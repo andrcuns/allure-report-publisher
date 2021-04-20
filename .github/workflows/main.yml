@@ -1,0 +1,36 @@
+name: Ruby
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+
+jobs:
+  setup:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Ruby 3.0
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+          bundler-cache: true
+
+  rubocop:
+    runs-on: ubuntu-20.04
+    needs: setup
+    steps:
+      - name: Rubocop
+        run: bundle exec rubocop
+
+  rspec:
+    runs-on: ubuntu-20.04
+    needs: setup
+    steps:
+      - name: Rspec
+        run: bundle exec rspec
