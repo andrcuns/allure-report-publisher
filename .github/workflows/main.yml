@@ -10,7 +10,7 @@ on:
 
 
 jobs:
-  setup:
+  rubocop:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -20,17 +20,19 @@ jobs:
         with:
           ruby-version: 3.0
           bundler-cache: true
-
-  rubocop:
-    runs-on: ubuntu-20.04
-    needs: setup
-    steps:
       - name: Rubocop
         run: bundle exec rubocop
 
   rspec:
     runs-on: ubuntu-20.04
-    needs: setup
+    needs: rubocop
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Ruby 3.0
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+          bundler-cache: true
       - name: Rspec
         run: bundle exec rspec
