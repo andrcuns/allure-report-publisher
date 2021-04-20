@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "allure_report_uploader"
+
+require "pry"
+Pry.start
