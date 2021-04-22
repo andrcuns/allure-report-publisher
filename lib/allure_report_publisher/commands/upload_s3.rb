@@ -3,11 +3,8 @@ module Allure
     module Commands
       # Upload allure report
       #
-      class Upload < Dry::CLI::Command
+      class UploadS3 < Dry::CLI::Command
         include Helpers
-
-        EXECUTOR_JSON = "executor.json".freeze
-        ALLURE_REPORT_DIR = "allure-report".freeze
 
         desc "Generate and upload allure report"
 

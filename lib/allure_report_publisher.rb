@@ -17,7 +17,10 @@ module Allure
       extend Dry::CLI::Registry
 
       register "version", Version, aliases: ["-v", "--version"]
-      register "upload", Upload
+
+      register "upload" do |prefix|
+        prefix.register "s3", UploadS3
+      end
     end
   end
 end
