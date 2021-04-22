@@ -16,6 +16,7 @@ module Allure
     module Commands
       extend Dry::CLI::Registry
 
+      register "version", Version, aliases: ["-v", "--version"]
       register "upload", Upload
     end
   end

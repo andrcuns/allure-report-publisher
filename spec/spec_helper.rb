@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "rspec"
+require "stringio"
+
 require "allure_report_publisher"
 
 RSpec.configure do |config|
