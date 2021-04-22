@@ -18,6 +18,12 @@ module Allure
         File.join(args).to_s
       end
 
+      # Execute code inside spinner
+      #
+      # @param [String] message
+      # @param [Boolean] auto_debrief
+      # @param [String] done_message
+      # @return [Boolean]
       def spin(message, auto_debrief: true, done_message: "#{message} ... done")
         CLI::UI::Spinner.spin(message, auto_debrief: auto_debrief) do |spinner|
           yield

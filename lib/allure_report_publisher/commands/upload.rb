@@ -13,7 +13,11 @@ module Allure
 
         option :result_files_glob, desc: "Allure results files glob. Required: true"
         option :bucket, desc: "Bucket name. Required: true"
-        option :project, desc: "Project name for report grouping. Required: false"
+        option :project, desc: "Project name for multiple reports inside single bucket. Required: false"
+
+        example [
+          "--result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket",
+        ]
 
         def call(**args)
           validate_args(args)
