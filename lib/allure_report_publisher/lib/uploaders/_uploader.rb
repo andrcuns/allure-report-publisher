@@ -60,7 +60,7 @@ module Allure
         #
         # @return [String]
         def run_id
-          @run_id ||= Time.now.strftime("%d-%m-%Y-%H-%M-%S")
+          @run_id ||= ENV["RUN_ID"]
         end
 
         # Aggregated results directory
