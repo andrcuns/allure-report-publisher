@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require "allure_report_uploader"
-
-Dry::CLI.new(Allure::Uploader::Commands).call

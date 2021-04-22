@@ -1,0 +1,20 @@
+---
+include:
+  - "**/*.rb"
+exclude:
+  - spec/**/*
+  - bin/*
+require:
+  - fileutils
+  - dry/cli
+  - cli/ui
+  - pathname
+  - parallel
+domains: []
+reporters:
+  - rubocop
+  - require_not_found
+  - update_errors
+plugins: []
+require_paths: []
+max_files: 5000

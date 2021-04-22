@@ -3,6 +3,8 @@ inherit_gem:
 
 AllCops:
   TargetRubyVersion: 2.5
+  Exclude:
+    - vendor/**/*
 
 Style/MethodCallWithArgsParentheses:
   Enabled: false
