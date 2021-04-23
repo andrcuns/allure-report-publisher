@@ -36,7 +36,7 @@ module Publisher
     # @return [void]
     def aggregate_results
       results = Dir.glob(results_glob)
-      raise(NoAllureResultsError, "Missing allure results") if results.empty?
+      error("Missing allure results") if results.empty?
 
       FileUtils.cp(results, results_dir)
     end
@@ -48,7 +48,7 @@ module Publisher
       out, _err, status = Open3.capture3(
         "allure generate --clean --output #{report_dir} #{results_dir}"
       )
-      raise(AllureError, out) unless status.success?
+      error(out) unless status.success?
     end
   end
 end
