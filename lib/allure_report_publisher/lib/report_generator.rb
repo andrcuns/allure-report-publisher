@@ -6,6 +6,8 @@ module Allure
 
     class NoAllureResultsError < StandardError; end
 
+    # Allure report generator
+    #
     class ReportGenerator
       include Helpers
 

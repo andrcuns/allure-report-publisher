@@ -11,7 +11,7 @@ module Allure
           "duration-trend.json",
           "history-trend.json",
           "history.json",
-          "retry-trend.json",
+          "retry-trend.json"
         ].freeze
 
         def initialize(results_glob, bucket, project = nil)
@@ -82,8 +82,8 @@ module Allure
         # @return [Array<Pathname>]
         def report_files
           @report_files ||= Pathname
-            .glob("#{report_dir}/**/*")
-            .reject(&:directory?)
+                            .glob("#{report_dir}/**/*")
+                            .reject(&:directory?)
         end
 
         # Generate allure report

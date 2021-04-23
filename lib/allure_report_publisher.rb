@@ -9,6 +9,8 @@ require_rel "allure_report_publisher/**/*.rb"
 
 module Allure
   module Publisher
+    # CLI commands
+    #
     module Commands
       extend Dry::CLI::Registry
 

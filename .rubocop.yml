@@ -1,10 +1,24 @@
-inherit_gem:
-  rubocop-shopify: rubocop.yml
+require:
+  - rubocop-rspec
+  - rubocop-rake
+  - rubocop-performance
 
 AllCops:
   TargetRubyVersion: 2.5
+  NewCops: enable
   Exclude:
     - vendor/**/*
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - "*.gemspec"
+
+Metrics/MethodLength:
+  Max: 15
 
 Style/MethodCallWithArgsParentheses:
   Enabled: false
@@ -12,5 +26,20 @@ Style/MethodCallWithArgsParentheses:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
 Layout/LineLength:
   Max: 120
+
+RSpec/MultipleExpectations:
+  Max: 4
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Max: 15
+
+RSpec/FilePath:
+  Enabled: false
