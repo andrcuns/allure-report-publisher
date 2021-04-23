@@ -32,6 +32,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-cli", "~> 0.6"
   spec.add_dependency "parallel", "~> 1.20"
   spec.add_dependency "pastel", "~> 0.8.0"
-  spec.add_dependency "require_all", "~> 2"
+  spec.add_dependency "require_all", ">= 2", "< 4"
   spec.add_dependency "tty-spinner", "~> 0.9.3"
 end

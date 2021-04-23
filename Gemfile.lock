@@ -6,7 +6,7 @@ PATH
       dry-cli (~> 0.6)
       parallel (~> 1.20)
       pastel (~> 0.8.0)
-      require_all (~> 2)
+      require_all (>= 2, < 4)
       tty-spinner (~> 0.9.3)
 
 GEM
@@ -64,7 +64,7 @@ GEM
     rainbow (3.0.0)
     rake (13.0.3)
     regexp_parser (2.1.1)
-    require_all (2.0.0)
+    require_all (3.0.0)
     reverse_markdown (2.0.0)
       nokogiri
     rexml (3.2.5)
