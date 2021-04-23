@@ -24,6 +24,7 @@ RSpec.describe Publisher::Uploaders::S3 do
     aggregate_failures do
       expect { s3_uploader.execute }.to output.to_stdout
 
+      expect(Publisher::ReportGenerator).to have_received(:new).with(results_glob, results_dir, report_dir)
       expect(report_generator).to have_received(:generate)
       expect(s3_client).to have_received(:put_object) do |arg|
         expect(arg[:body].path).to eq("spec/fixture/fake_report/index.html")
