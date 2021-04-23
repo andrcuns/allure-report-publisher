@@ -2,7 +2,6 @@
 
 require "rspec"
 require "stringio"
-require "pry"
 
 require "allure_report_publisher"
 
