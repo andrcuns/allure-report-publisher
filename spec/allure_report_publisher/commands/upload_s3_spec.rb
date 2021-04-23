@@ -1,7 +1,7 @@
-RSpec.describe Allure::Publisher::Commands::Version do
+RSpec.describe Publisher::Commands::Version do
   include_context "with cli helper"
 
-  let(:s3_uploader) { instance_double("Allure::Publisher::Uploaders::S3", execute: nil) }
+  let(:s3_uploader) { instance_double("Publisher::Uploaders::S3", execute: nil) }
   let(:result_glob) { "**/*" }
   let(:bucket) { "bucket" }
   let(:project) { "my-project" }
@@ -9,7 +9,7 @@ RSpec.describe Allure::Publisher::Commands::Version do
   let(:args) { ["--result-files-glob=#{result_glob}", "--bucket=#{bucket}", "--project=#{project}"] }
 
   before do
-    allow(Allure::Publisher::Uploaders::S3).to receive(:new) { s3_uploader }
+    allow(Publisher::Uploaders::S3).to receive(:new) { s3_uploader }
   end
 
   context "with required args" do
@@ -17,7 +17,7 @@ RSpec.describe Allure::Publisher::Commands::Version do
       run_cli(*command, *args)
 
       aggregate_failures do
-        expect(Allure::Publisher::Uploaders::S3).to have_received(:new).with(result_glob, bucket, project)
+        expect(Publisher::Uploaders::S3).to have_received(:new).with(result_glob, bucket, project)
         expect(s3_uploader).to have_received(:execute)
       end
     end
@@ -26,7 +26,7 @@ RSpec.describe Allure::Publisher::Commands::Version do
       run_cli(*command, *args[0, 2])
 
       aggregate_failures do
-        expect(Allure::Publisher::Uploaders::S3).to have_received(:new).with(result_glob, bucket, nil)
+        expect(Publisher::Uploaders::S3).to have_received(:new).with(result_glob, bucket, nil)
         expect(s3_uploader).to have_received(:execute)
       end
     end
