@@ -1,4 +1,4 @@
-RSpec.describe Allure::Publisher do
+RSpec.describe Publisher do
   it "prints global usage" do
     usage = <<~USE
       Commands:

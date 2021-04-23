@@ -1,7 +1,7 @@
-RSpec.describe Allure::Publisher::Commands::Version do
+RSpec.describe Publisher::Commands::Version do
+  include_context "with cli helper"
+
   it "prints version" do
-    expect { Dry::CLI.new(Allure::Publisher::Commands).call(arguments: ["--version"]) }.to(
-      output("#{Allure::Publisher::VERSION}\n").to_stdout
-    )
+    expect { run_cli("--version") }.to output("#{Publisher::VERSION}\n").to_stdout
   end
 end

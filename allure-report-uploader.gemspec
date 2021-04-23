@@ -3,7 +3,7 @@
 require_relative "lib/allure_report_publisher/version"
 
 Gem::Specification.new do |spec|
-  spec.version       = Allure::Publisher::VERSION
+  spec.version       = Publisher::VERSION
   spec.name          = "allure-report-publisher"
   spec.authors       = ["Andrejs Cunskis"]
   spec.email         = ["andrejs.cunskis@gmail.com"]
