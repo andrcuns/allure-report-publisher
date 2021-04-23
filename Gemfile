@@ -6,7 +6,7 @@ gemspec
 
 group :test do
   gem "rspec", "~> 3.0"
-  gem "rubocop-shopify", "~> 1.0"
+  gem "rubocop-shopify", "~> 2.0"
   gem "rubocop-rspec", "~> 2.2"
 end
 

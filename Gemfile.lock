@@ -95,8 +95,8 @@ GEM
     rubocop-rspec (2.2.0)
       rubocop (~> 1.0)
       rubocop-ast (>= 1.1.0)
-    rubocop-shopify (1.0.7)
-      rubocop (~> 1.4)
+    rubocop-shopify (2.0.1)
+      rubocop (~> 1.11)
     ruby-progressbar (1.11.0)
     solargraph (0.40.4)
       backport (~> 1.1)
@@ -131,7 +131,7 @@ DEPENDENCIES
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop-rspec (~> 2.2)
-  rubocop-shopify (~> 1.0)
+  rubocop-shopify (~> 2.0)
   solargraph (~> 0.40.4)
 
 BUNDLED WITH
