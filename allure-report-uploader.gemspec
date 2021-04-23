@@ -34,11 +34,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "pastel", "~> 0.8.0"
   spec.add_dependency "require_all", "~> 2"
   spec.add_dependency "tty-spinner", "~> 0.9.3"
-
-  spec.add_development_dependency "pry-byebug", "~> 3.9"
-  spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rubocop-shopify", "~> 1.0"
-  spec.add_development_dependency "rubocop-rspec", "~> 2.2"
-  spec.add_development_dependency "solargraph", "~> 0.40.4"
 end
