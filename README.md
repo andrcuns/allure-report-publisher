@@ -4,23 +4,34 @@ Upload your report to a file storage of your choice.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'allure-report-uploader'
+```bash
+gem install allure-report-uploader
 ```
-
-And then execute:
-
-    bundle install
-
-Or install it yourself as:
-
-    gem install allure-report-uploader
 
 ## Usage
 
-TODO: Write usage instructions here
+### AWS S3
+
+```shell
+$ allure-report-publisher upload s3 --help
+Command:
+  allure-report-publisher upload s3
+
+Usage:
+  allure-report-publisher upload s3
+
+Description:
+  Generate and upload allure report
+
+Options:
+  --result-files-glob=VALUE        # Allure results files glob. Required: true
+  --bucket=VALUE                   # Bucket name. Required: true
+  --project=VALUE                  # Project name for multiple reports inside single bucket. Required: false
+  --help, -h                       # Print this help
+
+Examples:
+  allure-report-publisher upload s3 --result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket
+```
 
 ## Development
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "allure_report_uploader"
+require "allure_report_publisher"
 
 require "pry"
 Pry.start

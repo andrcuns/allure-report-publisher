@@ -20,8 +20,10 @@ jobs:
         with:
           ruby-version: 3.0
           bundler-cache: true
+        env:
+          BUNDLE_WITHOUT: development
       - name: Rubocop
-        run: bundle exec rubocop
+        run: bundle exec rubocop --color
 
   rspec:
     runs-on: ubuntu-20.04
@@ -34,5 +36,7 @@ jobs:
         with:
           ruby-version: 3.0
           bundler-cache: true
+        env:
+          BUNDLE_WITHOUT: development
       - name: Rspec
-        run: bundle exec rspec
+        run: bundle exec rspec --force-color

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-require "allure_report_uploader"
+require "rspec"
+require "stringio"
+
+require "allure_report_publisher"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
