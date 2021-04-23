@@ -2,11 +2,11 @@ PATH
   remote: .
   specs:
     allure-report-publisher (0.0.1)
-      aws-sdk-s3 (~> 1.93)
-      dry-cli (~> 0.6)
+      aws-sdk-s3 (~> 1.93.1)
+      dry-cli (~> 0.6.0)
       parallel (~> 1.20)
       pastel (~> 0.8.0)
-      require_all (~> 2)
+      require_all (~> 3.0.0)
       tty-spinner (~> 0.9.3)
 
 GEM
@@ -64,7 +64,7 @@ GEM
     rainbow (3.0.0)
     rake (13.0.3)
     regexp_parser (2.1.1)
-    require_all (2.0.0)
+    require_all (3.0.0)
     reverse_markdown (2.0.0)
       nokogiri
     rexml (3.2.5)

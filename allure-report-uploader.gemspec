@@ -28,10 +28,10 @@ Gem::Specification.new do |spec|
   spec.executables   = ["allure-report-publisher"]
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "aws-sdk-s3", "~> 1.93"
-  spec.add_dependency "dry-cli", "~> 0.6"
+  spec.add_dependency "aws-sdk-s3", "~> 1.93.1"
+  spec.add_dependency "dry-cli", "~> 0.6.0"
   spec.add_dependency "parallel", "~> 1.20"
   spec.add_dependency "pastel", "~> 0.8.0"
-  spec.add_dependency "require_all", "~> 2"
+  spec.add_dependency "require_all", "~> 3.0.0"
   spec.add_dependency "tty-spinner", "~> 0.9.3"
 end
