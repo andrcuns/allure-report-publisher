@@ -30,10 +30,9 @@ module Publisher
       #
       # @return [void]
       def fetch_history
-        super
-
         log("Fetching allure history")
         spin("fetching history") do
+          create_history_dir
           HISTORY.each do |file|
             s3.get_object(
               response_target: path(results_dir, "history", file),
@@ -82,7 +81,7 @@ module Publisher
           }
         end
 
-        Parallel.each(args) { |obj| s3.put_object(obj) }
+        Parallel.each(args, in_threads: 8) { |obj| s3.put_object(obj) }
       end
 
       # Fabricate key for s3 object

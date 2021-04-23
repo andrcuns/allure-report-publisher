@@ -6,6 +6,7 @@ require "stringio"
 require "allure_report_publisher"
 
 require_relative "cli_helper"
+require_relative "mock_helper"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

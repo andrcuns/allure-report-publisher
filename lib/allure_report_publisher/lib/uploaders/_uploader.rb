@@ -40,7 +40,7 @@ module Publisher
       # Fetch allure report history
       #
       # @return [void]
-      def fetch_history
+      def create_history_dir
         FileUtils.mkdir_p(path(results_dir, "history"))
       end
 

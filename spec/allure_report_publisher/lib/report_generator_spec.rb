@@ -1,9 +1,8 @@
 RSpec.describe Publisher::ReportGenerator do
-  subject(:report_generator) do
-    described_class.new(results_glob, results_dir, report_dir)
-  end
+  subject(:report_generator) { described_class.new(results_glob, results_dir, report_dir) }
 
-  let(:spinner) { instance_double("TTY::Spinner", auto_spin: nil, success: nil, error: nil) }
+  include_context "with mock helper"
+
   let(:capture_status) { instance_double("Process::Status", success?: status) }
 
   let(:results_glob) { "spec/fixture/fake_results/*" }
@@ -12,7 +11,6 @@ RSpec.describe Publisher::ReportGenerator do
   let(:status) { true }
 
   before do
-    allow(TTY::Spinner).to receive(:new) { spinner }
     allow(FileUtils).to receive(:cp)
     allow(Open3).to receive(:capture3) { ["Allure output", "", capture_status] }
   end
