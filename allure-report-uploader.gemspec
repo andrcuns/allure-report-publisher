@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
     "source_code_uri" => "https://github.com/andrcuns/allure-report-uploader",
     "changelog_uri" => "https://github.com/andrcuns/allure-report-uploader/releases",
     "documentation_uri" => "https://github.com/andrcuns/allure-report-uploader/blob/master/README.md",
-    "bug_tracker_uri" => "https://github.com/andrcuns/allure-report-uploader/issues",
+    "bug_tracker_uri" => "https://github.com/andrcuns/allure-report-uploader/issues"
   }
 
   spec.files         = Dir["README.md", "lib/**/*", "bin/allure-report-publisher"]

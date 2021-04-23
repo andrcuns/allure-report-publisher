@@ -3,6 +3,8 @@ require "aws-sdk-s3"
 module Allure
   module Publisher
     module Uploaders
+      # Report upload to AWS S3 bucket
+      #
       class S3 < Uploader
         def execute
           generate_report
@@ -37,7 +39,7 @@ module Allure
               s3.get_object(
                 response_target: path(results_dir, "history", file),
                 key: key(project, "history", file),
-                bucket: bucket,
+                bucket: bucket
               )
             end
           end
@@ -77,7 +79,7 @@ module Allure
             {
               body: File.new(file),
               bucket: bucket,
-              key: key(key_prefix, file.relative_path_from(report_dir)),
+              key: key(key_prefix, file.relative_path_from(report_dir))
             }
           end
 

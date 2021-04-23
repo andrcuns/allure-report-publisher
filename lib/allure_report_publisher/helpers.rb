@@ -3,6 +3,8 @@ require "pastel"
 
 module Allure
   module Publisher
+    # General helpers
+    #
     module Helpers
       # Colorize string
       #
