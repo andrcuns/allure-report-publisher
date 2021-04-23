@@ -42,6 +42,7 @@ jobs:
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: c782e3e534f6aac1bb5a0d595723167ed145d03567242c2ce848ef46ba36672a
+          COVERAGE: "true"
         with:
           coverageCommand: bundle exec rspec --force-color
           coverageLocations: coverage/coverage.json:simplecov
