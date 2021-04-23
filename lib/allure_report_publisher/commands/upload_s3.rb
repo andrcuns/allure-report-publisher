@@ -13,7 +13,8 @@ module Allure
         option :project, desc: "Project name for multiple reports inside single bucket. Required: false"
 
         example [
-          "--result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket"
+          "--result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket",
+          "--result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket --project=my-project"
         ]
 
         def call(**args)

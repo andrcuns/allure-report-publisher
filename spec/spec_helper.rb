@@ -2,8 +2,11 @@
 
 require "rspec"
 require "stringio"
+require "pry"
 
 require "allure_report_publisher"
+
+require_relative "cli_helper"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
