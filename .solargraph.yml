@@ -5,11 +5,10 @@ exclude:
   - spec/**/*
   - bin/*
 require:
-  - fileutils
   - dry/cli
-  - cli/ui
-  - pathname
+  - fileutils
   - parallel
+  - pathname
 domains: []
 reporters:
   - rubocop

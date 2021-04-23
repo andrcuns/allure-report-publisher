@@ -32,7 +32,7 @@ module Allure
           super
 
           log("Fetching allure history")
-          spin("fetching history", auto_debrief: false) do
+          spin("fetching history") do
             HISTORY.each do |file|
               s3.get_object(
                 response_target: path(results_dir, "history", file),
@@ -48,7 +48,7 @@ module Allure
         # @return [void]
         def upload_history_and_report
           log("\nUploading report to s3")
-          spin("uploading report", done_message: "uploading report ... done. #{report_url}") do
+          spin("uploading report", done_message: "done. #{report_url}") do
             upload_history
             upload_report
           end

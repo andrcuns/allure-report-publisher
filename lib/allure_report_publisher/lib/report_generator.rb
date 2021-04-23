@@ -20,11 +20,9 @@ module Allure
       # @return [void]
       def generate
         log("\nGenerating allure report")
-        CLI::UI::Spinner.spin("generating report") do |spinner|
+        spin("generating report") do
           aggregate_results
           generate_report
-
-          spinner.update_title("generating report ... done")
         end
       end
 
