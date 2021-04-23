@@ -20,6 +20,8 @@ jobs:
         with:
           ruby-version: 3.0
           bundler-cache: true
+        env:
+          BUNDLE_WITHOUT: development
       - name: Rubocop
         run: bundle exec rubocop
 
@@ -34,5 +36,7 @@ jobs:
         with:
           ruby-version: 3.0
           bundler-cache: true
+        env:
+          BUNDLE_WITHOUT: development
       - name: Rspec
         run: bundle exec rspec
