@@ -3,7 +3,6 @@
 require "require_all"
 require "parallel"
 require "dry/cli"
-require "pry"
 
 require_rel "allure_report_publisher/helpers"
 require_rel "allure_report_publisher/**/*.rb"
