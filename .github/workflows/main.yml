@@ -27,7 +27,7 @@ jobs:
 
   test:
     runs-on: ubuntu-20.04
-    needs: rubocop
+    needs: lint
     steps:
       - name: Checkout
         uses: actions/checkout@v2
