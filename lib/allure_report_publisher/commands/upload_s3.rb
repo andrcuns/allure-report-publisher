@@ -33,15 +33,8 @@ module Allure
         # @param [Hash] args
         # @return [void]
         def validate_args(args)
-          unless args[:result_files_glob]
-            log("Missing argument --result-files-glob", "red")
-            exit(1)
-          end
-
-          unless args[:bucket]
-            log("Missing argument --bucket", "red")
-            exit(1)
-          end
+          error("Missing argument --result-files-glob!") unless args[:result_files_glob]
+          error("Missing argument --bucket!") unless args[:bucket]
         end
       end
     end

@@ -22,6 +22,15 @@ module Allure
         puts colorize(message, color)
       end
 
+      # Print error message and exit
+      #
+      # @param [String] message
+      # @return [void]
+      def error(message)
+        puts colorize(message, :red)
+        exit(1)
+      end
+
       # Safe join path
       #
       # @param [Array<String>] *args
