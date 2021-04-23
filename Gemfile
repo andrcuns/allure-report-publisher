@@ -10,6 +10,8 @@ group :test do
   gem "rubocop-performance", "~> 1.11"
   gem "rubocop-rake", "~> 0.5.1"
   gem "rubocop-rspec", "~> 2.2"
+  gem "simplecov", "~> 0.21.2"
+  gem "simplecov-console", "~> 0.9.1"
 end
 
 group :development do

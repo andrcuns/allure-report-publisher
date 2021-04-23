@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+return unless ENV["COVERAGE"] || ENV["COV_HTML_REPORT"]
+
+require "simplecov-console"
+require "simplecov_json_formatter"
+
+SimpleCov.start do
+  add_filter ["/spec/", "/bin/"]
+  minimum_coverage 90
+  enable_coverage :branch
+
+  formatter(
+    [].yield_self do |formatters|
+      formatters << SimpleCov::Formatter::Console
+      formatters << SimpleCov::Formatter::HTMLFormatter if ENV["COV_HTML_REPORT"]
+      formatters << SimpleCov::Formatter::JSONFormatter if ENV["CC_TEST_REPORTER_ID"]
+      SimpleCov::Formatter::MultiFormatter.new(formatters)
+    end
+  )
+end
