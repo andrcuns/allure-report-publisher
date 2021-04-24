@@ -29,6 +29,9 @@ Style/FrozenStringLiteralComment:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
+Style/SymbolProc:
+  SafeAutoCorrect: true
+
 Layout/LineLength:
   Max: 120
 

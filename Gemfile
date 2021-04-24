@@ -4,6 +4,11 @@ source "https://rubygems.org"
 
 gemspec
 
+group :release do
+  gem "git", "~> 1.8"
+  gem "semver2", "~> 3.4"
+end
+
 group :test do
   gem "rspec", "~> 3.0"
   gem "rubocop", "~> 1.13"
