@@ -4,7 +4,9 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "rubygems-tasks", "~> 0.2.5"
+group :release do
+  gem "rubygems-tasks", "~> 0.2.5"
+end
 
 group :test do
   gem "rspec", "~> 3.0"
