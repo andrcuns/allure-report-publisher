@@ -8,4 +8,8 @@ require "rubocop/rake_task"
 
 RuboCop::RakeTask.new
 
+require "rubygems/tasks"
+
+Gem::Tasks.new(scm: { tag: false, push: false })
+
 task default: %i[spec rubocop]

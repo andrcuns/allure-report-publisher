@@ -4,6 +4,8 @@ source "https://rubygems.org"
 
 gemspec
 
+gem "rubygems-tasks", "~> 0.2.5"
+
 group :test do
   gem "rspec", "~> 3.0"
   gem "rubocop", "~> 1.13"
