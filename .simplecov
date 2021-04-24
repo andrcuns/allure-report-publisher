@@ -7,7 +7,6 @@ require "simplecov_json_formatter"
 
 SimpleCov.start do
   add_filter ["/spec/", "/bin/"]
-  minimum_coverage 90
   enable_coverage :branch
 
   formatter(
