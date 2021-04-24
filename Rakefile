@@ -3,12 +3,17 @@
 require "rake"
 
 require_relative "lib/allure_report_publisher"
-Dir["tasks/*.rake"].each { |f| load(f) }
+
+load "tasks/release.rake"
+Publisher::ReleaseTask.new
+
+load "tasks/version.rake"
+Publisher::VersionTask.new
 
 require "rspec/core/rake_task"
-RSpec::Core::RakeTask.new(:spec)
+RSpec::Core::RakeTask.new(:test)
 
 require "rubocop/rake_task"
 RuboCop::RakeTask.new
 
-task default: %i[spec rubocop]
+task default: %i[rubocop test]
