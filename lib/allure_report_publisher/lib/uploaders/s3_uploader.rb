@@ -31,7 +31,7 @@ module Publisher
       # @return [void]
       def fetch_history
         log("Fetching allure history")
-        spin("fetching history") do
+        spin("fetching history", exit_on_error: false) do
           create_history_dir
           HISTORY.each do |file|
             s3.get_object(
@@ -40,6 +40,8 @@ module Publisher
               bucket: bucket
             )
           end
+        rescue Aws::S3::Errors::NoSuchKey
+          raise("Allure history not present!")
         end
       end
 
