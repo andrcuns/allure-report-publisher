@@ -19,12 +19,15 @@ module Publisher
         @report_url = report_url
       end
 
+      # :nocov:
+
       # Get ci run ID without creating instance of ci provider
       #
       # @return [String]
       def self.run_id
         raise("Not implemented!")
       end
+      # :nocov:
 
       # Write executor info file
       #
@@ -39,12 +42,15 @@ module Publisher
 
       attr_reader :results_path, :report_url
 
+      # :nocov:
+
       # Get executor info
       #
       # @return [Hash]
       def executor_info
         raise("Not implemented!")
       end
+      # :nocov:
 
       # CI run id
       #
