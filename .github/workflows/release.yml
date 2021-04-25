@@ -7,6 +7,14 @@ on:
   push:
     branches:
       - main
+    paths:
+      - bin/bin/allure-report-publisher
+      - lib/**/*
+      - .dockerignore
+      - Dockerfile
+      - allure-report-publisher.gemspec
+      - Gemfile
+      - Gemfile.lock
 
 jobs:
   docker:
