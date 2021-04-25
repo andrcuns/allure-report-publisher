@@ -159,6 +159,7 @@ DEPENDENCIES
   simplecov (~> 0.21.2)
   simplecov-console (~> 0.9.1)
   solargraph (~> 0.40.4)
+  yard (~> 0.9.26)
 
 BUNDLED WITH
    2.2.15
