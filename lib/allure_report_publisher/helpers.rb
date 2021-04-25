@@ -45,6 +45,7 @@ module Publisher
     #
     # @param [String] message
     # @param [String] done_message
+    # @param [Boolean] exit_on_error
     # @return [Boolean]
     def spin(message, done_message: "done", exit_on_error: true)
       spinner = TTY::Spinner.new(
