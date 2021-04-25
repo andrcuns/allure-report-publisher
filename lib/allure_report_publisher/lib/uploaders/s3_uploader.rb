@@ -16,7 +16,7 @@ module Publisher
       #
       # @return [Aws::S3::Client]
       def s3
-        @s3 ||= Aws::S3::Client.new
+        @s3 ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1")
       end
 
       # Report url
@@ -48,7 +48,7 @@ module Publisher
       # @return [void]
       def upload_history_and_report
         log("\nUploading report to s3")
-        spin("uploading report", done_message: "done. #{report_url}") do
+        Helpers::Spinner.spin("uploading report", done_message: "done. #{report_url}") do
           upload_history
           upload_report
         end
