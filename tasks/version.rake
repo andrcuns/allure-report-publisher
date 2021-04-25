@@ -9,7 +9,6 @@ module Publisher
     include Publisher::Helpers
 
     VERSION_FILE = "lib/allure_report_publisher/version.rb".freeze
-    GEMFILE = "pkg/allure-report-publisher-#{Publisher::VERSION}.gem".freeze
 
     def initialize
       add_version_task

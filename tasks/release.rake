@@ -5,6 +5,8 @@ module Publisher
     include Rake::DSL
     include Publisher::Helpers
 
+    GEMFILE = "pkg/allure-report-publisher-#{Publisher::VERSION}.gem".freeze
+
     def initialize
       add_build_task
       add_release_task
