@@ -4,7 +4,7 @@ require "require_all"
 require "parallel"
 require "dry/cli"
 
-require_rel "allure_report_publisher/helpers"
+require_rel "allure_report_publisher/lib/helpers/*.rb"
 require_rel "allure_report_publisher/**/*.rb"
 
 module Publisher

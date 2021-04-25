@@ -22,36 +22,6 @@ RSpec.describe Publisher::Helpers do
     end
   end
 
-  context "with spinner" do
-    it "outputs spinning and done message" do
-      helpers.spin("message", done_message: "done message") { fake.run }
-
-      aggregate_failures do
-        expect(spinner).to have_received(:auto_spin)
-        expect(spinner).to have_received(:success).with("done message")
-        expect(fake).to have_received(:run)
-      end
-    end
-
-    it "exits on error and prints error message" do
-      expect { helpers.spin("message") { raise("some error!") } }.to raise_error(SystemExit)
-
-      aggregate_failures do
-        expect(spinner).to have_received(:error).with("colorized string")
-        expect(pastel).to have_received(:decorate).with("some error!", :red)
-      end
-    end
-
-    it "prints warning and doesnt exit on exit_on_failure: false" do
-      helpers.spin("message", exit_on_error: false) { raise("some error!") }
-
-      aggregate_failures do
-        expect(spinner).to have_received(:error).with("colorized string")
-        expect(pastel).to have_received(:decorate).with("some error!", :yellow)
-      end
-    end
-  end
-
   context "with successful shell command execution" do
     it "executes shell command" do
       aggregate_failures do

@@ -64,7 +64,7 @@ module Publisher
       # @return [void]
       def add_history
         log("Adding allure history")
-        spin("adding history", exit_on_error: false) do
+        Helpers::Spinner.spin("adding history", exit_on_error: false) do
           create_history_dir
           yield
         end
@@ -77,7 +77,7 @@ module Publisher
         return unless ci_provider
 
         log("Adding executor info")
-        spin("adding") do
+        Helpers::Spinner.spin("adding") do
           ci_provider.write_executor_info
         end
       end
