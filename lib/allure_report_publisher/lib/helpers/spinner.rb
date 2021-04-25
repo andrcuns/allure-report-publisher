@@ -99,10 +99,11 @@ module Publisher
     # @param [String] error_message
     # @return [void]
     def spinner_error(error_message)
-      return spinner.error(colorize(error_message, error_color)) if tty?
+      colored_message = colorize(error_message, error_color)
+      return spinner.error(colored_message) if tty?
 
       spinner.stop
-      puts("[#{error_mark}] #{spinner_message} ... #{error_message}")
+      puts("[#{error_mark}] #{spinner_message} ... #{colored_message}")
     end
   end
 end
