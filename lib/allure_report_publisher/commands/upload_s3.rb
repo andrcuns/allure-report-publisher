@@ -9,11 +9,11 @@ module Publisher
 
       option :result_files_glob, desc: "Allure results files glob. Required: true"
       option :bucket, desc: "Bucket name. Required: true"
-      option :project, desc: "Project name for multiple reports inside single bucket. Required: false"
+      option :prefix, desc: "Optional prefix for report path. Required: false"
 
       example [
         "--result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket",
-        "--result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket --project=my-project"
+        "--result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket --project=my-project/prs"
       ]
 
       def call(**args)
@@ -22,7 +22,7 @@ module Publisher
         Uploaders::S3.new(
           args[:result_files_glob],
           args[:bucket],
-          args[:project]
+          args[:prefix]
         ).execute
       end
 

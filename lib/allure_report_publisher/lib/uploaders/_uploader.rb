@@ -13,10 +13,10 @@ module Publisher
         "retry-trend.json"
       ].freeze
 
-      def initialize(results_glob, bucket, project = nil)
+      def initialize(results_glob, bucket, prefix = nil)
         @results_glob = results_glob
         @bucket = bucket
-        @project = project
+        @prefix = prefix
       end
 
       # :nocov:
@@ -30,7 +30,7 @@ module Publisher
 
       private
 
-      attr_reader :results_glob, :bucket, :project
+      attr_reader :results_glob, :bucket, :prefix
 
       # Report url
       #
@@ -57,8 +57,8 @@ module Publisher
       # Report path prefix
       #
       # @return [String]
-      def prefix
-        @prefix ||= [project, run_id].compact.yield_self do |pre|
+      def path_prefix
+        @path_prefix ||= [prefix, run_id].compact.yield_self do |pre|
           break if pre.empty?
 
           pre.join("/")
