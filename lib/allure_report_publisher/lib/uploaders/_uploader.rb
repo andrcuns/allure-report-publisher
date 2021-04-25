@@ -76,7 +76,7 @@ module Publisher
       def add_executor_info
         return unless ci_provider
 
-        log("Adding executor info")
+        log("\nAdding executor info")
         Helpers::Spinner.spin("adding") do
           ci_provider.write_executor_info
         end
