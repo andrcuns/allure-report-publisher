@@ -5,7 +5,7 @@ module Publisher
     module CommonOptions
       def self.included(mod)
         mod.instance_eval do
-          option :color, default: false, type: :boolean, desc: "Force color output"
+          option :color, type: :boolean, desc: "Toggle color output"
         end
       end
     end
