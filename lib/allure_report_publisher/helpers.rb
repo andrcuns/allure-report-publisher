@@ -44,7 +44,6 @@ module Publisher
     # Execute code inside spinner
     #
     # @param [String] message
-    # @param [Boolean] auto_debrief
     # @param [String] done_message
     # @return [Boolean]
     def spin(message, done_message: "done")
