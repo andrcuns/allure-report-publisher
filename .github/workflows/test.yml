@@ -10,7 +10,7 @@ on:
 
 
 jobs:
-  lint:
+  rubocop:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -25,9 +25,9 @@ jobs:
       - name: Rubocop
         run: bundle exec rubocop --color
 
-  test:
+  rspec:
     runs-on: ubuntu-20.04
-    needs: lint
+    needs: rubocop
     steps:
       - name: Checkout
         uses: actions/checkout@v2
