@@ -19,6 +19,8 @@ module Publisher
         @project = project
       end
 
+      # :nocov:
+
       # Execute allure report generation and upload
       #
       # @return [void]
@@ -36,6 +38,7 @@ module Publisher
       def report_url
         raise(StandardError, "Not Implemented!")
       end
+      # :nocov:
 
       # Fetch allure report history
       #
