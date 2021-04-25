@@ -23,7 +23,7 @@ module Publisher
       #
       # @return [String]
       def report_url
-        @report_url ||= ["http://#{bucket}.s3.amazonaws.com", prefix, "index.html"].compact.join("/")
+        @report_url ||= ["http://#{bucket}.s3.amazonaws.com", path_prefix, "index.html"].compact.join("/")
       end
 
       # Fetch allure history
@@ -36,7 +36,7 @@ module Publisher
           HISTORY.each do |file|
             s3.get_object(
               response_target: path(results_dir, "history", file),
-              key: key(project, "history", file),
+              key: key(prefix, "history", file),
               bucket: bucket
             )
           end
