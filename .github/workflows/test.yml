@@ -48,7 +48,7 @@ jobs:
           coverageLocations: coverage/coverage.json:simplecov
       - name: Publish allure report
         run: |
-          docker run --rm -it \
+          docker run --rm \
             -v $GITHUB_WORKSPACE:/workspace \
             -e GITHUB_WORKFLOW=$GITHUB_WORKFLOW \
             -e GITHUB_SERVER_URL=$GITHUB_SERVER_URL \
