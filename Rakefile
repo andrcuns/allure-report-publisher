@@ -12,6 +12,9 @@ Publisher::VersionTask.new
 
 require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new(:test)
+RSpec::Core::RakeTask.new("test:coverage") do
+  ENV["COVERAGE"] = "true"
+end
 
 require "rubocop/rake_task"
 RuboCop::RakeTask.new
