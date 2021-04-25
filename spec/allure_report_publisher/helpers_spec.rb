@@ -5,10 +5,8 @@ RSpec.describe Publisher::Helpers do
 
   include_context "with mock helper"
 
-  # rubocop:disable RSpec/VerifiedDoubles
   let(:pastel) { double("Pastel", decorate: "colorized string") }
   let(:fake) { double("fake", run: nil) }
-  # rubocop:enable RSpec/VerifiedDoubles
 
   before do
     stub_const("Helpers", Struct.new(:test) { include Publisher::Helpers })
