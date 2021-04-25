@@ -1,5 +1,3 @@
-require "pry"
-
 RSpec.describe Publisher::Helpers do
   subject(:helpers) { Helpers.new }
 
