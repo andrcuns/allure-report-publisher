@@ -43,3 +43,6 @@ RSpec/ExampleLength:
 
 RSpec/FilePath:
   Enabled: false
+
+RSpec/VerifiedDoubles:
+  Enabled: false
