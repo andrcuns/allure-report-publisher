@@ -19,6 +19,13 @@ module Publisher
         @report_url = report_url
       end
 
+      # Get ci run ID without creating instance of ci provider
+      #
+      # @return [String]
+      def self.run_id
+        raise("Not implemented!")
+      end
+
       # Write executor info file
       #
       # @return [void]
@@ -26,13 +33,6 @@ module Publisher
         File.open("#{results_path}/#{EXECUTOR_JSON}", "w") do |file|
           file.write(executor_info.to_json)
         end
-      end
-
-      # CI run id
-      #
-      # @return [String]
-      def run_id
-        raise("Not implemented!")
       end
 
       private
@@ -44,6 +44,13 @@ module Publisher
       # @return [Hash]
       def executor_info
         raise("Not implemented!")
+      end
+
+      # CI run id
+      #
+      # @return [String]
+      def run_id
+        self.class.run_id
       end
     end
   end

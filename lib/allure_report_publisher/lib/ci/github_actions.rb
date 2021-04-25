@@ -6,7 +6,7 @@ module Publisher
       # Run id
       #
       # @return [String]
-      def run_id
+      def self.run_id
         @run_id ||= ENV["GITHUB_RUN_ID"]
       end
 

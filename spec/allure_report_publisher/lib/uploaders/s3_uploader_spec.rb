@@ -52,16 +52,19 @@ RSpec.describe Publisher::Uploaders::S3 do
     it "uploads allure report to s3" do
       aggregate_failures do
         expect { s3_uploader.execute }.to output.to_stdout
-        expect(put_object_args).to include({
-          body: "spec/fixture/fake_report/history/history.json",
-          bucket: bucket,
-          key: "#{prefix}/history/history.json"
-        })
-        expect(put_object_args).to include({
-          body: "spec/fixture/fake_report/index.html",
-          bucket: bucket,
-          key: "#{prefix}/index.html"
-        })
+
+        expect(put_object_args).to include(
+          {
+            body: "spec/fixture/fake_report/history/history.json",
+            bucket: bucket,
+            key: "#{prefix}/history/history.json"
+          },
+          {
+            body: "spec/fixture/fake_report/index.html",
+            bucket: bucket,
+            key: "#{prefix}/index.html"
+          }
+        )
       end
     end
 
@@ -81,6 +84,36 @@ RSpec.describe Publisher::Uploaders::S3 do
           bucket: bucket,
           key: "#{prefix}/history/history.json"
         })
+      end
+    end
+  end
+
+  context "with ci run" do
+    let(:ci_provider) { Publisher::CI::GithubActions }
+    let(:ci_provider_instance) { instance_double("Publisher::CI::GithubActions", write_executor_info: nil) }
+
+    before do
+      allow(Publisher::CI::GithubActions).to receive(:run_id).and_return(1)
+      allow(Publisher::CI::GithubActions).to receive(:new) { ci_provider_instance }
+    end
+
+    it "uploads allure report to s3" do
+      aggregate_failures do
+        expect { s3_uploader.execute }.to output.to_stdout
+
+        expect(ci_provider_instance).to have_received(:write_executor_info)
+        expect(put_object_args).to include(
+          {
+            body: "spec/fixture/fake_report/history/history.json",
+            bucket: bucket,
+            key: "#{prefix}/1/history/history.json"
+          },
+          {
+            body: "spec/fixture/fake_report/index.html",
+            bucket: bucket,
+            key: "#{prefix}/1/index.html"
+          }
+        )
       end
     end
   end

@@ -43,6 +43,13 @@ module Publisher
       end
       # :nocov:
 
+      # Get run id
+      #
+      # @return [String]
+      def run_id
+        @run_id ||= CI.provider&.run_id
+      end
+
       # Get CI provider
       #
       # @return [Publisher::CI::Base]
@@ -86,7 +93,7 @@ module Publisher
       #
       # @return [String]
       def path_prefix
-        @path_prefix ||= [prefix, ci_provider&.run_id].compact.yield_self do |pre|
+        @path_prefix ||= [prefix, run_id].compact.yield_self do |pre|
           break if pre.empty?
 
           pre.join("/")

@@ -70,7 +70,7 @@ module Publisher
       # @param [Array<Pathname>] files
       # @param [String] key_prefix
       # @return [Array<Hash>]
-      def upload_to_s3(files, key_prefix = prefix)
+      def upload_to_s3(files, key_prefix = path_prefix)
         args = files.map do |file|
           {
             body: File.new(file),
