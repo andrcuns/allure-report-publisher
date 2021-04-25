@@ -64,5 +64,6 @@ jobs:
             upload s3 \
               --result-files-glob='/workspace/spec/reports/allure-results/*' \
               --bucket='allure-reports-andrcuns' \
-              --prefix="allure-report-publisher/$GITHUB_REF"
+              --prefix="allure-report-publisher/$GITHUB_REF" \
+              --color
 
