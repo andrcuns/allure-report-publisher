@@ -11,7 +11,8 @@ RSpec.describe Publisher::CI do
         GITHUB_SERVER_URL: "https://github.com",
         GITHUB_REPOSITORY: "andrcuns/allure-report-publisher",
         GITHUB_JOB: "test",
-        GITHUB_RUN_ID: "123"
+        GITHUB_RUN_ID: "123",
+        GITHUB_RUN_NUMBER: "1"
       }
     end
 
@@ -30,7 +31,7 @@ RSpec.describe Publisher::CI do
           url: env[:GITHUB_SERVER_URL],
           reportUrl: report_url,
           buildUrl: "#{env[:GITHUB_SERVER_URL]}/#{env[:GITHUB_REPOSITORY]}/actions/runs/#{env[:GITHUB_RUN_ID]}",
-          buildOrder: env[:GITHUB_RUN_ID],
+          buildOrder: env[:GITHUB_RUN_NUMBER],
           buildName: env[:GITHUB_JOB]
         }
       )
