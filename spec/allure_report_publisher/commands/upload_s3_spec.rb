@@ -12,6 +12,10 @@ RSpec.describe Publisher::Commands::UploadS3 do
     allow(Publisher::Uploaders::S3).to receive(:new) { s3_uploader }
   end
 
+  after do
+    Publisher::Helpers.instance_variable_set(:@pastel, nil)
+  end
+
   context "with required args" do
     it "executes s3 uploader" do
       run_cli(*command, *args)

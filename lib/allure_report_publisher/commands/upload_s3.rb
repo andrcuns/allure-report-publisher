@@ -3,6 +3,7 @@ module Publisher
     # Upload allure report
     #
     class UploadS3 < Dry::CLI::Command
+      include CommonOptions
       include Helpers
 
       desc "Generate and upload allure report"
@@ -18,6 +19,7 @@ module Publisher
 
       def call(**args)
         validate_args(args)
+        Helpers.pastel(force_color: args[:color])
 
         Uploaders::S3.new(
           args[:result_files_glob],

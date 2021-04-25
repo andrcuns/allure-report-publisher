@@ -3,18 +3,15 @@ RSpec.describe Publisher::Helpers do
 
   include_context "with mock helper"
 
-  let(:pastel) { double("Pastel", decorate: "colorized string") }
   let(:fake) { double("fake", run: nil) }
 
   before do
     stub_const("Helpers", Struct.new(:test) { include Publisher::Helpers })
-    allow(Pastel).to receive(:new) { pastel }
   end
 
   context "with common helpers" do
     it "colorizes string" do
-      helpers.colorize("message", :green)
-      expect(pastel).to have_received(:decorate).with("message", :green)
+      expect(Pastel.new.colored?(helpers.colorize("message", :green))).to be_truthy # rubocop:disable RSpec/PredicateMatcher
     end
 
     it "returns joined path" do
