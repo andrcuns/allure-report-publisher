@@ -9,6 +9,7 @@ gem "rake", "~> 13.0"
 group :release do
   gem "git", "~> 1.8"
   gem "semver2", "~> 3.4"
+  gem "yard", "~> 0.9.26"
 end
 
 group :test do
