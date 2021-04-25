@@ -4,6 +4,8 @@ source "https://rubygems.org"
 
 gemspec
 
+gem "rake", "~> 13.0"
+
 group :release do
   gem "git", "~> 1.8"
   gem "semver2", "~> 3.4"
@@ -21,6 +23,5 @@ end
 
 group :development do
   gem "pry-byebug", "~> 3.9"
-  gem "rake", "~> 13.0"
   gem "solargraph", "~> 0.40.4"
 end
