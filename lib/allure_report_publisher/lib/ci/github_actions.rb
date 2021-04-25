@@ -23,7 +23,7 @@ module Publisher
           url: server_url,
           reportUrl: report_url,
           buildUrl: build_url,
-          buildOrder: run_id,
+          buildOrder: build_order,
           buildName: build_name
         }
       end
@@ -33,6 +33,13 @@ module Publisher
       # @return [String]
       def server_url
         @server_url ||= ENV["GITHUB_SERVER_URL"]
+      end
+
+      # ID for build orders
+      #
+      # @return [String]
+      def build_order
+        @build_order ||= ENV["GITHUB_RUN_NUMBER"]
       end
 
       # Build url
