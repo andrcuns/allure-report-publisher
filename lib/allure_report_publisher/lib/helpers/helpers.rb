@@ -5,13 +5,17 @@ module Publisher
   # Helpers
   #
   module Helpers
+    def self.pastel(force_color: nil)
+      @pastel ||= Pastel.new(enabled: force_color)
+    end
+
     # Colorize string
     #
     # @param [String] message
     # @param [Symbol] color
     # @return [String]
     def colorize(message, color)
-      Pastel.new.decorate(message, color)
+      Helpers.pastel.decorate(message, color)
     end
 
     # Log message to stdout
