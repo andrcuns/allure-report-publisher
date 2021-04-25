@@ -10,16 +10,26 @@ Upload your report to a file storage of your choice.
 
 ## Installation
 
-```bash
+### Rubygems
+
+```shell
 gem install allure-report-uploader
+```
+
+### Docker
+
+```shell
+docker pull andrcuns/allure-report-publisher:latest
 ```
 
 ## Usage
 
+allure-report-publisher will automatically detect if used in CI environment and add relevant executor info and history
+
 ### AWS S3
 
 ```shell
-$ allure-report-publisher upload s3 --help
+$ (allure-report-publisher|docker run --rm andrcuns/allure-report-publisher:latest) upload s3 --help
 Command:
   allure-report-publisher upload s3
 
@@ -30,13 +40,15 @@ Description:
   Generate and upload allure report
 
 Options:
+  --[no-]color                     # Toggle color output
   --result-files-glob=VALUE        # Allure results files glob. Required: true
   --bucket=VALUE                   # Bucket name. Required: true
-  --project=VALUE                  # Project name for multiple reports inside single bucket. Required: false
+  --prefix=VALUE                   # Optional prefix for report path. Required: false
   --help, -h                       # Print this help
 
 Examples:
   allure-report-publisher upload s3 --result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket
+  allure-report-publisher upload s3 --result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket --project=my-project/prs
 ```
 
 ## Development
