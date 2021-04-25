@@ -27,10 +27,13 @@ module Publisher
       def execute
         raise(StandardError, "Not Implemented!")
       end
+      # :nocov:
 
       private
 
       attr_reader :results_glob, :bucket, :prefix
+
+      # :nocov:
 
       # Report url
       #
@@ -38,14 +41,39 @@ module Publisher
       def report_url
         raise(StandardError, "Not Implemented!")
       end
+      # :nocov:
 
-      # Fetch allure history
+      # Get CI provider
+      #
+      # @return [Publisher::CI::Base]
+      def ci_provider
+        return @ci_provider if defined?(@ci_provider)
+
+        @ci_provider = CI.ci_provider&.new(results_dir, report_url)
+      end
+
+      # Add allure history
       #
       # @return [void]
-      def fetch_history
-        raise(StandardError, "Not Implemented!")
+      def add_history
+        log("Adding allure history")
+        spin("adding history", exit_on_error: false) do
+          create_history_dir
+          yield
+        end
       end
-      # :nocov:
+
+      # Add CI executor info
+      #
+      # @return [void]
+      def add_executor_info
+        return unless ci_provider
+
+        log("Adding executor info")
+        spin("adding") do
+          ci_provider.write_executor_info
+        end
+      end
 
       # Fetch allure report history
       #
@@ -58,18 +86,11 @@ module Publisher
       #
       # @return [String]
       def path_prefix
-        @path_prefix ||= [prefix, run_id].compact.yield_self do |pre|
+        @path_prefix ||= [prefix, ci_provider&.run_id].compact.yield_self do |pre|
           break if pre.empty?
 
           pre.join("/")
         end
-      end
-
-      # Run ID
-      #
-      # @return [String]
-      def run_id
-        @run_id ||= ENV["RUN_ID"]
       end
 
       # Aggregated results directory
@@ -99,7 +120,8 @@ module Publisher
       #
       # @return [void]
       def generate_report
-        fetch_history if run_id
+        add_history
+        add_executor_info
 
         ReportGenerator.new(results_glob, results_dir, report_dir).generate
       end

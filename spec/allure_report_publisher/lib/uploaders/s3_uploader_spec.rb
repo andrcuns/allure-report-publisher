@@ -1,13 +1,23 @@
 RSpec.describe Publisher::Uploaders::S3 do
-  subject(:s3_uploader) { described_class.new(results_glob, bucket, project) }
+  subject(:s3_uploader) { described_class.new(results_glob, bucket, prefix) }
 
   include_context "with mock helper"
 
   let(:report_generator) { instance_double("Publisher::ReportGenerator", generate: nil) }
-  let(:s3_client) { instance_double("Aws::S3::Client", put_object: nil) }
+  let(:s3_client) { instance_double("Aws::S3::Client", get_object: nil) }
   let(:results_glob) { "spec/fixture/fake_results/*" }
   let(:bucket) { "bucket" }
-  let(:project) { "project" }
+  let(:prefix) { "project" }
+  let(:put_object_args) { [] }
+  let(:history_files) do
+    [
+      "categories-trend.json",
+      "duration-trend.json",
+      "history-trend.json",
+      "history.json",
+      "retry-trend.json"
+    ]
+  end
 
   let(:results_dir) { "spec/fixture/fake_results" }
   let(:report_dir) { "spec/fixture/fake_report" }
@@ -15,21 +25,60 @@ RSpec.describe Publisher::Uploaders::S3 do
   before do
     allow(Publisher::ReportGenerator).to receive(:new) { report_generator }
     allow(Aws::S3::Client).to receive(:new) { s3_client }
+    allow(s3_client).to receive(:put_object) do |arg|
+      put_object_args.push({
+        body: arg[:body].path,
+        bucket: arg[:bucket],
+        key: arg[:key]
+      })
+    end
 
     allow(Dir).to receive(:mktmpdir).with("allure-results") { results_dir }
     allow(Dir).to receive(:mktmpdir).with("allure-report") { report_dir }
   end
 
-  it "generates and uploads allure report" do
-    aggregate_failures do
-      expect { s3_uploader.execute }.to output.to_stdout
+  context "with non ci run" do
+    it "generates allure report" do
+      aggregate_failures do
+        expect { s3_uploader.execute }.to output.to_stdout
 
-      expect(Publisher::ReportGenerator).to have_received(:new).with(results_glob, results_dir, report_dir)
-      expect(report_generator).to have_received(:generate)
-      expect(s3_client).to have_received(:put_object) do |arg|
-        expect(arg[:body].path).to eq("spec/fixture/fake_report/index.html")
-        expect(arg[:bucket]).to eq(bucket)
-        expect(arg[:key]).to eq("#{project}/index.html")
+        expect(Publisher::ReportGenerator).to have_received(:new).with(results_glob, results_dir, report_dir)
+        expect(report_generator).to have_received(:generate)
+      end
+    end
+
+    it "uploads allure report to s3" do
+      aggregate_failures do
+        expect { s3_uploader.execute }.to output.to_stdout
+        expect(put_object_args).to include({
+          body: "spec/fixture/fake_report/history/history.json",
+          bucket: bucket,
+          key: "#{prefix}/history/history.json"
+        })
+        expect(put_object_args).to include({
+          body: "spec/fixture/fake_report/index.html",
+          bucket: bucket,
+          key: "#{prefix}/index.html"
+        })
+      end
+    end
+
+    it "fetches and saves history info" do
+      aggregate_failures do
+        expect { s3_uploader.execute }.to output.to_stdout
+
+        history_files.each do |file|
+          expect(s3_client).to have_received(:get_object).with(
+            response_target: "#{results_dir}/history/#{file}",
+            key: "#{prefix}/history/#{file}",
+            bucket: bucket
+          )
+        end
+        expect(put_object_args).to include({
+          body: "spec/fixture/fake_report/history/history.json",
+          bucket: bucket,
+          key: "#{prefix}/history/history.json"
+        })
       end
     end
   end

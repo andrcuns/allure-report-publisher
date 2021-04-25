@@ -26,13 +26,11 @@ module Publisher
         @report_url ||= ["http://#{bucket}.s3.amazonaws.com", path_prefix, "index.html"].compact.join("/")
       end
 
-      # Fetch allure history
+      # Add allure history
       #
       # @return [void]
-      def fetch_history
-        log("Fetching allure history")
-        spin("fetching history", exit_on_error: false) do
-          create_history_dir
+      def add_history
+        super do
           HISTORY.each do |file|
             s3.get_object(
               response_target: path(results_dir, "history", file),
@@ -41,7 +39,7 @@ module Publisher
             )
           end
         rescue Aws::S3::Errors::NoSuchKey
-          raise("Allure history not present!")
+          raise("Allure history from previous runs not found!")
         end
       end
 
@@ -60,9 +58,7 @@ module Publisher
       #
       # @return [void]
       def upload_history
-        return unless run_id
-
-        upload_to_s3(report_files.select { |file| file.fnmatch?("*/history/*") }, project)
+        upload_to_s3(report_files.select { |file| file.fnmatch?("*/history/*") }, prefix)
       end
 
       def upload_report

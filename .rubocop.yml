@@ -20,6 +20,9 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Max: 15
 
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
 Style/MethodCallWithArgsParentheses:
   Enabled: false
 
