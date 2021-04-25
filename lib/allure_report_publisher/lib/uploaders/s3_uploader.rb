@@ -23,7 +23,7 @@ module Publisher
       #
       # @return [String]
       def report_url
-        @report_url ||= ["http://#{bucket}.s3.amazonaws.com", path_prefix, "index.html"].compact.join("/")
+        @report_url ||= ["http://#{bucket}.s3.amazonaws.com", full_prefix, "index.html"].compact.join("/")
       end
 
       # Add allure history
@@ -70,7 +70,7 @@ module Publisher
       # @param [Array<Pathname>] files
       # @param [String] key_prefix
       # @return [Array<Hash>]
-      def upload_to_s3(files, key_prefix = path_prefix)
+      def upload_to_s3(files, key_prefix = full_prefix)
         args = files.map do |file|
           {
             body: File.new(file),

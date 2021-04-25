@@ -92,8 +92,8 @@ module Publisher
       # Report path prefix
       #
       # @return [String]
-      def path_prefix
-        @path_prefix ||= [prefix, run_id].compact.yield_self do |pre|
+      def full_prefix
+        @full_prefix ||= [prefix, run_id].compact.yield_self do |pre|
           break if pre.empty?
 
           pre.join("/")
