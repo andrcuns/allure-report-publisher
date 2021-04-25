@@ -40,6 +40,8 @@ GEM
     dry-cli (0.6.0)
       concurrent-ruby (~> 1.0)
     e2mmap (0.1.0)
+    git (1.8.1)
+      rchardet (~> 1.8)
     jaro_winkler (1.5.4)
     jmespath (1.4.0)
     kramdown (2.3.1)
@@ -65,6 +67,7 @@ GEM
     racc (1.5.2)
     rainbow (3.0.0)
     rake (13.0.3)
+    rchardet (1.8.0)
     regexp_parser (2.1.1)
     require_all (3.0.0)
     reverse_markdown (2.0.0)
@@ -103,6 +106,7 @@ GEM
       rubocop (~> 1.0)
       rubocop-ast (>= 1.1.0)
     ruby-progressbar (1.11.0)
+    semver2 (3.4.2)
     simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -143,6 +147,7 @@ PLATFORMS
 
 DEPENDENCIES
   allure-report-publisher!
+  git (~> 1.8)
   pry-byebug (~> 3.9)
   rake (~> 13.0)
   rspec (~> 3.0)
@@ -150,6 +155,7 @@ DEPENDENCIES
   rubocop-performance (~> 1.11)
   rubocop-rake (~> 0.5.1)
   rubocop-rspec (~> 2.2)
+  semver2 (~> 3.4)
   simplecov (~> 0.21.2)
   simplecov-console (~> 0.9.1)
   solargraph (~> 0.40.4)

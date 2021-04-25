@@ -1,5 +1,6 @@
 require "tty-spinner"
 require "pastel"
+require "open3"
 
 module Publisher
   # General helpers
@@ -59,6 +60,17 @@ module Publisher
     rescue StandardError => e
       spinner.error(colorize(e.message, :red))
       exit(1)
+    end
+
+    # Execute shell command
+    #
+    # @param [String] command
+    # @return [String] output
+    def execute_shell(command)
+      out, err, status = Open3.capture3(command)
+      raise("Out:\n#{out}\n\nErr:\n#{err}") unless status.success?
+
+      out
     end
   end
 end
