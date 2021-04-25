@@ -46,3 +46,18 @@ jobs:
         with:
           coverageCommand: bundle exec rspec --force-color
           coverageLocations: coverage/coverage.json:simplecov
+      - name: Publish allure report
+        run: |
+          docker run --rm -it \
+            -v $GITHUB_WORKSPACE:/workspace \
+            -e GITHUB_WORKFLOW=$GITHUB_WORKFLOW \
+            -e GITHUB_SERVER_URL=$GITHUB_SERVER_URL \
+            -e GITHUB_REPOSITORY=$GITHUB_REPOSITORY \
+            -e GITHUB_JOB=$GITHUB_JOB \
+            -e GITHUB_RUN_ID=$GITHUB_RUN_ID \
+            ghcr.io/andrcuns/allure-report-publisher:latest \
+            upload s3 \
+              --result-files-glob='/workspace/spec/reports/allure-results/*' \
+              --bucket='allure-reports-andrcuns' \
+              --prefix="allure-report-publisher/$GITHUB_REF"
+
