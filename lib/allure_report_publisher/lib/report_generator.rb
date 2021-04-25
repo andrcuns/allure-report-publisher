@@ -20,7 +20,7 @@ module Publisher
     #
     # @return [void]
     def generate
-      log("\nGenerating allure report")
+      log("Generating allure report")
       Helpers::Spinner.spin("generating report") do
         aggregate_results
         generate_report

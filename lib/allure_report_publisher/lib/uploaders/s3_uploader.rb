@@ -47,7 +47,7 @@ module Publisher
       #
       # @return [void]
       def upload_history_and_report
-        log("\nUploading report to s3")
+        log("Uploading report to s3")
         Helpers::Spinner.spin("uploading report", done_message: "done. #{report_url}") do
           upload_history
           upload_report
