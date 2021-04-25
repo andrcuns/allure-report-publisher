@@ -38,6 +38,13 @@ module Publisher
       def report_url
         raise(StandardError, "Not Implemented!")
       end
+
+      # Fetch allure history
+      #
+      # @return [void]
+      def fetch_history
+        raise(StandardError, "Not Implemented!")
+      end
       # :nocov:
 
       # Fetch allure report history

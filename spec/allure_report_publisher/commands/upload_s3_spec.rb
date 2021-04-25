@@ -1,4 +1,4 @@
-RSpec.describe Publisher::Commands::Version do
+RSpec.describe Publisher::Commands::UploadS3 do
   include_context "with cli helper"
 
   let(:s3_uploader) { instance_double("Publisher::Uploaders::S3", execute: nil) }

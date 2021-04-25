@@ -11,13 +11,15 @@ RSpec.describe Publisher::Helpers do
     allow(Pastel).to receive(:new) { pastel }
   end
 
-  it "colorizes string" do
-    helpers.colorize("message", :green)
-    expect(pastel).to have_received(:decorate).with("message", :green)
-  end
+  context "with common helpers" do
+    it "colorizes string" do
+      helpers.colorize("message", :green)
+      expect(pastel).to have_received(:decorate).with("message", :green)
+    end
 
-  it "returns joined path" do
-    expect(helpers.path("path", "to", "file")).to eq("path/to/file")
+    it "returns joined path" do
+      expect(helpers.path("path", "to", "file")).to eq("path/to/file")
+    end
   end
 
   context "with spinner" do
@@ -31,12 +33,21 @@ RSpec.describe Publisher::Helpers do
       end
     end
 
-    it "handles failure" do
+    it "exits on error and prints error message" do
       expect { helpers.spin("message") { raise("some error!") } }.to raise_error(SystemExit)
 
       aggregate_failures do
         expect(spinner).to have_received(:error).with("colorized string")
         expect(pastel).to have_received(:decorate).with("some error!", :red)
+      end
+    end
+
+    it "prints warning and doesnt exit on exit_on_failure: false" do
+      helpers.spin("message", exit_on_error: false) { raise("some error!") }
+
+      aggregate_failures do
+        expect(spinner).to have_received(:error).with("colorized string")
+        expect(pastel).to have_received(:decorate).with("some error!", :yellow)
       end
     end
   end

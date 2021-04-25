@@ -45,20 +45,23 @@ module Publisher
     #
     # @param [String] message
     # @param [String] done_message
+    # @param [Boolean] exit_on_error
     # @return [Boolean]
-    def spin(message, done_message: "done")
+    def spin(message, done_message: "done", exit_on_error: true)
+      error_color = exit_on_error ? :red : :yellow
       spinner = TTY::Spinner.new(
         "[:spinner] #{message} ...",
         format: :dots,
         success_mark: colorize(TTY::Spinner::TICK, :green),
-        error_mark: colorize(TTY::Spinner::CROSS, :red)
+        error_mark: colorize(TTY::Spinner::CROSS, error_color)
       )
+
       spinner.auto_spin
       yield
       spinner.success(done_message)
     rescue StandardError => e
-      spinner.error(colorize(e.message, :red))
-      exit(1)
+      spinner.error(colorize(e.message, error_color))
+      exit(1) if exit_on_error
     end
 
     # Execute shell command
