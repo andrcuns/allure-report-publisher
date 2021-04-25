@@ -5,6 +5,7 @@ RSpec.describe Publisher::Uploaders::S3 do
 
   let(:report_generator) { instance_double("Publisher::ReportGenerator", generate: nil) }
   let(:s3_client) { instance_double("Aws::S3::Client", get_object: nil) }
+  let(:ci_provider) { nil }
   let(:results_glob) { "spec/fixture/fake_results/*" }
   let(:bucket) { "bucket" }
   let(:prefix) { "project" }
@@ -23,6 +24,7 @@ RSpec.describe Publisher::Uploaders::S3 do
   let(:report_dir) { "spec/fixture/fake_report" }
 
   before do
+    allow(Publisher::CI).to receive(:provider) { ci_provider }
     allow(Publisher::ReportGenerator).to receive(:new) { report_generator }
     allow(Aws::S3::Client).to receive(:new) { s3_client }
     allow(s3_client).to receive(:put_object) do |arg|

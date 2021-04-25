@@ -49,7 +49,7 @@ module Publisher
       def ci_provider
         return @ci_provider if defined?(@ci_provider)
 
-        @ci_provider = CI.ci_provider&.new(results_dir, report_url)
+        @ci_provider = CI.provider&.new(results_dir, report_url)
       end
 
       # Add allure history

@@ -5,7 +5,7 @@ module Publisher
     # Detect CI provider
     #
     # @return [Publisher::CI::Base]
-    def self.ci_provider
+    def self.provider
       return GithubActions if ENV["GITHUB_WORKFLOW"]
     end
 
