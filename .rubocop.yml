@@ -20,6 +20,12 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Max: 15
 
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
 Style/MethodCallWithArgsParentheses:
   Enabled: false
 
@@ -39,7 +45,7 @@ RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
 RSpec/ExampleLength:
-  Max: 15
+  Max: 20
 
 RSpec/FilePath:
   Enabled: false
