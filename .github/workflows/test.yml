@@ -51,6 +51,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
+          docker pull -q ghcr.io/andrcuns/allure-report-publisher:latest; \
           docker run --rm \
             -v $GITHUB_WORKSPACE:/workspace \
             -e GITHUB_WORKFLOW=$GITHUB_WORKFLOW \
