@@ -8,6 +8,8 @@
 
 Upload your report to a file storage of your choice.
 
+![Demo](demo.gif)
+
 ## Installation
 
 ### Rubygems
