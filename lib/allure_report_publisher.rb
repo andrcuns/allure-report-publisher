@@ -20,3 +20,5 @@ module Publisher
     end
   end
 end
+
+Publisher::Commands.before("upload s3") { Publisher::Helpers.validate_allure_cli_present }

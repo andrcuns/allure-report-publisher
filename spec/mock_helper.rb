@@ -10,5 +10,6 @@ RSpec.shared_context("with mock helper") do
     allow(Publisher::Helpers::Spinner).to receive(:new) { spinner }
     allow(spinner).to receive(:spin).and_yield
     allow(Open3).to receive(:capture3) { [cmd_out, cmd_err, status_fake] }
+    allow(Open3).to receive(:capture2) { [cmd_out, status_fake] }
   end
 end
