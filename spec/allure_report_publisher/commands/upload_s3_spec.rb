@@ -10,6 +10,7 @@ RSpec.describe Publisher::Commands::UploadS3 do
 
   before do
     allow(Publisher::Uploaders::S3).to receive(:new) { s3_uploader }
+    allow(Publisher::Helpers).to receive(:validate_allure_cli_present)
   end
 
   context "with required args" do
