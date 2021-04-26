@@ -1,13 +1,7 @@
 RSpec.describe Publisher::Helpers do
-  subject(:helpers) { Helpers.new }
+  subject(:helpers) { described_class }
 
   include_context "with mock helper"
-
-  let(:fake) { double("fake", run: nil) }
-
-  before do
-    stub_const("Helpers", Struct.new(:test) { include Publisher::Helpers })
-  end
 
   context "with common helpers" do
     it "colorizes string" do
@@ -26,6 +20,10 @@ RSpec.describe Publisher::Helpers do
         expect(Open3).to have_received(:capture3).with("command")
       end
     end
+
+    it "passes allure executable check" do
+      expect { helpers.validate_allure_cli_present }.not_to raise_error
+    end
   end
 
   context "with unsuccessful shell command execution" do
@@ -33,6 +31,16 @@ RSpec.describe Publisher::Helpers do
 
     it "raises error with command output" do
       expect { helpers.execute_shell("command") }.to raise_error("Out:\n#{cmd_out}\n\nErr:\n#{cmd_err}")
+    end
+
+    it "raises error that allure is missing" do
+      error = Pastel.new(enabled: true).decorate(
+        "Allure cli is missing! See https://docs.qameta.io/allure/#_installing_a_commandline on how to install it!",
+        :red
+      )
+      expect do
+        expect { helpers.validate_allure_cli_present }.to raise_error(SystemExit)
+      end.to output("#{error}\n").to_stdout
     end
   end
 end
