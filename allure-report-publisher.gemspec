@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.executables   = ["allure-report-publisher"]
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "aws-sdk-s3", "~> 1.93.1"
+  spec.add_dependency "aws-sdk-s3", ">= 1.93.1", "< 1.95.0"
   spec.add_dependency "dry-cli", "~> 0.6.0"
   spec.add_dependency "parallel", "~> 1.20"
   spec.add_dependency "pastel", "~> 0.8.0"
