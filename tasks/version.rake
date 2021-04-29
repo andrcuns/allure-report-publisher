@@ -21,7 +21,7 @@ module Publisher
       task(:version, [:semver]) do |_task, args|
         new_version = send(args[:semver]).format("%M.%m.%p").to_s
 
-        spin("Updating app version", done_message: "updated to v#{new_version}") do
+        Helpers::Spinner.spin("Updating app version", done_message: "updated to v#{new_version}") do
           update_version(new_version)
           update_lock
           commit_and_tag(new_version)
