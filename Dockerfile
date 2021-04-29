@@ -15,7 +15,7 @@ RUN gem install bundler -N -v ${BUNDLER_VERSION}
 WORKDIR /build
 
 # Copy dependency files needed for install first to fetch from cache if unchanged
-COPY Gemfile Gemfile.lock allure-report-publisher.gemspec ./
+COPY Gemfile allure-report-publisher.gemspec ./
 COPY lib/allure_report_publisher/version.rb ./lib/allure_report_publisher/version.rb
 COPY bin/allure-report-publisher bin/allure-report-publisher
 RUN bundle install
