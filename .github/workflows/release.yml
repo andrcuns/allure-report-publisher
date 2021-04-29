@@ -14,7 +14,6 @@ on:
       - Dockerfile
       - allure-report-publisher.gemspec
       - Gemfile
-      - Gemfile.lock
 
 jobs:
   docker:
