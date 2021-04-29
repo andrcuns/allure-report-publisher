@@ -4,4 +4,3 @@
 !bin/allure-report-publisher
 !allure-report-publisher.gemspec
 !Gemfile
-!Gemfile.lock
