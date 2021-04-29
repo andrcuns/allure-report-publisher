@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    allure-report-publisher (0.0.1)
+    allure-report-publisher (0.0.2)
       aws-sdk-s3 (>= 1.93.1, < 1.95.0)
       dry-cli (~> 0.6.0)
       parallel (~> 1.20)
