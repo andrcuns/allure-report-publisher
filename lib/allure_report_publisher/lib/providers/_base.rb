@@ -43,10 +43,12 @@ module Publisher
       #
       # @return [void]
       def add_report_url
-        reported = pr_description.match?(DESCRIPTION_PATTERN)
-        return update_pr_description(pr_description.gsub(DESCRIPTION_PATTERN, description_template)) if reported
+        raise("Not a pull request, skipped!") unless pr?
 
-        update_pr_description(pr_description + description_template)
+        reported = pr_description.match?(DESCRIPTION_PATTERN)
+        return update_pr_description(pr_description.gsub(DESCRIPTION_PATTERN, description_template).strip) if reported
+
+        update_pr_description("#{pr_description}\n#{description_template}".strip)
       end
 
       private
@@ -59,6 +61,13 @@ module Publisher
       #
       # @return [Hash]
       def executor_info
+        raise("Not implemented!")
+      end
+
+      # Pull request run
+      #
+      # @return [Boolean]
+      def pr?
         raise("Not implemented!")
       end
 
@@ -92,7 +101,7 @@ module Publisher
         <<~DESC
           <!-- allure -->
           ---
-          📝 `Allure report:` <#{report_url}>
+          📝 *Allure report:* <#{report_url}>
           <!-- allurestop -->
         DESC
       end
