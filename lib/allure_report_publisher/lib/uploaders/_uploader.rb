@@ -47,7 +47,7 @@ module Publisher
       #
       # @return [String]
       def run_id
-        @run_id ||= CI.provider&.run_id
+        @run_id ||= Providers.provider&.run_id
       end
 
       # Get CI provider
@@ -56,7 +56,7 @@ module Publisher
       def ci_provider
         return @ci_provider if defined?(@ci_provider)
 
-        @ci_provider = CI.provider&.new(results_dir, report_url)
+        @ci_provider = Providers.provider&.new(results_dir, report_url)
       end
 
       # Add allure history

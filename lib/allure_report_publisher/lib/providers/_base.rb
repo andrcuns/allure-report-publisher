@@ -1,12 +1,12 @@
 module Publisher
-  # CI provider utilities
+  # Namespace for providers executing tests
   #
-  module CI
+  module Providers
     # Detect CI provider
     #
-    # @return [Publisher::CI::Base]
+    # @return [Publisher::Providers::Base]
     def self.provider
-      return GithubActions if ENV["GITHUB_WORKFLOW"]
+      return Github if ENV["GITHUB_WORKFLOW"]
     end
 
     # Base class for CI executor info
@@ -25,6 +25,13 @@ module Publisher
       #
       # @return [String]
       def self.run_id
+        raise("Not implemented!")
+      end
+
+      # Add report url to pull request description
+      #
+      # @return [void]
+      def add_report_url
         raise("Not implemented!")
       end
       # :nocov:

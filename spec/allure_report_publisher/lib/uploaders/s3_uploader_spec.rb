@@ -24,7 +24,7 @@ RSpec.describe Publisher::Uploaders::S3 do
   let(:report_dir) { "spec/fixture/fake_report" }
 
   before do
-    allow(Publisher::CI).to receive(:provider) { ci_provider }
+    allow(Publisher::Providers).to receive(:provider) { ci_provider }
     allow(Publisher::ReportGenerator).to receive(:new) { report_generator }
     allow(Aws::S3::Client).to receive(:new) { s3_client }
     allow(s3_client).to receive(:put_object) do |arg|
@@ -89,12 +89,12 @@ RSpec.describe Publisher::Uploaders::S3 do
   end
 
   context "with ci run" do
-    let(:ci_provider) { Publisher::CI::GithubActions }
+    let(:ci_provider) { Publisher::Providers::Github }
     let(:ci_provider_instance) { instance_double("Publisher::CI::GithubActions", write_executor_info: nil) }
 
     before do
-      allow(Publisher::CI::GithubActions).to receive(:run_id).and_return(1)
-      allow(Publisher::CI::GithubActions).to receive(:new) { ci_provider_instance }
+      allow(Publisher::Providers::Github).to receive(:run_id).and_return(1)
+      allow(Publisher::Providers::Github).to receive(:new) { ci_provider_instance }
     end
 
     it "uploads allure report to s3" do

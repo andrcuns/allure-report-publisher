@@ -1,8 +1,8 @@
 module Publisher
-  module CI
+  module Providers
     # Github actions executor info
     #
-    class GithubActions < Base
+    class Github < Base
       # Run id
       #
       # @return [String]
