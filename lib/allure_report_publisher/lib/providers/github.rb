@@ -1,3 +1,5 @@
+require "octokit"
+
 module Publisher
   module Providers
     # Github actions executor info
@@ -26,6 +28,17 @@ module Publisher
           buildOrder: run_id,
           buildName: build_name
         }
+      end
+
+      # Github api client
+      #
+      # @return [Octokit::Client]
+      def client
+        @client ||= begin
+          raise("Missing GITHUB_AUTH_TOKEN environment variable") unless ENV["GITHUB_AUTH_TOKEN"]
+
+          Octokit::Client.new(access_token: ENV["GITHUB_AUTH_TOKEN"], api_endpoint: "#{server_url}/api/v3/")
+        end
       end
 
       # Server url
