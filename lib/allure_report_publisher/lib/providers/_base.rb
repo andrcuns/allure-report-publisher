@@ -101,7 +101,7 @@ module Publisher
         <<~DESC
           <!-- allure -->
           ---
-          📝 *Allure report:* <#{report_url}>
+          📝 *Latest allure report:* <#{report_url}>
           <!-- allurestop -->
         DESC
       end

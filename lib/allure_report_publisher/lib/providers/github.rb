@@ -35,7 +35,7 @@ module Publisher
       # @return [Octokit::Client]
       def client
         @client ||= begin
-          raise("Missing GITHUB_AUTH_TOKEN environment variable") unless ENV["GITHUB_AUTH_TOKEN"]
+          raise("Missing GITHUB_AUTH_TOKEN environment variable!") unless ENV["GITHUB_AUTH_TOKEN"]
 
           Octokit::Client.new(access_token: ENV["GITHUB_AUTH_TOKEN"], api_endpoint: ENV["GITHUB_API_URL"])
         end
@@ -81,7 +81,7 @@ module Publisher
       #
       # @return [String]
       def build_url
-        @build_url ||= "#{server_url}/#{ENV['GITHUB_REPOSITORY']}/actions/runs/#{run_id}"
+        @build_url ||= "#{server_url}/#{repository}/actions/runs/#{run_id}"
       end
 
       # Job name
