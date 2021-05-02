@@ -23,7 +23,7 @@ jobs:
         env:
           BUNDLE_WITHOUT: development
       - name: Rubocop
-        run: bundle exec rubocop --color
+        run: ruby test.rb
 
   rspec:
     runs-on: ubuntu-20.04
