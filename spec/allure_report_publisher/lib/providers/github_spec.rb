@@ -66,7 +66,7 @@ RSpec.describe Publisher::Providers::Github do
             #{pr_description}
             <!-- allure -->
             ---
-            📝 *Latest allure report:* <#{report_url}>
+            📝 [Latest allure report](#{report_url})
             <!-- allurestop -->
           DESC
         )
