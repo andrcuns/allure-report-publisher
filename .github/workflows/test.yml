@@ -50,6 +50,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           docker pull -q ghcr.io/andrcuns/allure-report-publisher:latest; \
           docker run --rm \
@@ -66,5 +67,6 @@ jobs:
               --result-files-glob='/workspace/spec/reports/allure-results/*' \
               --bucket='allure-reports-andrcuns' \
               --prefix="allure-report-publisher/$GITHUB_REF" \
+              --update-pr \
               --color
 
