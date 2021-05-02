@@ -5,11 +5,6 @@ module Publisher
     # Report upload to AWS S3 bucket
     #
     class S3 < Uploader
-      def execute
-        generate_report
-        upload_history_and_report
-      end
-
       private
 
       # S3 client
@@ -61,6 +56,9 @@ module Publisher
         upload_to_s3(report_files.select { |file| file.fnmatch?("*/history/*") }, prefix)
       end
 
+      # Upload allure report
+      #
+      # @return [void]
       def upload_report
         upload_to_s3(report_files)
       end

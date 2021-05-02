@@ -24,39 +24,28 @@ module Publisher
       # Execute allure report generation and upload
       #
       # @return [void]
-      def execute
-        raise(StandardError, "Not Implemented!")
+      def execute(update_pr: false)
+        generate_report
+        upload_history_and_report
+        add_report_url if update_pr
       end
-      # :nocov:
 
       private
 
       attr_reader :results_glob, :bucket, :prefix
 
-      # :nocov:
-
       # Report url
       #
       # @return [String]
       def report_url
-        raise(StandardError, "Not Implemented!")
-      end
-      # :nocov:
-
-      # Get run id
-      #
-      # @return [String]
-      def run_id
-        @run_id ||= CI.provider&.run_id
+        raise("Not Implemented!")
       end
 
-      # Get CI provider
+      # Upload report to s3
       #
-      # @return [Publisher::CI::Base]
-      def ci_provider
-        return @ci_provider if defined?(@ci_provider)
-
-        @ci_provider = CI.provider&.new(results_dir, report_url)
+      # @return [void]
+      def upload_history_and_report
+        raise("Not implemented!")
       end
 
       # Add allure history
@@ -80,6 +69,45 @@ module Publisher
         Helpers::Spinner.spin("adding") do
           ci_provider.write_executor_info
         end
+      end
+
+      # Generate allure report
+      #
+      # @return [void]
+      def generate_report
+        add_history
+        add_executor_info
+
+        ReportGenerator.new(results_glob, results_dir, report_dir).generate
+      end
+
+      # Add allure report url to pull request description
+      #
+      # @return [void]
+      def add_report_url
+        return unless ci_provider
+
+        log("Adding allure report link to pr description")
+        Helpers::Spinner.spin("adding") do
+          ci_provider.add_report_url
+        end
+      end
+      # :nocov:
+
+      # Get run id
+      #
+      # @return [String]
+      def run_id
+        @run_id ||= Providers.provider&.run_id
+      end
+
+      # Get CI provider
+      #
+      # @return [Publisher::Providers::Base]
+      def ci_provider
+        return @ci_provider if defined?(@ci_provider)
+
+        @ci_provider = Providers.provider&.new(results_dir, report_url)
       end
 
       # Fetch allure report history
@@ -121,16 +149,6 @@ module Publisher
         @report_files ||= Pathname
                           .glob("#{report_dir}/**/*")
                           .reject(&:directory?)
-      end
-
-      # Generate allure report
-      #
-      # @return [void]
-      def generate_report
-        add_history
-        add_executor_info
-
-        ReportGenerator.new(results_glob, results_dir, report_dir).generate
       end
     end
   end
