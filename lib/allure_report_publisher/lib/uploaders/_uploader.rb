@@ -66,7 +66,7 @@ module Publisher
         return unless ci_provider
 
         log("Adding executor info")
-        Helpers::Spinner.spin("adding") do
+        Helpers::Spinner.spin("adding executor") do
           ci_provider.write_executor_info
         end
       end
@@ -88,7 +88,7 @@ module Publisher
         return unless ci_provider
 
         log("Adding allure report link to pr description")
-        Helpers::Spinner.spin("adding", exit_on_error: false) do
+        Helpers::Spinner.spin("adding link", exit_on_error: false) do
           ci_provider.add_report_url
         end
       end
