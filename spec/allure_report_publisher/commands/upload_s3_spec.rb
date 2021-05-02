@@ -6,7 +6,13 @@ RSpec.describe Publisher::Commands::UploadS3 do
   let(:bucket) { "bucket" }
   let(:prefix) { "my-project/prs" }
   let(:command) { %w[upload s3] }
-  let(:args) { ["--result-files-glob=#{result_glob}", "--bucket=#{bucket}", "--prefix=#{prefix}"] }
+  let(:args) do
+    [
+      "--result-files-glob=#{result_glob}",
+      "--bucket=#{bucket}",
+      "--prefix=#{prefix}"
+    ]
+  end
 
   before do
     allow(Publisher::Uploaders::S3).to receive(:new) { s3_uploader }
@@ -19,7 +25,7 @@ RSpec.describe Publisher::Commands::UploadS3 do
 
       aggregate_failures do
         expect(Publisher::Uploaders::S3).to have_received(:new).with(result_glob, bucket, prefix)
-        expect(s3_uploader).to have_received(:execute)
+        expect(s3_uploader).to have_received(:execute).with(update_pr: false)
       end
     end
 
@@ -28,8 +34,14 @@ RSpec.describe Publisher::Commands::UploadS3 do
 
       aggregate_failures do
         expect(Publisher::Uploaders::S3).to have_received(:new).with(result_glob, bucket, nil)
-        expect(s3_uploader).to have_received(:execute)
+        expect(s3_uploader).to have_received(:execute).with(update_pr: false)
       end
+    end
+
+    it "executes s3 uploader with pr update" do
+      run_cli(*command, *args, "--update-pr")
+
+      expect(s3_uploader).to have_received(:execute).with(update_pr: true)
     end
   end
 

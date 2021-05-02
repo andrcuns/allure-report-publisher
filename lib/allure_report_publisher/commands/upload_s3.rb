@@ -25,7 +25,7 @@ module Publisher
           args[:result_files_glob],
           args[:bucket],
           args[:prefix]
-        ).execute
+        ).execute(update_pr: args[:update_pr])
       end
 
       private

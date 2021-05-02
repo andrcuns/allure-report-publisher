@@ -90,7 +90,9 @@ RSpec.describe Publisher::Uploaders::S3 do
 
   context "with ci run" do
     let(:ci_provider) { Publisher::Providers::Github }
-    let(:ci_provider_instance) { instance_double("Publisher::CI::GithubActions", write_executor_info: nil) }
+    let(:ci_provider_instance) do
+      instance_double("Publisher::Providers::Github", write_executor_info: nil, add_report_url: nil)
+    end
 
     before do
       allow(Publisher::Providers::Github).to receive(:run_id).and_return(1)
@@ -101,7 +103,6 @@ RSpec.describe Publisher::Uploaders::S3 do
       aggregate_failures do
         expect { s3_uploader.execute }.to output.to_stdout
 
-        expect(ci_provider_instance).to have_received(:write_executor_info)
         expect(put_object_args).to include(
           {
             body: "spec/fixture/fake_report/history/history.json",
@@ -114,6 +115,20 @@ RSpec.describe Publisher::Uploaders::S3 do
             key: "#{prefix}/1/index.html"
           }
         )
+      end
+    end
+
+    it "adds executor info" do
+      aggregate_failures do
+        expect { s3_uploader.execute }.to output.to_stdout
+        expect(ci_provider_instance).to have_received(:write_executor_info)
+      end
+    end
+
+    it "updates pr description with allure report link" do
+      aggregate_failures do
+        expect { s3_uploader.execute(update_pr: true) }.to output.to_stdout
+        expect(ci_provider_instance).to have_received(:add_report_url)
       end
     end
   end
