@@ -49,7 +49,7 @@ module Publisher
         reported = pr_description.match?(DESCRIPTION_PATTERN)
         return update_pr_description(pr_description.gsub(DESCRIPTION_PATTERN, description_template).strip) if reported
 
-        update_pr_description("#{pr_description}\n#{description_template}".strip)
+        update_pr_description("#{pr_description}\n\n#{description_template}".strip)
       end
 
       private

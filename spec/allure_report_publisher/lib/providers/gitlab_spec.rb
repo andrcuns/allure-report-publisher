@@ -68,6 +68,7 @@ RSpec.describe Publisher::Providers::Gitlab do
           env[:CI_MERGE_REQUEST_IID],
           description: <<~DESC.strip
             #{mr_description}
+
             <!-- allure -->
             ---
             📝 [Latest allure report](#{report_url})
