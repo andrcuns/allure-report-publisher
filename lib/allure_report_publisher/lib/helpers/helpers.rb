@@ -48,7 +48,7 @@ module Publisher
     # @param [String] message
     # @return [void]
     def error(message)
-      puts colorize(message, :red)
+      warn colorize(message, :red)
       exit(1)
     end
 

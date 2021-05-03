@@ -11,6 +11,7 @@ require "allure_report_publisher"
 
 require_relative "cli_helper"
 require_relative "mock_helper"
+require_relative "stdout_helper"
 
 # Force color output to avoid different behaviour on CI
 Publisher::Helpers.instance_variable_set(:@pastel, Pastel.new(enabled: true))

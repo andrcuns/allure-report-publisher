@@ -25,14 +25,26 @@ module Publisher
       #
       # @return [void]
       def execute(update_pr: false)
+        check_client_configured
+
         generate_report
         upload_history_and_report
         add_report_url if update_pr
+      rescue StandardError => e
+        error(e.message)
       end
 
       private
 
       attr_reader :results_glob, :bucket, :prefix
+
+      # Validate if client is properly configured
+      # and raise error if it is not
+      #
+      # @return [void]
+      def check_client_configured
+        raise("Not Implemented!")
+      end
 
       # Report url
       #

@@ -47,12 +47,12 @@ RSpec.describe Publisher::Commands::UploadS3 do
 
   context "with missing args" do
     it "exits when result glob is missing" do
-      expect { expect { run_cli(*command, args[1]) }.to raise_error(SystemExit) }.to output.to_stdout
+      expect { expect { run_cli(*command, args[1]) }.to raise_error(SystemExit) }.to output.to_stderr
       expect(s3_uploader).not_to have_received(:execute)
     end
 
     it "exits when bucket is missing" do
-      expect { expect { run_cli(*command, args[0]) }.to raise_error(SystemExit) }.to output.to_stdout
+      expect { expect { run_cli(*command, args[0]) }.to raise_error(SystemExit) }.to output.to_stderr
       expect(s3_uploader).not_to have_received(:execute)
     end
   end
