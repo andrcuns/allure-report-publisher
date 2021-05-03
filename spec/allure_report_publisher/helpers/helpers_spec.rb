@@ -40,7 +40,7 @@ RSpec.describe Publisher::Helpers do
       )
       expect do
         expect { helpers.validate_allure_cli_present }.to raise_error(SystemExit)
-      end.to output("#{error}\n").to_stdout
+      end.to output("#{error}\n").to_stderr
     end
   end
 end

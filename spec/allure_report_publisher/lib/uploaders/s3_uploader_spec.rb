@@ -39,6 +39,18 @@ RSpec.describe Publisher::Uploaders::S3 do
     allow(Dir).to receive(:mktmpdir).with("allure-report") { report_dir }
   end
 
+  context "with missing aws credentials" do
+    before do
+      allow(Aws::S3::Client).to receive(:new).and_raise(Aws::Sigv4::Errors::MissingCredentialsError)
+    end
+
+    it "exits with custom credentials missing error" do
+      expect do
+        expect { s3_uploader.execute }.to raise_error(SystemExit)
+      end.to output.to_stderr
+    end
+  end
+
   context "with non ci run" do
     it "generates allure report" do
       aggregate_failures do

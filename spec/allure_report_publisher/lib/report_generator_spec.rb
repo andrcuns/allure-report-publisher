@@ -32,7 +32,7 @@ RSpec.describe Publisher::ReportGenerator do
     it "exits with missing allure results message" do
       expect do
         expect { report_generator.generate }.to raise_error(SystemExit)
-      end.to output(/Missing allure results/).to_stdout
+      end.to output(/Missing allure results/).to_stderr
     end
   end
 
@@ -42,7 +42,7 @@ RSpec.describe Publisher::ReportGenerator do
     it "exits with output of allure command" do
       expect do
         expect { report_generator.generate }.to raise_error(SystemExit)
-      end.to output(/Allure output/).to_stdout
+      end.to output(/Allure output/).to_stderr
     end
   end
 end

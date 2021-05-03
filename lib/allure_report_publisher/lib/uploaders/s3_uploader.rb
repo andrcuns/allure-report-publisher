@@ -7,11 +7,12 @@ module Publisher
     class S3 < Uploader
       private
 
-      # S3 client
+      # Validate if client is properly configured
+      # and raise error if it is not
       #
-      # @return [Aws::S3::Client]
-      def s3
-        @s3 ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1")
+      # @return [void]
+      def check_client_configured
+        s3
       end
 
       # Report url
@@ -47,6 +48,19 @@ module Publisher
           upload_history
           upload_report
         end
+      end
+
+      # S3 client
+      #
+      # @return [Aws::S3::Client]
+      def s3
+        @s3 ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1")
+      rescue Aws::Sigv4::Errors::MissingCredentialsError
+        raise(<<~MSG)
+          missing aws credentials, provide credentials with one of the following options:
+            - AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables
+            - ~/.aws/credentials file
+        MSG
       end
 
       # Upload allure history
