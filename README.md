@@ -30,6 +30,9 @@ allure-report-publisher will automatically detect if used in CI environment and 
 
 ### AWS S3
 
+- `AWS authentication`: requires environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` or credentials file `~/.aws/credentials`
+- `Allure report link`: requires `GITHUB_AUTH_TOKEN` or `GITLAB_AUTH_TOKEN` in order to update pull request description with link to latest report
+
 ```shell
 $ (allure-report-publisher|docker run --rm andrcuns/allure-report-publisher:latest) upload s3 --help
 Command:
@@ -43,6 +46,7 @@ Description:
 
 Options:
   --[no-]color                     # Toggle color output
+  --[no-]update-pr                 # Update pull request description with url to allure report, default: false
   --result-files-glob=VALUE        # Allure results files glob. Required: true
   --bucket=VALUE                   # Bucket name. Required: true
   --prefix=VALUE                   # Optional prefix for report path. Required: false
