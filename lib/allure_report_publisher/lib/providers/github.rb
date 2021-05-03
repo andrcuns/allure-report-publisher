@@ -2,7 +2,7 @@ require "octokit"
 
 module Publisher
   module Providers
-    # Github actions executor info
+    # Github implementation
     #
     class Github < Base
       # Run id

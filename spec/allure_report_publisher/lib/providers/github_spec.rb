@@ -76,7 +76,7 @@ RSpec.describe Publisher::Providers::Github do
     context "without pr ci context" do
       let(:event_name) { "push" }
 
-      it "skips execution with not a pr message" do
+      it "skips adding allure link to pr with not a pr message" do
         expect { provider.add_report_url }.to raise_error("Not a pull request, skipped!")
       end
     end
@@ -84,7 +84,7 @@ RSpec.describe Publisher::Providers::Github do
     context "without configured auth token" do
       let(:auth_token) { nil }
 
-      it "skips execution with not configured auth token message" do
+      it "skips adding allure link to pr with not configured auth token message" do
         expect { provider.add_report_url }.to raise_error("Missing GITHUB_AUTH_TOKEN environment variable!")
       end
     end

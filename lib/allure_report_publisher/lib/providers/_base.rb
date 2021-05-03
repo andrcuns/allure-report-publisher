@@ -7,6 +7,7 @@ module Publisher
     # @return [Publisher::Providers::Base]
     def self.provider
       return Github if ENV["GITHUB_WORKFLOW"]
+      return Gitlab if ENV["GITLAB_CI"]
     end
 
     # Base class for CI executor info

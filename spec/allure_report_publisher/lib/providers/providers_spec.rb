@@ -6,4 +6,10 @@ RSpec.describe Publisher::Providers do
       expect(provider).to eq(Publisher::Providers::Github)
     end
   end
+
+  it "detects gitlab instance" do
+    ClimateControl.modify(GITLAB_CI: "true", GITHUB_WORKFLOW: nil) do
+      expect(provider).to eq(Publisher::Providers::Gitlab)
+    end
+  end
 end
