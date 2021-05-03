@@ -2,6 +2,7 @@ RSpec.describe Publisher::ReportGenerator do
   subject(:report_generator) { described_class.new(results_glob, results_dir, report_dir) }
 
   include_context "with mock helper"
+  include_context "with stdout capture"
 
   let(:capture_status) { instance_double("Process::Status", success?: status) }
 
@@ -18,7 +19,7 @@ RSpec.describe Publisher::ReportGenerator do
   context "with present allure results" do
     it "generates allure report" do
       aggregate_failures do
-        expect { report_generator.generate }.to output.to_stdout
+        report_generator.generate
 
         expect(FileUtils).to have_received(:cp).with(Dir.glob(results_glob), results_dir)
         expect(Open3).to have_received(:capture3).with("allure generate --clean --output #{report_dir} #{results_dir}")
