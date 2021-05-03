@@ -1,3 +1,5 @@
+require "gitlab"
+
 module Publisher
   module Providers
     # Gitlab implementation
@@ -26,11 +28,47 @@ module Publisher
         }
       end
 
+      # Current pull request description
+      #
+      # @return [String]
+      def pr_description
+        @pr_description ||= client.merge_request(project, mr_iid).description
+      end
+
+      # Update pull request description
+      #
+      # @param [String] desc
+      # @return [void]
+      def update_pr_description(desc)
+        client.update_merge_request(project, mr_iid, description: desc)
+      end
+
+      # Get gitlab client
+      #
+      # @return [Gitlab::Client]
+      def client
+        @client ||= begin
+          raise("Missing GITLAB_AUTH_TOKEN environment variable!") unless ENV["GITLAB_AUTH_TOKEN"]
+
+          ::Gitlab::Client.new(
+            endpoint: "#{server_url}/api/v4",
+            private_token: ENV["GITLAB_AUTH_TOKEN"]
+          )
+        end
+      end
+
       # Pull request run
       #
       # @return [Boolean]
       def pr?
         ENV["CI_PIPELINE_SOURCE"] == "merge_request_event"
+      end
+
+      # Merge request iid
+      #
+      # @return [Integer]
+      def mr_iid
+        @mr_iid ||= ENV["CI_MERGE_REQUEST_IID"]
       end
 
       # Server url
@@ -57,8 +95,8 @@ module Publisher
       # Github repository
       #
       # @return [String]
-      def repository
-        @repository ||= ENV["CI_PROJECT_PATH"]
+      def project
+        @project ||= ENV["CI_PROJECT_PATH"]
       end
     end
   end
