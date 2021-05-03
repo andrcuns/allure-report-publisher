@@ -40,6 +40,14 @@ RSpec.describe Publisher::Uploaders::S3 do
   end
 
   context "with missing aws credentials" do
+    let(:err_msg) do
+      Pastel.new(enabled: true).decorate(<<~MSG.strip, :red)
+        missing aws credentials, provide credentials with one of the following options:
+          - AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables
+          - ~/.aws/credentials file
+      MSG
+    end
+
     before do
       allow(Aws::S3::Client).to receive(:new).and_raise(Aws::Sigv4::Errors::MissingCredentialsError)
     end
@@ -47,7 +55,7 @@ RSpec.describe Publisher::Uploaders::S3 do
     it "exits with custom credentials missing error" do
       expect do
         expect { s3_uploader.execute }.to raise_error(SystemExit)
-      end.to output.to_stderr
+      end.to output("#{err_msg}\n").to_stderr
     end
   end
 

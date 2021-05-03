@@ -56,7 +56,7 @@ module Publisher
       def s3
         @s3 ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1")
       rescue Aws::Sigv4::Errors::MissingCredentialsError
-        raise(<<~MSG)
+        raise(<<~MSG.strip)
           missing aws credentials, provide credentials with one of the following options:
             - AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables
             - ~/.aws/credentials file
