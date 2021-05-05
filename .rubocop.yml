@@ -20,6 +20,9 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Max: 15
 
+Metrics/ClassLength:
+  Max: 200
+
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 

@@ -6,12 +6,21 @@ RSpec.describe Publisher::Commands::UploadS3 do
   let(:bucket) { "bucket" }
   let(:prefix) { "my-project/prs" }
   let(:command) { %w[upload s3] }
-  let(:args) do
+  let(:cli_args) do
     [
-      "--result-files-glob=#{result_glob}",
+      "--results-glob=#{result_glob}",
       "--bucket=#{bucket}",
       "--prefix=#{prefix}"
     ]
+  end
+  let(:args) do
+    {
+      results_glob: result_glob,
+      bucket: bucket,
+      prefix: prefix,
+      update_pr: false,
+      copy_latest: false
+    }
   end
 
   before do
@@ -21,38 +30,54 @@ RSpec.describe Publisher::Commands::UploadS3 do
 
   context "with required args" do
     it "executes s3 uploader" do
-      run_cli(*command, *args)
+      run_cli(*command, *cli_args)
 
       aggregate_failures do
-        expect(Publisher::Uploaders::S3).to have_received(:new).with(result_glob, bucket, prefix)
-        expect(s3_uploader).to have_received(:execute).with(update_pr: false)
+        expect(Publisher::Uploaders::S3).to have_received(:new).with(args)
+        expect(s3_uploader).to have_received(:execute)
       end
     end
 
     it "executes s3 uploader without prefix argument" do
-      run_cli(*command, *args[0, 2])
+      run_cli(*command, *cli_args[0, 2])
 
       aggregate_failures do
-        expect(Publisher::Uploaders::S3).to have_received(:new).with(result_glob, bucket, nil)
-        expect(s3_uploader).to have_received(:execute).with(update_pr: false)
+        expect(Publisher::Uploaders::S3).to have_received(:new).with(
+          args.slice(:results_glob, :bucket, :copy_latest, :update_pr)
+        )
+        expect(s3_uploader).to have_received(:execute)
+      end
+    end
+  end
+
+  context "with optional args" do
+    it "executes s3 uploader with pr update" do
+      run_cli(*command, *cli_args, "--update-pr")
+
+      aggregate_failures do
+        expect(Publisher::Uploaders::S3).to have_received(:new).with({ **args, update_pr: true })
+        expect(s3_uploader).to have_received(:execute)
       end
     end
 
-    it "executes s3 uploader with pr update" do
-      run_cli(*command, *args, "--update-pr")
+    it "executes s3 uploader with copy latest" do
+      run_cli(*command, *cli_args, "--copy-latest")
 
-      expect(s3_uploader).to have_received(:execute).with(update_pr: true)
+      aggregate_failures do
+        expect(Publisher::Uploaders::S3).to have_received(:new).with({ **args, copy_latest: true })
+        expect(s3_uploader).to have_received(:execute)
+      end
     end
   end
 
   context "with missing args" do
     it "exits when result glob is missing" do
-      expect { expect { run_cli(*command, args[1]) }.to raise_error(SystemExit) }.to output.to_stderr
+      expect { expect { run_cli(*command, cli_args[1]) }.to raise_error(SystemExit) }.to output.to_stderr
       expect(s3_uploader).not_to have_received(:execute)
     end
 
     it "exits when bucket is missing" do
-      expect { expect { run_cli(*command, args[0]) }.to raise_error(SystemExit) }.to output.to_stderr
+      expect { expect { run_cli(*command, cli_args[0]) }.to raise_error(SystemExit) }.to output.to_stderr
       expect(s3_uploader).not_to have_received(:execute)
     end
   end

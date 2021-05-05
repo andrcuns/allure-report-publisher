@@ -1,5 +1,5 @@
 RSpec.describe Publisher::Uploaders::S3 do
-  subject(:s3_uploader) { described_class.new(results_glob, bucket, prefix) }
+  subject(:s3_uploader) { described_class }
 
   include_context "with mock helper"
   include_context "with stdout capture"
@@ -19,6 +19,15 @@ RSpec.describe Publisher::Uploaders::S3 do
       "history.json",
       "retry-trend.json"
     ]
+  end
+  let(:args) do
+    {
+      results_glob: results_glob,
+      bucket: bucket,
+      prefix: prefix,
+      update_pr: false,
+      copy_latest: false
+    }
   end
 
   let(:results_dir) { "spec/fixture/fake_results" }
@@ -55,7 +64,7 @@ RSpec.describe Publisher::Uploaders::S3 do
 
     it "exits with custom credentials missing error" do
       expect do
-        expect { s3_uploader.execute }.to raise_error(SystemExit)
+        expect { s3_uploader.new(**args).execute }.to raise_error(SystemExit)
       end.to output("#{err_msg}\n").to_stderr
     end
   end
@@ -63,7 +72,7 @@ RSpec.describe Publisher::Uploaders::S3 do
   context "with non ci run" do
     it "generates allure report" do
       aggregate_failures do
-        s3_uploader.execute
+        s3_uploader.new(**args).execute
 
         expect(Publisher::ReportGenerator).to have_received(:new).with(results_glob, results_dir, report_dir)
         expect(report_generator).to have_received(:generate)
@@ -72,7 +81,7 @@ RSpec.describe Publisher::Uploaders::S3 do
 
     it "uploads allure report to s3" do
       aggregate_failures do
-        s3_uploader.execute
+        s3_uploader.new(**args).execute
 
         expect(put_object_args).to include(
           {
@@ -91,7 +100,7 @@ RSpec.describe Publisher::Uploaders::S3 do
 
     it "fetches and saves history info" do
       aggregate_failures do
-        s3_uploader.execute
+        s3_uploader.new(**args).execute
 
         history_files.each do |file|
           expect(s3_client).to have_received(:get_object).with(
@@ -122,7 +131,7 @@ RSpec.describe Publisher::Uploaders::S3 do
 
     it "uploads allure report to s3" do
       aggregate_failures do
-        s3_uploader.execute
+        s3_uploader.new(**args).execute
 
         expect(put_object_args).to include(
           {
@@ -140,12 +149,12 @@ RSpec.describe Publisher::Uploaders::S3 do
     end
 
     it "adds executor info" do
-      s3_uploader.execute
+      s3_uploader.new(**args).execute
       expect(ci_provider_instance).to have_received(:write_executor_info)
     end
 
     it "updates pr description with allure report link" do
-      s3_uploader.execute(update_pr: true)
+      s3_uploader.new(**{ **args, update_pr: true }).execute
       expect(ci_provider_instance).to have_received(:add_report_url)
     end
   end
