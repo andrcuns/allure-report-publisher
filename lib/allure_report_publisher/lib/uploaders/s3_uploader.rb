@@ -7,6 +7,19 @@ module Publisher
     class S3 < Uploader
       private
 
+      # S3 client
+      #
+      # @return [Aws::S3::Client]
+      def s3
+        @s3 ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1")
+      rescue Aws::Sigv4::Errors::MissingCredentialsError
+        raise(<<~MSG.strip)
+          missing aws credentials, provide credentials with one of the following options:
+            - AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables
+            - ~/.aws/credentials file
+        MSG
+      end
+
       # Validate if client is properly configured
       # and raise error if it is not
       #
@@ -44,27 +57,6 @@ module Publisher
         rescue Aws::S3::Errors::NoSuchKey
           raise("Allure history from previous runs not found!")
         end
-      end
-
-      # Upload report to s3
-      #
-      # @return [void]
-      def upload_history_and_report
-        upload_history
-        upload_report
-      end
-
-      # S3 client
-      #
-      # @return [Aws::S3::Client]
-      def s3
-        @s3 ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1")
-      rescue Aws::Sigv4::Errors::MissingCredentialsError
-        raise(<<~MSG.strip)
-          missing aws credentials, provide credentials with one of the following options:
-            - AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables
-            - ~/.aws/credentials file
-        MSG
       end
 
       # Upload allure history

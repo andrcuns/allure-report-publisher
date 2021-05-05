@@ -55,17 +55,17 @@ module Publisher
         raise("Not Implemented!")
       end
 
-      # Latest run report url
+      # Upload history to s3
       #
-      # @return [String]
-      def latest_report_url
-        raise("Not Implemented!")
+      # @return [void]
+      def upload_history
+        raise("Not implemented!")
       end
 
       # Upload report to s3
       #
       # @return [void]
-      def upload_history_and_report
+      def upload_report
         raise("Not implemented!")
       end
 
@@ -118,7 +118,8 @@ module Publisher
 
         log("Uploading report")
         Helpers::Spinner.spin("uploading report") do
-          upload_history_and_report
+          upload_history unless copy_latest_report # latest report will add a common history folder
+          upload_report
           upload_latest_copy if copy_latest_report
         end
         log("Run report: #{report_url}", :green)
