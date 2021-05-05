@@ -13,8 +13,8 @@ module Publisher
       option :prefix, desc: "Optional prefix for report path. Required: false"
 
       example [
-        "--result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket",
-        "--result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket --project=my-project/prs"
+        "--results-glob='path/to/allure-result/**/*' --bucket=my-bucket",
+        "--results-glob='path/to/allure-result/**/*' --bucket=my-bucket --project=my-project/prs"
       ]
 
       def call(**args)

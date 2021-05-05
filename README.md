@@ -45,16 +45,17 @@ Description:
   Generate and upload allure report
 
 Options:
-  --[no-]color                     # Toggle color output
+  --[no-]color                     # Toggle color output, default: false
   --[no-]update-pr                 # Update pull request description with url to allure report, default: false
-  --result-files-glob=VALUE        # Allure results files glob. Required: true
+  --[no-]copy-latest               # Keep copy of latest report at base prefix path, default: false
+  --results-glob=VALUE             # Allure results files glob. Required: true
   --bucket=VALUE                   # Bucket name. Required: true
   --prefix=VALUE                   # Optional prefix for report path. Required: false
   --help, -h                       # Print this help
 
 Examples:
-  allure-report-publisher upload s3 --result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket
-  allure-report-publisher upload s3 --result-files-glob='path/to/allure-result/**/*' --bucket=my-bucket --project=my-project/prs
+  allure-report-publisher upload s3 --results-glob='path/to/allure-result/**/*' --bucket=my-bucket
+  allure-report-publisher upload s3 --results-glob='path/to/allure-result/**/*' --bucket=my-bucket --project=my-project/prs
 ```
 
 ## Development
