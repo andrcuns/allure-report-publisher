@@ -73,4 +73,5 @@ jobs:
               --bucket='allure-reports-andrcuns' \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr \
+              --copy-latest \
               --color || true
