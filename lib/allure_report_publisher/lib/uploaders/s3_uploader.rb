@@ -7,6 +7,19 @@ module Publisher
     class S3 < Uploader
       private
 
+      # S3 client
+      #
+      # @return [Aws::S3::Client]
+      def s3
+        @s3 ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1")
+      rescue Aws::Sigv4::Errors::MissingCredentialsError
+        raise(<<~MSG.strip)
+          missing aws credentials, provide credentials with one of the following options:
+            - AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables
+            - ~/.aws/credentials file
+        MSG
+      end
+
       # Validate if client is properly configured
       # and raise error if it is not
       #
@@ -19,7 +32,14 @@ module Publisher
       #
       # @return [String]
       def report_url
-        @report_url ||= ["http://#{bucket}.s3.amazonaws.com", full_prefix, "index.html"].compact.join("/")
+        @report_url ||= url(full_prefix)
+      end
+
+      # Latest report url
+      #
+      # @return [String]
+      def latest_report_url
+        @latest_report_url ||= url(prefix)
       end
 
       # Add allure history
@@ -39,30 +59,6 @@ module Publisher
         end
       end
 
-      # Upload report to s3
-      #
-      # @return [void]
-      def upload_history_and_report
-        log("Uploading report to s3")
-        Helpers::Spinner.spin("uploading report", done_message: "done. #{report_url}") do
-          upload_history
-          upload_report
-        end
-      end
-
-      # S3 client
-      #
-      # @return [Aws::S3::Client]
-      def s3
-        @s3 ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1")
-      rescue Aws::Sigv4::Errors::MissingCredentialsError
-        raise(<<~MSG.strip)
-          missing aws credentials, provide credentials with one of the following options:
-            - AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables
-            - ~/.aws/credentials file
-        MSG
-      end
-
       # Upload allure history
       #
       # @return [void]
@@ -74,7 +70,14 @@ module Publisher
       #
       # @return [void]
       def upload_report
-        upload_to_s3(report_files)
+        upload_to_s3(report_files, full_prefix)
+      end
+
+      # Upload copy of latest run
+      #
+      # @return [void]
+      def upload_latest_copy
+        upload_to_s3(report_files, prefix)
       end
 
       # Upload files to s3
@@ -82,7 +85,7 @@ module Publisher
       # @param [Array<Pathname>] files
       # @param [String] key_prefix
       # @return [Array<Hash>]
-      def upload_to_s3(files, key_prefix = full_prefix)
+      def upload_to_s3(files, key_prefix)
         args = files.map do |file|
           {
             body: File.new(file),
@@ -100,6 +103,14 @@ module Publisher
       # @return [String]
       def key(*args)
         args.compact.join("/")
+      end
+
+      # Report url
+      #
+      # @param [String] path_prefix
+      # @return [String]
+      def url(path_prefix)
+        ["http://#{bucket}.s3.amazonaws.com", path_prefix, "index.html"].compact.join("/")
       end
     end
   end

@@ -8,7 +8,7 @@ module Publisher
 
       desc "Generate and upload allure report"
 
-      option :result_files_glob, desc: "Allure results files glob. Required: true"
+      option :results_glob, desc: "Allure results files glob. Required: true"
       option :bucket, desc: "Bucket name. Required: true"
       option :prefix, desc: "Optional prefix for report path. Required: false"
 
@@ -21,11 +21,9 @@ module Publisher
         validate_args(args)
         Helpers.pastel(force_color: args[:color])
 
-        Uploaders::S3.new(
-          args[:result_files_glob],
-          args[:bucket],
-          args[:prefix]
-        ).execute(update_pr: args[:update_pr])
+        Uploaders::S3
+          .new(**args.slice(:results_glob, :bucket, :prefix, :copy_latest, :update_pr))
+          .execute
       end
 
       private
@@ -35,7 +33,7 @@ module Publisher
       # @param [Hash] args
       # @return [void]
       def validate_args(args)
-        error("Missing argument --result-files-glob!") unless args[:result_files_glob]
+        error("Missing argument --results-glob!") unless args[:results_glob]
         error("Missing argument --bucket!") unless args[:bucket]
       end
     end
