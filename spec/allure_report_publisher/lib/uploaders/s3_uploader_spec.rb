@@ -29,6 +29,29 @@ RSpec.describe Publisher::Uploaders::S3 do
       copy_latest: false
     }
   end
+  let(:run_report_files) do
+    [
+      {
+        body: "spec/fixture/fake_report/history/history.json",
+        bucket: bucket,
+        key: "#{prefix}/1/history/history.json"
+      },
+      {
+        body: "spec/fixture/fake_report/index.html",
+        bucket: bucket,
+        key: "#{prefix}/1/index.html"
+      }
+    ]
+  end
+  let(:latest_report_files) do
+    [
+      {
+        body: "spec/fixture/fake_report/index.html",
+        bucket: bucket,
+        key: "#{prefix}/index.html"
+      }
+    ]
+  end
 
   let(:results_dir) { "spec/fixture/fake_results" }
   let(:report_dir) { "spec/fixture/fake_report" }
@@ -130,22 +153,18 @@ RSpec.describe Publisher::Uploaders::S3 do
     end
 
     it "uploads allure report to s3" do
-      aggregate_failures do
-        s3_uploader.new(**args).execute
+      s3_uploader.new(**args).execute
 
-        expect(put_object_args).to include(
-          {
-            body: "spec/fixture/fake_report/history/history.json",
-            bucket: bucket,
-            key: "#{prefix}/1/history/history.json"
-          },
-          {
-            body: "spec/fixture/fake_report/index.html",
-            bucket: bucket,
-            key: "#{prefix}/1/index.html"
-          }
-        )
+      aggregate_failures do
+        expect(put_object_args).to include(*run_report_files)
+        expect(put_object_args).not_to include(*latest_report_files)
       end
+    end
+
+    it "uploads latest allure report copy to s3" do
+      s3_uploader.new(**{ **args, copy_latest: true }).execute
+
+      expect(put_object_args).to include(*latest_report_files)
     end
 
     it "adds executor info" do
