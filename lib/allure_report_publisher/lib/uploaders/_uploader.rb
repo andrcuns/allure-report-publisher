@@ -18,7 +18,7 @@ module Publisher
         @bucket = bucket
         @prefix = prefix
         @update_pr = update_pr
-        @copy_latest = copy_latest
+        @copy_latest = Providers.provider && copy_latest # copy latest for ci only
       end
 
       # :nocov:
@@ -114,16 +114,14 @@ module Publisher
       #
       # @return [void]
       def upload
-        copy_latest_report = ci_provider && copy_latest
-
         log("Uploading report")
         Helpers::Spinner.spin("uploading report") do
-          upload_history unless copy_latest_report # latest report will add a common history folder
+          upload_history unless copy_latest # latest report will add a common history folder
           upload_report
-          upload_latest_copy if copy_latest_report
+          upload_latest_copy if copy_latest
         end
         log("Run report: #{report_url}", :green)
-        log("Latest report: #{latest_report_url}", :green) if copy_latest_report
+        log("Latest report: #{latest_report_url}", :green) if copy_latest
       end
 
       # Add allure report url to pull request description
