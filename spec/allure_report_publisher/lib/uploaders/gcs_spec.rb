@@ -31,7 +31,7 @@ RSpec.describe Publisher::Uploaders::GCS do
       end
     end
 
-    it "uploads allure report to gcs" do
+    it "uploads allure report" do
       described_class.new(**args).execute
 
       aggregate_failures do
@@ -63,7 +63,7 @@ RSpec.describe Publisher::Uploaders::GCS do
       allow(Publisher::Providers::Github).to receive(:new) { ci_provider_instance }
     end
 
-    it "uploads allure report to s3" do
+    it "uploads allure report" do
       described_class.new(**args).execute
 
       aggregate_failures do
@@ -78,7 +78,7 @@ RSpec.describe Publisher::Uploaders::GCS do
       end
     end
 
-    it "uploads latest allure report copy to s3" do
+    it "uploads latest allure report copy" do
       described_class.new(**{ **args, copy_latest: true }).execute
 
       expect(bucket).to have_received(:create_file).with(*report)
