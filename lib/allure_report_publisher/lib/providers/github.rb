@@ -4,7 +4,7 @@ module Publisher
   module Providers
     # Github implementation
     #
-    class Github < Base
+    class Github < Provider
       # Run id
       #
       # @return [String]

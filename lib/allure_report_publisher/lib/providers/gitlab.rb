@@ -4,7 +4,7 @@ module Publisher
   module Providers
     # Gitlab implementation
     #
-    class Gitlab < Base
+    class Gitlab < Provider
       # Get ci run ID without creating instance of ci provider
       #
       # @return [String]
