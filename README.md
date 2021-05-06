@@ -28,35 +28,43 @@ docker pull andrcuns/allure-report-publisher:latest
 
 allure-report-publisher will automatically detect if used in CI environment and add relevant executor info and history
 
-### AWS S3
-
-- `AWS authentication`: requires environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` or credentials file `~/.aws/credentials`
 - `Allure report link`: requires `GITHUB_AUTH_TOKEN` or `GITLAB_AUTH_TOKEN` in order to update pull request description with link to latest report
 
 ```shell
-$ (allure-report-publisher|docker run --rm andrcuns/allure-report-publisher:latest) upload s3 --help
+$ (allure-report-publisher|docker run --rm andrcuns/allure-report-publisher:latest) upload --help
 Command:
-  allure-report-publisher upload s3
+  allure-report-publisher upload
 
 Usage:
-  allure-report-publisher upload s3
+  allure-report-publisher upload TYPE
 
 Description:
   Generate and upload allure report
 
+Arguments:
+  TYPE                 # REQUIRED Cloud storage type: (s3/gcs)
+
 Options:
-  --[no-]color                     # Toggle color output, default: false
-  --[no-]update-pr                 # Update pull request description with url to allure report, default: false
-  --[no-]copy-latest               # Keep copy of latest report at base prefix path, default: false
   --results-glob=VALUE             # Allure results files glob. Required: true
   --bucket=VALUE                   # Bucket name. Required: true
   --prefix=VALUE                   # Optional prefix for report path. Required: false
+  --[no-]update-pr                 # Update pull request description with url to allure report, default: false
+  --[no-]copy-latest               # Keep copy of latest report at base prefix path, default: false
+  --[no-]color                     # Toggle color output, default: false
   --help, -h                       # Print this help
 
 Examples:
   allure-report-publisher upload s3 --results-glob='path/to/allure-result/**/*' --bucket=my-bucket
-  allure-report-publisher upload s3 --results-glob='path/to/allure-result/**/*' --bucket=my-bucket --project=my-project/prs
+  allure-report-publisher upload gcs --results-glob='path/to/allure-result/**/*' --bucket=my-bucket --prefix=my-project/prs
 ```
+
+### AWS S3
+
+- `AWS authentication`: requires environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` or credentials file `~/.aws/credentials`
+
+### Google Cloud Storage
+
+- `GCS authentication`: requires environment variable `GOOGLE_CLOUD_CREDENTIALS_JSON` with contents of credentials.json
 
 ## Development
 
