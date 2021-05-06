@@ -10,22 +10,14 @@ module Publisher
       # S3 client
       #
       # @return [Aws::S3::Client]
-      def s3
-        @s3 ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1")
+      def client
+        @client ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1")
       rescue Aws::Sigv4::Errors::MissingCredentialsError
         raise(<<~MSG.strip)
           missing aws credentials, provide credentials with one of the following options:
             - AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables
             - ~/.aws/credentials file
         MSG
-      end
-
-      # Validate if client is properly configured
-      # and raise error if it is not
-      #
-      # @return [void]
-      def check_client_configured
-        s3
       end
 
       # Report url
@@ -45,18 +37,16 @@ module Publisher
       # Add allure history
       #
       # @return [void]
-      def add_history
-        super do
-          HISTORY.each do |file|
-            s3.get_object(
-              response_target: path(results_dir, "history", file),
-              key: key(prefix, "history", file),
-              bucket: bucket
-            )
-          end
-        rescue Aws::S3::Errors::NoSuchKey
-          raise("Allure history from previous runs not found!")
+      def download_history
+        HISTORY.each do |file|
+          client.get_object(
+            response_target: path(results_dir, "history", file),
+            key: key(prefix, "history", file),
+            bucket: bucket_name
+          )
         end
+      rescue Aws::S3::Errors::NoSuchKey
+        raise("Allure history from previous runs not found!")
       end
 
       # Upload allure history
@@ -89,12 +79,12 @@ module Publisher
         args = files.map do |file|
           {
             body: File.new(file),
-            bucket: bucket,
+            bucket: bucket_name,
             key: key(key_prefix, file.relative_path_from(report_dir))
           }
         end
 
-        Parallel.each(args, in_threads: 8) { |obj| s3.put_object(obj) }
+        Parallel.each(args, in_threads: 8) { |obj| client.put_object(obj) }
       end
 
       # Fabricate key for s3 object
@@ -110,7 +100,7 @@ module Publisher
       # @param [String] path_prefix
       # @return [String]
       def url(path_prefix)
-        ["http://#{bucket}.s3.amazonaws.com", path_prefix, "index.html"].compact.join("/")
+        ["http://#{bucket_name}.s3.amazonaws.com", path_prefix, "index.html"].compact.join("/")
       end
     end
   end

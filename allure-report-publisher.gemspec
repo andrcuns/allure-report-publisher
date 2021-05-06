@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "aws-sdk-s3", ">= 1.93.1", "< 1.95.0"
   spec.add_dependency "dry-cli", "~> 0.6.0"
   spec.add_dependency "gitlab", "~> 4.17"
+  spec.add_dependency "google-cloud-storage", "~> 1.31"
   spec.add_dependency "octokit", "~> 4.21"
   spec.add_dependency "parallel", "~> 1.20"
   spec.add_dependency "pastel", "~> 0.8.0"
