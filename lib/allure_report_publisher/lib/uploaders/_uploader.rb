@@ -18,7 +18,7 @@ module Publisher
         @bucket_name = bucket
         @prefix = prefix
         @update_pr = update_pr
-        @copy_latest = Providers.provider && copy_latest # copy latest for ci only
+        @copy_latest = !!(Providers.provider && copy_latest) # copy latest for ci only
       end
 
       # Execute allure report generation and upload
@@ -130,7 +130,7 @@ module Publisher
       #
       # @return [void]
       def run_uploads
-        upload_history unless copy_latest # latest report will add a common history folder
+        upload_history unless !run_id || copy_latest
         upload_report
         upload_latest_copy if copy_latest
       end

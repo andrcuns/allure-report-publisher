@@ -1,4 +1,4 @@
-require_relative "./common_uploader"
+require_relative "./common_uploader_command"
 
 # rubocop:disable RSpec/ContextWording
 RSpec.describe Publisher::Commands::Upload do

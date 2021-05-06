@@ -9,7 +9,7 @@ module Publisher
 
       # GCS client
       #
-      # @return [oogle::Cloud::Storage]
+      # @return [Google::Cloud::Storage::Project]
       def client
         @client ||= Google::Cloud::Storage.new
       end
