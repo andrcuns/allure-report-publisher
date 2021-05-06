@@ -15,19 +15,17 @@ module Publisher
 
       def initialize(results_glob:, bucket:, update_pr: false, prefix: nil, copy_latest: false)
         @results_glob = results_glob
-        @bucket = bucket
+        @bucket_name = bucket
         @prefix = prefix
         @update_pr = update_pr
-        @copy_latest = Providers.provider && copy_latest # copy latest for ci only
+        @copy_latest = !!(Providers.provider && copy_latest) # copy latest for ci only
       end
-
-      # :nocov:
 
       # Execute allure report generation and upload
       #
       # @return [void]
       def execute
-        check_client_configured
+        client # initialize client and check for errors
 
         generate
         upload
@@ -38,13 +36,14 @@ module Publisher
 
       private
 
-      attr_reader :results_glob, :bucket, :prefix, :update_pr, :copy_latest
+      attr_reader :results_glob, :bucket_name, :prefix, :update_pr, :copy_latest
 
-      # Validate if client is properly configured
-      # and raise error if it is not
+      # :nocov:
+
+      # Cloud provider client
       #
-      # @return [void]
-      def check_client_configured
+      # @return [Object]
+      def client
         raise("Not Implemented!")
       end
 
@@ -53,6 +52,13 @@ module Publisher
       # @return [String]
       def report_url
         raise("Not Implemented!")
+      end
+
+      # Download allure history
+      #
+      # @return [void]
+      def download_history
+        raise("Not implemented!")
       end
 
       # Upload history to s3
@@ -84,7 +90,7 @@ module Publisher
         log("Adding allure history")
         Helpers::Spinner.spin("adding history", exit_on_error: false) do
           create_history_dir
-          yield
+          download_history
         end
       end
 
@@ -124,7 +130,7 @@ module Publisher
       #
       # @return [void]
       def run_uploads
-        upload_history unless copy_latest # latest report will add a common history folder
+        upload_history unless !run_id || copy_latest
         upload_report
         upload_latest_copy if copy_latest
       end

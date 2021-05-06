@@ -12,7 +12,7 @@ module Publisher
 
     # Base class for CI executor info
     #
-    class Base
+    class Provider
       EXECUTOR_JSON = "executor.json".freeze
       DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/.freeze
 

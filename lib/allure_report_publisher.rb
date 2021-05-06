@@ -14,11 +14,8 @@ module Publisher
     extend Dry::CLI::Registry
 
     register "version", Version, aliases: ["-v", "--version"]
-
-    register "upload" do |prefix|
-      prefix.register "s3", UploadS3
-    end
+    register "upload", Upload, aliases: ["u"]
   end
 end
 
-Publisher::Commands.before("upload s3") { Publisher::Helpers.validate_allure_cli_present }
+Publisher::Commands.before("upload") { Publisher::Helpers.validate_allure_cli_present }
