@@ -97,7 +97,7 @@ module Publisher
       # @param [String] path_prefix
       # @return [String]
       def url(path_prefix)
-        ["https://storage.cloud.google.com", bucket_name, path_prefix, "index.html"].compact.join("/")
+        ["https://storage.googleapis.com", bucket_name, path_prefix, "index.html"].compact.join("/")
       end
     end
   end
