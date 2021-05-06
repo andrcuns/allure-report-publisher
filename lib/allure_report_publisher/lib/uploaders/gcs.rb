@@ -39,11 +39,11 @@ module Publisher
       #
       # @return [void]
       def download_history
-        HISTORY.each do |file|
-          file = bucket.file(key(prefix, "history", file))
+        HISTORY.each do |file_name|
+          file = bucket.file(key(prefix, "history", file_name))
           raise("Allure history from previous runs not found!") unless file
 
-          download(path(results_dir, "history", file))
+          file.download(path(results_dir, "history", file_name))
         end
       end
 
