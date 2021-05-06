@@ -21,8 +21,6 @@ module Publisher
         @copy_latest = Providers.provider && copy_latest # copy latest for ci only
       end
 
-      # :nocov:
-
       # Execute allure report generation and upload
       #
       # @return [void]
@@ -39,6 +37,8 @@ module Publisher
       private
 
       attr_reader :results_glob, :bucket_name, :prefix, :update_pr, :copy_latest
+
+      # :nocov:
 
       # Cloud provider client
       #
