@@ -25,11 +25,13 @@ module Publisher
 
       # Execute allure report generation and upload
       #
-      # @return [void]
+      # @return [Hash<String, String>] uploaded report urls
       def execute
         generate_report
         upload
         add_url_to_pr
+
+        report_urls
       end
 
       # Generate allure report
@@ -60,7 +62,7 @@ module Publisher
 
       # Uploaded report urls
       #
-      # @return [Hash<Symbol, String>]
+      # @return [Hash<String, String>] uploaded report urls
       def report_urls
         urls = { "Report url" => report_url }
         urls["Latest report url"] = latest_report_url if copy_latest
