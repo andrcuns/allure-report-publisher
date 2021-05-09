@@ -47,13 +47,13 @@ module Publisher
         log("Generating allure report")
         Spinner.spin("generating") { uploader.generate_report }
 
-        log("\nUploading allure report to #{args[:type]}")
+        log("Uploading allure report to #{args[:type]}")
         Spinner.spin("uploading") { uploader.upload }
         uploader.report_urls.each { |k, v| log("#{k}: #{v}", :green) }
-        return unless args[:update_pr]
+        return unless args[:update_pr] && uploader.pr?
 
-        log("\nUpdating pull request description")
-        Spinner.spin("updating") { uploader.add_url_to_pr }
+        log("Updating pull request description")
+        Spinner.spin("updating", exit_on_error: false) { uploader.add_url_to_pr }
       end
 
       private

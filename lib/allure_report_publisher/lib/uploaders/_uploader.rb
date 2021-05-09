@@ -25,13 +25,11 @@ module Publisher
 
       # Execute allure report generation and upload
       #
-      # @return [Hash<String, String>] uploaded report urls
+      # @return [void]
       def execute
         generate_report
         upload
         add_url_to_pr
-
-        report_urls
       end
 
       # Generate allure report
@@ -68,6 +66,13 @@ module Publisher
         urls["Latest report url"] = latest_report_url if copy_latest
 
         urls
+      end
+
+      # Executed in PR pipeline
+      #
+      # @return [Boolean]
+      def pr?
+        ci_provider&.pr?
       end
 
       private

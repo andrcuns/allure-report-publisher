@@ -149,7 +149,7 @@ RSpec.describe Publisher::Uploaders::S3 do
     end
 
     it "returns correct uploader report urls" do
-      expect(described_class.new(**{ **args, copy_latest: true }).execute).to eq({
+      expect(described_class.new(**{ **args, copy_latest: true }).report_urls).to eq({
         "Report url" => "http://bucket.s3.amazonaws.com/project/1/index.html",
         "Latest report url" => "http://bucket.s3.amazonaws.com/project/index.html"
       })
