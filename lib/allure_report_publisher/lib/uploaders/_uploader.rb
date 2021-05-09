@@ -27,11 +27,43 @@ module Publisher
       def execute
         client # initialize client and check for errors
 
-        generate
+        generate_report
         upload
         add_url_to_pr
       rescue StandardError => e
         error(e.message)
+      end
+
+      # Generate allure report
+      #
+      # @return [void]
+      def generate_report
+        add_history
+        add_executor_info
+
+        ReportGenerator.new(results_glob, results_dir, report_dir).generate
+      end
+
+      # Upload report to storage provider
+      #
+      # @return [void]
+      def upload
+        log("Uploading report")
+        Helpers::Spinner.spin("uploading report") { run_uploads }
+        log("Run report: #{report_url}", :green)
+        log("Latest report: #{latest_report_url}", :green) if copy_latest
+      end
+
+      # Add allure report url to pull request description
+      #
+      # @return [void]
+      def add_url_to_pr
+        return unless update_pr && ci_provider
+
+        log("Adding allure report link to pr description")
+        Helpers::Spinner.spin("adding link", exit_on_error: false) do
+          ci_provider.add_report_url
+        end
       end
 
       private
@@ -106,16 +138,6 @@ module Publisher
         end
       end
 
-      # Generate allure report
-      #
-      # @return [void]
-      def generate
-        add_history
-        add_executor_info
-
-        ReportGenerator.new(results_glob, results_dir, report_dir).generate
-      end
-
       # Upload report to storage provider
       #
       # @return [void]
@@ -133,18 +155,6 @@ module Publisher
         upload_history unless !run_id || copy_latest
         upload_report
         upload_latest_copy if copy_latest
-      end
-
-      # Add allure report url to pull request description
-      #
-      # @return [void]
-      def add_url_to_pr
-        return unless update_pr && ci_provider
-
-        log("Adding allure report link to pr description")
-        Helpers::Spinner.spin("adding link", exit_on_error: false) do
-          ci_provider.add_report_url
-        end
       end
 
       # Get run id
