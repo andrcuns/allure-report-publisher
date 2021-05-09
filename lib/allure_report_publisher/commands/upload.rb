@@ -53,7 +53,7 @@ module Publisher
         return unless args[:update_pr]
 
         log("\nUpdating pull request description")
-        Spinner.spin("updating") { uploader.add_url_to_pr }
+        Spinner.spin("updating", exit_on_error: false) { uploader.add_url_to_pr }
       end
 
       private

@@ -25,13 +25,11 @@ module Publisher
 
       # Execute allure report generation and upload
       #
-      # @return [Hash<String, String>] uploaded report urls
+      # @return [void]
       def execute
         generate_report
         upload
         add_url_to_pr
-
-        report_urls
       end
 
       # Generate allure report
