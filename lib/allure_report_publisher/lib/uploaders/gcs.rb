@@ -41,7 +41,7 @@ module Publisher
       def download_history
         HISTORY.each do |file_name|
           file = bucket.file(key(prefix, "history", file_name))
-          raise("Allure history from previous runs not found!") unless file
+          raise(HistoryNotFoundError, "Allure history from previous runs not found!") unless file
 
           file.download(path(results_dir, "history", file_name))
         end

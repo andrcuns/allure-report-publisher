@@ -3,7 +3,6 @@ require_relative "./common_uploader"
 RSpec.describe Publisher::Uploaders::S3 do
   include_context "with uploader"
   include_context "with mock helper"
-  include_context "with stdout capture"
 
   let(:s3_client) { instance_double("Aws::S3::Client", get_object: nil) }
   let(:put_object_args) { [] }
@@ -56,9 +55,11 @@ RSpec.describe Publisher::Uploaders::S3 do
     end
 
     it "exits with custom credentials missing error" do
-      expect do
-        expect { described_class.new(**args).execute }.to raise_error(SystemExit)
-      end.to output("#{err_msg}\n").to_stderr
+      expect { described_class.new(**args).execute }.to raise_error(<<~MSG.strip)
+        missing aws credentials, provide credentials with one of the following options:
+          - AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables
+          - ~/.aws/credentials file
+      MSG
     end
   end
 
@@ -145,6 +146,13 @@ RSpec.describe Publisher::Uploaders::S3 do
     it "updates pr description with allure report link" do
       described_class.new(**{ **args, update_pr: true }).execute
       expect(ci_provider_instance).to have_received(:add_report_url)
+    end
+
+    it "returns correct uploader report urls" do
+      expect(described_class.new(**{ **args, copy_latest: true }).execute).to eq({
+        "Report url" => "http://bucket.s3.amazonaws.com/project/1/index.html",
+        "Latest report url" => "http://bucket.s3.amazonaws.com/project/index.html"
+      })
     end
   end
 end

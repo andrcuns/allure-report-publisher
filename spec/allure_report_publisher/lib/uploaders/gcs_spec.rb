@@ -94,5 +94,12 @@ RSpec.describe Publisher::Uploaders::GCS do
       described_class.new(**{ **args, update_pr: true }).execute
       expect(ci_provider_instance).to have_received(:add_report_url)
     end
+
+    it "returns correct uploader report urls" do
+      expect(described_class.new(**{ **args, copy_latest: true }).execute).to eq({
+        "Report url" => "https://storage.googleapis.com/bucket/project/1/index.html",
+        "Latest report url" => "https://storage.googleapis.com/bucket/project/index.html"
+      })
+    end
   end
 end

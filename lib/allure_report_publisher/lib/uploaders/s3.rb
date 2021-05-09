@@ -46,7 +46,7 @@ module Publisher
           )
         end
       rescue Aws::S3::Errors::NoSuchKey
-        raise("Allure history from previous runs not found!")
+        raise(HistoryNotFoundError, "Allure history from previous runs not found!")
       end
 
       # Upload allure history
