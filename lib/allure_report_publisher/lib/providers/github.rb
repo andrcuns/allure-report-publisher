@@ -12,6 +12,13 @@ module Publisher
         @run_id ||= ENV["GITHUB_RUN_ID"]
       end
 
+      # Pull request run
+      #
+      # @return [Boolean]
+      def pr?
+        ENV["GITHUB_EVENT_NAME"] == "pull_request"
+      end
+
       private
 
       # Executor info
@@ -39,13 +46,6 @@ module Publisher
 
           Octokit::Client.new(access_token: ENV["GITHUB_AUTH_TOKEN"], api_endpoint: ENV["GITHUB_API_URL"])
         end
-      end
-
-      # Pull request run
-      #
-      # @return [Boolean]
-      def pr?
-        ENV["GITHUB_EVENT_NAME"] == "pull_request"
       end
 
       # Pull request description
