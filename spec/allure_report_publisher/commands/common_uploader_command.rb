@@ -11,7 +11,8 @@ RSpec.shared_examples("upload command") do
       generate_report: nil,
       upload: nil,
       report_urls: { "Report url" => "http://report.com" },
-      add_url_to_pr: nil
+      add_url_to_pr: nil,
+      pr?: true
     )
   end
 

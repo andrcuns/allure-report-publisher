@@ -68,6 +68,13 @@ module Publisher
         urls
       end
 
+      # Executed in PR pipeline
+      #
+      # @return [Boolean]
+      def pr?
+        ci_provider&.pr?
+      end
+
       private
 
       attr_reader :results_glob, :bucket_name, :prefix, :update_pr, :copy_latest

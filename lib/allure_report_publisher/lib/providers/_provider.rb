@@ -52,23 +52,23 @@ module Publisher
         update_pr_description("#{pr_description}\n\n#{description_template}".strip)
       end
 
-      private
-
-      attr_reader :results_path, :report_url
-
       # :nocov:
-
-      # Get executor info
-      #
-      # @return [Hash]
-      def executor_info
-        raise("Not implemented!")
-      end
 
       # Pull request run
       #
       # @return [Boolean]
       def pr?
+        raise("Not implemented!")
+      end
+
+      private
+
+      attr_reader :results_path, :report_url
+
+      # Get executor info
+      #
+      # @return [Hash]
+      def executor_info
         raise("Not implemented!")
       end
 
