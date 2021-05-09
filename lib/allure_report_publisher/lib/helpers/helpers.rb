@@ -10,7 +10,7 @@ module Publisher
     # @param [Boolean] force_color
     # @return [Pastel]
     def self.pastel(force_color: nil)
-      @pastel ||= Pastel.new(enabled: force_color)
+      @pastel ||= Pastel.new(enabled: force_color, eachline: "\n")
     end
 
     # Check allure cli is installed and executable
