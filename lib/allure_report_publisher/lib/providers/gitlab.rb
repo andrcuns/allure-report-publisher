@@ -12,6 +12,13 @@ module Publisher
         @run_id ||= ENV["CI_PIPELINE_ID"]
       end
 
+      # Pull request run
+      #
+      # @return [Boolean]
+      def pr?
+        ENV["CI_PIPELINE_SOURCE"] == "merge_request_event"
+      end
+
       # Get executor info
       #
       # @return [Hash]
@@ -55,13 +62,6 @@ module Publisher
             private_token: ENV["GITLAB_AUTH_TOKEN"]
           )
         end
-      end
-
-      # Pull request run
-      #
-      # @return [Boolean]
-      def pr?
-        ENV["CI_PIPELINE_SOURCE"] == "merge_request_event"
       end
 
       # Merge request iid
