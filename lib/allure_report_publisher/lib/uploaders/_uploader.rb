@@ -1,5 +1,7 @@
 module Publisher
   module Uploaders
+    class HistoryNotFoundError < StandardError; end
+
     # Uploader implementation
     #
     class Uploader
@@ -25,13 +27,9 @@ module Publisher
       #
       # @return [void]
       def execute
-        client # initialize client and check for errors
-
         generate_report
         upload
         add_url_to_pr
-      rescue StandardError => e
-        error(e.message)
       end
 
       # Generate allure report
@@ -48,10 +46,7 @@ module Publisher
       #
       # @return [void]
       def upload
-        log("Uploading report")
-        Helpers::Spinner.spin("uploading report") { run_uploads }
-        log("Run report: #{report_url}", :green)
-        log("Latest report: #{latest_report_url}", :green) if copy_latest
+        run_uploads
       end
 
       # Add allure report url to pull request description
@@ -60,10 +55,17 @@ module Publisher
       def add_url_to_pr
         return unless update_pr && ci_provider
 
-        log("Adding allure report link to pr description")
-        Helpers::Spinner.spin("adding link", exit_on_error: false) do
-          ci_provider.add_report_url
-        end
+        ci_provider.add_report_url
+      end
+
+      # Uploaded report urls
+      #
+      # @return [Hash<Symbol, String>]
+      def report_urls
+        urls = { "Report url" => report_url }
+        urls["Latest report url"] = latest_report_url if copy_latest
+
+        urls
       end
 
       private
@@ -83,6 +85,13 @@ module Publisher
       #
       # @return [String]
       def report_url
+        raise("Not Implemented!")
+      end
+
+      # Latest report url
+      #
+      # @return [String]
+      def latest_report_url
         raise("Not Implemented!")
       end
 
@@ -119,11 +128,10 @@ module Publisher
       #
       # @return [void]
       def add_history
-        log("Adding allure history")
-        Helpers::Spinner.spin("adding history", exit_on_error: false) do
-          create_history_dir
-          download_history
-        end
+        create_history_dir
+        download_history
+      rescue HistoryNotFoundError
+        nil
       end
 
       # Add CI executor info
@@ -132,20 +140,7 @@ module Publisher
       def add_executor_info
         return unless ci_provider
 
-        log("Adding executor info")
-        Helpers::Spinner.spin("adding executor") do
-          ci_provider.write_executor_info
-        end
-      end
-
-      # Upload report to storage provider
-      #
-      # @return [void]
-      def upload
-        log("Uploading report")
-        Helpers::Spinner.spin("uploading report") { run_uploads }
-        log("Run report: #{report_url}", :green)
-        log("Latest report: #{latest_report_url}", :green) if copy_latest
+        ci_provider.write_executor_info
       end
 
       # Run upload commands

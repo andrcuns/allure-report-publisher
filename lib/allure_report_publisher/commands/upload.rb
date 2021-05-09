@@ -42,9 +42,18 @@ module Publisher
         validate_result_files(args[:results_glob])
         Helpers.pastel(force_color: args[:color] || nil)
 
-        uploaders(args[:type])
-          .new(**args.slice(:results_glob, :bucket, :prefix, :copy_latest, :update_pr))
-          .execute
+        uploader = uploaders(args[:type]).new(**args.slice(:results_glob, :bucket, :prefix, :copy_latest, :update_pr))
+
+        log("Generating allure report")
+        Spinner.spin("generating") { uploader.generate_report }
+
+        log("\nUploading allure report to #{args[:type]}")
+        Spinner.spin("uploading") { uploader.upload }
+        uploader.report_urls.each { |k, v| log("#{k}: #{v}", :green) }
+        return unless args[:update_pr]
+
+        log("\nUpdating pull request description")
+        Spinner.spin("updating") { uploader.add_url_to_pr }
       end
 
       private

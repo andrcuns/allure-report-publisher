@@ -1,9 +1,20 @@
 RSpec.shared_examples("upload command") do
   include_context "with cli helper"
+  include_context "with output capture"
 
   let(:result_glob) { "**/*" }
   let(:bucket) { "bucket" }
   let(:prefix) { "my-project/prs" }
+  let(:uploader_stub) do
+    instance_double(
+      uploader.to_s,
+      generate_report: nil,
+      upload: nil,
+      report_urls: { "Report url" => "http://report.com" },
+      add_url_to_pr: nil
+    )
+  end
+
   let(:cli_args) do
     [
       "--results-glob=#{result_glob}",
@@ -32,7 +43,8 @@ RSpec.shared_examples("upload command") do
 
       aggregate_failures do
         expect(uploader).to have_received(:new).with(args)
-        expect(uploader_stub).to have_received(:execute)
+        expect(uploader_stub).to have_received(:generate_report)
+        expect(uploader_stub).to have_received(:upload)
       end
     end
 
@@ -43,7 +55,8 @@ RSpec.shared_examples("upload command") do
         expect(uploader).to have_received(:new).with(
           args.slice(:results_glob, :bucket, :copy_latest, :update_pr)
         )
-        expect(uploader_stub).to have_received(:execute)
+        expect(uploader_stub).to have_received(:generate_report)
+        expect(uploader_stub).to have_received(:upload)
       end
     end
   end
@@ -54,7 +67,9 @@ RSpec.shared_examples("upload command") do
 
       aggregate_failures do
         expect(uploader).to have_received(:new).with({ **args, update_pr: true })
-        expect(uploader_stub).to have_received(:execute)
+        expect(uploader_stub).to have_received(:generate_report)
+        expect(uploader_stub).to have_received(:upload)
+        expect(uploader_stub).to have_received(:add_url_to_pr)
       end
     end
 
@@ -63,20 +78,23 @@ RSpec.shared_examples("upload command") do
 
       aggregate_failures do
         expect(uploader).to have_received(:new).with({ **args, copy_latest: true })
-        expect(uploader_stub).to have_received(:execute)
+        expect(uploader_stub).to have_received(:generate_report)
+        expect(uploader_stub).to have_received(:upload)
       end
     end
   end
 
   context "with missing args" do
     it "exits when result glob is missing" do
-      expect { expect { run_cli(*command, cli_args[1]) }.to raise_error(SystemExit) }.to output.to_stderr
-      expect(uploader_stub).not_to have_received(:execute)
+      expect { run_cli(*command, cli_args[1]) }.to raise_error(SystemExit)
+      expect(uploader_stub).not_to have_received(:generate_report)
+      expect(uploader_stub).not_to have_received(:upload)
     end
 
     it "exits when bucket is missing" do
-      expect { expect { run_cli(*command, cli_args[0]) }.to raise_error(SystemExit) }.to output.to_stderr
-      expect(uploader_stub).not_to have_received(:execute)
+      expect { run_cli(*command, cli_args[0]) }.to raise_error(SystemExit)
+      expect(uploader_stub).not_to have_received(:generate_report)
+      expect(uploader_stub).not_to have_received(:upload)
     end
   end
 end

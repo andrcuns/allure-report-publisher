@@ -20,11 +20,8 @@ module Publisher
     #
     # @return [void]
     def generate
-      log("Generating allure report")
-      Helpers::Spinner.spin("generating report") do
-        aggregate_results
-        generate_report
-      end
+      aggregate_results
+      generate_report
     end
 
     private
@@ -36,7 +33,7 @@ module Publisher
     # @return [void]
     def aggregate_results
       results = Dir.glob(results_glob)
-      error("Missing allure results") if results.empty?
+      raise("Missing allure results") if results.empty?
 
       FileUtils.cp(results, results_dir)
     end
@@ -48,7 +45,7 @@ module Publisher
       out, _err, status = Open3.capture3(
         "allure generate --clean --output #{report_dir} #{results_dir}"
       )
-      error(out) unless status.success?
+      raise(out) unless status.success?
     end
   end
 end

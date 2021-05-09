@@ -2,7 +2,6 @@ RSpec.describe Publisher::ReportGenerator do
   subject(:report_generator) { described_class.new(results_glob, results_dir, report_dir) }
 
   include_context "with mock helper"
-  include_context "with stdout capture"
 
   let(:capture_status) { instance_double("Process::Status", success?: status) }
 
@@ -31,9 +30,7 @@ RSpec.describe Publisher::ReportGenerator do
     let(:results_glob) { "spec/*.tar.gz" }
 
     it "exits with missing allure results message" do
-      expect do
-        expect { report_generator.generate }.to raise_error(SystemExit)
-      end.to output(/Missing allure results/).to_stderr
+      expect { report_generator.generate }.to raise_error("Missing allure results")
     end
   end
 
@@ -41,9 +38,7 @@ RSpec.describe Publisher::ReportGenerator do
     let(:status) { false }
 
     it "exits with output of allure command" do
-      expect do
-        expect { report_generator.generate }.to raise_error(SystemExit)
-      end.to output(/Allure output/).to_stderr
+      expect { report_generator.generate }.to raise_error("Allure output")
     end
   end
 end
