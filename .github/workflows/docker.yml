@@ -23,7 +23,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-refs/heads/main
       - name: Build
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v2.4.0
         with:
           push: false
           tags: andrcuns/allure-report-publisher:latest
