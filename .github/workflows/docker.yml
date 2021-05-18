@@ -26,9 +26,13 @@ jobs:
         uses: docker/build-push-action@v2.4.0
         with:
           push: false
+          load: true
           tags: andrcuns/allure-report-publisher:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
+      - uses: azure/container-scan@v0
+        with:
+          image-name: andrcuns/allure-report-publisher:latest
       # Temp fix
       # https://github.com/docker/build-push-action/issues/252
       # https://github.com/moby/buildkit/issues/1896
