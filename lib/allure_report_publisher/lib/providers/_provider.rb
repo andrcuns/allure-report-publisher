@@ -16,9 +16,10 @@ module Publisher
       EXECUTOR_JSON = "executor.json".freeze
       DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/.freeze
 
-      def initialize(results_path, report_url)
+      def initialize(results_path:, report_url:, update_pr:)
         @results_path = results_path
         @report_url = report_url
+        @update_pr = update_pr
       end
 
       # :nocov:
@@ -45,6 +46,7 @@ module Publisher
       # @return [void]
       def add_report_url
         raise("Not a pull request, skipped!") unless pr?
+        return comment_report_urls("Allure report generated!\n#{job_entry}") if comment?
         return update_pr_description(updated_pr_description) if reported?
 
         update_pr_description(initial_pr_descripion)
@@ -61,7 +63,7 @@ module Publisher
 
       private
 
-      attr_reader :results_path, :report_url
+      attr_reader :results_path, :report_url, :update_pr
 
       # Get executor info
       #
@@ -79,16 +81,27 @@ module Publisher
 
       # Update pull request description
       #
-      # @param [String] _desc
+      # @param [String] _urls
       # @return [void]
-      def update_pr_description(_desc)
+      def update_pr_description(_urls)
         raise("Not implemented!")
       end
 
-      def comment_report_urls
+      # Add comment with report url
+      #
+      # @param [String] _url
+      # @return [void]
+      def comment_report_urls(_url)
         raise("Not implemented!")
       end
       # :nocov:
+
+      # Add report url as comment
+      #
+      # @return [Boolean]
+      def comment?
+        update_pr == "comment"
+      end
 
       # CI run id
       #

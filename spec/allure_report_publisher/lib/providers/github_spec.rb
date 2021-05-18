@@ -1,10 +1,11 @@
 RSpec.describe Publisher::Providers::Github do
-  subject(:provider) { described_class.new(results_path, report_url) }
+  subject(:provider) { described_class.new(results_path: results_path, report_url: report_url, update_pr: update_pr) }
 
   let(:results_path) { Dir.mktmpdir("allure-results", "tmp") }
   let(:report_url) { "https://report.com" }
   let(:auth_token) { "token" }
   let(:event_name) { "pull_request" }
+  let(:update_pr) { "description" }
 
   let(:env) do
     {

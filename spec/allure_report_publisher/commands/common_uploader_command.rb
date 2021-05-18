@@ -28,7 +28,6 @@ RSpec.shared_examples("upload command") do
       results_glob: result_glob,
       bucket: bucket,
       prefix: prefix,
-      update_pr: false,
       copy_latest: false
     }
   end
@@ -63,18 +62,29 @@ RSpec.shared_examples("upload command") do
   end
 
   context "with optional args" do
-    it "executes s3 uploader with pr update" do
-      run_cli(*command, *cli_args, "--update-pr")
+    it "executes uploader with --update-pr=comment" do
+      run_cli(*command, *cli_args, "--update-pr=comment")
 
       aggregate_failures do
-        expect(uploader).to have_received(:new).with({ **args, update_pr: true })
+        expect(uploader).to have_received(:new).with({ **args, update_pr: "comment" })
         expect(uploader_stub).to have_received(:generate_report)
         expect(uploader_stub).to have_received(:upload)
         expect(uploader_stub).to have_received(:add_url_to_pr)
       end
     end
 
-    it "executes s3 uploader with copy latest" do
+    it "executes uploader with --update-pr=description" do
+      run_cli(*command, *cli_args, "--update-pr=description")
+
+      aggregate_failures do
+        expect(uploader).to have_received(:new).with({ **args, update_pr: "description" })
+        expect(uploader_stub).to have_received(:generate_report)
+        expect(uploader_stub).to have_received(:upload)
+        expect(uploader_stub).to have_received(:add_url_to_pr)
+      end
+    end
+
+    it "executes uploader with --copy-latest" do
       run_cli(*command, *cli_args, "--copy-latest")
 
       aggregate_failures do
