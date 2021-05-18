@@ -67,7 +67,7 @@ RSpec.describe Publisher::Providers::Github do
 
             <!-- allure -->
             ---
-            📝 [Latest allure report](#{report_url})
+            `#{env[:GITHUB_JOB]}`: 📝 [allure report](#{report_url})
             <!-- allurestop -->
           DESC
         )

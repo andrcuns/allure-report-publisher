@@ -45,11 +45,9 @@ module Publisher
       # @return [void]
       def add_report_url
         raise("Not a pull request, skipped!") unless pr?
+        return update_pr_description(updated_pr_description) if reported?
 
-        reported = pr_description.match?(DESCRIPTION_PATTERN)
-        return update_pr_description(pr_description.gsub(DESCRIPTION_PATTERN, description_template).strip) if reported
-
-        update_pr_description("#{pr_description}\n\n#{description_template}".strip)
+        update_pr_description(initial_pr_descripion)
       end
 
       # :nocov:
@@ -86,6 +84,10 @@ module Publisher
       def update_pr_description(_desc)
         raise("Not implemented!")
       end
+
+      def comment_report_urls
+        raise("Not implemented!")
+      end
       # :nocov:
 
       # CI run id
@@ -95,16 +97,44 @@ module Publisher
         self.class.run_id
       end
 
+      # Check if PR already has report urls
+      #
+      # @return [Boolean]
+      def reported?
+        @reported ||= pr_description.match?(DESCRIPTION_PATTERN)
+      end
+
+      # Updated PR description
+      #
+      # @return [String]
+      def updated_pr_description
+        pr_description.gsub(DESCRIPTION_PATTERN, report_url_section).strip
+      end
+
+      # Initial PR description
+      #
+      # @return [String]
+      def initial_pr_descripion
+        "#{pr_description}\n\n#{report_url_section}".strip
+      end
+
       # Allure report url pr description
       #
       # @return [String]
-      def description_template
-        <<~DESC
+      def report_url_section
+        @report_url_section ||= <<~DESC
           <!-- allure -->
           ---
-          📝 [Latest allure report](#{report_url})
+          #{job_entry}
           <!-- allurestop -->
         DESC
+      end
+
+      # Single job report URL entry
+      #
+      # @return [String]
+      def job_entry
+        @job_entry ||= "`#{build_name}`: 📝 [allure report](#{report_url})"
       end
     end
   end
