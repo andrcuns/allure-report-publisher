@@ -103,21 +103,21 @@ RSpec.describe Publisher::Providers::Gitlab do
         )
       end
     end
+  end
 
-    context "without mr ci context" do
-      let(:event_name) { "push" }
+  context "without mr ci context" do
+    let(:event_name) { "push" }
 
-      it "skips adding allure link to mr with not a pr message" do
-        expect { provider.add_report_url }.to raise_error("Not a pull request, skipped!")
-      end
+    it "skips adding allure link to mr with not a pr message" do
+      expect { provider.add_report_url }.to raise_error("Not a pull request, skipped!")
     end
+  end
 
-    context "without configured auth token" do
-      let(:auth_token) { nil }
+  context "without configured auth token" do
+    let(:auth_token) { nil }
 
-      it "skips adding allure link to pr with not configured auth token message" do
-        expect { provider.add_report_url }.to raise_error("Missing GITLAB_AUTH_TOKEN environment variable!")
-      end
+    it "skips adding allure link to pr with not configured auth token message" do
+      expect { provider.add_report_url }.to raise_error("Missing GITLAB_AUTH_TOKEN environment variable!")
     end
   end
 end

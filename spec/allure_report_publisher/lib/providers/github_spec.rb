@@ -6,6 +6,9 @@ RSpec.describe Publisher::Providers::Github do
   let(:auth_token) { "token" }
   let(:event_name) { "pull_request" }
   let(:update_pr) { "description" }
+  let(:sha_url) do
+    "[#{env[:GITHUB_SHA]}](#{env[:GITHUB_SERVER_URL]}/#{env[:GITHUB_REPOSITORY]}/pull/1/commits/#{env[:GITHUB_SHA]})"
+  end
 
   let(:env) do
     {
@@ -17,7 +20,8 @@ RSpec.describe Publisher::Providers::Github do
       GITHUB_API_URL: "https://api.github.com",
       GITHUB_EVENT_PATH: "spec/fixture/workflow_event.json",
       GITHUB_AUTH_TOKEN: auth_token,
-      GITHUB_EVENT_NAME: event_name
+      GITHUB_EVENT_NAME: event_name,
+      GITHUB_SHA: "sha"
     }.compact
   end
 
@@ -44,20 +48,25 @@ RSpec.describe Publisher::Providers::Github do
     end
   end
 
-  context "when adding allure report url to pr description" do
-    context "with pr context" do
-      let(:pr_description) { "pr description" }
-      let(:octokit) do
-        instance_double("Octokit::Client", pull_request: { body: pr_description }, update_pull_request: nil)
-      end
+  context "with pr context" do
+    let(:pr_description) { "pr description" }
+    let(:octokit) do
+      instance_double(
+        "Octokit::Client",
+        pull_request: { body: pr_description },
+        update_pull_request: nil,
+        add_comment: nil
+      )
+    end
 
-      before do
-        allow(Octokit::Client).to receive(:new)
-          .with(access_token: env[:GITHUB_AUTH_TOKEN], api_endpoint: env[:GITHUB_API_URL])
-          .and_return(octokit)
-      end
+    before do
+      allow(Octokit::Client).to receive(:new)
+        .with(access_token: env[:GITHUB_AUTH_TOKEN], api_endpoint: env[:GITHUB_API_URL])
+        .and_return(octokit)
+    end
 
-      it "updates pr description with latest allure report link" do
+    context "with add report url to mr description arg" do
+      it "updates pr description" do
         provider.add_report_url
 
         expect(octokit).to have_received(:update_pull_request).with(
@@ -69,7 +78,7 @@ RSpec.describe Publisher::Providers::Github do
             <!-- allure -->
             ---
             # Allure report
-            📝 `allure-report-publisher` generated allure report!
+            📝 `allure-report-publisher` generated allure report for #{sha_url}!
             `#{env[:GITHUB_JOB]}`: [allure report](#{report_url})
             <!-- allurestop -->
           DESC
@@ -77,20 +86,38 @@ RSpec.describe Publisher::Providers::Github do
       end
     end
 
-    context "without pr ci context" do
-      let(:event_name) { "push" }
+    context "with add report url as comment arg" do
+      let(:update_pr) { "comment" }
 
-      it "skips adding allure link to pr with not a pr message" do
-        expect { provider.add_report_url }.to raise_error("Not a pull request, skipped!")
+      it "adds comment" do
+        provider.add_report_url
+
+        expect(octokit).to have_received(:add_comment).with(
+          env[:GITHUB_REPOSITORY],
+          1,
+          <<~DESC.strip
+            # Allure report
+            📝 `allure-report-publisher` generated allure report for #{sha_url}!
+            `#{env[:GITHUB_JOB]}`: [allure report](#{report_url})
+          DESC
+        )
       end
     end
+  end
 
-    context "without configured auth token" do
-      let(:auth_token) { nil }
+  context "without pr ci context" do
+    let(:event_name) { "push" }
 
-      it "skips adding allure link to pr with not configured auth token message" do
-        expect { provider.add_report_url }.to raise_error("Missing GITHUB_AUTH_TOKEN environment variable!")
-      end
+    it "skips adding allure link to pr with not a pr message" do
+      expect { provider.add_report_url }.to raise_error("Not a pull request, skipped!")
+    end
+  end
+
+  context "without configured auth token" do
+    let(:auth_token) { nil }
+
+    it "skips adding allure link to pr with not configured auth token message" do
+      expect { provider.add_report_url }.to raise_error("Missing GITHUB_AUTH_TOKEN environment variable!")
     end
   end
 end

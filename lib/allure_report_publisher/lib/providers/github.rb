@@ -63,6 +63,14 @@ module Publisher
         client.update_pull_request(repository, pr_id, body: desc)
       end
 
+      # Add comment with report url
+      #
+      # @param [String] urls
+      # @return [void]
+      def add_urls_comment(urls)
+        client.add_comment(repository, pr_id, urls)
+      end
+
       # Pull request id
       #
       # @return [Integer]
@@ -96,6 +104,15 @@ module Publisher
       # @return [String]
       def repository
         @repository ||= ENV["GITHUB_REPOSITORY"]
+      end
+
+      # Commit sha url
+      #
+      # @return [String]
+      def sha_url
+        sha = ENV["GITHUB_SHA"]
+
+        "[#{sha}](#{server_url}/#{repository}/pull/#{pr_id}/commits/#{sha})"
       end
     end
   end
