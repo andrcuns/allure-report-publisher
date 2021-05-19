@@ -44,10 +44,16 @@ module Publisher
 
       # Update pull request description
       #
-      # @param [String] desc
       # @return [void]
-      def update_pr_description(desc)
-        client.update_merge_request(project, mr_iid, description: desc)
+      def update_pr_description
+        client.update_merge_request(project, mr_iid, description: updated_pr_description)
+      end
+
+      # Add comment with report url
+      #
+      # @return [void]
+      def add_comment
+        client.create_merge_request_comment(project, mr_iid, comment)
       end
 
       # Get gitlab client
@@ -92,11 +98,20 @@ module Publisher
         @build_name ||= ENV["CI_JOB_NAME"]
       end
 
-      # Github repository
+      # Gitlab repository
       #
       # @return [String]
       def project
         @project ||= ENV["CI_PROJECT_PATH"]
+      end
+
+      # Commit sha url
+      #
+      # @return [String]
+      def sha_url
+        sha = ENV["CI_COMMIT_SHA"]
+
+        "[#{sha}](#{server_url}/#{project}/-/tree/#{sha})"
       end
     end
   end

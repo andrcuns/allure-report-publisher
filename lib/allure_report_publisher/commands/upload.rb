@@ -20,9 +20,9 @@ module Publisher
       option :prefix,
              desc: "Optional prefix for report path. Required: false"
       option :update_pr,
-             type: :boolean,
-             default: false,
-             desc: "Update pull request description with url to allure report"
+             type: :string,
+             values: %w[comment description],
+             desc: "Add report url to PR via comment or description update"
       option :copy_latest,
              type: :boolean,
              default: false,

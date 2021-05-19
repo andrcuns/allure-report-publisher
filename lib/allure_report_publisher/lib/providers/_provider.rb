@@ -16,9 +16,10 @@ module Publisher
       EXECUTOR_JSON = "executor.json".freeze
       DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/.freeze
 
-      def initialize(results_path, report_url)
+      def initialize(results_path:, report_url:, update_pr:)
         @results_path = results_path
         @report_url = report_url
+        @update_pr = update_pr
       end
 
       # :nocov:
@@ -45,11 +46,9 @@ module Publisher
       # @return [void]
       def add_report_url
         raise("Not a pull request, skipped!") unless pr?
+        return add_comment if comment?
 
-        reported = pr_description.match?(DESCRIPTION_PATTERN)
-        return update_pr_description(pr_description.gsub(DESCRIPTION_PATTERN, description_template).strip) if reported
-
-        update_pr_description("#{pr_description}\n\n#{description_template}".strip)
+        update_pr_description
       end
 
       # :nocov:
@@ -63,7 +62,7 @@ module Publisher
 
       private
 
-      attr_reader :results_path, :report_url
+      attr_reader :results_path, :report_url, :update_pr
 
       # Get executor info
       #
@@ -81,12 +80,32 @@ module Publisher
 
       # Update pull request description
       #
-      # @param [String] _desc
       # @return [void]
-      def update_pr_description(_desc)
+      def update_pr_description
+        raise("Not implemented!")
+      end
+
+      # Add comment with report url
+      #
+      # @return [void]
+      def add_comment
+        raise("Not implemented!")
+      end
+
+      # Commit SHA url
+      #
+      # @return [String]
+      def sha_url
         raise("Not implemented!")
       end
       # :nocov:
+
+      # Add report url as comment
+      #
+      # @return [Boolean]
+      def comment?
+        update_pr == "comment"
+      end
 
       # CI run id
       #
@@ -95,16 +114,69 @@ module Publisher
         self.class.run_id
       end
 
+      # Check if PR already has report urls
+      #
+      # @return [Boolean]
+      def reported?
+        @reported ||= pr_description.match?(DESCRIPTION_PATTERN)
+      end
+
+      # Full PR description
+      #
+      # @return [String]
+      def updated_pr_description
+        reported? ? existing_pr_description : initial_pr_descripion
+      end
+
+      # Updated PR description
+      #
+      # @return [String]
+      def existing_pr_description
+        pr_description.gsub(DESCRIPTION_PATTERN, description_section).strip
+      end
+
+      # Initial PR description
+      #
+      # @return [String]
+      def initial_pr_descripion
+        "#{pr_description}\n\n#{description_section}".strip
+      end
+
+      # Commend body
+      #
+      # @return [String]
+      def comment
+        @comment ||= "#{heading}\n#{job_entry}"
+      end
+
+      # Heading for report urls
+      #
+      # @return [String]
+      def heading
+        @heading ||= <<~HEADING.strip
+          # Allure report
+          📝 `allure-report-publisher` generated allure report for #{sha_url}!
+        HEADING
+      end
+
       # Allure report url pr description
       #
       # @return [String]
-      def description_template
-        <<~DESC
+      def description_section
+        @description_section ||= <<~DESC
           <!-- allure -->
           ---
-          📝 [Latest allure report](#{report_url})
+          #{heading}
+          #{job_entry}
           <!-- allurestop -->
         DESC
+      end
+
+      # Single job report URL entry
+      #
+      # @return [String]
+      def job_entry
+        @job_entry ||= "`#{build_name}`: [allure report](#{report_url})"
       end
     end
   end

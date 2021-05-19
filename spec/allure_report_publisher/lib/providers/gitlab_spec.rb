@@ -1,10 +1,14 @@
 RSpec.describe Publisher::Providers::Gitlab do
-  subject(:provider) { described_class.new(results_path, report_url) }
+  subject(:provider) { described_class.new(results_path: results_path, report_url: report_url, update_pr: update_pr) }
 
   let(:results_path) { Dir.mktmpdir("allure-results", "tmp") }
   let(:report_url) { "https://report.com" }
   let(:auth_token) { "token" }
   let(:event_name) { "merge_request_event" }
+  let(:update_pr) { "description" }
+  let(:sha_url) do
+    "[#{env[:CI_COMMIT_SHA]}](#{env[:CI_SERVER_URL]}/#{env[:CI_PROJECT_PATH]}/-/tree/#{env[:CI_COMMIT_SHA]})"
+  end
 
   let(:env) do
     {
@@ -16,7 +20,8 @@ RSpec.describe Publisher::Providers::Gitlab do
       CI_PIPELINE_ID: "123",
       CI_PIPELINE_URL: "https://gitlab.com/pipeline/url",
       CI_PIPELINE_SOURCE: event_name,
-      GITLAB_AUTH_TOKEN: auth_token
+      GITLAB_AUTH_TOKEN: auth_token,
+      CI_COMMIT_SHA: "sha"
     }.compact
   end
 
@@ -43,24 +48,60 @@ RSpec.describe Publisher::Providers::Gitlab do
     end
   end
 
-  context "when adding allure report url to mr description" do
-    context "with mr context" do
-      let(:mr_description) { "mr description" }
-      let(:gitlab) do
-        instance_double(
-          "Gitlab::Client",
-          merge_request: double("mr", description: mr_description),
-          update_merge_request: nil
+  context "with mr context" do
+    let(:full_mr_description) { "mr description" }
+    let(:gitlab) do
+      instance_double(
+        "Gitlab::Client",
+        merge_request: double("mr", description: full_mr_description),
+        update_merge_request: nil,
+        create_merge_request_comment: nil
+      )
+    end
+
+    before do
+      allow(Gitlab::Client).to receive(:new)
+        .with(private_token: env[:GITLAB_AUTH_TOKEN], endpoint: "#{env[:CI_SERVER_URL]}/api/v4")
+        .and_return(gitlab)
+    end
+
+    context "with add report url to mr description arg for new mr" do
+      it "updates mr description" do
+        provider.add_report_url
+
+        expect(gitlab).to have_received(:update_merge_request).with(
+          env[:CI_PROJECT_PATH],
+          env[:CI_MERGE_REQUEST_IID],
+          description: <<~DESC.strip
+            #{full_mr_description}
+
+            <!-- allure -->
+            ---
+            # Allure report
+            📝 `allure-report-publisher` generated allure report for #{sha_url}!
+            `#{env[:CI_JOB_NAME]}`: [allure report](#{report_url})
+            <!-- allurestop -->
+          DESC
         )
       end
+    end
 
-      before do
-        allow(Gitlab::Client).to receive(:new)
-          .with(private_token: env[:GITLAB_AUTH_TOKEN], endpoint: "#{env[:CI_SERVER_URL]}/api/v4")
-          .and_return(gitlab)
+    context "with add report url to mr description arg for existing mr" do
+      let(:mr_description) { "pr description" }
+      let(:full_mr_description) do
+        <<~PR
+          #{mr_description}
+
+          <!-- allure -->
+            ---
+            # Allure report
+            📝 `allure-report-publisher` generated allure report for sha-url!
+            `#{env[:CI_JOB_NAME]}`: [allure report](report-url)
+          <!-- allurestop -->
+        PR
       end
 
-      it "updates mr description with latest allure report link" do
+      it "updates mr description" do
         provider.add_report_url
 
         expect(gitlab).to have_received(:update_merge_request).with(
@@ -71,27 +112,47 @@ RSpec.describe Publisher::Providers::Gitlab do
 
             <!-- allure -->
             ---
-            📝 [Latest allure report](#{report_url})
+            # Allure report
+            📝 `allure-report-publisher` generated allure report for #{sha_url}!
+            `#{env[:CI_JOB_NAME]}`: [allure report](#{report_url})
             <!-- allurestop -->
           DESC
         )
       end
     end
 
-    context "without mr ci context" do
-      let(:event_name) { "push" }
+    context "with add report url as comment arg" do
+      let(:update_pr) { "comment" }
 
-      it "skips adding allure link to mr with not a pr message" do
-        expect { provider.add_report_url }.to raise_error("Not a pull request, skipped!")
+      it "adds comment" do
+        provider.add_report_url
+
+        expect(gitlab).to have_received(:create_merge_request_comment).with(
+          env[:CI_PROJECT_PATH],
+          env[:CI_MERGE_REQUEST_IID],
+          <<~DESC.strip
+            # Allure report
+            📝 `allure-report-publisher` generated allure report for #{sha_url}!
+            `#{env[:CI_JOB_NAME]}`: [allure report](#{report_url})
+          DESC
+        )
       end
     end
+  end
 
-    context "without configured auth token" do
-      let(:auth_token) { nil }
+  context "without mr ci context" do
+    let(:event_name) { "push" }
 
-      it "skips adding allure link to pr with not configured auth token message" do
-        expect { provider.add_report_url }.to raise_error("Missing GITLAB_AUTH_TOKEN environment variable!")
-      end
+    it "skips adding allure link to mr with not a pr message" do
+      expect { provider.add_report_url }.to raise_error("Not a pull request, skipped!")
+    end
+  end
+
+  context "without configured auth token" do
+    let(:auth_token) { nil }
+
+    it "skips adding allure link to pr with not configured auth token message" do
+      expect { provider.add_report_url }.to raise_error("Missing GITLAB_AUTH_TOKEN environment variable!")
     end
   end
 end

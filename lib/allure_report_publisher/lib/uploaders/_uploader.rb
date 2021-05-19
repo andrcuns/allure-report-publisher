@@ -15,7 +15,7 @@ module Publisher
         "retry-trend.json"
       ].freeze
 
-      def initialize(results_glob:, bucket:, update_pr: false, prefix: nil, copy_latest: false)
+      def initialize(results_glob:, bucket:, update_pr: nil, prefix: nil, copy_latest: false)
         @results_glob = results_glob
         @bucket_name = bucket
         @prefix = prefix
@@ -172,7 +172,7 @@ module Publisher
       def ci_provider
         return @ci_provider if defined?(@ci_provider)
 
-        @ci_provider = Providers.provider&.new(results_dir, report_url)
+        @ci_provider = Providers.provider&.new(results_dir: results_dir, report_url: report_url, update_pr: update_pr)
       end
 
       # Fetch allure report history

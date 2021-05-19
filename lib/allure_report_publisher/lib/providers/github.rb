@@ -57,10 +57,16 @@ module Publisher
 
       # Update pull request description
       #
-      # @param [String] _desc
       # @return [void]
-      def update_pr_description(desc)
-        client.update_pull_request(repository, pr_id, body: desc)
+      def update_pr_description
+        client.update_pull_request(repository, pr_id, body: updated_pr_description)
+      end
+
+      # Add comment with report url
+      #
+      # @return [void]
+      def add_comment
+        client.add_comment(repository, pr_id, comment)
       end
 
       # Pull request id
@@ -96,6 +102,15 @@ module Publisher
       # @return [String]
       def repository
         @repository ||= ENV["GITHUB_REPOSITORY"]
+      end
+
+      # Commit sha url
+      #
+      # @return [String]
+      def sha_url
+        sha = ENV["GITHUB_SHA"]
+
+        "[#{sha}](#{server_url}/#{repository}/pull/#{pr_id}/commits/#{sha})"
       end
     end
   end
