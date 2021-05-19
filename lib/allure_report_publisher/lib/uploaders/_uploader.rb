@@ -39,7 +39,7 @@ module Publisher
         add_history
         add_executor_info
 
-        ReportGenerator.new(results_glob, results_dir, report_dir).generate
+        ReportGenerator.new(results_glob, results_path, report_path).generate
       end
 
       # Upload report to storage provider
@@ -172,14 +172,14 @@ module Publisher
       def ci_provider
         return @ci_provider if defined?(@ci_provider)
 
-        @ci_provider = Providers.provider&.new(results_dir: results_dir, report_url: report_url, update_pr: update_pr)
+        @ci_provider = Providers.provider&.new(results_path: results_path, report_url: report_url, update_pr: update_pr)
       end
 
       # Fetch allure report history
       #
       # @return [void]
       def create_history_dir
-        FileUtils.mkdir_p(path(results_dir, "history"))
+        FileUtils.mkdir_p(path(results_path, "history"))
       end
 
       # Report path prefix
@@ -196,15 +196,15 @@ module Publisher
       # Aggregated results directory
       #
       # @return [String]
-      def results_dir
-        @results_dir ||= Dir.mktmpdir("allure-results")
+      def results_path
+        @results_path ||= Dir.mktmpdir("allure-results")
       end
 
       # Allure report directory
       #
       # @return [String]
-      def report_dir
-        @report_dir ||= Dir.mktmpdir("allure-report")
+      def report_path
+        @report_path ||= Dir.mktmpdir("allure-report")
       end
 
       # Report files
@@ -212,7 +212,7 @@ module Publisher
       # @return [Array<Pathname>]
       def report_files
         @report_files ||= Pathname
-                          .glob("#{report_dir}/**/*")
+                          .glob("#{report_path}/**/*")
                           .reject(&:directory?)
       end
     end
