@@ -89,9 +89,13 @@ module Publisher
 
       # Add comment with report url
       #
-      # @param [String] _url
+      # @param [String] _urls
       # @return [void]
-      def add_urls_comment(_url)
+      def add_urls_comment(_urls)
+        raise("Not implemented!")
+      end
+
+      def sha_url
         raise("Not implemented!")
       end
       # :nocov:
@@ -123,7 +127,7 @@ module Publisher
       def heading
         <<~HEADING.strip
           # Allure report
-          📝 `allure-report-publisher` generated allure report!
+          📝 `allure-report-publisher` generated allure report for #{sha_url}!
         HEADING
       end
 

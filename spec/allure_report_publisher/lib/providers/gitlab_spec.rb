@@ -6,6 +6,9 @@ RSpec.describe Publisher::Providers::Gitlab do
   let(:auth_token) { "token" }
   let(:event_name) { "merge_request_event" }
   let(:update_pr) { "description" }
+  let(:sha_url) do
+    "[#{env[:CI_COMMIT_SHA]}](#{env[:CI_SERVER_URL]}/#{env[:CI_PROJECT_PATH]}/-/tree/#{env[:CI_COMMIT_SHA]})"
+  end
 
   let(:env) do
     {
@@ -17,7 +20,8 @@ RSpec.describe Publisher::Providers::Gitlab do
       CI_PIPELINE_ID: "123",
       CI_PIPELINE_URL: "https://gitlab.com/pipeline/url",
       CI_PIPELINE_SOURCE: event_name,
-      GITLAB_AUTH_TOKEN: auth_token
+      GITLAB_AUTH_TOKEN: auth_token,
+      CI_COMMIT_SHA: "sha"
     }.compact
   end
 
@@ -44,24 +48,25 @@ RSpec.describe Publisher::Providers::Gitlab do
     end
   end
 
-  context "when adding allure report url to mr description" do
-    context "with mr context" do
-      let(:mr_description) { "mr description" }
-      let(:gitlab) do
-        instance_double(
-          "Gitlab::Client",
-          merge_request: double("mr", description: mr_description),
-          update_merge_request: nil
-        )
-      end
+  context "with mr context" do
+    let(:mr_description) { "mr description" }
+    let(:gitlab) do
+      instance_double(
+        "Gitlab::Client",
+        merge_request: double("mr", description: mr_description),
+        update_merge_request: nil,
+        create_merge_request_comment: nil
+      )
+    end
 
-      before do
-        allow(Gitlab::Client).to receive(:new)
-          .with(private_token: env[:GITLAB_AUTH_TOKEN], endpoint: "#{env[:CI_SERVER_URL]}/api/v4")
-          .and_return(gitlab)
-      end
+    before do
+      allow(Gitlab::Client).to receive(:new)
+        .with(private_token: env[:GITLAB_AUTH_TOKEN], endpoint: "#{env[:CI_SERVER_URL]}/api/v4")
+        .and_return(gitlab)
+    end
 
-      it "updates mr description with latest allure report link" do
+    context "with add report url to mr description arg" do
+      it "updates mr description" do
         provider.add_report_url
 
         expect(gitlab).to have_received(:update_merge_request).with(
@@ -73,9 +78,27 @@ RSpec.describe Publisher::Providers::Gitlab do
             <!-- allure -->
             ---
             # Allure report
-            📝 `allure-report-publisher` generated allure report!
+            📝 `allure-report-publisher` generated allure report for #{sha_url}!
             `#{env[:CI_JOB_NAME]}`: [allure report](#{report_url})
             <!-- allurestop -->
+          DESC
+        )
+      end
+    end
+
+    context "with add report url as comment arg" do
+      let(:update_pr) { "comment" }
+
+      it "adds comment" do
+        provider.add_report_url
+
+        expect(gitlab).to have_received(:create_merge_request_comment).with(
+          env[:CI_PROJECT_PATH],
+          env[:CI_MERGE_REQUEST_IID],
+          <<~DESC.strip
+            # Allure report
+            📝 `allure-report-publisher` generated allure report for #{sha_url}!
+            `#{env[:CI_JOB_NAME]}`: [allure report](#{report_url})
           DESC
         )
       end

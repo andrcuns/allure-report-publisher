@@ -50,6 +50,14 @@ module Publisher
         client.update_merge_request(project, mr_iid, description: desc)
       end
 
+      # Add comment with report url
+      #
+      # @param [String] urls
+      # @return [void]
+      def add_urls_comment(urls)
+        client.create_merge_request_comment(project, mr_iid, urls)
+      end
+
       # Get gitlab client
       #
       # @return [Gitlab::Client]
@@ -92,11 +100,20 @@ module Publisher
         @build_name ||= ENV["CI_JOB_NAME"]
       end
 
-      # Github repository
+      # Gitlab repository
       #
       # @return [String]
       def project
         @project ||= ENV["CI_PROJECT_PATH"]
+      end
+
+      # Commit sha url
+      #
+      # @return [String]
+      def sha_url
+        sha = ENV["CI_COMMIT_SHA"]
+
+        "[#{sha}](#{server_url}/#{project}/-/tree/#{sha})"
       end
     end
   end
