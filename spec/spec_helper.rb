@@ -32,6 +32,6 @@ RSpec.configure do |config|
 end
 
 AllureRspec.configure do |c|
-  c.results_directory = "spec/reports/allure-results"
+  c.results_directory = "reports/allure-results"
   c.clean_results_directory = true
 end

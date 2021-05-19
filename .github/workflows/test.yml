@@ -69,7 +69,7 @@ jobs:
             -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
             ghcr.io/andrcuns/allure-report-publisher:latest \
             upload s3 \
-              --results-glob="/workspace/spec/reports/allure-results/*" \
+              --results-glob="/workspace/reports/allure-results/*" \
               --bucket='allure-reports-andrcuns' \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr=description \

@@ -4,7 +4,7 @@
 /coverage/
 /doc/
 /pkg/
-/spec/reports/
+/reports/
 
 # rspec failure tracking
 .rspec_status
