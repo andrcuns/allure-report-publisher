@@ -72,7 +72,9 @@ RSpec.describe Publisher::Providers::Gitlab do
 
             <!-- allure -->
             ---
-            `#{env[:CI_JOB_NAME]}`: 📝 [allure report](#{report_url})
+            # Allure report
+            📝 `allure-report-publisher` generated allure report!
+            `#{env[:CI_JOB_NAME]}`: [allure report](#{report_url})
             <!-- allurestop -->
           DESC
         )

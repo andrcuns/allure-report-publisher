@@ -46,7 +46,7 @@ module Publisher
       # @return [void]
       def add_report_url
         raise("Not a pull request, skipped!") unless pr?
-        return comment_report_urls("Allure report generated!\n#{job_entry}") if comment?
+        return add_urls_comment("#{heading}\n#{job_entry}") if comment?
         return update_pr_description(updated_pr_description) if reported?
 
         update_pr_description(initial_pr_descripion)
@@ -91,7 +91,7 @@ module Publisher
       #
       # @param [String] _url
       # @return [void]
-      def comment_report_urls(_url)
+      def add_urls_comment(_url)
         raise("Not implemented!")
       end
       # :nocov:
@@ -117,27 +117,38 @@ module Publisher
         @reported ||= pr_description.match?(DESCRIPTION_PATTERN)
       end
 
+      # Heading for report urls
+      #
+      # @return [String]
+      def heading
+        <<~HEADING.strip
+          # Allure report
+          📝 `allure-report-publisher` generated allure report!
+        HEADING
+      end
+
       # Updated PR description
       #
       # @return [String]
       def updated_pr_description
-        pr_description.gsub(DESCRIPTION_PATTERN, report_url_section).strip
+        pr_description.gsub(DESCRIPTION_PATTERN, description_section).strip
       end
 
       # Initial PR description
       #
       # @return [String]
       def initial_pr_descripion
-        "#{pr_description}\n\n#{report_url_section}".strip
+        "#{pr_description}\n\n#{description_section}".strip
       end
 
       # Allure report url pr description
       #
       # @return [String]
-      def report_url_section
-        @report_url_section ||= <<~DESC
+      def description_section
+        @description_section ||= <<~DESC
           <!-- allure -->
           ---
+          #{heading}
           #{job_entry}
           <!-- allurestop -->
         DESC
@@ -147,7 +158,7 @@ module Publisher
       #
       # @return [String]
       def job_entry
-        @job_entry ||= "`#{build_name}`: 📝 [allure report](#{report_url})"
+        @job_entry ||= "`#{build_name}`: [allure report](#{report_url})"
       end
     end
   end
