@@ -74,4 +74,4 @@ jobs:
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr=description \
               --copy-latest \
-              --color || true
+              --color
