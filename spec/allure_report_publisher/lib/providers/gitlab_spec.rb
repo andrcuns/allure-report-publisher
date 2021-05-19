@@ -49,11 +49,11 @@ RSpec.describe Publisher::Providers::Gitlab do
   end
 
   context "with mr context" do
-    let(:mr_description) { "mr description" }
+    let(:full_mr_description) { "mr description" }
     let(:gitlab) do
       instance_double(
         "Gitlab::Client",
-        merge_request: double("mr", description: mr_description),
+        merge_request: double("mr", description: full_mr_description),
         update_merge_request: nil,
         create_merge_request_comment: nil
       )
@@ -65,7 +65,42 @@ RSpec.describe Publisher::Providers::Gitlab do
         .and_return(gitlab)
     end
 
-    context "with add report url to mr description arg" do
+    context "with add report url to mr description arg for new mr" do
+      it "updates mr description" do
+        provider.add_report_url
+
+        expect(gitlab).to have_received(:update_merge_request).with(
+          env[:CI_PROJECT_PATH],
+          env[:CI_MERGE_REQUEST_IID],
+          description: <<~DESC.strip
+            #{full_mr_description}
+
+            <!-- allure -->
+            ---
+            # Allure report
+            📝 `allure-report-publisher` generated allure report for #{sha_url}!
+            `#{env[:CI_JOB_NAME]}`: [allure report](#{report_url})
+            <!-- allurestop -->
+          DESC
+        )
+      end
+    end
+
+    context "with add report url to mr description arg for existing mr" do
+      let(:mr_description) { "pr description" }
+      let(:full_mr_description) do
+        <<~PR
+          #{mr_description}
+
+          <!-- allure -->
+            ---
+            # Allure report
+            📝 `allure-report-publisher` generated allure report for sha-url!
+            `#{env[:CI_JOB_NAME]}`: [allure report](report-url)
+          <!-- allurestop -->
+        PR
+      end
+
       it "updates mr description" do
         provider.add_report_url
 
