@@ -72,6 +72,6 @@ jobs:
               --results-glob="/workspace/spec/reports/allure-results/*" \
               --bucket='allure-reports-andrcuns' \
               --prefix="allure-report-publisher/$GITHUB_REF" \
-              --update-pr \
+              --update-pr=description \
               --copy-latest \
               --color || true
