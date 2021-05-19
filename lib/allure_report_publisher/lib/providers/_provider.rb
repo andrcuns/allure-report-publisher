@@ -46,10 +46,9 @@ module Publisher
       # @return [void]
       def add_report_url
         raise("Not a pull request, skipped!") unless pr?
-        return add_urls_comment("#{heading}\n#{job_entry}") if comment?
-        return update_pr_description(updated_pr_description) if reported?
+        return add_comment if comment?
 
-        update_pr_description(initial_pr_descripion)
+        update_pr_description
       end
 
       # :nocov:
@@ -81,20 +80,21 @@ module Publisher
 
       # Update pull request description
       #
-      # @param [String] _urls
       # @return [void]
-      def update_pr_description(_urls)
+      def update_pr_description
         raise("Not implemented!")
       end
 
       # Add comment with report url
       #
-      # @param [String] _urls
       # @return [void]
-      def add_urls_comment(_urls)
+      def add_comment
         raise("Not implemented!")
       end
 
+      # Commit SHA url
+      #
+      # @return [String]
       def sha_url
         raise("Not implemented!")
       end
@@ -121,20 +121,17 @@ module Publisher
         @reported ||= pr_description.match?(DESCRIPTION_PATTERN)
       end
 
-      # Heading for report urls
+      # Full PR description
       #
       # @return [String]
-      def heading
-        <<~HEADING.strip
-          # Allure report
-          📝 `allure-report-publisher` generated allure report for #{sha_url}!
-        HEADING
+      def updated_pr_description
+        reported? ? existing_pr_description : initial_pr_descripion
       end
 
       # Updated PR description
       #
       # @return [String]
-      def updated_pr_description
+      def existing_pr_description
         pr_description.gsub(DESCRIPTION_PATTERN, description_section).strip
       end
 
@@ -143,6 +140,23 @@ module Publisher
       # @return [String]
       def initial_pr_descripion
         "#{pr_description}\n\n#{description_section}".strip
+      end
+
+      # Commend body
+      #
+      # @return [String]
+      def comment
+        @comment ||= "#{heading}\n#{job_entry}"
+      end
+
+      # Heading for report urls
+      #
+      # @return [String]
+      def heading
+        @heading ||= <<~HEADING.strip
+          # Allure report
+          📝 `allure-report-publisher` generated allure report for #{sha_url}!
+        HEADING
       end
 
       # Allure report url pr description

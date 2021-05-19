@@ -44,18 +44,16 @@ module Publisher
 
       # Update pull request description
       #
-      # @param [String] desc
       # @return [void]
-      def update_pr_description(desc)
-        client.update_merge_request(project, mr_iid, description: desc)
+      def update_pr_description
+        client.update_merge_request(project, mr_iid, description: updated_pr_description)
       end
 
       # Add comment with report url
       #
-      # @param [String] urls
       # @return [void]
-      def add_urls_comment(urls)
-        client.create_merge_request_comment(project, mr_iid, urls)
+      def add_comment
+        client.create_merge_request_comment(project, mr_iid, comment)
       end
 
       # Get gitlab client

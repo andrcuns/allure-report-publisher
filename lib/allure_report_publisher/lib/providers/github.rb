@@ -57,18 +57,16 @@ module Publisher
 
       # Update pull request description
       #
-      # @param [String] _desc
       # @return [void]
-      def update_pr_description(desc)
-        client.update_pull_request(repository, pr_id, body: desc)
+      def update_pr_description
+        client.update_pull_request(repository, pr_id, body: updated_pr_description)
       end
 
       # Add comment with report url
       #
-      # @param [String] urls
       # @return [void]
-      def add_urls_comment(urls)
-        client.add_comment(repository, pr_id, urls)
+      def add_comment
+        client.add_comment(repository, pr_id, comment)
       end
 
       # Pull request id
