@@ -25,12 +25,12 @@ jobs:
         with:
           push: false
           load: true
-          tags: andrcuns/allure-report-publisher:latest
+          tags: andrcuns/allure-report-publisher:${{ github.sha }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       - uses: azure/container-scan@v0
         with:
-          image-name: andrcuns/allure-report-publisher:latest
+          image-name: andrcuns/allure-report-publisher:${{ github.sha }}
           severity-threshold: CRITICAL
           run-quality-checks: true
       # Temp fix
