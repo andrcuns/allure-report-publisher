@@ -43,7 +43,7 @@ module Publisher
           file = bucket.file(key(prefix, "history", file_name))
           raise(HistoryNotFoundError, "Allure history from previous runs not found!") unless file
 
-          file.download(path(results_dir, "history", file_name))
+          file.download(path(results_path, "history", file_name))
         end
       end
 
@@ -77,7 +77,7 @@ module Publisher
         args = files.map do |file|
           {
             file: file.to_s,
-            path: key(key_prefix, file.relative_path_from(report_dir))
+            path: key(key_prefix, file.relative_path_from(report_path))
           }
         end
 

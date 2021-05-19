@@ -40,7 +40,7 @@ module Publisher
       def download_history
         HISTORY.each do |file|
           client.get_object(
-            response_target: path(results_dir, "history", file),
+            response_target: path(results_path, "history", file),
             key: key(prefix, "history", file),
             bucket: bucket_name
           )
@@ -80,7 +80,7 @@ module Publisher
           {
             body: File.new(file),
             bucket: bucket_name,
-            key: key(key_prefix, file.relative_path_from(report_dir))
+            key: key(key_prefix, file.relative_path_from(report_path))
           }
         end
 
