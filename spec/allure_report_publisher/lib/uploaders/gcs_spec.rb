@@ -16,9 +16,6 @@ RSpec.describe Publisher::Uploaders::GCS do
     allow(Publisher::Providers).to receive(:provider) { ci_provider }
     allow(Publisher::ReportGenerator).to receive(:new) { report_generator }
     allow(Google::Cloud::Storage).to receive(:new) { client }
-
-    allow(Dir).to receive(:mktmpdir).with("allure-results") { results_dir }
-    allow(Dir).to receive(:mktmpdir).with("allure-report") { report_dir }
   end
 
   context "with non ci run" do
@@ -26,7 +23,7 @@ RSpec.describe Publisher::Uploaders::GCS do
       described_class.new(**args).execute
 
       aggregate_failures do
-        expect(Publisher::ReportGenerator).to have_received(:new).with(results_glob, results_dir, report_dir)
+        expect(Publisher::ReportGenerator).to have_received(:new).with(results_glob, results_path, report_path)
         expect(report_generator).to have_received(:generate)
       end
     end
@@ -46,7 +43,7 @@ RSpec.describe Publisher::Uploaders::GCS do
       aggregate_failures do
         history_files.each do |f|
           expect(bucket).to have_received(:file).with("#{prefix}/history/#{f}")
-          expect(file).to have_received(:download).with("#{results_dir}/history/#{f}")
+          expect(file).to have_received(:download).with("#{results_path}/history/#{f}")
         end
       end
     end
@@ -55,10 +52,11 @@ RSpec.describe Publisher::Uploaders::GCS do
   context "with ci run" do
     let(:ci_provider) { Publisher::Providers::Github }
     let(:ci_provider_instance) do
-      instance_double("Publisher::Providers::Github", write_executor_info: nil, add_report_url: nil)
+      instance_double("Publisher::Providers::Github", executor_info: executor_info, add_report_url: nil)
     end
 
     before do
+      allow(File).to receive(:open).with("#{results_path}/executor.json", "w").and_yield(executor_file)
       allow(Publisher::Providers::Github).to receive(:run_id).and_return(1)
       allow(Publisher::Providers::Github).to receive(:new) { ci_provider_instance }
     end
@@ -69,7 +67,7 @@ RSpec.describe Publisher::Uploaders::GCS do
       aggregate_failures do
         history_files.each do |f|
           expect(bucket).to have_received(:file).with("#{prefix}/history/#{f}")
-          expect(file).to have_received(:download).with("#{results_dir}/history/#{f}")
+          expect(file).to have_received(:download).with("#{results_path}/history/#{f}")
         end
 
         expect(bucket).to have_received(:create_file).with(*history)
@@ -87,7 +85,7 @@ RSpec.describe Publisher::Uploaders::GCS do
 
     it "adds executor info" do
       described_class.new(**args).execute
-      expect(ci_provider_instance).to have_received(:write_executor_info)
+      expect(executor_file).to have_received(:write).with(executor_info.to_json)
     end
 
     it "updates pr description with allure report link" do

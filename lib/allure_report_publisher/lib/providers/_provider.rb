@@ -13,11 +13,9 @@ module Publisher
     # Base class for CI executor info
     #
     class Provider
-      EXECUTOR_JSON = "executor.json".freeze
       DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/.freeze
 
-      def initialize(results_path:, report_url:, update_pr:)
-        @results_path = results_path
+      def initialize(report_url:, update_pr:)
         @report_url = report_url
         @update_pr = update_pr
       end
@@ -30,16 +28,14 @@ module Publisher
       def self.run_id
         raise("Not implemented!")
       end
-      # :nocov:
 
-      # Write executor info file
+      # Get executor info
       #
-      # @return [void]
-      def write_executor_info
-        File.open("#{results_path}/#{EXECUTOR_JSON}", "w") do |file|
-          file.write(executor_info.to_json)
-        end
+      # @return [Hash]
+      def executor_info
+        raise("Not implemented!")
       end
+      # :nocov:
 
       # Add report url to pull request description
       #
@@ -62,14 +58,7 @@ module Publisher
 
       private
 
-      attr_reader :results_path, :report_url, :update_pr
-
-      # Get executor info
-      #
-      # @return [Hash]
-      def executor_info
-        raise("Not implemented!")
-      end
+      attr_reader :report_url, :update_pr
 
       # Current pull request description
       #

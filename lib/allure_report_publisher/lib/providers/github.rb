@@ -19,8 +19,6 @@ module Publisher
         ENV["GITHUB_EVENT_NAME"] == "pull_request"
       end
 
-      private
-
       # Executor info
       #
       # @return [Hash]
@@ -36,6 +34,8 @@ module Publisher
           buildName: build_name
         }
       end
+
+      private
 
       # Github api client
       #

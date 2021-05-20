@@ -1,7 +1,6 @@
 RSpec.describe Publisher::Providers::Github do
-  subject(:provider) { described_class.new(results_path: results_path, report_url: report_url, update_pr: update_pr) }
+  subject(:provider) { described_class.new(report_url: report_url, update_pr: update_pr) }
 
-  let(:results_path) { Dir.mktmpdir("allure-results", "tmp") }
   let(:report_url) { "https://report.com" }
   let(:auth_token) { "token" }
   let(:event_name) { "pull_request" }
@@ -29,11 +28,9 @@ RSpec.describe Publisher::Providers::Github do
     ClimateControl.modify(env) { example.run }
   end
 
-  context "when adding executor info" do
-    it "creates correct executor.json file" do
-      provider.write_executor_info
-
-      expect(JSON.parse(File.read("#{results_path}/executor.json"), symbolize_names: true)).to eq(
+  context "with any context" do
+    it "returns correct executor info" do
+      expect(provider.executor_info).to eq(
         {
           name: "Github",
           type: "github",
@@ -145,7 +142,7 @@ RSpec.describe Publisher::Providers::Github do
     end
   end
 
-  context "without pr ci context" do
+  context "without pr context" do
     let(:event_name) { "push" }
 
     it "skips adding allure link to pr with not a pr message" do

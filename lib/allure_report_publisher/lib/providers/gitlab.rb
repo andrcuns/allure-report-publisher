@@ -35,6 +35,8 @@ module Publisher
         }
       end
 
+      private
+
       # Current pull request description
       #
       # @return [String]

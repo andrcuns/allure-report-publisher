@@ -7,6 +7,7 @@ module Publisher
     class Uploader
       include Helpers
 
+      EXECUTOR_JSON = "executor.json".freeze
       HISTORY = [
         "categories-trend.json",
         "duration-trend.json",
@@ -147,7 +148,9 @@ module Publisher
       def add_executor_info
         return unless ci_provider
 
-        ci_provider.write_executor_info
+        File.open("#{results_path}/#{EXECUTOR_JSON}", "w") do |file|
+          file.write(ci_provider.executor_info.to_json)
+        end
       end
 
       # Run upload commands
@@ -172,7 +175,7 @@ module Publisher
       def ci_provider
         return @ci_provider if defined?(@ci_provider)
 
-        @ci_provider = Providers.provider&.new(results_path: results_path, report_url: report_url, update_pr: update_pr)
+        @ci_provider = Providers.provider&.new(report_url: report_url, update_pr: update_pr)
       end
 
       # Fetch allure report history
