@@ -112,7 +112,7 @@ module Publisher
         sha = ENV["CI_COMMIT_SHA"]
         short_sha = ENV["CI_COMMIT_SHORT_SHA"]
 
-        "[#{short_sha}](#{server_url}/#{project}/-/tree/#{sha})"
+        "[#{short_sha}](#{server_url}/#{project}/-/merge_requests/#{mr_iid}/diffs?commit_id=#{sha})"
       end
     end
   end
