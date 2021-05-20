@@ -8,19 +8,21 @@ RSpec.describe Publisher::Providers::Gitlab do
   let(:update_pr) { "description" }
   let(:sha) { "e1de5e18c3af8skjdhfksjdhjk" }
   let(:short_sha) { "e1de5e18c3af8" }
+  let(:mr_id) { "1" }
+  let(:project) { "andrcuns/allure-report-publisher" }
   let(:sha_url) do
-    "[#{short_sha}](#{env[:CI_SERVER_URL]}/#{env[:CI_PROJECT_PATH]}/-/tree/#{sha})"
+    "[#{short_sha}](#{env[:CI_SERVER_URL]}/#{project}/-/merge_requests/#{mr_id}/diffs?commit_id=#{sha})"
   end
 
   let(:env) do
     {
       GITLAB_CI: "yes",
       CI_SERVER_URL: "https://gitlab.com",
-      CI_PROJECT_PATH: "andrcuns/allure-report-publisher",
-      CI_MERGE_REQUEST_IID: "1",
       CI_JOB_NAME: "test",
       CI_PIPELINE_ID: "123",
       CI_PIPELINE_URL: "https://gitlab.com/pipeline/url",
+      CI_PROJECT_PATH: project,
+      CI_MERGE_REQUEST_IID: mr_id,
       CI_PIPELINE_SOURCE: event_name,
       GITLAB_AUTH_TOKEN: auth_token,
       CI_COMMIT_SHA: sha,
@@ -73,8 +75,8 @@ RSpec.describe Publisher::Providers::Gitlab do
         provider.add_report_url
 
         expect(gitlab).to have_received(:update_merge_request).with(
-          env[:CI_PROJECT_PATH],
-          env[:CI_MERGE_REQUEST_IID],
+          project,
+          mr_id,
           description: <<~DESC.strip
             #{full_mr_description}
 
@@ -110,8 +112,8 @@ RSpec.describe Publisher::Providers::Gitlab do
         provider.add_report_url
 
         expect(gitlab).to have_received(:update_merge_request).with(
-          env[:CI_PROJECT_PATH],
-          env[:CI_MERGE_REQUEST_IID],
+          project,
+          mr_id,
           description: <<~DESC.strip
             #{mr_description}
 
@@ -134,8 +136,8 @@ RSpec.describe Publisher::Providers::Gitlab do
         provider.add_report_url
 
         expect(gitlab).to have_received(:create_merge_request_comment).with(
-          env[:CI_PROJECT_PATH],
-          env[:CI_MERGE_REQUEST_IID],
+          project,
+          mr_id,
           <<~DESC.strip
             # Allure report
             `allure-report-publisher` generated allure report for #{sha_url}!
