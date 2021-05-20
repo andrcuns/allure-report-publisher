@@ -108,7 +108,7 @@ module Publisher
       #
       # @return [String]
       def build_name
-        @build_name ||= ENV["CI_JOB_NAME"]
+        @build_name ||= ENV[ALLURE_JOB_NAME] || ENV["CI_JOB_NAME"]
       end
 
       # Gitlab repository

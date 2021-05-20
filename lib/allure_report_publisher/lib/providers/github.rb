@@ -118,7 +118,7 @@ module Publisher
       #
       # @return [String]
       def build_name
-        @build_name ||= ENV["GITHUB_JOB"]
+        @build_name ||= ENV[ALLURE_JOB_NAME] || ENV["GITHUB_JOB"]
       end
 
       # Github repository
