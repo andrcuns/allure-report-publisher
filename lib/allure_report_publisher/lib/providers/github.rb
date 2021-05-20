@@ -48,6 +48,13 @@ module Publisher
         end
       end
 
+      # Github event
+      #
+      # @return [Hash]
+      def github_event
+        @github_event ||= JSON.parse(File.read(ENV["GITHUB_EVENT_PATH"]), symbolize_names: true)
+      end
+
       # Pull request description
       #
       # @return [String]
@@ -73,7 +80,7 @@ module Publisher
       #
       # @return [Integer]
       def pr_id
-        @pr_id ||= JSON.parse(File.read(ENV["GITHUB_EVENT_PATH"]))["number"]
+        @pr_id ||= github_event[:number]
       end
 
       # Server url
@@ -108,7 +115,7 @@ module Publisher
       #
       # @return [String]
       def sha_url
-        sha = ENV["GITHUB_SHA"]
+        sha = github_event.dig(:pull_request, :head, :sha)
 
         "[#{sha}](#{server_url}/#{repository}/pull/#{pr_id}/commits/#{sha})"
       end

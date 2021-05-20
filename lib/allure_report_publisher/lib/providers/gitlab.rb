@@ -110,8 +110,9 @@ module Publisher
       # @return [String]
       def sha_url
         sha = ENV["CI_COMMIT_SHA"]
+        short_sha = ENV["CI_COMMIT_SHORT_SHA"]
 
-        "[#{sha}](#{server_url}/#{project}/-/tree/#{sha})"
+        "[#{short_sha}](#{server_url}/#{project}/-/tree/#{sha})"
       end
     end
   end

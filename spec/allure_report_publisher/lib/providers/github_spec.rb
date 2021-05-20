@@ -6,8 +6,9 @@ RSpec.describe Publisher::Providers::Github do
   let(:auth_token) { "token" }
   let(:event_name) { "pull_request" }
   let(:update_pr) { "description" }
+  let(:sha) { "e1de5e18c3af8" }
   let(:sha_url) do
-    "[#{env[:GITHUB_SHA]}](#{env[:GITHUB_SERVER_URL]}/#{env[:GITHUB_REPOSITORY]}/pull/1/commits/#{env[:GITHUB_SHA]})"
+    "[#{sha}](#{env[:GITHUB_SERVER_URL]}/#{env[:GITHUB_REPOSITORY]}/pull/1/commits/#{sha})"
   end
 
   let(:env) do
@@ -20,8 +21,7 @@ RSpec.describe Publisher::Providers::Github do
       GITHUB_API_URL: "https://api.github.com",
       GITHUB_EVENT_PATH: "spec/fixture/workflow_event.json",
       GITHUB_AUTH_TOKEN: auth_token,
-      GITHUB_EVENT_NAME: event_name,
-      GITHUB_SHA: "sha"
+      GITHUB_EVENT_NAME: event_name
     }.compact
   end
 

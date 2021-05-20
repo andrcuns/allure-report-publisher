@@ -6,8 +6,10 @@ RSpec.describe Publisher::Providers::Gitlab do
   let(:auth_token) { "token" }
   let(:event_name) { "merge_request_event" }
   let(:update_pr) { "description" }
+  let(:sha) { "e1de5e18c3af8skjdhfksjdhjk" }
+  let(:short_sha) { "e1de5e18c3af8" }
   let(:sha_url) do
-    "[#{env[:CI_COMMIT_SHA]}](#{env[:CI_SERVER_URL]}/#{env[:CI_PROJECT_PATH]}/-/tree/#{env[:CI_COMMIT_SHA]})"
+    "[#{short_sha}](#{env[:CI_SERVER_URL]}/#{env[:CI_PROJECT_PATH]}/-/tree/#{sha})"
   end
 
   let(:env) do
@@ -21,7 +23,8 @@ RSpec.describe Publisher::Providers::Gitlab do
       CI_PIPELINE_URL: "https://gitlab.com/pipeline/url",
       CI_PIPELINE_SOURCE: event_name,
       GITLAB_AUTH_TOKEN: auth_token,
-      CI_COMMIT_SHA: "sha"
+      CI_COMMIT_SHA: sha,
+      CI_COMMIT_SHORT_SHA: short_sha
     }.compact
   end
 
