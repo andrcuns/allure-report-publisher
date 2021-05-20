@@ -134,10 +134,10 @@ RSpec.describe Publisher::Providers::Gitlab do
           env[:CI_PROJECT_PATH],
           env[:CI_MERGE_REQUEST_IID],
           <<~DESC.strip
-          # Allure report
-          `allure-report-publisher` generated allure report for #{sha_url}!
+            # Allure report
+            `allure-report-publisher` generated allure report for #{sha_url}!
 
-          **#{env[:CI_JOB_NAME]}**: 📝 [allure report](#{report_url})
+            **#{env[:CI_JOB_NAME]}**: 📝 [allure report](#{report_url})
           DESC
         )
       end
