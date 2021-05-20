@@ -121,21 +121,14 @@ module Publisher
       #
       # @return [String]
       def existing_pr_description
-        pr_description.gsub(DESCRIPTION_PATTERN, description_section).strip
+        pr_description.gsub(DESCRIPTION_PATTERN, pr_body).strip
       end
 
       # Initial PR description
       #
       # @return [String]
       def initial_pr_descripion
-        "#{pr_description}\n\n#{description_section}".strip
-      end
-
-      # Commend body
-      #
-      # @return [String]
-      def comment
-        @comment ||= "#{heading}\n\n#{job_entry}"
+        "#{pr_description}\n\n#{pr_body}".strip
       end
 
       # Heading for report urls
@@ -151,8 +144,8 @@ module Publisher
       # Allure report url pr description
       #
       # @return [String]
-      def description_section
-        @description_section ||= <<~DESC
+      def pr_body
+        @pr_body ||= <<~DESC
           <!-- allure -->
           ---
           #{heading}
@@ -160,6 +153,13 @@ module Publisher
           #{job_entry}
           <!-- allurestop -->
         DESC
+      end
+
+      # Allure report url comment body
+      #
+      # @return [String]
+      def comment_body
+        @comment_body ||= pr_body.gsub("---\n", "")
       end
 
       # Single job report URL entry
