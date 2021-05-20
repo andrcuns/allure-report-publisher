@@ -9,6 +9,17 @@ RSpec.describe Publisher::Providers::Github do
   let(:sha_url) do
     "[#{sha}](#{env[:GITHUB_SERVER_URL]}/#{env[:GITHUB_REPOSITORY]}/pull/1/commits/#{sha})"
   end
+  let(:urls) do
+    <<~URLS
+      <!-- allure -->
+      ---
+      # Allure report
+      `allure-report-publisher` generated allure report for #{sha_url}!
+
+      **#{env[:GITHUB_JOB]}**: 📝 [allure report](#{report_url})
+      <!-- allurestop -->
+    URLS
+  end
 
   let(:env) do
     {
@@ -47,13 +58,16 @@ RSpec.describe Publisher::Providers::Github do
 
   context "with pr context" do
     let(:full_pr_description) { "pr description" }
+    let(:comments) { [] }
 
     let(:octokit) do
       instance_double(
         "Octokit::Client",
         pull_request: { body: full_pr_description },
+        issue_comments: comments,
         update_pull_request: nil,
-        add_comment: nil
+        add_comment: nil,
+        update_comment: nil
       )
     end
 
@@ -63,7 +77,7 @@ RSpec.describe Publisher::Providers::Github do
         .and_return(octokit)
     end
 
-    context "with add report url to mr description arg for new pr" do
+    context "with add report url to pr description arg for new pr" do
       it "updates pr description" do
         provider.add_report_url
 
@@ -73,19 +87,13 @@ RSpec.describe Publisher::Providers::Github do
           body: <<~DESC.strip
             #{full_pr_description}
 
-            <!-- allure -->
-            ---
-            # Allure report
-            `allure-report-publisher` generated allure report for #{sha_url}!
-
-            **#{env[:GITHUB_JOB]}**: 📝 [allure report](#{report_url})
-            <!-- allurestop -->
+            #{urls}
           DESC
         )
       end
     end
 
-    context "with add report url to mr description arg for existing pr" do
+    context "with add report url to pr description arg for existing pr" do
       let(:pr_description) { "pr description" }
       let(:full_pr_description) do
         <<~PR
@@ -110,13 +118,7 @@ RSpec.describe Publisher::Providers::Github do
           body: <<~DESC.strip
             #{pr_description}
 
-            <!-- allure -->
-            ---
-            # Allure report
-            `allure-report-publisher` generated allure report for #{sha_url}!
-
-            **#{env[:GITHUB_JOB]}**: 📝 [allure report](#{report_url})
-            <!-- allurestop -->
+            #{urls}
           DESC
         )
       end
@@ -125,19 +127,34 @@ RSpec.describe Publisher::Providers::Github do
     context "with add report url as comment arg" do
       let(:update_pr) { "comment" }
 
-      it "adds comment" do
-        provider.add_report_url
+      context "with new pr" do
+        it "adds new comment" do
+          provider.add_report_url
 
-        expect(octokit).to have_received(:add_comment).with(
-          env[:GITHUB_REPOSITORY],
-          1,
-          <<~DESC.strip
-            # Allure report
-            `allure-report-publisher` generated allure report for #{sha_url}!
+          expect(octokit).to have_received(:add_comment).with(env[:GITHUB_REPOSITORY], 1, urls.gsub("---\n", ""))
+        end
+      end
 
-            **#{env[:GITHUB_JOB]}**: 📝 [allure report](#{report_url})
-          DESC
-        )
+      context "with existing pr" do
+        let(:comments) do
+          [{
+            id: 2,
+            body: <<~BODY
+              <!-- allure -->
+              # Allure report
+              `allure-report-publisher` generated allure report for sha_url!
+
+              **#{env[:GITHUB_JOB]}**: 📝 [allure report](report_url)
+              <!-- allurestop -->
+            BODY
+          }]
+        end
+
+        it "updates existing comment" do
+          provider.add_report_url
+
+          expect(octokit).to have_received(:update_comment).with(env[:GITHUB_REPOSITORY], 2, urls.gsub("---\n", ""))
+        end
       end
     end
   end

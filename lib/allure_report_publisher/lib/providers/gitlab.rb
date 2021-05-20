@@ -55,7 +55,7 @@ module Publisher
       #
       # @return [void]
       def add_comment
-        client.create_merge_request_comment(project, mr_iid, comment)
+        client.create_merge_request_comment(project, mr_iid, comment_body)
       end
 
       # Get gitlab client

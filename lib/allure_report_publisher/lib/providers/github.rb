@@ -5,6 +5,12 @@ module Publisher
     # Github implementation
     #
     class Github < Provider
+      # Set octokit to autopaginate
+      #
+      Octokit.configure do |config|
+        config.auto_paginate = true
+      end
+
       # Run id
       #
       # @return [String]
@@ -48,6 +54,31 @@ module Publisher
         end
       end
 
+      # Update pull request description
+      #
+      # @return [void]
+      def update_pr_description
+        client.update_pull_request(repository, pr_id, body: updated_pr_description)
+      end
+
+      # Add comment with report url
+      #
+      # @return [void]
+      def add_comment
+        return client.add_comment(repository, pr_id, comment_body) unless comment
+
+        client.update_comment(repository, comment[:id], comment_body)
+      end
+
+      # Existing comment with allure urls
+      #
+      # @return [Sawyer::Resource]
+      def comment
+        @comment ||= client.issue_comments(repository, pr_id).detect do |comment|
+          comment[:body].match?(DESCRIPTION_PATTERN)
+        end
+      end
+
       # Github event
       #
       # @return [Hash]
@@ -60,20 +91,6 @@ module Publisher
       # @return [String]
       def pr_description
         @pr_description ||= client.pull_request(repository, pr_id)[:body]
-      end
-
-      # Update pull request description
-      #
-      # @return [void]
-      def update_pr_description
-        client.update_pull_request(repository, pr_id, body: updated_pr_description)
-      end
-
-      # Add comment with report url
-      #
-      # @return [void]
-      def add_comment
-        client.add_comment(repository, pr_id, comment)
       end
 
       # Pull request id
