@@ -23,7 +23,7 @@ jobs:
         env:
           BUNDLE_WITHOUT: development
       - name: Rubocop
-        run: bundle exec rubocop --color
+        run: cat $GITHUB_EVENT_PATH && bundle exec rubocop --color
 
   rspec:
     runs-on: ubuntu-20.04
