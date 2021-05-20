@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - Dockerfile
+      - Gemfile
+      - Gemfile.lock
+      - allure-report-publisher.gemspec
 
 jobs:
   docker:
@@ -29,14 +32,14 @@ jobs:
         with:
           push: false
           load: true
-          tags: andrcuns/allure-report-publisher:${{ github.sha }}
+          tags: andrcuns/allure-report-publisher:build
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       - uses: azure/container-scan@v0
         env:
           DOCKER_CONTENT_TRUST: 1
         with:
-          image-name: andrcuns/allure-report-publisher:${{ github.sha }}
+          image-name: andrcuns/allure-report-publisher:build
           severity-threshold: CRITICAL
           run-quality-checks: true
       # Temp fix
