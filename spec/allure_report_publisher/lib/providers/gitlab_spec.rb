@@ -72,7 +72,7 @@ RSpec.describe Publisher::Providers::Gitlab do
         merge_request_comments: comment_double,
         update_merge_request: nil,
         create_merge_request_comment: nil,
-        edit_note: nil
+        edit_merge_request_note: nil
       )
     end
 
@@ -159,7 +159,7 @@ RSpec.describe Publisher::Providers::Gitlab do
         it "updates comment" do
           provider.add_report_url
 
-          expect(gitlab).to have_received(:edit_note).with(project, 2, urls.gsub("---\n", ""))
+          expect(gitlab).to have_received(:edit_merge_request_note).with(project, mr_id, 2, urls.gsub("---\n", ""))
         end
       end
     end

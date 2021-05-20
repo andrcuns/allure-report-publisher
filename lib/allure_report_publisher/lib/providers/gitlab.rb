@@ -57,7 +57,7 @@ module Publisher
       def add_comment
         return client.create_merge_request_comment(project, mr_iid, comment_body) unless comment
 
-        client.edit_note(project, comment.id, comment_body)
+        client.edit_merge_request_note(project, mr_iid, comment.id, comment_body)
       end
 
       # Existing comment with allure urls
