@@ -14,6 +14,7 @@ module Publisher
     #
     class Provider
       DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/.freeze
+      ALLURE_JOB_NAME = "ALLURE_JOB_NAME".freeze
 
       def initialize(report_url:, update_pr:)
         @report_url = report_url
