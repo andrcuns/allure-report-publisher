@@ -55,7 +55,18 @@ module Publisher
       #
       # @return [void]
       def add_comment
-        client.create_merge_request_comment(project, mr_iid, comment_body)
+        return client.create_merge_request_comment(project, mr_iid, comment_body) unless comment
+
+        client.edit_note(project, comment.id, comment_body)
+      end
+
+      # Existing comment with allure urls
+      #
+      # @return [Gitlab::ObjectifiedHash]
+      def comment
+        client.merge_request_comments(project, mr_iid).auto_paginate.detect do |comment|
+          comment.body.match?(DESCRIPTION_PATTERN)
+        end
       end
 
       # Get gitlab client

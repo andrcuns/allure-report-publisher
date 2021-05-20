@@ -9,6 +9,8 @@ RSpec.describe Publisher::Providers::Gitlab do
   let(:short_sha) { "e1de5e18c3af8" }
   let(:mr_id) { "1" }
   let(:project) { "andrcuns/allure-report-publisher" }
+  let(:comment_double) { double("comments", auto_paginate: [comment].compact) }
+  let(:comment) { nil }
   let(:sha_url) do
     "[#{short_sha}](#{env[:CI_SERVER_URL]}/#{project}/-/merge_requests/#{mr_id}/diffs?commit_id=#{sha})"
   end
@@ -67,8 +69,10 @@ RSpec.describe Publisher::Providers::Gitlab do
       instance_double(
         "Gitlab::Client",
         merge_request: double("mr", description: full_mr_description),
+        merge_request_comments: comment_double,
         update_merge_request: nil,
-        create_merge_request_comment: nil
+        create_merge_request_comment: nil,
+        edit_note: nil
       )
     end
 
@@ -128,10 +132,35 @@ RSpec.describe Publisher::Providers::Gitlab do
     context "with add report url as comment arg" do
       let(:update_pr) { "comment" }
 
-      it "adds comment" do
-        provider.add_report_url
+      context "with new mr" do
+        it "adds comment" do
+          provider.add_report_url
 
-        expect(gitlab).to have_received(:create_merge_request_comment).with(project, mr_id, urls.gsub("---\n", ""))
+          expect(gitlab).to have_received(:create_merge_request_comment).with(project, mr_id, urls.gsub("---\n", ""))
+        end
+      end
+
+      context "with existing mr" do
+        let(:comment) do
+          double(
+            "comment",
+            id: 2,
+            body: <<~PR
+              <!-- allure -->
+              # Allure report
+              `allure-report-publisher` generated allure report for sha_url!
+
+              **#{env[:CI_JOB_NAME]}**: 📝 [allure report](report_url)
+              <!-- allurestop -->
+            PR
+          )
+        end
+
+        it "updates comment" do
+          provider.add_report_url
+
+          expect(gitlab).to have_received(:edit_note).with(project, 2, urls.gsub("---\n", ""))
+        end
       end
     end
   end
