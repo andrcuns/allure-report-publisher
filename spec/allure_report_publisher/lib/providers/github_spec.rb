@@ -79,8 +79,9 @@ RSpec.describe Publisher::Providers::Github do
             <!-- allure -->
             ---
             # Allure report
-            📝 `allure-report-publisher` generated allure report for #{sha_url}!
-            `#{env[:GITHUB_JOB]}`: [allure report](#{report_url})
+            `allure-report-publisher` generated allure report for #{sha_url}!
+
+            **#{env[:GITHUB_JOB]}**: 📝 [allure report](#{report_url})
             <!-- allurestop -->
           DESC
         )
@@ -96,8 +97,9 @@ RSpec.describe Publisher::Providers::Github do
           <!-- allure -->
             ---
             # Allure report
-            📝 `allure-report-publisher` generated allure report for sha-url!
-            `#{env[:GITHUB_JOB]}`: [allure report](report-url)
+            `allure-report-publisher` generated allure report for sha_url!
+
+            **#{env[:GITHUB_JOB]}**: 📝 [allure report](report_url)
           <!-- allurestop -->
         PR
       end
@@ -114,8 +116,9 @@ RSpec.describe Publisher::Providers::Github do
             <!-- allure -->
             ---
             # Allure report
-            📝 `allure-report-publisher` generated allure report for #{sha_url}!
-            `#{env[:GITHUB_JOB]}`: [allure report](#{report_url})
+            `allure-report-publisher` generated allure report for #{sha_url}!
+
+            **#{env[:GITHUB_JOB]}**: 📝 [allure report](#{report_url})
             <!-- allurestop -->
           DESC
         )
@@ -133,8 +136,9 @@ RSpec.describe Publisher::Providers::Github do
           1,
           <<~DESC.strip
             # Allure report
-            📝 `allure-report-publisher` generated allure report for #{sha_url}!
-            `#{env[:GITHUB_JOB]}`: [allure report](#{report_url})
+            `allure-report-publisher` generated allure report for #{sha_url}!
+
+            **#{env[:GITHUB_JOB]}**: 📝 [allure report](#{report_url})
           DESC
         )
       end

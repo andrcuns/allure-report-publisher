@@ -146,7 +146,7 @@ module Publisher
       #
       # @return [String]
       def comment
-        @comment ||= "#{heading}\n#{job_entry}"
+        @comment ||= "#{heading}\n\n#{job_entry}"
       end
 
       # Heading for report urls
@@ -155,7 +155,7 @@ module Publisher
       def heading
         @heading ||= <<~HEADING.strip
           # Allure report
-          📝 `allure-report-publisher` generated allure report for #{sha_url}!
+          `allure-report-publisher` generated allure report for #{sha_url}!
         HEADING
       end
 
@@ -167,6 +167,7 @@ module Publisher
           <!-- allure -->
           ---
           #{heading}
+
           #{job_entry}
           <!-- allurestop -->
         DESC
@@ -176,7 +177,7 @@ module Publisher
       #
       # @return [String]
       def job_entry
-        @job_entry ||= "`#{build_name}`: [allure report](#{report_url})"
+        @job_entry ||= "**#{build_name}**: 📝 [allure report](#{report_url})"
       end
     end
   end

@@ -78,8 +78,9 @@ RSpec.describe Publisher::Providers::Gitlab do
             <!-- allure -->
             ---
             # Allure report
-            📝 `allure-report-publisher` generated allure report for #{sha_url}!
-            `#{env[:CI_JOB_NAME]}`: [allure report](#{report_url})
+            `allure-report-publisher` generated allure report for #{sha_url}!
+
+            **#{env[:CI_JOB_NAME]}**: 📝 [allure report](#{report_url})
             <!-- allurestop -->
           DESC
         )
@@ -95,8 +96,9 @@ RSpec.describe Publisher::Providers::Gitlab do
           <!-- allure -->
             ---
             # Allure report
-            📝 `allure-report-publisher` generated allure report for sha-url!
-            `#{env[:CI_JOB_NAME]}`: [allure report](report-url)
+            `allure-report-publisher` generated allure report for sha_url!
+
+            **#{env[:CI_JOB_NAME]}**: 📝 [allure report](report_url)
           <!-- allurestop -->
         PR
       end
@@ -113,8 +115,9 @@ RSpec.describe Publisher::Providers::Gitlab do
             <!-- allure -->
             ---
             # Allure report
-            📝 `allure-report-publisher` generated allure report for #{sha_url}!
-            `#{env[:CI_JOB_NAME]}`: [allure report](#{report_url})
+            `allure-report-publisher` generated allure report for #{sha_url}!
+
+            **#{env[:CI_JOB_NAME]}**: 📝 [allure report](#{report_url})
             <!-- allurestop -->
           DESC
         )
@@ -131,9 +134,10 @@ RSpec.describe Publisher::Providers::Gitlab do
           env[:CI_PROJECT_PATH],
           env[:CI_MERGE_REQUEST_IID],
           <<~DESC.strip
-            # Allure report
-            📝 `allure-report-publisher` generated allure report for #{sha_url}!
-            `#{env[:CI_JOB_NAME]}`: [allure report](#{report_url})
+          # Allure report
+          `allure-report-publisher` generated allure report for #{sha_url}!
+
+          **#{env[:CI_JOB_NAME]}**: 📝 [allure report](#{report_url})
           DESC
         )
       end
