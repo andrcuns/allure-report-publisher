@@ -52,7 +52,7 @@ module Publisher
         uploader.report_urls.each { |k, v| log("#{k}: #{v}", :green) }
         return unless args[:update_pr] && uploader.pr?
 
-        log("Updating pull request description")
+        log("Adding reports urls")
         Spinner.spin("updating", exit_on_error: false) { uploader.add_url_to_pr }
       end
 
