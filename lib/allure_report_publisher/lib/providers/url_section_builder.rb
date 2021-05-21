@@ -48,7 +48,7 @@ module Publisher
       # Allure report url pr description
       #
       # @return [String]
-      def body(job_entries = "**#{build_name}**: 📝 [allure report](#{report_url})")
+      def body(job_entries = job_entry)
         @body ||= <<~BODY.strip
           <!-- allure -->
           ---
@@ -83,14 +83,14 @@ module Publisher
       #
       # @return [String]
       def job_entry
-        @job_entry ||= "**#{build_name}**: 📝 [allure report](#{report_url})"
+        @job_entry ||= "**#{build_name}**: 📝 [allure report](#{report_url})<br />"
       end
 
       # Job entry pattern
       #
       # @return [RegExp]
       def job_entry_pattern
-        @job_entry_pattern ||= /^\*\*#{build_name}\*\*:.*\[allure report\]\(.*\)$/
+        @job_entry_pattern ||= %r{^\*\*#{build_name}\*\*:.*\[allure report\]\(.*\)<br />$}
       end
     end
   end

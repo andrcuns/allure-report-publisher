@@ -13,7 +13,7 @@ RSpec.describe Publisher::Providers::UrlSectionBuilder do
       `allure-report-publisher` generated allure report for #{url_sha}!
 
       <!-- jobs -->
-      **#{job_name}**: 📝 [allure report](#{url_report})
+      **#{job_name}**: 📝 [allure report](#{url_report})<br />
       <!-- jobs -->
       <!-- allurestop -->
     URLS
@@ -36,8 +36,8 @@ RSpec.describe Publisher::Providers::UrlSectionBuilder do
         `allure-report-publisher` generated allure report for #{sha_url}!
 
         <!-- jobs -->
-        **build-name-2**: 📝 [allure report](#{report_url})
-        **#{build_name}**: 📝 [allure report](#{report_url})
+        **build-name-2**: 📝 [allure report](#{report_url})<br />
+        **#{build_name}**: 📝 [allure report](#{report_url})<br />
         <!-- jobs -->
         <!-- allurestop -->
       PR
@@ -60,8 +60,8 @@ RSpec.describe Publisher::Providers::UrlSectionBuilder do
         `allure-report-publisher` generated allure report for #{sha_url}!
 
         <!-- jobs -->
-        **build-name-2**: 📝 [allure report](#{report_url})
-        **#{build_name}**: 📝 [allure report](#{report_url})
+        **build-name-2**: 📝 [allure report](#{report_url})<br />
+        **#{build_name}**: 📝 [allure report](#{report_url})<br />
         <!-- jobs -->
         <!-- allurestop -->
       PR
