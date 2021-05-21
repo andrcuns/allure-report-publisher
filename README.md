@@ -31,7 +31,7 @@ docker pull andrcuns/allure-report-publisher:latest
 
 allure-report-publisher will automatically detect if used in CI environment and add relevant executor info and history
 
-- `Allure report link`: requires `GITHUB_AUTH_TOKEN` or `GITLAB_AUTH_TOKEN` in order to update pull request description with link to latest report
+- `--update-pr=(comment|description)`: requires `GITHUB_AUTH_TOKEN` or `GITLAB_AUTH_TOKEN` in order to update pull request with links to allure reports
 
 ```shell
 $ (allure-report-publisher|docker run --rm andrcuns/allure-report-publisher:latest) upload --help
