@@ -28,12 +28,12 @@ RUN gem build -o ${GEMFILE}
 FROM ruby as production
 
 # Install allure
-ARG ALLURE_VERSION=2.13.9
+ARG ALLURE_VERSION=2.14.0
 ENV PATH=$PATH:/usr/local/allure-${ALLURE_VERSION}/bin
 RUN apk --no-cache add openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 RUN set -eux; \
-    wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${ALLURE_VERSION}/allure-commandline-${ALLURE_VERSION}.tgz; \
-    tar -xzf allure-commandline-${ALLURE_VERSION}.tgz -C /usr/local && rm allure-commandline-${ALLURE_VERSION}.tgz; \
+    wget https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz; \
+    tar -xzf allure-${ALLURE_VERSION}.tgz -C /usr/local && rm allure-${ALLURE_VERSION}.tgz; \
     allure --version
 
 # Install allure-report-publisher
