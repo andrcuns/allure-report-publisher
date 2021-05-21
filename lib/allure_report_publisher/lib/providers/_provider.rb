@@ -10,10 +10,78 @@ module Publisher
       return Gitlab if ENV["GITLAB_CI"]
     end
 
+    # Urls section builder
+    #
+    class ReportUrls
+      DESCRIPTION_PATTERN = /<!-- allure -->([\s\S]+)<!-- allurestop -->/.freeze
+
+      def initialize(report_url:, build_name:, sha_url:)
+        @report_url = report_url
+        @build_name = build_name
+        @sha_url = sha_url
+      end
+
+      # Matches url section pattern
+      #
+      # @param [String] urls
+      # @return [Boolean]
+      def self.match?(urls)
+        urls.match?(DESCRIPTION_PATTERN)
+      end
+
+      # Get urls for PR update
+      #
+      # @param [String] pr
+      # @return [String]
+      def updated_pr_description(pr_description)
+        return "#{pr_description}\n\n#{body}".strip unless pr_description.match?(DESCRIPTION_PATTERN)
+
+        pr_description.gsub(DESCRIPTION_PATTERN, body).strip
+      end
+
+      # Allure report url comment
+      #
+      # @return [String]
+      def comment_body(_pr_comment = nil)
+        body.gsub("---\n", "")
+      end
+
+      attr_reader :report_url, :build_name, :sha_url
+
+      private
+
+      # Allure report url pr description
+      #
+      # @return [String]
+      def body
+        @body ||= "<!-- allure -->\n---\n#{heading}\n\n#{job_entry}\n<!-- allurestop -->\n"
+      end
+
+      # Url section heading
+      #
+      # @return [String]
+      def heading
+        @heading ||= "# Allure report\n`allure-report-publisher` generated allure report for #{sha_url}!"
+      end
+
+      # Single job report URL entry
+      #
+      # @return [String]
+      def job_entry
+        @job_entry ||= "**#{build_name}**: 📝 [allure report](#{report_url})"
+      end
+
+      # Job entry pattern
+      #
+      # @return [RegExp]
+      def job_entry_pattern
+        @job_entry_pattern ||= /^\*\*#{build_name}\*\*: 📝 \[allure report\]S+$/
+      end
+    end
+
     # Base class for CI executor info
     #
     class Provider
-      DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/.freeze
       ALLURE_JOB_NAME = "ALLURE_JOB_NAME".freeze
 
       def initialize(report_url:, update_pr:)
@@ -82,6 +150,13 @@ module Publisher
         raise("Not implemented!")
       end
 
+      # Build name
+      #
+      # @return [String]
+      def build_name
+        raise("Not implemented!")
+      end
+
       # Commit SHA url
       #
       # @return [String]
@@ -108,66 +183,14 @@ module Publisher
       #
       # @return [Boolean]
       def reported?
-        @reported ||= pr_description.match?(DESCRIPTION_PATTERN)
+        @reported ||= ReportUrls.match?(pr_description)
       end
 
-      # Full PR description
+      # Report urls section creator
       #
-      # @return [String]
-      def updated_pr_description
-        reported? ? existing_pr_description : initial_pr_descripion
-      end
-
-      # Updated PR description
-      #
-      # @return [String]
-      def existing_pr_description
-        pr_description.gsub(DESCRIPTION_PATTERN, pr_body).strip
-      end
-
-      # Initial PR description
-      #
-      # @return [String]
-      def initial_pr_descripion
-        "#{pr_description}\n\n#{pr_body}".strip
-      end
-
-      # Heading for report urls
-      #
-      # @return [String]
-      def heading
-        @heading ||= <<~HEADING.strip
-          # Allure report
-          `allure-report-publisher` generated allure report for #{sha_url}!
-        HEADING
-      end
-
-      # Allure report url pr description
-      #
-      # @return [String]
-      def pr_body
-        @pr_body ||= <<~DESC
-          <!-- allure -->
-          ---
-          #{heading}
-
-          #{job_entry}
-          <!-- allurestop -->
-        DESC
-      end
-
-      # Allure report url comment body
-      #
-      # @return [String]
-      def comment_body
-        @comment_body ||= pr_body.gsub("---\n", "")
-      end
-
-      # Single job report URL entry
-      #
-      # @return [String]
-      def job_entry
-        @job_entry ||= "**#{build_name}**: 📝 [allure report](#{report_url})"
+      # @return [ReportUrls]
+      def report_urls
+        @report_urls ||= ReportUrls.new(report_url: report_url, build_name: build_name, sha_url: sha_url)
       end
     end
   end

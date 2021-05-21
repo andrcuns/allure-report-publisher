@@ -112,7 +112,7 @@ RSpec.describe Publisher::Providers::Gitlab do
         PR
       end
 
-      it "updates mr description" do
+      it "updates mr description", :test do
         provider.add_report_url
 
         expect(gitlab).to have_received(:update_merge_request).with(

@@ -58,16 +58,16 @@ module Publisher
       #
       # @return [void]
       def update_pr_description
-        client.update_pull_request(repository, pr_id, body: updated_pr_description)
+        client.update_pull_request(repository, pr_id, body: report_urls.updated_pr_description(pr_description))
       end
 
       # Add comment with report url
       #
       # @return [void]
       def add_comment
-        return client.add_comment(repository, pr_id, comment_body) unless comment
+        return client.add_comment(repository, pr_id, report_urls.comment_body) unless comment
 
-        client.update_comment(repository, comment[:id], comment_body)
+        client.update_comment(repository, comment[:id], report_urls.comment_body(comment[:body]))
       end
 
       # Existing comment with allure urls
@@ -75,7 +75,7 @@ module Publisher
       # @return [Sawyer::Resource]
       def comment
         @comment ||= client.issue_comments(repository, pr_id).detect do |comment|
-          comment[:body].match?(DESCRIPTION_PATTERN)
+          ReportUrls.match?(comment[:body])
         end
       end
 
