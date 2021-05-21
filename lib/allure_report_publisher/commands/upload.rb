@@ -22,7 +22,7 @@ module Publisher
       option :update_pr,
              type: :string,
              values: %w[comment description],
-             desc: "Add report url to PR via comment or description update"
+             desc: "Add report url to PR via comment or description update. Required: false"
       option :copy_latest,
              type: :boolean,
              default: false,
