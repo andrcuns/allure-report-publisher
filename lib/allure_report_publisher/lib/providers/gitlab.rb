@@ -123,8 +123,9 @@ module Publisher
       # @return [String]
       def sha_url
         sha = ENV["CI_MERGE_REQUEST_SOURCE_BRANCH_SHA"] || ENV["CI_COMMIT_SHA"]
+        short_sha = sha[0..7]
 
-        "[#{sha}](#{server_url}/#{project}/-/merge_requests/#{mr_iid}/diffs?commit_id=#{sha})"
+        "[#{short_sha}](#{server_url}/#{project}/-/merge_requests/#{mr_iid}/diffs?commit_id=#{sha})"
       end
     end
   end

@@ -5,14 +5,13 @@ RSpec.describe Publisher::Providers::Gitlab do
   let(:auth_token) { "token" }
   let(:event_name) { "merge_request_event" }
   let(:update_pr) { "description" }
-  let(:sha) { "e1de5e18c3af8skjdhfksjdhjk" }
-  let(:short_sha) { "e1de5e18c3af8" }
   let(:mr_id) { "1" }
   let(:project) { "andrcuns/allure-report-publisher" }
   let(:comment_double) { double("comments", auto_paginate: [comment].compact) }
   let(:comment) { nil }
+  let(:sha) { "cfdef23b4b06df32ab1e98ee4091504948daf2a9" }
   let(:sha_url) do
-    "[#{sha}](#{env[:CI_SERVER_URL]}/#{project}/-/merge_requests/#{mr_id}/diffs?commit_id=#{sha})"
+    "[#{sha[0..7]}](#{env[:CI_SERVER_URL]}/#{project}/-/merge_requests/#{mr_id}/diffs?commit_id=#{sha})"
   end
   let(:urls) do
     <<~URLS

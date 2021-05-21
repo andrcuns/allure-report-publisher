@@ -5,9 +5,9 @@ RSpec.describe Publisher::Providers::Github do
   let(:auth_token) { "token" }
   let(:event_name) { "pull_request" }
   let(:update_pr) { "description" }
-  let(:sha) { "e1de5e18c3af8" }
+  let(:sha) { "cfdef23b4b06df32ab1e98ee4091504948daf2a9" }
   let(:sha_url) do
-    "[#{sha}](#{env[:GITHUB_SERVER_URL]}/#{env[:GITHUB_REPOSITORY]}/pull/1/commits/#{sha})"
+    "[#{sha[0..7]}](#{env[:GITHUB_SERVER_URL]}/#{env[:GITHUB_REPOSITORY]}/pull/1/commits/#{sha})"
   end
   let(:urls) do
     <<~URLS

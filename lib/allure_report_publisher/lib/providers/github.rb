@@ -133,8 +133,9 @@ module Publisher
       # @return [String]
       def sha_url
         sha = github_event.dig(:pull_request, :head, :sha)
+        short_sha = sha[0..7]
 
-        "[#{sha}](#{server_url}/#{repository}/pull/#{pr_id}/commits/#{sha})"
+        "[#{short_sha}](#{server_url}/#{repository}/pull/#{pr_id}/commits/#{sha})"
       end
     end
   end
