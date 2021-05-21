@@ -48,16 +48,16 @@ module Publisher
       #
       # @return [void]
       def update_pr_description
-        client.update_merge_request(project, mr_iid, description: updated_pr_description)
+        client.update_merge_request(project, mr_iid, description: report_urls.updated_pr_description(pr_description))
       end
 
       # Add comment with report url
       #
       # @return [void]
       def add_comment
-        return client.create_merge_request_comment(project, mr_iid, comment_body) unless comment
+        return client.create_merge_request_comment(project, mr_iid, report_urls.comment_body) unless comment
 
-        client.edit_merge_request_note(project, mr_iid, comment.id, comment_body)
+        client.edit_merge_request_note(project, mr_iid, comment.id, report_urls.comment_body(comment.body))
       end
 
       # Existing comment with allure urls
@@ -65,7 +65,7 @@ module Publisher
       # @return [Gitlab::ObjectifiedHash]
       def comment
         client.merge_request_comments(project, mr_iid).auto_paginate.detect do |comment|
-          comment.body.match?(DESCRIPTION_PATTERN)
+          UrlSectionBuilder.match?(comment.body)
         end
       end
 

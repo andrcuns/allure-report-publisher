@@ -13,7 +13,6 @@ module Publisher
     # Base class for CI executor info
     #
     class Provider
-      DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/.freeze
       ALLURE_JOB_NAME = "ALLURE_JOB_NAME".freeze
 
       def initialize(report_url:, update_pr:)
@@ -82,6 +81,13 @@ module Publisher
         raise("Not implemented!")
       end
 
+      # Build name
+      #
+      # @return [String]
+      def build_name
+        raise("Not implemented!")
+      end
+
       # Commit SHA url
       #
       # @return [String]
@@ -90,13 +96,6 @@ module Publisher
       end
       # :nocov:
 
-      # Add report url as comment
-      #
-      # @return [Boolean]
-      def comment?
-        update_pr == "comment"
-      end
-
       # CI run id
       #
       # @return [String]
@@ -104,70 +103,18 @@ module Publisher
         self.class.run_id
       end
 
-      # Check if PR already has report urls
+      # Add report url as comment
       #
       # @return [Boolean]
-      def reported?
-        @reported ||= pr_description.match?(DESCRIPTION_PATTERN)
+      def comment?
+        update_pr == "comment"
       end
 
-      # Full PR description
+      # Report urls section creator
       #
-      # @return [String]
-      def updated_pr_description
-        reported? ? existing_pr_description : initial_pr_descripion
-      end
-
-      # Updated PR description
-      #
-      # @return [String]
-      def existing_pr_description
-        pr_description.gsub(DESCRIPTION_PATTERN, pr_body).strip
-      end
-
-      # Initial PR description
-      #
-      # @return [String]
-      def initial_pr_descripion
-        "#{pr_description}\n\n#{pr_body}".strip
-      end
-
-      # Heading for report urls
-      #
-      # @return [String]
-      def heading
-        @heading ||= <<~HEADING.strip
-          # Allure report
-          `allure-report-publisher` generated allure report for #{sha_url}!
-        HEADING
-      end
-
-      # Allure report url pr description
-      #
-      # @return [String]
-      def pr_body
-        @pr_body ||= <<~DESC
-          <!-- allure -->
-          ---
-          #{heading}
-
-          #{job_entry}
-          <!-- allurestop -->
-        DESC
-      end
-
-      # Allure report url comment body
-      #
-      # @return [String]
-      def comment_body
-        @comment_body ||= pr_body.gsub("---\n", "")
-      end
-
-      # Single job report URL entry
-      #
-      # @return [String]
-      def job_entry
-        @job_entry ||= "**#{build_name}**: 📝 [allure report](#{report_url})"
+      # @return [ReportUrls]
+      def report_urls
+        @report_urls ||= UrlSectionBuilder.new(report_url: report_url, build_name: build_name, sha_url: sha_url)
       end
     end
   end
