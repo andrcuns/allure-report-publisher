@@ -13,19 +13,6 @@ RSpec.describe Publisher::Providers::Gitlab do
   let(:sha_url) do
     "[#{sha[0..7]}](#{env[:CI_SERVER_URL]}/#{project}/-/merge_requests/#{mr_id}/diffs?commit_id=#{sha})"
   end
-  let(:urls) do
-    <<~URLS.strip
-      <!-- allure -->
-      ---
-      # Allure report
-      `allure-report-publisher` generated allure report for #{sha_url}!
-
-      <!-- jobs -->
-      **#{env[:CI_JOB_NAME]}**: 📝 [allure report](#{report_url})
-      <!-- jobs -->
-      <!-- allurestop -->
-    URLS
-  end
 
   let(:env) do
     {
@@ -40,6 +27,20 @@ RSpec.describe Publisher::Providers::Gitlab do
       GITLAB_AUTH_TOKEN: auth_token,
       CI_MERGE_REQUEST_SOURCE_BRANCH_SHA: sha
     }.compact
+  end
+
+  def urls_section(url_sha: sha_url, job_name: env[:CI_JOB_NAME], url_report: report_url)
+    <<~URLS.strip
+      <!-- allure -->
+      ---
+      # Allure report
+      `allure-report-publisher` generated allure report for #{url_sha}!
+
+      <!-- jobs -->
+      **#{job_name}**: 📝 [allure report](#{url_report})
+      <!-- jobs -->
+      <!-- allurestop -->
+    URLS
   end
 
   around do |example|
@@ -89,32 +90,14 @@ RSpec.describe Publisher::Providers::Gitlab do
         expect(gitlab).to have_received(:update_merge_request).with(
           project,
           mr_id,
-          description: <<~DESC.strip
-            #{full_mr_description}
-
-            #{urls}
-          DESC
+          description: "#{full_mr_description}\n\n#{urls_section}"
         )
       end
     end
 
     context "with add report url to mr description arg for existing mr" do
       let(:mr_description) { "pr description" }
-      let(:full_mr_description) do
-        <<~PR.strip
-          #{mr_description}
-
-          <!-- allure -->
-          ---
-          # Allure report
-          `allure-report-publisher` generated allure report for sha_url!
-
-          <!-- jobs -->
-          **#{env[:CI_JOB_NAME]}**: 📝 [allure report](report_url)
-          <!-- jobs -->
-          <!-- allurestop -->
-        PR
-      end
+      let(:full_mr_description) { "#{mr_description}\n\n#{urls_section(url_sha: 'sha', url_report: 'report')}" }
 
       it "updates mr description", :test do
         provider.add_report_url
@@ -122,11 +105,7 @@ RSpec.describe Publisher::Providers::Gitlab do
         expect(gitlab).to have_received(:update_merge_request).with(
           project,
           mr_id,
-          description: <<~DESC.strip
-            #{mr_description}
-
-            #{urls}
-          DESC
+          description: "#{mr_description}\n\n#{urls_section}"
         )
       end
     end
@@ -138,32 +117,28 @@ RSpec.describe Publisher::Providers::Gitlab do
         it "adds comment" do
           provider.add_report_url
 
-          expect(gitlab).to have_received(:create_merge_request_comment).with(project, mr_id, urls.gsub("---\n", ""))
+          expect(gitlab).to have_received(:create_merge_request_comment).with(
+            project,
+            mr_id,
+            urls_section.gsub("---\n", "")
+          )
         end
       end
 
       context "with existing mr" do
         let(:comment) do
-          double(
-            "comment",
-            id: 2,
-            body: <<~PR
-              <!-- allure -->
-              # Allure report
-              `allure-report-publisher` generated allure report for sha_url!
-
-              <!-- jobs -->
-              **#{env[:CI_JOB_NAME]}**: 📝 [allure report](report_url)
-              <!-- jobs -->
-              <!-- allurestop -->
-            PR
-          )
+          double("comment", id: 2, body: urls_section(url_sha: "sha", url_report: "report"))
         end
 
         it "updates comment" do
           provider.add_report_url
 
-          expect(gitlab).to have_received(:edit_merge_request_note).with(project, mr_id, 2, urls.gsub("---\n", ""))
+          expect(gitlab).to have_received(:edit_merge_request_note).with(
+            project,
+            mr_id,
+            2,
+            urls_section.gsub("---\n", "")
+          )
         end
       end
     end

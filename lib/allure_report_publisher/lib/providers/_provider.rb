@@ -204,13 +204,6 @@ module Publisher
         update_pr == "comment"
       end
 
-      # Check if PR already has report urls
-      #
-      # @return [Boolean]
-      def reported?
-        @reported ||= ReportUrls.match?(pr_description)
-      end
-
       # Report urls section creator
       #
       # @return [ReportUrls]
