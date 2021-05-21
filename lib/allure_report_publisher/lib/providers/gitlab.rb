@@ -65,7 +65,7 @@ module Publisher
       # @return [Gitlab::ObjectifiedHash]
       def comment
         client.merge_request_comments(project, mr_iid).auto_paginate.detect do |comment|
-          ReportUrls.match?(comment.body)
+          UrlSectionBuilder.match?(comment.body)
         end
       end
 
