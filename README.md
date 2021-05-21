@@ -45,16 +45,16 @@ Description:
   Generate and upload allure report
 
 Arguments:
-  TYPE                 # REQUIRED Cloud storage type: (s3/gcs)
+  TYPE                              # REQUIRED Cloud storage type: (s3/gcs)
 
 Options:
-  --results-glob=VALUE             # Allure results files glob. Required: true
-  --bucket=VALUE                   # Bucket name. Required: true
-  --prefix=VALUE                   # Optional prefix for report path. Required: false
-  --[no-]update-pr                 # Update pull request description with url to allure report, default: false
-  --[no-]copy-latest               # Keep copy of latest report at base prefix path, default: false
-  --[no-]color                     # Toggle color output, default: false
-  --help, -h                       # Print this help
+  --results-glob=VALUE              # Allure results files glob. Required: true
+  --bucket=VALUE                    # Bucket name. Required: true
+  --prefix=VALUE                    # Optional prefix for report path. Required: false
+  --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description)
+  --[no-]copy-latest                # Keep copy of latest report at base prefix path, default: false
+  --[no-]color                      # Toggle color output, default: false
+  --help, -h                        # Print this help
 
 Examples:
   allure-report-publisher upload s3 --results-glob='path/to/allure-result/**/*' --bucket=my-bucket
@@ -63,11 +63,28 @@ Examples:
 
 ### AWS S3
 
-- `AWS authentication`: requires environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` or credentials file `~/.aws/credentials`
+Requires environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` or credentials file `~/.aws/credentials`
 
 ### Google Cloud Storage
 
-- `GCS authentication`: requires environment variable `GOOGLE_CLOUD_CREDENTIALS_JSON` with contents of credentials.json
+Requires on of the following environment variables.
+
+credentials.json file location:
+
+- `STORAGE_CREDENTIALS`
+- `STORAGE_KEYFILE`
+- `GOOGLE_CLOUD_CREDENTIALS`
+- `GOOGLE_CLOUD_KEYFILE`
+- `GCLOUD_KEYFILE`
+
+credentials.json contents:
+
+- `GOOGLE_CLOUD_CREDENTIALS_JSON`
+- `STORAGE_CREDENTIALS_JSON`
+- `STORAGE_KEYFILE_JSON`
+- `GOOGLE_CLOUD_CREDENTIALS_JSON`
+- `GOOGLE_CLOUD_KEYFILE_JSON`
+- `GCLOUD_KEYFILE_JSON`
 
 ## Development
 
