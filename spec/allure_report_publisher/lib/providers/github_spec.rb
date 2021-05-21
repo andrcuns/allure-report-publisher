@@ -10,7 +10,7 @@ RSpec.describe Publisher::Providers::Github do
     "[#{sha[0..7]}](#{env[:GITHUB_SERVER_URL]}/#{env[:GITHUB_REPOSITORY]}/pull/1/commits/#{sha})"
   end
   let(:urls) do
-    <<~URLS
+    <<~URLS.strip
       <!-- allure -->
       ---
       # Allure report
@@ -96,7 +96,7 @@ RSpec.describe Publisher::Providers::Github do
     context "with add report url to pr description arg for existing pr" do
       let(:pr_description) { "pr description" }
       let(:full_pr_description) do
-        <<~PR
+        <<~PR.strip
           #{pr_description}
 
           <!-- allure -->

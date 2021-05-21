@@ -14,7 +14,7 @@ RSpec.describe Publisher::Providers::Gitlab do
     "[#{sha[0..7]}](#{env[:CI_SERVER_URL]}/#{project}/-/merge_requests/#{mr_id}/diffs?commit_id=#{sha})"
   end
   let(:urls) do
-    <<~URLS
+    <<~URLS.strip
       <!-- allure -->
       ---
       # Allure report
@@ -99,7 +99,7 @@ RSpec.describe Publisher::Providers::Gitlab do
     context "with add report url to mr description arg for existing mr" do
       let(:mr_description) { "pr description" }
       let(:full_mr_description) do
-        <<~PR
+        <<~PR.strip
           #{mr_description}
 
           <!-- allure -->

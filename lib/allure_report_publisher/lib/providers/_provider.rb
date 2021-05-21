@@ -34,9 +34,9 @@ module Publisher
       # @param [String] pr
       # @return [String]
       def updated_pr_description(pr_description)
-        return "#{pr_description}\n\n#{body}".strip unless pr_description.match?(DESCRIPTION_PATTERN)
+        return "#{pr_description}\n\n#{body}" unless pr_description.match?(DESCRIPTION_PATTERN)
 
-        pr_description.gsub(DESCRIPTION_PATTERN, body).strip
+        pr_description.gsub(DESCRIPTION_PATTERN, body)
       end
 
       # Allure report url comment
@@ -54,7 +54,7 @@ module Publisher
       #
       # @return [String]
       def body
-        @body ||= "<!-- allure -->\n---\n#{heading}\n\n#{job_entry}\n<!-- allurestop -->\n"
+        @body ||= "<!-- allure -->\n---\n#{heading}\n\n#{job_entry}\n<!-- allurestop -->"
       end
 
       # Url section heading
@@ -165,18 +165,18 @@ module Publisher
       end
       # :nocov:
 
-      # Add report url as comment
-      #
-      # @return [Boolean]
-      def comment?
-        update_pr == "comment"
-      end
-
       # CI run id
       #
       # @return [String]
       def run_id
         self.class.run_id
+      end
+
+      # Add report url as comment
+      #
+      # @return [Boolean]
+      def comment?
+        update_pr == "comment"
       end
 
       # Check if PR already has report urls
