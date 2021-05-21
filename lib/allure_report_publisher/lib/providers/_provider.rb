@@ -13,7 +13,8 @@ module Publisher
     # Urls section builder
     #
     class ReportUrls
-      DESCRIPTION_PATTERN = /<!-- allure -->([\s\S]+)<!-- allurestop -->/.freeze
+      DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/.freeze
+      JOBS_PATTERN = /<!-- jobs -->\n([\s\S]+)\n<!-- jobs -->/.freeze
 
       def initialize(report_url:, build_name:, sha_url:)
         @report_url = report_url
@@ -23,10 +24,10 @@ module Publisher
 
       # Matches url section pattern
       #
-      # @param [String] urls
+      # @param [String] urls_block
       # @return [Boolean]
-      def self.match?(urls)
-        urls.match?(DESCRIPTION_PATTERN)
+      def self.match?(urls_block)
+        urls_block.match?(DESCRIPTION_PATTERN)
       end
 
       # Get urls for PR update
@@ -36,14 +37,18 @@ module Publisher
       def updated_pr_description(pr_description)
         return "#{pr_description}\n\n#{body}" unless pr_description.match?(DESCRIPTION_PATTERN)
 
-        pr_description.gsub(DESCRIPTION_PATTERN, body)
+        job_entries = jobs_section(pr_description)
+        pr_description.gsub(DESCRIPTION_PATTERN, body(job_entries))
       end
 
       # Allure report url comment
       #
       # @return [String]
-      def comment_body(_pr_comment = nil)
-        body.gsub("---\n", "")
+      def comment_body(pr_comment = nil)
+        return body.gsub("---\n", "") unless pr_comment
+
+        job_entries = jobs_section(pr_comment)
+        body(job_entries).gsub("---\n", "")
       end
 
       attr_reader :report_url, :build_name, :sha_url
@@ -53,8 +58,17 @@ module Publisher
       # Allure report url pr description
       #
       # @return [String]
-      def body
-        @body ||= "<!-- allure -->\n---\n#{heading}\n\n#{job_entry}\n<!-- allurestop -->"
+      def body(job_entries = "**#{build_name}**: 📝 [allure report](#{report_url})")
+        @body ||= <<~BODY.strip
+          <!-- allure -->
+          ---
+          #{heading}
+
+          <!-- jobs -->
+          #{job_entries}
+          <!-- jobs -->
+          <!-- allurestop -->
+        BODY
       end
 
       # Url section heading
@@ -62,6 +76,17 @@ module Publisher
       # @return [String]
       def heading
         @heading ||= "# Allure report\n`allure-report-publisher` generated allure report for #{sha_url}!"
+      end
+
+      # Return updated jobs section
+      #
+      # @param [String] urls
+      # @return [String]
+      def jobs_section(urls_block)
+        jobs = urls_block.match(JOBS_PATTERN)[1]
+        return jobs.gsub(job_entry_pattern, job_entry) if jobs.match?(job_entry_pattern)
+
+        "#{jobs}\n#{job_entry}"
       end
 
       # Single job report URL entry
@@ -75,7 +100,7 @@ module Publisher
       #
       # @return [RegExp]
       def job_entry_pattern
-        @job_entry_pattern ||= /^\*\*#{build_name}\*\*: 📝 \[allure report\]S+$/
+        @job_entry_pattern ||= /^\*\*#{build_name}\*\*:.*\[allure report\]\(.*\)$/
       end
     end
 
