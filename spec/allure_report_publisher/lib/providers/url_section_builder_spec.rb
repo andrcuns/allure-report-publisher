@@ -23,63 +23,56 @@ RSpec.describe Publisher::Providers::UrlSectionBuilder do
     URLS
   end
 
-  context "with pr description update" do
+  context "without prior result" do
+    let(:result) { urls_section }
+
     it "returns initial pr description" do
-      expect(builder.updated_pr_description("pr")).to eq("pr\n\n#{urls_section}")
+      expect(builder.updated_pr_description("pr")).to eq("pr\n\n#{result}")
     end
 
-    it "updates existing job" do
-      pr_desc = urls_section(url_sha: "old", job_section: jobs([{ name: build_name, url: "old" }]))
-      expect(builder.updated_pr_description(pr_desc)).to eq(urls_section)
-    end
-
-    it "adds another job" do
-      pr_desc = urls_section(
-        url_sha: "old",
-        job_section: jobs([
-          { name: "build-1", url: "test" },
-          { name: "build-2", url: "test" }
-        ])
-      )
-      expect(builder.updated_pr_description(pr_desc)).to eq(
-        urls_section(
-          job_section: jobs([
-            { name: "build-1", url: "test" },
-            { name: "build-2", url: "test" },
-            { name: build_name, url: report_url }
-          ])
-        )
-      )
+    it "returns initial comment" do
+      expect(builder.comment_body).to eq(result.gsub("---\n", ""))
     end
   end
 
-  context "with pr comment update" do
-    it "returns initial comment" do
-      expect(builder.comment_body).to eq(urls_section.gsub("---\n", ""))
+  context "with previous result for single job" do
+    let(:existing_block) { urls_section(url_sha: "old", job_section: jobs([{ name: build_name, url: "old" }])) }
+
+    it "updates existing job in pr description" do
+      expect(builder.updated_pr_description("pr\n\n#{existing_block}")).to eq("pr\n\n#{urls_section}")
     end
 
-    it "updates existing job" do
-      comment = urls_section(url_sha: "old", job_section: jobs([{ name: build_name, url: "old" }]))
-      expect(builder.comment_body(comment)).to eq(urls_section.gsub("---\n", ""))
+    it "updates existing job in comment" do
+      expect(builder.comment_body(existing_block)).to eq(urls_section.gsub("---\n", ""))
     end
+  end
 
-    it "adds another job" do
-      comment = urls_section(
+  context "with previous result for multiple jobs" do
+    let(:existing_block) do
+      urls_section(
         url_sha: "old",
         job_section: jobs([
           { name: "build-1", url: "test" },
           { name: "build-2", url: "test" }
         ])
       )
-      expect(builder.comment_body(comment)).to eq(
-        urls_section(
-          job_section: jobs([
-            { name: "build-1", url: "test" },
-            { name: "build-2", url: "test" },
-            { name: build_name, url: report_url }
-          ])
-        ).gsub("---\n", "")
+    end
+    let(:result) do
+      urls_section(
+        job_section: jobs([
+          { name: "build-1", url: "test" },
+          { name: "build-2", url: "test" },
+          { name: build_name, url: report_url }
+        ])
       )
+    end
+
+    it "adds another job in pr description" do
+      expect(builder.updated_pr_description("pr\n\n#{existing_block}")).to eq("pr\n\n#{result}")
+    end
+
+    it "adds another job in comment" do
+      expect(builder.comment_body(existing_block)).to eq(result.gsub("---\n", ""))
     end
   end
 
