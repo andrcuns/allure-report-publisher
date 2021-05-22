@@ -6,7 +6,7 @@ RSpec.describe Publisher::Providers::UrlSectionBuilder do
   let(:sha_url) { "sha url" }
 
   def jobs(jobs = [{ name: build_name, url: report_url }])
-    jobs.map { |job| "**#{job[:name]}**: 📝 [allure test report](#{job[:url]})<br />" }.join("\n")
+    jobs.map { |job| "**#{job[:name]}**: 📝 [test report](#{job[:url]})<br />" }.join("\n")
   end
 
   def urls_section(url_sha: sha_url, job_section: jobs)
@@ -14,7 +14,7 @@ RSpec.describe Publisher::Providers::UrlSectionBuilder do
       <!-- allure -->
       ---
       # Allure report
-      `allure-report-publisher` generated allure test report for #{url_sha}!
+      `allure-report-publisher` generated test report for #{url_sha}!
 
       <!-- jobs -->
       #{job_section}
