@@ -65,7 +65,7 @@ module Publisher
       #
       # @return [String]
       def heading
-        @heading ||= "# Allure report\n`allure-report-publisher` generated allure report for #{sha_url}!"
+        @heading ||= "# Allure report\n`allure-report-publisher` generated allure test report for #{sha_url}!"
       end
 
       # Return updated jobs section
@@ -83,14 +83,14 @@ module Publisher
       #
       # @return [String]
       def job_entry
-        @job_entry ||= "**#{build_name}**: 📝 [allure report](#{report_url})<br />"
+        @job_entry ||= "**#{build_name}**: 📝 [allure test report](#{report_url})<br />"
       end
 
       # Job entry pattern
       #
       # @return [RegExp]
       def job_entry_pattern
-        @job_entry_pattern ||= %r{^\*\*#{build_name}\*\*:.*\[allure report\]\(.*\)<br />$}
+        @job_entry_pattern ||= %r{^\*\*#{build_name}\*\*:.*\[allure test report\]\(.*\)<br />$}
       end
     end
   end
