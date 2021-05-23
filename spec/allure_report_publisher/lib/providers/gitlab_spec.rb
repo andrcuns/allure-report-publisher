@@ -5,13 +5,23 @@ RSpec.describe Publisher::Providers::Gitlab do
 
   let(:build_name) { env[:CI_JOB_NAME] }
   let(:server_url) { env[:CI_SERVER_URL] }
-  let(:repository) { env[:CI_PROJECT_PATH] }
+  let(:project) { env[:CI_PROJECT_PATH] }
+  let(:custom_project) { nil }
   let(:run_id) { env[:CI_PIPELINE_ID] }
   let(:api_url) { env[:GITHUB_API_URL] }
   let(:mr_id) { "1" }
+  let(:custom_mr_id) { nil }
   let(:event_name) { "merge_request_event" }
-  let(:sha_url) { "[#{sha[0..7]}](#{server_url}/#{repository}/-/merge_requests/1/diffs?commit_id=#{sha})" }
+  let(:comment) { nil }
 
+  let(:sha_url) do
+    "[#{sha[0..7]}](#{server_url}/#{project}/-/merge_requests/#{mr_id}/diffs?commit_id=#{sha})"
+  end
+  let(:custom_sha_url) do
+    "[#{sha[0..7]}](#{server_url}/#{custom_project}/-/merge_requests/#{custom_mr_id}/diffs?commit_id=#{sha})"
+  end
+
+  let(:comment_double) { double("comments", auto_paginate: [comment].compact) }
   let(:client) do
     instance_double(
       "Gitlab::Client",
@@ -22,8 +32,6 @@ RSpec.describe Publisher::Providers::Gitlab do
       edit_merge_request_note: nil
     )
   end
-  let(:comment_double) { double("comments", auto_paginate: [comment].compact) }
-  let(:comment) { nil }
 
   let(:env) do
     {
@@ -35,8 +43,10 @@ RSpec.describe Publisher::Providers::Gitlab do
       CI_PROJECT_PATH: "project",
       CI_MERGE_REQUEST_IID: mr_id,
       CI_PIPELINE_SOURCE: event_name,
+      CI_MERGE_REQUEST_SOURCE_BRANCH_SHA: sha,
       GITLAB_AUTH_TOKEN: auth_token,
-      CI_MERGE_REQUEST_SOURCE_BRANCH_SHA: sha
+      ALLURE_PROJECT: custom_project,
+      ALLURE_MR_IID: custom_mr_id
     }.compact
   end
 
@@ -71,7 +81,7 @@ RSpec.describe Publisher::Providers::Gitlab do
         expect(url_builder).to have_received(:updated_pr_description)
           .with(full_pr_description)
         expect(client).to have_received(:update_merge_request)
-          .with(repository, mr_id, description: updated_pr_description)
+          .with(project, mr_id, description: updated_pr_description)
       end
     end
 
@@ -83,7 +93,7 @@ RSpec.describe Publisher::Providers::Gitlab do
           provider.add_report_url
 
           expect(url_builder).to have_received(:comment_body).with(no_args)
-          expect(client).to have_received(:create_merge_request_comment).with(repository, mr_id, updated_comment_body)
+          expect(client).to have_received(:create_merge_request_comment).with(project, mr_id, updated_comment_body)
         end
       end
 
@@ -105,7 +115,7 @@ RSpec.describe Publisher::Providers::Gitlab do
           expect(url_builder).to have_received(:comment_body)
             .with(comment.body)
           expect(client).to have_received(:edit_merge_request_note)
-            .with(repository, mr_id, comment_id, updated_comment_body)
+            .with(project, mr_id, comment_id, updated_comment_body)
         end
       end
     end
@@ -124,6 +134,27 @@ RSpec.describe Publisher::Providers::Gitlab do
 
     it "skips adding allure link to pr with not configured auth token message" do
       expect { provider.add_report_url }.to raise_error("Missing GITLAB_AUTH_TOKEN environment variable!")
+    end
+  end
+
+  context "with overridden parameters" do
+    let(:event_name) { "push" }
+    let(:custom_project) { "custom/project" }
+    let(:custom_mr_id) { "123" }
+
+    before do
+      allow(Publisher::Providers::UrlSectionBuilder).to receive(:new)
+        .with(report_url: report_url, build_name: build_name, sha_url: custom_sha_url)
+        .and_return(url_builder)
+    end
+
+    it "updates mr description with custom parameters for non mr runs" do
+      provider.add_report_url
+
+      expect(url_builder).to have_received(:updated_pr_description)
+        .with(full_pr_description)
+      expect(client).to have_received(:update_merge_request)
+        .with(custom_project, custom_mr_id, description: updated_pr_description)
     end
   end
 end
