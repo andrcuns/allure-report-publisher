@@ -87,21 +87,21 @@ module Publisher
       #
       # @return [String]
       def allure_project
-        @allure_project ||= ENV["ALLURE_PROJECT"]
+        @allure_project ||= ENV["ALLURE_PROJECT_PATH"]
       end
 
       # Custom mr iid name
       #
       # @return [String]
       def allure_mr_iid
-        @allure_mr_iid ||= ENV["ALLURE_MR_IID"]
+        @allure_mr_iid ||= ENV["ALLURE_MERGE_REQUEST_IID"]
       end
 
       # Custom sha
       #
       # @return [String]
       def allure_sha
-        @allure_sha ||= ENV["ALLURE_SHA"]
+        @allure_sha ||= ENV["ALLURE_COMMIT_SHA"]
       end
 
       # Gitlab project path

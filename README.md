@@ -127,9 +127,9 @@ Following environment variables can override default CI values:
 
 In case merge request triggers a downstream pipeline yet you want to update original merge request, overriding following environment variables might be useful:
 
-- `ALLURE_PROJECT`: overrides default `CI_PROJECT_PATH` value
-- `ALLURE_MR_IID`: overrides default `CI_MERGE_REQUEST_IID` value
-- `ALLURE_SHA`: overrides default `CI_MERGE_REQUEST_SOURCE_BRANCH_SHA` or `CI_COMMIT_SHA` values
+- `ALLURE_PROJECT_PATH`: overrides default `CI_PROJECT_PATH` value
+- `ALLURE_MERGE_REQUEST_IID`: overrides default `CI_MERGE_REQUEST_IID` value
+- `ALLURE_COMMIT_SHA`: overrides default `CI_MERGE_REQUEST_SOURCE_BRANCH_SHA` or `CI_COMMIT_SHA` values
 
 # Development
 
