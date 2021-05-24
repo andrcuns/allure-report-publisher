@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     allure-report-publisher (0.2.1)
-      aws-sdk-s3 (>= 1.93.1, < 1.95.0)
+      aws-sdk-s3 (>= 1.93.1, < 1.96.0)
       dry-cli (>= 0.6, < 0.8)
       gitlab (~> 4.17)
       google-cloud-storage (~> 1.31)
@@ -28,7 +28,7 @@ GEM
     ansi (1.5.0)
     ast (2.4.2)
     aws-eventstream (1.1.1)
-    aws-partitions (1.451.0)
+    aws-partitions (1.461.0)
     aws-sdk-core (3.114.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
@@ -37,7 +37,7 @@ GEM
     aws-sdk-kms (1.43.0)
       aws-sdk-core (~> 3, >= 3.112.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.94.1)
+    aws-sdk-s3 (1.95.0)
       aws-sdk-core (~> 3, >= 3.112.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.1)
