@@ -101,6 +101,18 @@ It is possible to update pull requests with urls to published reports.
 
 - `--update-pr=(comment|description)`: post report urls in pr description or as a comment
 
+Example:
+
+---
+
+`# Allure report`
+
+`allure-report-publisher` generated test report for [1b756f48](https://github.com/andrcuns/allure-report-publisher/commit/HEAD)!
+
+**rspec**: 📝 [test report](https://storage.googleapis.com/allure-test-reports/allure-report-publisher/refs/heads/main/index.html)
+
+---
+
 ## Github Actions
 
 Additional configuration is done via environment variables
