@@ -16,7 +16,7 @@ module Publisher
       #
       # @return [Boolean]
       def pr?
-        ENV["CI_PIPELINE_SOURCE"] == "merge_request_event"
+        (allure_project && allure_mr_iid) || ENV["CI_PIPELINE_SOURCE"] == "merge_request_event"
       end
 
       # Get executor info
@@ -83,11 +83,39 @@ module Publisher
         end
       end
 
+      # Custom repository name
+      #
+      # @return [String]
+      def allure_project
+        @allure_project ||= ENV["ALLURE_PROJECT_PATH"]
+      end
+
+      # Custom mr iid name
+      #
+      # @return [String]
+      def allure_mr_iid
+        @allure_mr_iid ||= ENV["ALLURE_MERGE_REQUEST_IID"]
+      end
+
+      # Custom sha
+      #
+      # @return [String]
+      def allure_sha
+        @allure_sha ||= ENV["ALLURE_COMMIT_SHA"]
+      end
+
+      # Gitlab project path
+      #
+      # @return [String]
+      def project
+        @project ||= allure_project || ENV["CI_PROJECT_PATH"]
+      end
+
       # Merge request iid
       #
       # @return [Integer]
       def mr_iid
-        @mr_iid ||= ENV["CI_MERGE_REQUEST_IID"]
+        @mr_iid ||= allure_mr_iid || ENV["CI_MERGE_REQUEST_IID"]
       end
 
       # Server url
@@ -111,18 +139,11 @@ module Publisher
         @build_name ||= ENV[ALLURE_JOB_NAME] || ENV["CI_JOB_NAME"]
       end
 
-      # Gitlab repository
-      #
-      # @return [String]
-      def project
-        @project ||= ENV["CI_PROJECT_PATH"]
-      end
-
       # Commit sha url
       #
       # @return [String]
       def sha_url
-        sha = ENV["CI_MERGE_REQUEST_SOURCE_BRANCH_SHA"] || ENV["CI_COMMIT_SHA"]
+        sha = allure_sha || ENV["CI_MERGE_REQUEST_SOURCE_BRANCH_SHA"] || ENV["CI_COMMIT_SHA"]
         short_sha = sha[0..7]
 
         "[#{short_sha}](#{server_url}/#{project}/-/merge_requests/#{mr_iid}/diffs?commit_id=#{sha})"
