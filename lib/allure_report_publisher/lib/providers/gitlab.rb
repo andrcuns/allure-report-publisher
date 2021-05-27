@@ -74,11 +74,11 @@ module Publisher
       # @return [Gitlab::Client]
       def client
         @client ||= begin
-          raise("Missing GITLAB_AUTH_TOKEN environment variable!") unless ENV["GITLAB_AUTH_TOKEN"]
+          raise("Missing GITLAB_AUTH_TOKEN environment variable!") unless env("GITLAB_AUTH_TOKEN")
 
           ::Gitlab::Client.new(
             endpoint: "#{server_url}/api/v4",
-            private_token: ENV["GITLAB_AUTH_TOKEN"]
+            private_token: env("GITLAB_AUTH_TOKEN")
           )
         end
       end
@@ -87,66 +87,76 @@ module Publisher
       #
       # @return [String]
       def allure_project
-        @allure_project ||= ENV["ALLURE_PROJECT_PATH"]
+        @allure_project ||= env("ALLURE_PROJECT_PATH")
       end
 
       # Custom mr iid name
       #
       # @return [String]
       def allure_mr_iid
-        @allure_mr_iid ||= ENV["ALLURE_MERGE_REQUEST_IID"]
+        @allure_mr_iid ||= env("ALLURE_MERGE_REQUEST_IID")
       end
 
       # Custom sha
       #
       # @return [String]
       def allure_sha
-        @allure_sha ||= ENV["ALLURE_COMMIT_SHA"]
+        @allure_sha ||= env("ALLURE_COMMIT_SHA")
       end
 
       # Gitlab project path
       #
       # @return [String]
       def project
-        @project ||= allure_project || ENV["CI_PROJECT_PATH"]
+        @project ||= allure_project || env("CI_PROJECT_PATH")
       end
 
       # Merge request iid
       #
       # @return [Integer]
       def mr_iid
-        @mr_iid ||= allure_mr_iid || ENV["CI_MERGE_REQUEST_IID"]
+        @mr_iid ||= allure_mr_iid || env("CI_MERGE_REQUEST_IID")
       end
 
       # Server url
       #
       # @return [String]
       def server_url
-        @server_url ||= ENV["CI_SERVER_URL"]
+        @server_url ||= env("CI_SERVER_URL")
       end
 
       # Build url
       #
       # @return [String]
       def build_url
-        @build_url ||= ENV["CI_PIPELINE_URL"]
+        @build_url ||= env("CI_PIPELINE_URL")
       end
 
       # Job name
       #
       # @return [String]
       def build_name
-        @build_name ||= ENV[ALLURE_JOB_NAME] || ENV["CI_JOB_NAME"]
+        @build_name ||= env(ALLURE_JOB_NAME) || env("CI_JOB_NAME")
       end
 
       # Commit sha url
       #
       # @return [String]
       def sha_url
-        sha = allure_sha || ENV["CI_MERGE_REQUEST_SOURCE_BRANCH_SHA"] || ENV["CI_COMMIT_SHA"]
+        sha = allure_sha || env("CI_MERGE_REQUEST_SOURCE_BRANCH_SHA") || env("CI_COMMIT_SHA")
         short_sha = sha[0..7]
 
         "[#{short_sha}](#{server_url}/#{project}/-/merge_requests/#{mr_iid}/diffs?commit_id=#{sha})"
+      end
+
+      # Return non empty environment variable value
+      #
+      # @param [String] name
+      # @return [String, nil]
+      def env(name)
+        return unless ENV[name] && !ENV[name].empty?
+
+        ENV[name]
       end
     end
   end
