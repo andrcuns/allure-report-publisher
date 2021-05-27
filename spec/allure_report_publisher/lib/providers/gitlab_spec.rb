@@ -43,7 +43,8 @@ RSpec.describe Publisher::Providers::Gitlab do
       CI_PROJECT_PATH: "project",
       CI_MERGE_REQUEST_IID: mr_id,
       CI_PIPELINE_SOURCE: event_name,
-      CI_MERGE_REQUEST_SOURCE_BRANCH_SHA: sha,
+      CI_MERGE_REQUEST_SOURCE_BRANCH_SHA: "",
+      CI_COMMIT_SHA: sha,
       GITLAB_AUTH_TOKEN: auth_token,
       ALLURE_PROJECT_PATH: custom_project,
       ALLURE_MERGE_REQUEST_IID: custom_mr_id
