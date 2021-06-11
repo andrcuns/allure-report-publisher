@@ -31,6 +31,10 @@ module Publisher
              type: :boolean,
              default: false,
              desc: "Toggle color output"
+      option :ignore_missing_results,
+             type: :boolean,
+             default: false,
+             desc: "Ignore missing allure results"
 
       example [
         "s3 --results-glob='path/to/allure-result/**/*' --bucket=my-bucket",
@@ -39,7 +43,7 @@ module Publisher
 
       def call(**args)
         validate_args(args)
-        validate_result_files(args[:results_glob])
+        validate_result_files(args[:results_glob], args[:ignore_missing_results])
         Helpers.pastel(force_color: args[:color] || nil)
 
         uploader = uploaders(args[:type]).new(**args.slice(:results_glob, :bucket, :prefix, :copy_latest, :update_pr))
@@ -82,8 +86,11 @@ module Publisher
       #
       # @param [String] results_glob
       # @return [void]
-      def validate_result_files(results_glob)
-        Dir.glob(results_glob).empty? && error("Glob '#{results_glob}' did not match any files!")
+      def validate_result_files(results_glob, ignore)
+        return unless Dir.glob(results_glob).empty?
+
+        log("Glob '#{results_glob}' did not match any files!", ignore ? :yellow : :red)
+        exit(ignore ? 0 : 1)
       end
     end
   end
