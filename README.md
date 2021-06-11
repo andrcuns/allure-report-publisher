@@ -50,6 +50,7 @@ Options:
   --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description)
   --[no-]copy-latest                # Keep copy of latest report at base prefix path, default: false
   --[no-]color                      # Toggle color output, default: false
+  --[no-]ignore-missing-results     # Ignore missing allure results, default: false
   --help, -h                        # Print this help
 
 Examples:
