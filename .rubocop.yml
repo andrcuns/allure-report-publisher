@@ -56,5 +56,5 @@ RSpec/FilePath:
 RSpec/VerifiedDoubles:
   Enabled: false
 
-RSpec/RSpec/NestedGroups:
+RSpec/NestedGroups:
   Max: 4
