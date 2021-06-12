@@ -42,9 +42,10 @@ module Publisher
       ]
 
       def call(**args)
+        Helpers.pastel(force_color: args[:color] || nil)
+
         validate_args(args)
         validate_result_files(args[:results_glob], args[:ignore_missing_results])
-        Helpers.pastel(force_color: args[:color] || nil)
 
         uploader = uploaders(args[:type]).new(**args.slice(:results_glob, :bucket, :prefix, :copy_latest, :update_pr))
 
