@@ -11,7 +11,7 @@ module Publisher
       #
       # @return [Aws::S3::Client]
       def client
-        @client ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1")
+        @client ||= Aws::S3::Client.new(region: ENV["AWS_REGION"] || "us-east-1", endpoint: ENV["AWS_ENDPOINT"] || "s3.us-east-1.amazonaws.com", force_path_style: ENV["AWS_FORCE_PATH_STYLE"] || false)
       rescue Aws::Sigv4::Errors::MissingCredentialsError
         raise(<<~MSG.strip)
           missing aws credentials, provide credentials with one of the following options:
