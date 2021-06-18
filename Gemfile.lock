@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    allure-report-publisher (0.3.3)
+    allure-report-publisher (0.3.4)
       aws-sdk-s3 (>= 1.93.1, < 1.97.0)
       dry-cli (>= 0.6, < 0.8)
       gitlab (~> 4.17)
