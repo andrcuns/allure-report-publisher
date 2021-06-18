@@ -108,7 +108,7 @@ module Publisher
       #
       # @return [String]
       def project
-        @project ||= allure_project || env("CI_PROJECT_PATH")
+        @project ||= allure_project || env("CI_MERGE_REQUEST_PROJECT_PATH") || env("CI_PROJECT_PATH")
       end
 
       # Merge request iid
