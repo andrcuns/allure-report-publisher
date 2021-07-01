@@ -18,7 +18,7 @@ group :test do
   gem "rspec", "~> 3.0"
   gem "rubocop", "~> 1.17"
   gem "rubocop-performance", "~> 1.11"
-  gem "rubocop-rake", "~> 0.5.1"
+  gem "rubocop-rake", "~> 0.6.0"
   gem "rubocop-rspec", "~> 2.4"
   gem "simplecov", "~> 0.21.2"
   gem "simplecov-console", "~> 0.9.1"
