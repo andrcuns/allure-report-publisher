@@ -31,7 +31,7 @@ RSpec.describe Publisher::Uploaders::S3 do
   end
 
   before do
-    allow(Aws::S3::Client).to receive(:new) { s3_client }
+    allow(Aws::S3::Client).to receive(:new).with(region: "us-east-1", force_path_style: false) { s3_client }
     allow(s3_client).to receive(:put_object) do |arg|
       put_object_args.push({
         body: arg[:body].path,
