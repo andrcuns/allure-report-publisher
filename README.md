@@ -66,6 +66,12 @@ Multiple cloud storage providers are supported
 
 Requires environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` or credentials file `~/.aws/credentials`
 
+Additional configuration:
+
+- `AWS_REGION`: configure s3 region, default: `us-east-1`
+- `AWS_FORCE_PATH_STYLE`: when set to true, the bucket name is always left in the request URI and never moved to the host as a sub-domain, default: `false`
+- `AWS_ENDPOINT`: custom s3 endpoint when used with other s3 compatible storage
+
 ## Google Cloud Storage
 
 Requires on of the following environment variables.
