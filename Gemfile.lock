@@ -68,7 +68,7 @@ GEM
     faraday-excon (1.1.0)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
-    git (1.9.0)
+    git (1.9.1)
       rchardet (~> 1.8)
     gitlab (4.17.0)
       httparty (~> 0.18)
