@@ -13,3 +13,9 @@ updates:
       interval: daily
     reviewers:
       - andrcuns
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: daily
+    reviewers:
+      - andrcuns
