@@ -13,7 +13,7 @@ group :release do
 end
 
 group :test do
-  gem "allure-rspec", "~> 2.14.3"
+  gem "allure-rspec", "~> 2.14.5"
   gem "climate_control", "~> 1.0.1"
   gem "rspec", "~> 3.0"
   gem "rubocop", "~> 1.19"
