@@ -44,7 +44,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push latest
         if: github.event_name == 'push'
-        uses: docker/build-push-action@v2.6.1
+        uses: docker/build-push-action@v2.7.0
         with:
           push: true
           tags: ghcr.io/andrcuns/allure-report-publisher:latest
@@ -52,7 +52,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       - name: Build and push release
         if: github.event_name == 'release'
-        uses: docker/build-push-action@v2.6.1
+        uses: docker/build-push-action@v2.7.0
         with:
           push: true
           tags: andrcuns/allure-report-publisher:${{ github.event.release.tag_name }},andrcuns/allure-report-publisher:latest

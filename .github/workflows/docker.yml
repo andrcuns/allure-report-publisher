@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-refs/heads/main
       - name: Build
-        uses: docker/build-push-action@v2.6.1
+        uses: docker/build-push-action@v2.7.0
         with:
           push: false
           load: true
