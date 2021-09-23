@@ -26,5 +26,5 @@ end
 
 group :development do
   gem "pry-byebug", "~> 3.9"
-  gem "solargraph", "~> 0.43.1"
+  gem "solargraph", "~> 0.43.2"
 end
