@@ -29,8 +29,3 @@ jobs:
           tags: andrcuns/allure-report-publisher:build
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - uses: azure/container-scan@v0
-        with:
-          image-name: andrcuns/allure-report-publisher:build
-          severity-threshold: CRITICAL
-          run-quality-checks: true
