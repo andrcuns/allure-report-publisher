@@ -1,4 +1,4 @@
-FROM ruby:3-alpine3.14 as ruby
+FROM ruby:3.0.2-alpine3.14 as ruby
 
 ARG GEMFILE=allure-report-publisher.gem
 
@@ -6,11 +6,8 @@ ARG GEMFILE=allure-report-publisher.gem
 #
 FROM ruby as build
 
-ARG BUNDLER_VERSION=2.2.15
 ARG BUNDLE_WITHOUT=development:test:release
 ARG GEMFILE
-
-RUN gem install bundler -N -v ${BUNDLER_VERSION} 
 
 WORKDIR /build
 
