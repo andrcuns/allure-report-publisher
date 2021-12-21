@@ -74,7 +74,7 @@ GEM
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
-    git (1.9.1)
+    git (1.10.0)
       rchardet (~> 1.8)
     gitlab (4.17.0)
       httparty (~> 0.18)
@@ -262,7 +262,7 @@ DEPENDENCIES
   allure-report-publisher!
   allure-rspec (~> 2.15.0)
   climate_control (~> 1.0.1)
-  git (~> 1.9)
+  git (~> 1.10)
   pry-byebug (~> 3.9)
   rake (~> 13.0)
   rspec (~> 3.0)

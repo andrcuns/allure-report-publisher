@@ -7,7 +7,7 @@ gemspec
 gem "rake", "~> 13.0"
 
 group :release do
-  gem "git", "~> 1.9"
+  gem "git", "~> 1.10"
   gem "semver2", "~> 3.4"
   gem "yard", "~> 0.9.27"
 end
