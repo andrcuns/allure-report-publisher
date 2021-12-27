@@ -56,7 +56,7 @@ RSpec.describe Publisher::Uploaders::GCS do
     end
 
     before do
-      allow(File).to receive(:open).with("#{results_path}/executor.json", "w").and_yield(executor_file)
+      allow(File).to receive(:write)
       allow(Publisher::Providers::Github).to receive(:run_id).and_return(1)
       allow(Publisher::Providers::Github).to receive(:new) { ci_provider_instance }
     end
@@ -85,7 +85,7 @@ RSpec.describe Publisher::Uploaders::GCS do
 
     it "adds executor info" do
       described_class.new(**args).execute
-      expect(executor_file).to have_received(:write).with(executor_info.to_json)
+      expect(File).to have_received(:write).with("#{results_path}/executor.json", executor_info.to_json)
     end
 
     it "updates pr description with allure report link" do

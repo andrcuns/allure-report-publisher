@@ -148,9 +148,7 @@ module Publisher
       def add_executor_info
         return unless ci_provider
 
-        File.open("#{results_path}/#{EXECUTOR_JSON}", "w") do |file|
-          file.write(ci_provider.executor_info.to_json)
-        end
+        File.write("#{results_path}/#{EXECUTOR_JSON}", ci_provider.executor_info.to_json)
       end
 
       # Run upload commands

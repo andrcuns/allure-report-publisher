@@ -2,7 +2,6 @@ RSpec.shared_context("with uploader") do
   include_context "with mock helper"
 
   let(:report_generator) { instance_double("Publisher::ReportGenerator", generate: nil) }
-  let(:executor_file) { instance_double("File", write: nil) }
   let(:results_glob) { "spec/fixture/fake_results/*" }
   let(:bucket_name) { "bucket" }
   let(:prefix) { "project" }
