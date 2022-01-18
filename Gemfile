@@ -16,7 +16,7 @@ group :test do
   gem "allure-rspec", "~> 2.15.0"
   gem "climate_control", "~> 1.0.1"
   gem "rspec", "~> 3.0"
-  gem "rubocop", "~> 1.24"
+  gem "rubocop", "~> 1.25"
   gem "rubocop-performance", "~> 1.13"
   gem "rubocop-rake", "~> 0.6.0"
   gem "rubocop-rspec", "~> 2.7"
