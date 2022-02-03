@@ -4,7 +4,6 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "mini_mime", "~> 1.1"
 gem "rake", "~> 13.0"
 
 group :release do
