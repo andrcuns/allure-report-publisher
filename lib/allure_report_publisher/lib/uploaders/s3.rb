@@ -1,4 +1,5 @@
 require "aws-sdk-s3"
+require "mini_mime"
 
 module Publisher
   module Uploaders
@@ -88,7 +89,8 @@ module Publisher
           {
             body: File.new(file),
             bucket: bucket_name,
-            key: key(key_prefix, file.relative_path_from(report_path))
+            key: key(key_prefix, file.relative_path_from(report_path)),
+            content_type: MiniMime.lookup_by_filename(file).content_type
           }
         end
 
