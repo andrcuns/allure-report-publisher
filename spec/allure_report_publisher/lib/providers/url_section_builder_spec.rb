@@ -78,11 +78,11 @@ RSpec.describe Publisher::Providers::UrlSectionBuilder do
 
   context "with content matcher" do
     it "matches existing url block" do
-      expect(described_class.match?(urls_section)).to eq(true)
+      expect(described_class.match?(urls_section)).to be(true)
     end
 
     it "doesnt match non url block" do
-      expect(described_class.match?("some text")).to eq(false)
+      expect(described_class.match?("some text")).to be(false)
     end
   end
 end
