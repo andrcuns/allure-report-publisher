@@ -18,10 +18,10 @@ GEM
   specs:
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    allure-rspec (2.16.1)
-      allure-ruby-commons (= 2.16.1)
+    allure-rspec (2.16.2)
+      allure-ruby-commons (= 2.16.2)
       rspec-core (>= 3.8, < 4)
-    allure-ruby-commons (2.16.1)
+    allure-ruby-commons (2.16.2)
       mime-types (>= 3.3, < 4)
       oj (>= 3.10, < 4)
       require_all (>= 2, < 4)
@@ -267,7 +267,7 @@ PLATFORMS
 
 DEPENDENCIES
   allure-report-publisher!
-  allure-rspec (~> 2.16.1)
+  allure-rspec (~> 2.16.2)
   climate_control (~> 1.0.1)
   git (~> 1.10)
   pry-byebug (~> 3.9)
