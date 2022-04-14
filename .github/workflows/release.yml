@@ -63,7 +63,7 @@ jobs:
           ruby-version: 3.1.2
           bundler-cache: true
         env:
-          BUNDLE_WITHOUT: default:development
+          BUNDLE_WITHOUT: default
       - name: Build and push
         run: bundle exec rake release
         env:
