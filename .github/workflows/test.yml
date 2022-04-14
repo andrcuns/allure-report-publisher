@@ -66,10 +66,11 @@ jobs:
           tags: publisher:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Upload allure reports
+      - name: Download allure reports
         uses: actions/download-artifact@v3
         with:
           name: allure-reports
+          path: reports/allure-results
       - name: Publish allure report
         env:
           GOOGLE_CLOUD_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CLOUD_CREDENTIALS_JSON }}
