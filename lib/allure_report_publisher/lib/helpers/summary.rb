@@ -18,10 +18,18 @@ module Publisher
         @summary_type = summary_type
       end
 
+      # Get summary table
+      #
+      # @param [String] report_path
+      # @param [String] summary_type
+      # @return [Terminal::Table]
       def self.get(report_path, summary_type)
         new(report_path, summary_type).summary_table
       end
 
+      # Summary table
+      #
+      # @return [Terminal::Table]
       def summary_table
         table_style = {
           border_left: false,
