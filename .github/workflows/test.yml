@@ -44,28 +44,52 @@ jobs:
         with:
           coverageCommand: bundle exec rspec --force-color
           coverageLocations: coverage/coverage.json:simplecov
+      - uses: actions/upload-artifact@v3
+        with:
+          name: allure-reports
+          path: reports/allure-results/
+
+  allure:
+    runs-on: ubuntu-20.04
+    needs: rspec
+    if: always()
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1.6.0
+      - name: Build
+        uses: docker/build-push-action@v2.10.0
+        with:
+          push: false
+          load: true
+          tags: publisher:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Upload allure reports
+        uses: actions/download-artifact@v3
+        with:
+          name: allure-reports
       - name: Publish allure report
-        if: always()
         env:
           GOOGLE_CLOUD_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CLOUD_CREDENTIALS_JSON }}
           GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          docker pull -q ghcr.io/andrcuns/allure-report-publisher:latest; \
           docker run --rm \
             -v "$(pwd)":/workspace \
             -v "$GITHUB_EVENT_PATH:$GITHUB_EVENT_PATH" \
             -e GITHUB_WORKFLOW="$GITHUB_WORKFLOW" \
             -e GITHUB_EVENT_NAME="$GITHUB_EVENT_NAME" \
+            -e GITHUB_EVENT_PATH="$GITHUB_EVENT_PATH" \
             -e GITHUB_SERVER_URL="$GITHUB_SERVER_URL" \
             -e GITHUB_API_URL="$GITHUB_API_URL" \
             -e GITHUB_REPOSITORY="$GITHUB_REPOSITORY" \
             -e GITHUB_JOB="$GITHUB_JOB" \
             -e GITHUB_RUN_ID="$GITHUB_RUN_ID" \
             -e GITHUB_AUTH_TOKEN="$GITHUB_AUTH_TOKEN" \
-            -e GITHUB_EVENT_PATH="$GITHUB_EVENT_PATH" \
             -e GITHUB_SHA="$GITHUB_SHA" \
             -e GOOGLE_CLOUD_CREDENTIALS_JSON="$GOOGLE_CLOUD_CREDENTIALS_JSON" \
-            ghcr.io/andrcuns/allure-report-publisher:latest \
+            publisher:latest \
             upload gcs \
               --results-glob="/workspace/reports/allure-results/*" \
               --bucket="allure-test-reports" \
