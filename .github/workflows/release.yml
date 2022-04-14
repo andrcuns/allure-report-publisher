@@ -49,7 +49,7 @@ jobs:
         with:
           push: true
           tags: andrcuns/allure-report-publisher:${{ github.event.release.tag_name }},andrcuns/allure-report-publisher:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-from: type=gha
 
   gem:
     runs-on: ubuntu-20.04
@@ -57,10 +57,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up Ruby 3.0
+      - name: Set up Ruby 3.1
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0
+          ruby-version: 3.1.2
           bundler-cache: true
         env:
           BUNDLE_WITHOUT: development
