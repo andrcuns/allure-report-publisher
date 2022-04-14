@@ -38,6 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "parallel", "~> 1.20"
   spec.add_dependency "pastel", "~> 0.8.0"
   spec.add_dependency "require_all", "~> 3.0.0"
+  spec.add_dependency "terminal-table", "~> 3.0"
   spec.add_dependency "tty-spinner", "~> 0.9.3"
 
   spec.add_development_dependency "allure-rspec", "~> 2.17.0"

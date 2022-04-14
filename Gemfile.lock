@@ -11,6 +11,7 @@ PATH
       parallel (~> 1.20)
       pastel (~> 0.8.0)
       require_all (~> 3.0.0)
+      terminal-table (~> 3.0)
       tty-spinner (~> 0.9.3)
 
 GEM

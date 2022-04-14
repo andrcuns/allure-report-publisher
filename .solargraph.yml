@@ -4,6 +4,7 @@ include:
 exclude:
   - spec/**/*
   - bin/*
+  - vendor/bundle/**/*
 require:
   - dry/cli
   - fileutils
