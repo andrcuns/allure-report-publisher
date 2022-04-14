@@ -6,7 +6,7 @@ ARG GEMFILE=allure-report-publisher.gem
 #
 FROM ruby as build
 
-ARG BUNDLE_WITHOUT=development:test:release
+ARG BUNDLE_WITHOUT=development:release
 ARG GEMFILE
 
 WORKDIR /build
