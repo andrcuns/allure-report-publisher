@@ -31,7 +31,7 @@ module Publisher
         pr_description.gsub(DESCRIPTION_PATTERN, body(job_entries))
       end
 
-      # Allure report url comment
+      # Allure report url comment without description separator
       #
       # @return [String]
       def comment_body(pr_comment = nil)
@@ -65,7 +65,7 @@ module Publisher
       #
       # @return [String]
       def heading
-        @heading ||= "# Allure report\n`allure-report-publisher` generated test report for #{sha_url}!"
+        @heading ||= "# Allure report\n`allure-report-publisher` generated test report!"
       end
 
       # Return updated jobs section
@@ -83,14 +83,18 @@ module Publisher
       #
       # @return [String]
       def job_entry
-        @job_entry ||= "**#{build_name}**: 📝 [test report](#{report_url})<br />"
+        @job_entry ||= <<~TXT.strip
+          <!-- #{build_name} -->
+          **#{build_name}**: 📝 [test report](#{report_url}) for #{sha_url}
+          <!-- #{build_name} -->
+        TXT
       end
 
       # Job entry pattern
       #
       # @return [RegExp]
       def job_entry_pattern
-        @job_entry_pattern ||= %r{^\*\*#{build_name}\*\*:.*\[test report\]\(.*\)<br />$}
+        @job_entry_pattern ||= /<!-- #{build_name} -->\n([\s\S]+)\n<!-- #{build_name} -->/
       end
     end
   end
