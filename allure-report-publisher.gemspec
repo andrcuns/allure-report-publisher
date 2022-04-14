@@ -39,4 +39,17 @@ Gem::Specification.new do |spec|
   spec.add_dependency "pastel", "~> 0.8.0"
   spec.add_dependency "require_all", "~> 3.0.0"
   spec.add_dependency "tty-spinner", "~> 0.9.3"
+
+  spec.add_development_dependency "allure-rspec", "~> 2.17.0"
+  spec.add_development_dependency "climate_control", "~> 1.0.1"
+  spec.add_development_dependency "pry-byebug", "~> 3.9"
+  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "rspec", "~> 3.11"
+  spec.add_development_dependency "rubocop", "~> 1.27"
+  spec.add_development_dependency "rubocop-performance", "~> 1.13"
+  spec.add_development_dependency "rubocop-rake", "~> 0.6.0"
+  spec.add_development_dependency "rubocop-rspec", "~> 2.9"
+  spec.add_development_dependency "simplecov", "~> 0.21.2"
+  spec.add_development_dependency "simplecov-console", "~> 0.9.1"
+  spec.add_development_dependency "solargraph", "~> 0.44.3"
 end

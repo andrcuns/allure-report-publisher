@@ -20,7 +20,7 @@ jobs:
           ruby-version: 3.1.2
           bundler-cache: true
         env:
-          BUNDLE_WITHOUT: development
+          BUNDLE_WITHOUT: release
       - name: Rubocop
         run: bundle exec rubocop --color
 
@@ -35,7 +35,7 @@ jobs:
           ruby-version: 3.1.2
           bundler-cache: true
         env:
-          BUNDLE_WITHOUT: development
+          BUNDLE_WITHOUT: release
       - name: RSpec
         uses: paambaati/codeclimate-action@v3.0.0
         env:
