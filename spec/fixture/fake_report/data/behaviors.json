@@ -12,17 +12,20 @@
               "children": [
                 {
                   "name": "spec",
-                  "status": "passed"
+                  "status": "passed",
+                  "flaky": false
                 }
               ]
             },
             {
               "name": "spec",
-              "status": "failed"
+              "status": "failed",
+              "flaky": true
             },
             {
               "name": "spec",
-              "status": "skipped"
+              "status": "skipped",
+              "flaky": false
             }
           ]
         },
@@ -31,11 +34,13 @@
           "children": [
             {
               "name": "spec 3",
-              "status": "passed"
+              "status": "passed",
+              "flaky": false
             },
             {
               "name": "spec 4",
-              "status": "broken"
+              "status": "broken",
+              "flaky": false
             }
           ]
         }
@@ -46,7 +51,8 @@
       "children": [
         {
           "name": "spec 5",
-          "status": "passed"
+          "status": "passed",
+          "flaky": false
         }
       ]
     }
