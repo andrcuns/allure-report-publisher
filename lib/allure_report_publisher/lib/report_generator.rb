@@ -10,10 +10,8 @@ module Publisher
   class ReportGenerator
     include Helpers
 
-    def initialize(results_glob, results_path, report_path)
+    def initialize(results_glob)
       @results_glob = results_glob
-      @results_path = results_path
-      @report_path = report_path
     end
 
     # Generate allure report
@@ -24,9 +22,23 @@ module Publisher
       generate_report
     end
 
+    # Aggregated results directory
+    #
+    # @return [String]
+    def results_path
+      @results_path ||= Dir.mktmpdir("allure-results")
+    end
+
+    # Allure report directory
+    #
+    # @return [String]
+    def report_path
+      @report_path ||= Dir.mktmpdir("allure-report")
+    end
+
     private
 
-    attr_reader :results_glob, :results_path, :report_path
+    attr_reader :results_glob
 
     # Copy all results files to results directory
     #

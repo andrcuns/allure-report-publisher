@@ -1,6 +1,6 @@
 require_relative "common_provider"
 
-RSpec.describe Publisher::Providers::Github do
+RSpec.describe Publisher::Providers::Github, epic: "providers" do
   include_context "with provider helper"
 
   let(:build_name) { env[:GITHUB_JOB] }
@@ -92,7 +92,7 @@ RSpec.describe Publisher::Providers::Github do
         end
 
         before do
-          allow(Publisher::Providers::UrlSectionBuilder).to receive(:match?)
+          allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
             .with(comments.first[:body])
             .and_return(true)
         end

@@ -1,0 +1,54 @@
+{
+  "name": "behaviors",
+  "children": [
+    {
+      "name": "epic name",
+      "children": [
+        {
+          "name": "feature name",
+          "children": [
+            {
+              "name": "story name",
+              "children": [
+                {
+                  "name": "spec",
+                  "status": "passed"
+                }
+              ]
+            },
+            {
+              "name": "spec",
+              "status": "failed"
+            },
+            {
+              "name": "spec",
+              "status": "skipped"
+            }
+          ]
+        },
+        {
+          "name": "feature name 2",
+          "children": [
+            {
+              "name": "spec 3",
+              "status": "passed"
+            },
+            {
+              "name": "spec 4",
+              "status": "broken"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "epic name 2",
+      "children": [
+        {
+          "name": "spec 5",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}

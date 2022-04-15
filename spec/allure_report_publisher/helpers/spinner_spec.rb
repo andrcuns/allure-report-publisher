@@ -1,4 +1,4 @@
-RSpec.describe Publisher::Helpers::Spinner do
+RSpec.describe Publisher::Helpers::Spinner, epic: "helpers" do
   let(:spinner_message) { "Spinner message!" }
   let(:tty) { true }
   let(:pastel) { Pastel.new(enabled: true) }

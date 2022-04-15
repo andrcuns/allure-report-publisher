@@ -1,6 +1,6 @@
 require_relative "common_provider"
 
-RSpec.describe Publisher::Providers::Gitlab do
+RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
   include_context "with provider helper"
 
   let(:build_name) { env[:CI_JOB_NAME] }
@@ -17,11 +17,13 @@ RSpec.describe Publisher::Providers::Gitlab do
   let(:sha_url) do
     "[#{sha[0..7]}](#{server_url}/#{project}/-/merge_requests/#{mr_id}/diffs?commit_id=#{sha})"
   end
+
   let(:custom_sha_url) do
     "[#{sha[0..7]}](#{server_url}/#{custom_project}/-/merge_requests/#{custom_mr_id}/diffs?commit_id=#{sha})"
   end
 
   let(:comment_double) { double("comments", auto_paginate: [comment].compact) }
+
   let(:client) do
     instance_double(
       "Gitlab::Client",
@@ -105,7 +107,7 @@ RSpec.describe Publisher::Providers::Gitlab do
         end
 
         before do
-          allow(Publisher::Providers::UrlSectionBuilder).to receive(:match?)
+          allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
             .with(comment.body)
             .and_return(true)
         end
@@ -142,12 +144,7 @@ RSpec.describe Publisher::Providers::Gitlab do
     let(:event_name) { "push" }
     let(:custom_project) { "custom/project" }
     let(:custom_mr_id) { "123" }
-
-    before do
-      allow(Publisher::Providers::UrlSectionBuilder).to receive(:new)
-        .with(report_url: report_url, build_name: build_name, sha_url: custom_sha_url)
-        .and_return(url_builder)
-    end
+    let(:sha_url) { custom_sha_url }
 
     it "updates mr description with custom parameters for non mr runs" do
       provider.add_report_url

@@ -1,3 +1,5 @@
+require "forwardable"
+
 module Publisher
   module Uploaders
     class HistoryNotFoundError < StandardError; end
@@ -6,6 +8,7 @@ module Publisher
     #
     class Uploader
       include Helpers
+      extend Forwardable
 
       EXECUTOR_JSON = "executor.json".freeze
       HISTORY = [
@@ -16,11 +19,12 @@ module Publisher
         "retry-trend.json"
       ].freeze
 
-      def initialize(results_glob:, bucket:, update_pr: nil, prefix: nil, copy_latest: false)
+      def initialize(results_glob:, bucket:, update_pr: nil, prefix: nil, copy_latest: false, summary_type: nil) # rubocop:disable Metrics/ParameterLists
         @results_glob = results_glob
         @bucket_name = bucket
         @prefix = prefix
         @update_pr = update_pr
+        @summary_type = summary_type
         @copy_latest = !!(Providers.provider && copy_latest) # copy latest for ci only
       end
 
@@ -40,7 +44,7 @@ module Publisher
         add_history
         add_executor_info
 
-        ReportGenerator.new(results_glob, results_path, report_path).generate
+        report_generator.generate
       end
 
       # Upload report to storage provider
@@ -78,7 +82,14 @@ module Publisher
 
       private
 
-      attr_reader :results_glob, :bucket_name, :prefix, :update_pr, :copy_latest
+      attr_reader :results_glob,
+                  :bucket_name,
+                  :prefix,
+                  :update_pr,
+                  :copy_latest,
+                  :summary_type
+
+      def_delegators :report_generator, :results_path, :report_path
 
       # :nocov:
 
@@ -132,6 +143,54 @@ module Publisher
       end
       # :nocov:
 
+      # Allure report generator
+      #
+      # @return [Publisher::ReportGenerator]
+      def report_generator
+        @report_generator ||= ReportGenerator.new(results_glob)
+      end
+
+      # Report path prefix
+      #
+      # @return [String]
+      def full_prefix
+        @full_prefix ||= [prefix, run_id].compact.yield_self do |pre|
+          break if pre.empty?
+
+          pre.join("/")
+        end
+      end
+
+      # Report files
+      #
+      # @return [Array<Pathname>]
+      def report_files
+        @report_files ||= Pathname
+                          .glob("#{report_path}/**/*")
+                          .reject(&:directory?)
+      end
+
+      # Get run id
+      #
+      # @return [String]
+      def run_id
+        @run_id ||= Providers.provider&.run_id
+      end
+
+      # Get CI provider
+      #
+      # @return [Publisher::Providers::Base]
+      def ci_provider
+        return @ci_provider if defined?(@ci_provider)
+
+        @ci_provider = Providers.provider&.new(
+          report_url: report_url,
+          report_path: report_path,
+          update_pr: update_pr,
+          summary_type: summary_type
+        )
+      end
+
       # Add allure history
       #
       # @return [void]
@@ -160,61 +219,11 @@ module Publisher
         upload_latest_copy if copy_latest
       end
 
-      # Get run id
-      #
-      # @return [String]
-      def run_id
-        @run_id ||= Providers.provider&.run_id
-      end
-
-      # Get CI provider
-      #
-      # @return [Publisher::Providers::Base]
-      def ci_provider
-        return @ci_provider if defined?(@ci_provider)
-
-        @ci_provider = Providers.provider&.new(report_url: report_url, update_pr: update_pr)
-      end
-
       # Fetch allure report history
       #
       # @return [void]
       def create_history_dir
         FileUtils.mkdir_p(path(results_path, "history"))
-      end
-
-      # Report path prefix
-      #
-      # @return [String]
-      def full_prefix
-        @full_prefix ||= [prefix, run_id].compact.yield_self do |pre|
-          break if pre.empty?
-
-          pre.join("/")
-        end
-      end
-
-      # Aggregated results directory
-      #
-      # @return [String]
-      def results_path
-        @results_path ||= Dir.mktmpdir("allure-results")
-      end
-
-      # Allure report directory
-      #
-      # @return [String]
-      def report_path
-        @report_path ||= Dir.mktmpdir("allure-report")
-      end
-
-      # Report files
-      #
-      # @return [Array<Pathname>]
-      def report_files
-        @report_files ||= Pathname
-                          .glob("#{report_path}/**/*")
-                          .reject(&:directory?)
       end
     end
   end

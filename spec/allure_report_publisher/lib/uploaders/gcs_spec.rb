@@ -1,9 +1,8 @@
-require_relative "./common_uploader"
+require_relative "common_uploader"
 
-RSpec.describe Publisher::Uploaders::GCS do
+RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   include_context "with uploader"
 
-  let(:report_generator) { instance_double("Publisher::ReportGenerator", generate: nil) }
   let(:client) { instance_double("Google::Cloud::Storage::Project", bucket: bucket) }
   let(:bucket) { instance_double("Google::Cloud::Storage::Bucket", file: file, create_file: nil) }
   let(:file) { instance_double("Google::Cloud::Storage::File", download: nil) }
@@ -13,8 +12,6 @@ RSpec.describe Publisher::Uploaders::GCS do
   let(:report) { ["spec/fixture/fake_report/index.html", "#{prefix}/index.html"] }
 
   before do
-    allow(Publisher::Providers).to receive(:provider) { ci_provider }
-    allow(Publisher::ReportGenerator).to receive(:new) { report_generator }
     allow(Google::Cloud::Storage).to receive(:new) { client }
   end
 
@@ -23,7 +20,7 @@ RSpec.describe Publisher::Uploaders::GCS do
       described_class.new(**args).execute
 
       aggregate_failures do
-        expect(Publisher::ReportGenerator).to have_received(:new).with(results_glob, results_path, report_path)
+        expect(Publisher::ReportGenerator).to have_received(:new).with(results_glob)
         expect(report_generator).to have_received(:generate)
       end
     end

@@ -1,4 +1,4 @@
-RSpec.describe Publisher::Helpers do
+RSpec.describe Publisher::Helpers, epic: "helpers" do
   subject(:helpers) { described_class }
 
   include_context "with mock helper"

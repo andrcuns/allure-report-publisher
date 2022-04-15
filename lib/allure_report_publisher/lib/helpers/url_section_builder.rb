@@ -1,15 +1,23 @@
 module Publisher
-  module Providers
+  module Helpers
     # Urls section builder
     #
     class UrlSectionBuilder
       DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/.freeze
       JOBS_PATTERN = /<!-- jobs -->\n([\s\S]+)\n<!-- jobs -->/.freeze
 
-      def initialize(report_url:, build_name:, sha_url:)
+      # Url section builder
+      #
+      # @param [String] report_url
+      # @param [String] build_name
+      # @param [String] sha_url
+      # @param [String] summary_table
+      def initialize(report_url:, report_path:, build_name:, sha_url:, summary_type:)
         @report_url = report_url
+        @report_path = report_path
         @build_name = build_name
         @sha_url = sha_url
+        @summary_type = summary_type
       end
 
       # Matches url section pattern
@@ -41,7 +49,11 @@ module Publisher
         body(job_entries).gsub("---\n", "")
       end
 
-      attr_reader :report_url, :build_name, :sha_url
+      attr_reader :report_url,
+                  :report_path,
+                  :build_name,
+                  :sha_url,
+                  :summary_type
 
       private
 
@@ -68,6 +80,15 @@ module Publisher
         @heading ||= "# Allure report\n`allure-report-publisher` generated test report!"
       end
 
+      # Get execution summary table
+      #
+      # @return [Terminal::Table]
+      def summary_table
+        return @summary_table if defined?(@summary_table)
+
+        @summary_table = summary_type ? Helpers::Summary.get(report_path, summary_type) : nil
+      end
+
       # Return updated jobs section
       #
       # @param [String] urls
@@ -83,11 +104,14 @@ module Publisher
       #
       # @return [String]
       def job_entry
-        @job_entry ||= <<~TXT.strip
-          <!-- #{build_name} -->
-          **#{build_name}**: 📝 [test report](#{report_url}) for #{sha_url}
-          <!-- #{build_name} -->
-        TXT
+        @job_entry ||= begin
+          entry = ["<!-- #{build_name} -->"]
+          entry << "**#{build_name}**: 📝 [test report](#{report_url}) for #{sha_url}"
+          entry << "```markdown\n#{summary_table}\n```" if summary_table
+          entry << "<!-- #{build_name} -->"
+
+          entry.join("\n")
+        end
       end
 
       # Job entry pattern

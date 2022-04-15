@@ -1,4 +1,4 @@
-RSpec.describe Publisher::Providers do
+RSpec.describe Publisher::Providers, epic: "providers" do
   subject(:provider) { described_class.provider }
 
   it "detects github instance" do

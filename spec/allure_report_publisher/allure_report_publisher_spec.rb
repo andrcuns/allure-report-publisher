@@ -1,4 +1,4 @@
-RSpec.describe Publisher do
+RSpec.describe Publisher, epic: "cli" do
   it "prints global usage" do
     usage = <<~USE
       Commands:
