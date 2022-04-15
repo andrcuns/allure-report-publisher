@@ -7,15 +7,22 @@ updates:
     versioning-strategy: increase
     reviewers:
       - andrcuns
-  - package-ecosystem: github-actions
-    directory: /
-    schedule:
-      interval: daily
-    reviewers:
-      - andrcuns
+    commit-message:
+      prefix: deps
+      prefix-development: deps-dev
   - package-ecosystem: docker
     directory: /
     schedule:
       interval: daily
     reviewers:
       - andrcuns
+    commit-message:
+      prefix: deps
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+    reviewers:
+      - andrcuns
+    labels:
+      - ci
