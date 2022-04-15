@@ -31,7 +31,7 @@ module Publisher
 
       # PR description with allure report urls
       #
-      # @param [String] pr
+      # @param [String] pr_description
       # @return [String]
       def updated_pr_description(pr_description)
         stripped_description = (pr_description || "").strip
@@ -46,6 +46,7 @@ module Publisher
 
       # Comment body with allure report urls
       #
+      # @param [String] pr_comment
       # @return [String]
       def comment_body(pr_comment = nil)
         return url_section(separator: false) unless pr_comment
