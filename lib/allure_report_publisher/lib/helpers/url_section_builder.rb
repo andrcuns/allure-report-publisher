@@ -33,6 +33,7 @@ module Publisher
       # @param [String] pr
       # @return [String]
       def updated_pr_description(pr_description)
+        return strip_separator(body) unless pr_description
         return "#{pr_description}\n\n#{body}" unless pr_description.match?(DESCRIPTION_PATTERN)
 
         job_entries = jobs_section(pr_description)
@@ -43,10 +44,10 @@ module Publisher
       #
       # @return [String]
       def comment_body(pr_comment = nil)
-        return body.gsub("---\n", "") unless pr_comment
+        return strip_separator(body) unless pr_comment
 
         job_entries = jobs_section(pr_comment)
-        body(job_entries).gsub("---\n", "")
+        strip_separator(body(job_entries))
       end
 
       attr_reader :report_url,
@@ -89,17 +90,6 @@ module Publisher
         @summary_table = summary_type ? Helpers::Summary.get(report_path, summary_type) : nil
       end
 
-      # Return updated jobs section
-      #
-      # @param [String] urls
-      # @return [String]
-      def jobs_section(urls_block)
-        jobs = urls_block.match(JOBS_PATTERN)[1]
-        return jobs.gsub(job_entry_pattern, job_entry) if jobs.match?(job_entry_pattern)
-
-        "#{jobs}\n#{job_entry}"
-      end
-
       # Single job report URL entry
       #
       # @return [String]
@@ -119,6 +109,25 @@ module Publisher
       # @return [RegExp]
       def job_entry_pattern
         @job_entry_pattern ||= /<!-- #{build_name} -->\n([\s\S]+)\n<!-- #{build_name} -->/
+      end
+
+      # Return updated jobs section
+      #
+      # @param [String] urls
+      # @return [String]
+      def jobs_section(urls_block)
+        jobs = urls_block.match(JOBS_PATTERN)[1]
+        return jobs.gsub(job_entry_pattern, job_entry) if jobs.match?(job_entry_pattern)
+
+        "#{jobs}\n#{job_entry}"
+      end
+
+      # Strip separator from allure results section
+      #
+      # @param [String] body
+      # @return [String]
+      def strip_separator(body)
+        body.gsub("---\n", "")
       end
     end
   end
