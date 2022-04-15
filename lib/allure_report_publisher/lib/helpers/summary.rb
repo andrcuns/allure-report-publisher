@@ -5,7 +5,7 @@ module Publisher
     # Test summary table generator
     #
     class Summary
-      BEHAVIOR = "behaviors".freeze
+      BEHAVIORS = "behaviors".freeze
       PACKAGES = "packages".freeze
       SUITES = "suites".freeze
 

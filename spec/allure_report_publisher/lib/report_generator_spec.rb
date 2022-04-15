@@ -1,5 +1,5 @@
 RSpec.describe Publisher::ReportGenerator do
-  subject(:report_generator) { described_class.new(results_glob, results_dir, report_dir) }
+  subject(:report_generator) { described_class.new(results_glob) }
 
   include_context "with mock helper"
 
@@ -11,6 +11,8 @@ RSpec.describe Publisher::ReportGenerator do
   let(:status) { true }
 
   before do
+    allow(Dir).to receive(:mktmpdir).with("allure-results") { results_dir }
+    allow(Dir).to receive(:mktmpdir).with("allure-report") { report_dir }
     allow(FileUtils).to receive(:cp)
     allow(Open3).to receive(:capture3) { ["Allure output", "", capture_status] }
   end

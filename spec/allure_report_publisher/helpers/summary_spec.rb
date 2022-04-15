@@ -36,7 +36,7 @@ end
 
 RSpec.describe Publisher::Helpers::Summary do
   context "with behavior summary" do
-    let(:summary_type) { Publisher::Helpers::Summary::BEHAVIOR }
+    let(:summary_type) { Publisher::Helpers::Summary::BEHAVIORS }
 
     it_behaves_like "summary fetcher"
   end

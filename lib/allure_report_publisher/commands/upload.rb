@@ -21,16 +21,23 @@ module Publisher
              desc: "Optional prefix for report path. Required: false"
       option :update_pr,
              type: :string,
-             values: %w[comment description],
-             desc: "Add report url to PR via comment or description update. Required: false"
+             desc: "Add report url to PR via comment or description update. Required: false",
+             values: %w[comment description]
+      option :summary,
+             type: :string,
+             desc: "Additionally add summary table to PR comment or description. Required: false",
+             values: [
+               Publisher::Helpers::Summary::BEHAVIORS,
+               Publisher::Helpers::Summary::SUITES,
+               Publisher::Helpers::Summary::PACKAGES
+             ]
       option :copy_latest,
              type: :boolean,
              default: false,
              desc: "Keep copy of latest report at base prefix path"
       option :color,
              type: :boolean,
-             default: false,
-             desc: "Toggle color output"
+             desc: "Force color output"
       option :ignore_missing_results,
              type: :boolean,
              default: false,
@@ -42,12 +49,11 @@ module Publisher
       ]
 
       def call(**args)
-        Helpers.pastel(force_color: args[:color] || nil)
+        Helpers.pastel(force_color: args[:color])
+        @args = args
 
-        validate_args(args)
-        validate_result_files(args[:results_glob], args[:ignore_missing_results])
-
-        uploader = uploaders(args[:type]).new(**args.slice(:results_glob, :bucket, :prefix, :copy_latest, :update_pr))
+        validate_args
+        validate_result_files
 
         log("Generating allure report")
         Spinner.spin("generating") { uploader.generate_report }
@@ -63,6 +69,23 @@ module Publisher
 
       private
 
+      attr_reader :args
+
+      # Uploader instance
+      #
+      # @return [Publisher::Uploaders::Uploader]
+      def uploader
+        @uploader ||= uploaders(args[:type]).new(
+          **args.slice(
+            :results_glob,
+            :bucket,
+            :prefix,
+            :copy_latest,
+            :update_pr
+          )
+        )
+      end
+
       # Uploader class
       #
       # @param [String] uploader
@@ -76,9 +99,8 @@ module Publisher
 
       # Validate required args
       #
-      # @param [Hash] args
       # @return [void]
-      def validate_args(args)
+      def validate_args
         error("Missing argument --results-glob!") unless args[:results_glob]
         error("Missing argument --bucket!") unless args[:bucket]
       end
@@ -87,7 +109,9 @@ module Publisher
       #
       # @param [String] results_glob
       # @return [void]
-      def validate_result_files(results_glob, ignore)
+      def validate_result_files
+        results_glob = args[:results_glob]
+        ignore = args[:ignore_missing_results]
         return unless Dir.glob(results_glob).empty?
 
         log("Glob '#{results_glob}' did not match any files!", ignore ? :yellow : :red)

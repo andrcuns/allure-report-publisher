@@ -6,6 +6,12 @@ module Publisher
       DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/.freeze
       JOBS_PATTERN = /<!-- jobs -->\n([\s\S]+)\n<!-- jobs -->/.freeze
 
+      # Url section builder
+      #
+      # @param [String] report_url
+      # @param [String] build_name
+      # @param [String] sha_url
+      # @param [String] summary_table
       def initialize(report_url:, build_name:, sha_url:)
         @report_url = report_url
         @build_name = build_name

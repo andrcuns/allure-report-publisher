@@ -15,6 +15,10 @@ module Publisher
     class Provider
       ALLURE_JOB_NAME = "ALLURE_JOB_NAME".freeze
 
+      # CI provider base
+      #
+      # @param [String] report_url
+      # @param [Boolean] update_pr
       def initialize(report_url:, update_pr:)
         @report_url = report_url
         @update_pr = update_pr
