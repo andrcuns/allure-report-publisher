@@ -44,13 +44,7 @@ module Publisher
       # @return [Array<Array>]
       def expanded_summary
         @expanded_summary ||= summary_data.map do |name, summary|
-          status = if summary[:failed].zero?
-                     summary[:flaky].zero? ? "✅" : "⚠️"
-                   else
-                     "❌"
-                   end
-
-          [name, *summary.values, status]
+          [name, *summary.values, status_icon(summary[:failed], summary[:flaky])]
         end
       end
 
@@ -66,13 +60,26 @@ module Publisher
           hsh[:skipped] += entry[:skipped]
           hsh[:flaky] += entry[:flaky]
         end
-        status = if sum[:failed].zero?
-                   sum[:flaky].zero? ? "✅" : "⚠️"
-                 else
-                   "❌"
-                 end
 
-        @short_summary = ["Total", sum[:passed], sum[:failed], sum[:skipped], sum[:flaky], status]
+        @short_summary = [
+          "Total",
+          sum[:passed],
+          sum[:failed],
+          sum[:skipped],
+          sum[:flaky],
+          status_icon(sum[:failed], sum[:flaky])
+        ]
+      end
+
+      # Status icon based on run results
+      #
+      # @param [Integer] failed
+      # @param [Integer] flaky
+      # @return [String]
+      def status_icon(failed, flaky)
+        return flaky.zero? ? "✅" : "⚠️" if failed.zero?
+
+        "❌"
       end
 
       # Summary terminal table
