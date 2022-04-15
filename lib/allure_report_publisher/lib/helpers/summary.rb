@@ -32,29 +32,45 @@ module Publisher
       #
       # @return [Terminal::Table]
       def summary_table
-        Terminal::Table.new do |table|
-          table.title = "#{summary_type} summary"
-          table.headings = ["", "passed", "failed", "skipped", "result"]
-          table.rows = summary_table_rows
-        end
+        return short_summary_table if summary_type == TOTAL
+
+        expanded_summary_table
       end
 
       private
 
       attr_reader :report_path, :summary_type
 
-      # Summary table rows
+      # Expanded summary table
       #
-      # @return [Array]
-      def summary_table_rows
-        if summary_type != TOTAL
-          return summary_data.map { |name, summary| [name, *summary.values, summary[:failed].zero? ? "✅" : "❌"] }
+      # @return [Terminal::Table]
+      def expanded_summary_table
+        table(summary_data.map { |name, summary| [name, *summary.values, summary[:failed].zero? ? "✅" : "❌"] })
+      end
+
+      # Short summary table
+      #
+      # @return [Terminal::Table]
+      def short_summary_table
+        sum = summary_data.values.each_with_object({ passed: 0, failed: 0, skipped: 0 }) do |entry, hsh|
+          hsh[:passed] += entry[:passed]
+          hsh[:failed] += entry[:failed]
+          hsh[:skipped] += entry[:skipped]
         end
 
-        total = ->(type) { summary_data.values.sum { |obj| obj[type] } }
-        failed = total.call(:failed)
+        table([["Total", sum[:passed], sum[:failed], sum[:skipped], sum[:failed].zero? ? "✅" : "❌"]])
+      end
 
-        [["Total", total.call(:passed), failed, total.call(:skipped), failed.zero? ? "✅" : "❌"]]
+      # Summary terminal table
+      #
+      # @param [Array] rows
+      # @return [Terminal::Table]
+      def table(rows)
+        Terminal::Table.new do |table|
+          table.title = "#{summary_type} summary"
+          table.headings = ["", "passed", "failed", "skipped", "result"]
+          table.rows = rows
+        end
       end
 
       # Data json
