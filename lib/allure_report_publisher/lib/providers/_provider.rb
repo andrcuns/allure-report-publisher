@@ -19,9 +19,11 @@ module Publisher
       #
       # @param [String] report_url
       # @param [Boolean] update_pr
-      def initialize(report_url:, update_pr:)
+      def initialize(report_url:, report_path:, update_pr:, summary_type:)
         @report_url = report_url
+        @report_path = report_path
         @update_pr = update_pr
+        @summary_type = summary_type
       end
 
       # :nocov:
@@ -62,7 +64,10 @@ module Publisher
 
       private
 
-      attr_reader :report_url, :update_pr
+      attr_reader :report_url,
+                  :report_path,
+                  :update_pr,
+                  :summary_type
 
       # Current pull request description
       #
@@ -117,8 +122,14 @@ module Publisher
       # Report urls section creator
       #
       # @return [ReportUrls]
-      def report_urls
-        @report_urls ||= UrlSectionBuilder.new(report_url: report_url, build_name: build_name, sha_url: sha_url)
+      def url_section_builder
+        @url_section_builder ||= UrlSectionBuilder.new(
+          report_url: report_url,
+          report_path: report_path,
+          build_name: build_name,
+          sha_url: sha_url,
+          summary_type: summary_type
+        )
       end
     end
   end

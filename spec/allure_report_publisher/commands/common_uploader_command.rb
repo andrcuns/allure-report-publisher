@@ -23,12 +23,14 @@ RSpec.shared_examples("upload command") do
       "--prefix=#{prefix}"
     ]
   end
+
   let(:args) do
     {
       results_glob: result_glob,
       bucket: bucket,
       prefix: prefix,
-      copy_latest: false
+      copy_latest: false,
+      summary_type: nil
     }
   end
 
@@ -53,7 +55,7 @@ RSpec.shared_examples("upload command") do
 
       aggregate_failures do
         expect(uploader).to have_received(:new).with(
-          args.slice(:results_glob, :bucket, :copy_latest, :update_pr)
+          args.slice(:results_glob, :bucket, :copy_latest, :update_pr, :summary_type)
         )
         expect(uploader_stub).to have_received(:generate_report)
         expect(uploader_stub).to have_received(:upload)

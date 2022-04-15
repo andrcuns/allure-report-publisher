@@ -58,16 +58,16 @@ module Publisher
       #
       # @return [void]
       def update_pr_description
-        client.update_pull_request(repository, pr_id, body: report_urls.updated_pr_description(pr_description))
+        client.update_pull_request(repository, pr_id, body: url_section_builder.updated_pr_description(pr_description))
       end
 
       # Add comment with report url
       #
       # @return [void]
       def add_comment
-        return client.add_comment(repository, pr_id, report_urls.comment_body) unless comment
+        return client.add_comment(repository, pr_id, url_section_builder.comment_body) unless comment
 
-        client.update_comment(repository, comment[:id], report_urls.comment_body(comment[:body]))
+        client.update_comment(repository, comment[:id], url_section_builder.comment_body(comment[:body]))
       end
 
       # Existing comment with allure urls

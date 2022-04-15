@@ -76,6 +76,7 @@ module Publisher
       # @return [Publisher::Uploaders::Uploader]
       def uploader
         @uploader ||= uploaders(args[:type]).new(
+          summary_type: args[:summary],
           **args.slice(
             :results_glob,
             :bucket,
