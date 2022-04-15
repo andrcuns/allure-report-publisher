@@ -48,8 +48,9 @@ Options:
   --bucket=VALUE                    # Bucket name. Required: true
   --prefix=VALUE                    # Optional prefix for report path. Required: false
   --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description)
+  --summary=VALUE                   # Additionally add summary table to PR comment or description. Required: false: (behaviors/suites/packages/total)
   --[no-]copy-latest                # Keep copy of latest report at base prefix path, default: false
-  --[no-]color                      # Toggle color output, default: false
+  --[no-]color                      # Force color output
   --[no-]ignore-missing-results     # Ignore missing allure results, default: false
   --help, -h                        # Print this help
 
@@ -104,9 +105,10 @@ Following CI providers are supported:
 
 ## Pull requests
 
-It is possible to update pull requests with urls to published reports.
+It is possible to update pull requests with urls to published reports and execution summary.
 
 - `--update-pr=(comment|description)`: post report urls in pr description or as a comment
+- `--summary=(behaviors/suites/packages/total)`: add execution summary table
 
 Example:
 
@@ -114,9 +116,19 @@ Example:
 
 `# Allure report`
 
-`allure-report-publisher` generated test report for [1b756f48](https://github.com/andrcuns/allure-report-publisher/commit/HEAD)!
+`allure-report-publisher` generated test report!
 
-**rspec**: 📝 [test report](https://storage.googleapis.com/allure-test-reports/allure-report-publisher/refs/heads/main/index.html)
+**rspec**: ✅ [test report](https://storage.googleapis.com/allure-test-reports/allure-report-publisher/refs/heads/main/index.html) for [1b756f48](https://github.com/andrcuns/allure-report-publisher/commit/HEAD)
+
+```markdown
++--------------------------------------------------------+
+|                   total summary                        |
++-----------+--------+--------+---------+-------+--------+
+|           | passed | failed | skipped | flaky | result |
++-----------+--------+--------+---------+-------+--------+
+| Total     | 100    | 0      | 2       | 0     | ✅     |
++-----------+--------+--------+---------+-------+--------+
+```
 
 ---
 
