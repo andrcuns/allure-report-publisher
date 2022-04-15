@@ -84,6 +84,14 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
       expect(builder.updated_pr_description("pr")).to eq("pr\n\n#{urls_section}")
     end
 
+    it "returns pr description without separator for nil" do
+      expect(builder.updated_pr_description(nil)).to eq(urls_section.gsub("---\n", ""))
+    end
+
+    it "returns pr description without separator for empty string" do
+      expect(builder.updated_pr_description("")).to eq(urls_section.gsub("---\n", ""))
+    end
+
     it "returns initial comment" do
       expect(builder.comment_body).to eq(urls_section.gsub("---\n", ""))
     end
@@ -98,6 +106,10 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
 
     it "updates existing job in comment" do
       expect(builder.comment_body(existing_block)).to eq(urls_section.gsub("---\n", ""))
+    end
+
+    it "doesn't add separator for description with url section only" do
+      expect(builder.updated_pr_description(existing_block)).to eq(urls_section.gsub("---\n", ""))
     end
   end
 

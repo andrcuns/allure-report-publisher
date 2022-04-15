@@ -34,11 +34,15 @@ module Publisher
       # @param [String] pr
       # @return [String]
       def updated_pr_description(pr_description)
-        return strip_separator(body) unless pr_description
+        return strip_separator(body) if pr_description.nil? || pr_description.strip == ""
         return "#{pr_description}\n\n#{body}" unless pr_description.match?(DESCRIPTION_PATTERN)
 
         job_entries = jobs_section(pr_description)
-        pr_description.gsub(DESCRIPTION_PATTERN, body(job_entries))
+        empty_description = pr_description == pr_description.match(DESCRIPTION_PATTERN)[0]
+        pr_description.gsub(
+          DESCRIPTION_PATTERN,
+          empty_description ? strip_separator(body(job_entries)) : body(job_entries)
+        )
       end
 
       # Allure report url comment without description separator
