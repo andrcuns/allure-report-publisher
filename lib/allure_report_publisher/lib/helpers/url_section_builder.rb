@@ -29,29 +29,29 @@ module Publisher
         urls_block.match?(DESCRIPTION_PATTERN)
       end
 
-      # Get urls for PR update
+      # PR description with allure report urls
       #
       # @param [String] pr
       # @return [String]
       def updated_pr_description(pr_description)
-        description = (pr_description || "").strip
+        stripped_description = (pr_description || "").strip
 
-        return body(separator: false) if description == ""
-        return "#{pr_description}\n\n#{body}" unless pr_description.match?(DESCRIPTION_PATTERN)
+        return url_section(separator: false) if stripped_description == ""
+        return "#{pr_description}\n\n#{url_section}" unless pr_description.match?(DESCRIPTION_PATTERN)
 
         job_entries = jobs_section(pr_description)
-        non_empty = description != description.match(DESCRIPTION_PATTERN)[0]
-        pr_description.gsub(DESCRIPTION_PATTERN, body(job_entries: job_entries, separator: non_empty))
+        non_empty = stripped_description != pr_description.match(DESCRIPTION_PATTERN)[0]
+        pr_description.gsub(DESCRIPTION_PATTERN, url_section(job_entries: job_entries, separator: non_empty))
       end
 
-      # Allure report url comment without description separator
+      # Comment body with allure report urls
       #
       # @return [String]
       def comment_body(pr_comment = nil)
-        return body(separator: false) unless pr_comment
+        return url_section(separator: false) unless pr_comment
 
         job_entries = jobs_section(pr_comment)
-        body(job_entries: job_entries, separator: false)
+        url_section(job_entries: job_entries, separator: false)
       end
 
       attr_reader :report_url,
@@ -100,7 +100,7 @@ module Publisher
       # Allure report url section
       #
       # @return [String]
-      def body(job_entries: job_entry, separator: true)
+      def url_section(job_entries: job_entry, separator: true)
         reports = <<~BODY.strip
           <!-- allure -->
           ---
