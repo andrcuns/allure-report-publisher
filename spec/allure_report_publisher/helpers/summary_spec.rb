@@ -1,20 +1,11 @@
 RSpec.shared_examples "summary fetcher" do
   let(:report_path) { "spec/fixture/fake_report" }
 
-  let(:summary_data) do
-    {
-      "epic name" => { passed: 2, failed: 2, skipped: 1 },
-      "epic name 2" => { passed: 1, failed: 0, skipped: 0 }
-    }
-  end
-
   let(:summary_table) do
     Terminal::Table.new do |table|
       table.title = "#{summary_type} summary"
       table.headings = ["", "passed", "failed", "skipped", "result"]
-      table.rows = summary_data.map do |name, summary|
-        [name, *summary.values, summary[:failed].zero? ? "✅" : "❌"]
-      end
+      table.rows = rows
     end
   end
 
@@ -26,20 +17,36 @@ end
 RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
   subject(:summary) { described_class.get(report_path, summary_type) }
 
-  context "with behavior summary" do
-    let(:summary_type) { Publisher::Helpers::Summary::BEHAVIORS }
+  context "with expanded summary" do
+    let(:rows) do
+      [
+        ["epic name", 2, 2, 1, "❌"],
+        ["epic name 2", 1, 0, 0, "✅"]
+      ]
+    end
 
-    it_behaves_like "summary fetcher"
+    context "with behavior summary" do
+      let(:summary_type) { Publisher::Helpers::Summary::BEHAVIORS }
+
+      it_behaves_like "summary fetcher"
+    end
+
+    context "with packages summary" do
+      let(:summary_type) { Publisher::Helpers::Summary::PACKAGES }
+
+      it_behaves_like "summary fetcher"
+    end
+
+    context "with suites summary" do
+      let(:summary_type) { Publisher::Helpers::Summary::SUITES }
+
+      it_behaves_like "summary fetcher"
+    end
   end
 
-  context "with packages summary" do
-    let(:summary_type) { Publisher::Helpers::Summary::PACKAGES }
-
-    it_behaves_like "summary fetcher"
-  end
-
-  context "with suites summary" do
-    let(:summary_type) { Publisher::Helpers::Summary::SUITES }
+  context "with total summary" do
+    let(:summary_type) { Publisher::Helpers::Summary::TOTAL }
+    let(:rows) { [["Total", 3, 2, 1, "❌"]] }
 
     it_behaves_like "summary fetcher"
   end

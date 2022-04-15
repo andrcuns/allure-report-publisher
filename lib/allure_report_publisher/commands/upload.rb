@@ -29,7 +29,8 @@ module Publisher
              values: [
                Publisher::Helpers::Summary::BEHAVIORS,
                Publisher::Helpers::Summary::SUITES,
-               Publisher::Helpers::Summary::PACKAGES
+               Publisher::Helpers::Summary::PACKAGES,
+               Publisher::Helpers::Summary::TOTAL
              ]
       option :copy_latest,
              type: :boolean,

@@ -8,6 +8,7 @@ module Publisher
       BEHAVIORS = "behaviors".freeze
       PACKAGES = "packages".freeze
       SUITES = "suites".freeze
+      TOTAL = "total".freeze
 
       # Summary table generator
       #
@@ -34,9 +35,7 @@ module Publisher
         Terminal::Table.new do |table|
           table.title = "#{summary_type} summary"
           table.headings = ["", "passed", "failed", "skipped", "result"]
-          table.rows = summary_data.map do |name, summary|
-            [name, *summary.values, summary[:failed].zero? ? "✅" : "❌"]
-          end
+          table.rows = summary_table_rows
         end
       end
 
@@ -44,12 +43,26 @@ module Publisher
 
       attr_reader :report_path, :summary_type
 
+      # Summary table rows
+      #
+      # @return [Array]
+      def summary_table_rows
+        if summary_type != TOTAL
+          return summary_data.map { |name, summary| [name, *summary.values, summary[:failed].zero? ? "✅" : "❌"] }
+        end
+
+        total = ->(type) { summary_data.values.sum { |obj| obj[type] } }
+        failed = total.call(:failed)
+
+        [["Total", total.call(:passed), failed, total.call(:skipped), failed.zero? ? "✅" : "❌"]]
+      end
+
       # Data json
       #
       # @return [Hash]
       def data_json
         @data_json ||= JSON.parse(
-          File.read(File.join(report_path, "data", "#{summary_type}.json")),
+          File.read(File.join(report_path, "data", "#{summary_type == TOTAL ? SUITES : summary_type}.json")),
           symbolize_names: true
         )
       end
