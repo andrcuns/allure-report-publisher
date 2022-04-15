@@ -3,19 +3,22 @@ RSpec.shared_examples "summary fetcher" do
 
   let(:summary_table) do
     Terminal::Table.new do |table|
-      table.title = "#{summary_type} summary"
+      table.title = "#{summary_type || 'total'} summary"
       table.headings = ["", "passed", "failed", "skipped", "result"]
       table.rows = rows
     end
   end
 
-  it "fetches summary table" do
-    expect(summary.to_s).to eq(summary_table.to_s)
+  it "fetches summary table", :aggregate_failures do
+    expect(summary.status).to eq(status)
+    expect(summary.table.to_s).to eq(summary_table.to_s)
   end
 end
 
 RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
-  subject(:summary) { described_class.get(report_path, summary_type) }
+  subject(:summary) { described_class.new(report_path, summary_type) }
+
+  let(:status) { "❌" }
 
   context "with expanded summary" do
     let(:rows) do
@@ -39,15 +42,31 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
 
     context "with suites summary" do
       let(:summary_type) { Publisher::Helpers::Summary::SUITES }
+      let(:status) { "✅" }
+      let(:rows) do
+        [
+          ["epic name", 4, 0, 1, "✅"],
+          ["epic name 2", 1, 0, 0, "✅"]
+        ]
+      end
 
       it_behaves_like "summary fetcher"
     end
   end
 
-  context "with total summary" do
+  context "with short summary" do
     let(:summary_type) { Publisher::Helpers::Summary::TOTAL }
-    let(:rows) { [["Total", 3, 2, 1, "❌"]] }
+    let(:status) { "✅" }
+    let(:rows) { [["Total", 5, 0, 1, "✅"]] }
 
-    it_behaves_like "summary fetcher"
+    context "with explicitly provided provided type" do
+      it_behaves_like "summary fetcher"
+    end
+
+    context "without explicitly provided provided type" do
+      let(:summary_type) { nil }
+
+      it_behaves_like "summary fetcher"
+    end
   end
 end

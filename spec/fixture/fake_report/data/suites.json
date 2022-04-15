@@ -18,7 +18,7 @@
             },
             {
               "name": "spec",
-              "status": "failed"
+              "status": "passed"
             },
             {
               "name": "spec",
@@ -35,7 +35,7 @@
             },
             {
               "name": "spec 4",
-              "status": "broken"
+              "status": "passed"
             }
           ]
         }
