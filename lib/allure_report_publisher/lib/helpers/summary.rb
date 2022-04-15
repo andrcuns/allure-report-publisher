@@ -16,25 +16,23 @@ module Publisher
       # @param [String] summary_type
       def initialize(report_path, summary_type)
         @report_path = report_path
-        @summary_type = summary_type
-      end
-
-      # Get summary table
-      #
-      # @param [String] report_path
-      # @param [String] summary_type
-      # @return [Terminal::Table]
-      def self.get(report_path, summary_type)
-        new(report_path, summary_type).summary_table
+        @summary_type = summary_type || TOTAL
       end
 
       # Summary table
       #
       # @return [Terminal::Table]
-      def summary_table
-        return short_summary_table if summary_type == TOTAL
+      def table
+        return terminal_table([short_summary]) if summary_type == TOTAL
 
-        expanded_summary_table
+        terminal_table(expanded_summary)
+      end
+
+      # Test run status emoji
+      #
+      # @return [String]
+      def status
+        short_summary.last
       end
 
       private
@@ -43,29 +41,33 @@ module Publisher
 
       # Expanded summary table
       #
-      # @return [Terminal::Table]
-      def expanded_summary_table
-        table(summary_data.map { |name, summary| [name, *summary.values, summary[:failed].zero? ? "✅" : "❌"] })
+      # @return [Array<Array>]
+      def expanded_summary
+        @expanded_summary ||= summary_data.map do |name, summary|
+          [name, *summary.values, summary[:failed].zero? ? "✅" : "❌"]
+        end
       end
 
       # Short summary table
       #
-      # @return [Terminal::Table]
-      def short_summary_table
+      # @return [Array<String>]
+      def short_summary
+        return @short_summary if defined?(@short_summary)
+
         sum = summary_data.values.each_with_object({ passed: 0, failed: 0, skipped: 0 }) do |entry, hsh|
           hsh[:passed] += entry[:passed]
           hsh[:failed] += entry[:failed]
           hsh[:skipped] += entry[:skipped]
         end
 
-        table([["Total", sum[:passed], sum[:failed], sum[:skipped], sum[:failed].zero? ? "✅" : "❌"]])
+        @short_summary = ["Total", sum[:passed], sum[:failed], sum[:skipped], sum[:failed].zero? ? "✅" : "❌"]
       end
 
       # Summary terminal table
       #
       # @param [Array] rows
       # @return [Terminal::Table]
-      def table(rows)
+      def terminal_table(rows)
         Terminal::Table.new do |table|
           table.title = "#{summary_type} summary"
           table.headings = ["", "passed", "failed", "skipped", "result"]

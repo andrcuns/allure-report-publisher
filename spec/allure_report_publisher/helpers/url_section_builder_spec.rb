@@ -9,19 +9,29 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
     )
   end
 
+  let(:summary) { instance_double("Publisher::Helpers::Summary", status: status, table: summary_table) }
   let(:report_url) { "https://report.com" }
   let(:build_name) { "build-name" }
   let(:sha_url) { "sha-url" }
   let(:report_path) { "report_path" }
+  let(:status) { "✅" }
   let(:summary_type) { nil }
-  let(:summary_table) { nil }
+
+  let(:rows) { [["Total", 3, 0, 1, "✅"]] }
+  let(:summary_table) do
+    Terminal::Table.new do |table|
+      table.title = "#{summary_type} summary"
+      table.headings = ["", "passed", "failed", "skipped", "result"]
+      table.rows = rows
+    end
+  end
 
   def jobs(jobs = [{ name: build_name, url: report_url, sha_url: sha_url }])
     markdowns = jobs.map do |job|
       name = job[:name]
 
       entry = ["<!-- #{name} -->"]
-      entry << "**#{name}**: 📝 [test report](#{job[:url]}) for #{sha_url}"
+      entry << "**#{name}**: #{status} [test report](#{job[:url]}) for #{sha_url}"
       entry << "```markdown\n#{summary_table}\n```" if summary_type
       entry << "<!-- #{name} -->"
 
@@ -45,6 +55,30 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
     URLS
   end
 
+  before do
+    allow(Publisher::Helpers::Summary).to receive(:new) { summary }
+  end
+
+  context "with summary" do
+    let(:summary_type) { Publisher::Helpers::Summary::BEHAVIORS }
+    let(:status) { "❌" }
+
+    let(:rows) do
+      [
+        ["epic name", 2, 2, 1, "❌"],
+        ["epic name 2", 1, 0, 0, "✅"]
+      ]
+    end
+
+    it "return initial pr description with summary" do
+      expect(builder.updated_pr_description("pr")).to eq("pr\n\n#{urls_section}")
+    end
+
+    it "returns initial comment with summary" do
+      expect(builder.comment_body).to eq(urls_section.gsub("---\n", ""))
+    end
+  end
+
   context "without prior result" do
     it "returns initial pr description" do
       expect(builder.updated_pr_description("pr")).to eq("pr\n\n#{urls_section}")
@@ -52,45 +86,6 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
 
     it "returns initial comment" do
       expect(builder.comment_body).to eq(urls_section.gsub("---\n", ""))
-    end
-  end
-
-  context "with summary" do
-    let(:summary_type) { Publisher::Helpers::Summary::BEHAVIORS }
-
-    let(:summary_table) do
-      table_style = {
-        border_left: false,
-        border_right: false,
-        border_top: false,
-        border_bottom: false,
-        all_separators: true
-      }
-      summary_data = {
-        "epic name" => { passed: 2, failed: 2, skipped: 1 },
-        "epic name 2" => { passed: 1, failed: 0, skipped: 0 }
-      }
-
-      Terminal::Table.new(title: "#{summary_type} summary", style: table_style) do |table|
-        table.headings = ["", "passed", "failed", "skipped", "result"]
-        table.rows = summary_data.map do |name, summary|
-          [name, *summary.values, summary[:failed].zero? ? "✅" : "❌"]
-        end
-      end
-    end
-
-    before do
-      allow(Publisher::Helpers::Summary).to receive(:get) { summary_table }
-    end
-
-    it "return initial pr description with summary" do
-      expect(builder.updated_pr_description("pr")).to eq("pr\n\n#{urls_section}")
-      expect(Publisher::Helpers::Summary).to have_received(:get).with(report_path, summary_type)
-    end
-
-    it "returns initial comment with summary" do
-      expect(builder.comment_body).to eq(urls_section.gsub("---\n", ""))
-      expect(Publisher::Helpers::Summary).to have_received(:get).with(report_path, summary_type)
     end
   end
 

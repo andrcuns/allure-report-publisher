@@ -9,9 +9,10 @@ module Publisher
       # Url section builder
       #
       # @param [String] report_url
+      # @param [String] report_path
       # @param [String] build_name
       # @param [String] sha_url
-      # @param [String] summary_table
+      # @param [String] summary_type
       def initialize(report_url:, report_path:, build_name:, sha_url:, summary_type:)
         @report_url = report_url
         @report_path = report_path
@@ -81,13 +82,11 @@ module Publisher
         @heading ||= "# Allure report\n`allure-report-publisher` generated test report!"
       end
 
-      # Get execution summary table
+      # Test run summary
       #
-      # @return [Terminal::Table]
-      def summary_table
-        return @summary_table if defined?(@summary_table)
-
-        @summary_table = summary_type ? Helpers::Summary.get(report_path, summary_type) : nil
+      # @return [Helpers::Summary]
+      def summary
+        @summary ||= Helpers::Summary.new(report_path, summary_type)
       end
 
       # Single job report URL entry
@@ -96,8 +95,8 @@ module Publisher
       def job_entry
         @job_entry ||= begin
           entry = ["<!-- #{build_name} -->"]
-          entry << "**#{build_name}**: 📝 [test report](#{report_url}) for #{sha_url}"
-          entry << "```markdown\n#{summary_table}\n```" if summary_table
+          entry << "**#{build_name}**: #{summary.status} [test report](#{report_url}) for #{sha_url}"
+          entry << "```markdown\n#{summary.table}\n```" if summary_type
           entry << "<!-- #{build_name} -->"
 
           entry.join("\n")
