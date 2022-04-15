@@ -1,4 +1,4 @@
-RSpec.shared_examples("upload command") do
+RSpec.shared_examples "upload command" do
   include_context "with cli helper"
   include_context "with output capture"
 

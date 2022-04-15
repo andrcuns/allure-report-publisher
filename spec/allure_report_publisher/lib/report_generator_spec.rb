@@ -1,4 +1,4 @@
-RSpec.describe Publisher::ReportGenerator do
+RSpec.describe Publisher::ReportGenerator, epic: "report generator" do
   subject(:report_generator) { described_class.new(results_glob) }
 
   include_context "with mock helper"

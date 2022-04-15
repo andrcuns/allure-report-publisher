@@ -1,6 +1,6 @@
 require_relative "common_uploader"
 
-RSpec.describe Publisher::Uploaders::GCS do
+RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   include_context "with uploader"
 
   let(:client) { instance_double("Google::Cloud::Storage::Project", bucket: bucket) }

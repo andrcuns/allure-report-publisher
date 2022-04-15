@@ -1,6 +1,6 @@
 require_relative "common_provider"
 
-RSpec.describe Publisher::Providers::Gitlab do
+RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
   include_context "with provider helper"
 
   let(:build_name) { env[:CI_JOB_NAME] }
@@ -107,7 +107,7 @@ RSpec.describe Publisher::Providers::Gitlab do
         end
 
         before do
-          allow(Publisher::Providers::UrlSectionBuilder).to receive(:match?)
+          allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
             .with(comment.body)
             .and_return(true)
         end

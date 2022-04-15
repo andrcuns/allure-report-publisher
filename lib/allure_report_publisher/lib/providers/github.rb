@@ -75,7 +75,7 @@ module Publisher
       # @return [Sawyer::Resource]
       def comment
         @comment ||= client.issue_comments(repository, pr_id).detect do |comment|
-          UrlSectionBuilder.match?(comment[:body])
+          Helpers::UrlSectionBuilder.match?(comment[:body])
         end
       end
 

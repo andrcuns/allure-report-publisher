@@ -1,4 +1,4 @@
-RSpec.describe Publisher::Commands::Version do
+RSpec.describe Publisher::Commands::Version, epic: "commands" do
   include_context "with cli helper"
 
   it "prints version" do

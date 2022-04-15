@@ -1,4 +1,4 @@
-RSpec.shared_context("with provider helper") do
+RSpec.shared_context "with provider helper" do
   subject(:provider) do
     described_class.new(
       report_url: report_url,
@@ -10,7 +10,7 @@ RSpec.shared_context("with provider helper") do
 
   let(:url_builder) do
     instance_double(
-      "Publesher::Providers:UrlSectionBuilder",
+      "Publesher::Helpers::UrlSectionBuilder",
       updated_pr_description: updated_pr_description,
       comment_body: updated_comment_body
     )
@@ -27,7 +27,7 @@ RSpec.shared_context("with provider helper") do
   let(:summary_type) { nil }
 
   before do
-    allow(Publisher::Providers::UrlSectionBuilder).to receive(:new)
+    allow(Publisher::Helpers::UrlSectionBuilder).to receive(:new)
       .with(
         report_url: report_url,
         report_path: report_path,

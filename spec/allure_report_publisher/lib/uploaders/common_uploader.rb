@@ -1,4 +1,4 @@
-RSpec.shared_context("with uploader") do
+RSpec.shared_context "with uploader" do
   include_context "with mock helper"
 
   let(:report_generator) do

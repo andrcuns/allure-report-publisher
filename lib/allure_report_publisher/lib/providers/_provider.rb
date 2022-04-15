@@ -123,7 +123,7 @@ module Publisher
       #
       # @return [ReportUrls]
       def url_section_builder
-        @url_section_builder ||= UrlSectionBuilder.new(
+        @url_section_builder ||= Helpers::UrlSectionBuilder.new(
           report_url: report_url,
           report_path: report_path,
           build_name: build_name,

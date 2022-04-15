@@ -1,6 +1,4 @@
 RSpec.shared_examples "summary fetcher" do
-  subject(:summary) { described_class.get(report_path, summary_type) }
-
   let(:report_path) { "spec/fixture/fake_report" }
 
   let(:summary_data) do
@@ -34,7 +32,9 @@ RSpec.shared_examples "summary fetcher" do
   end
 end
 
-RSpec.describe Publisher::Helpers::Summary do
+RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
+  subject(:summary) { described_class.get(report_path, summary_type) }
+
   context "with behavior summary" do
     let(:summary_type) { Publisher::Helpers::Summary::BEHAVIORS }
 

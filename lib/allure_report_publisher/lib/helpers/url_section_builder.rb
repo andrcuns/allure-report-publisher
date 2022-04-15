@@ -1,5 +1,5 @@
 module Publisher
-  module Providers
+  module Helpers
     # Urls section builder
     #
     class UrlSectionBuilder

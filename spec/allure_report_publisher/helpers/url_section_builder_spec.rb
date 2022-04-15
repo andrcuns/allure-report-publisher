@@ -1,4 +1,4 @@
-RSpec.describe Publisher::Providers::UrlSectionBuilder do
+RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
   subject(:builder) do
     described_class.new(
       report_url: report_url,
