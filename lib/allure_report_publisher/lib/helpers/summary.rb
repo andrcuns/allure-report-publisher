@@ -31,15 +31,8 @@ module Publisher
       #
       # @return [Terminal::Table]
       def summary_table
-        table_style = {
-          border_left: false,
-          border_right: false,
-          border_top: false,
-          border_bottom: false,
-          all_separators: true
-        }
-
-        Terminal::Table.new(title: "#{summary_type} summary", style: table_style) do |table|
+        Terminal::Table.new do |table|
+          table.title = "#{summary_type} summary"
           table.headings = ["", "passed", "failed", "skipped", "result"]
           table.rows = summary_data.map do |name, summary|
             [name, *summary.values, summary[:failed].zero? ? "✅" : "❌"]
