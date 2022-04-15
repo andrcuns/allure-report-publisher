@@ -29,26 +29,30 @@ module Publisher
         urls_block.match?(DESCRIPTION_PATTERN)
       end
 
-      # Get urls for PR update
+      # PR description with allure report urls
       #
-      # @param [String] pr
+      # @param [String] pr_description
       # @return [String]
       def updated_pr_description(pr_description)
-        return strip_separator(body) unless pr_description
-        return "#{pr_description}\n\n#{body}" unless pr_description.match?(DESCRIPTION_PATTERN)
+        stripped_description = (pr_description || "").strip
+
+        return url_section(separator: false) if stripped_description == ""
+        return "#{pr_description}\n\n#{url_section}" unless pr_description.match?(DESCRIPTION_PATTERN)
 
         job_entries = jobs_section(pr_description)
-        pr_description.gsub(DESCRIPTION_PATTERN, body(job_entries))
+        non_empty = stripped_description != pr_description.match(DESCRIPTION_PATTERN)[0]
+        pr_description.gsub(DESCRIPTION_PATTERN, url_section(job_entries: job_entries, separator: non_empty))
       end
 
-      # Allure report url comment without description separator
+      # Comment body with allure report urls
       #
+      # @param [String] pr_comment
       # @return [String]
       def comment_body(pr_comment = nil)
-        return strip_separator(body) unless pr_comment
+        return url_section(separator: false) unless pr_comment
 
         job_entries = jobs_section(pr_comment)
-        strip_separator(body(job_entries))
+        url_section(job_entries: job_entries, separator: false)
       end
 
       attr_reader :report_url,
@@ -58,22 +62,6 @@ module Publisher
                   :summary_type
 
       private
-
-      # Allure report url pr description
-      #
-      # @return [String]
-      def body(job_entries = job_entry)
-        @body ||= <<~BODY.strip
-          <!-- allure -->
-          ---
-          #{heading}
-
-          <!-- jobs -->
-          #{job_entries}
-          <!-- jobs -->
-          <!-- allurestop -->
-        BODY
-      end
 
       # Url section heading
       #
@@ -110,6 +98,24 @@ module Publisher
         @job_entry_pattern ||= /<!-- #{build_name} -->\n([\s\S]+)\n<!-- #{build_name} -->/
       end
 
+      # Allure report url section
+      #
+      # @return [String]
+      def url_section(job_entries: job_entry, separator: true)
+        reports = <<~BODY.strip
+          <!-- allure -->
+          ---
+          #{heading}
+
+          <!-- jobs -->
+          #{job_entries}
+          <!-- jobs -->
+          <!-- allurestop -->
+        BODY
+
+        separator ? reports : reports.gsub("---\n", "")
+      end
+
       # Return updated jobs section
       #
       # @param [String] urls
@@ -119,14 +125,6 @@ module Publisher
         return jobs.gsub(job_entry_pattern, job_entry) if jobs.match?(job_entry_pattern)
 
         "#{jobs}\n#{job_entry}"
-      end
-
-      # Strip separator from allure results section
-      #
-      # @param [String] body
-      # @return [String]
-      def strip_separator(body)
-        body.gsub("---\n", "")
       end
     end
   end
