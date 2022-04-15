@@ -44,7 +44,13 @@ module Publisher
       # @return [Array<Array>]
       def expanded_summary
         @expanded_summary ||= summary_data.map do |name, summary|
-          [name, *summary.values, summary[:failed].zero? ? "✅" : "❌"]
+          status = if summary[:failed].zero?
+                     summary[:flaky].zero? ? "✅" : "⚠️"
+                   else
+                     "❌"
+                   end
+
+          [name, *summary.values, status]
         end
       end
 
@@ -54,13 +60,19 @@ module Publisher
       def short_summary
         return @short_summary if defined?(@short_summary)
 
-        sum = summary_data.values.each_with_object({ passed: 0, failed: 0, skipped: 0 }) do |entry, hsh|
+        sum = summary_data.values.each_with_object({ passed: 0, failed: 0, skipped: 0, flaky: 0 }) do |entry, hsh|
           hsh[:passed] += entry[:passed]
           hsh[:failed] += entry[:failed]
           hsh[:skipped] += entry[:skipped]
+          hsh[:flaky] += entry[:flaky]
         end
+        status = if sum[:failed].zero?
+                   sum[:flaky].zero? ? "✅" : "⚠️"
+                 else
+                   "❌"
+                 end
 
-        @short_summary = ["Total", sum[:passed], sum[:failed], sum[:skipped], sum[:failed].zero? ? "✅" : "❌"]
+        @short_summary = ["Total", sum[:passed], sum[:failed], sum[:skipped], sum[:flaky], status]
       end
 
       # Summary terminal table
@@ -70,7 +82,7 @@ module Publisher
       def terminal_table(rows)
         Terminal::Table.new do |table|
           table.title = "#{summary_type} summary"
-          table.headings = ["", "passed", "failed", "skipped", "result"]
+          table.headings = ["", "passed", "failed", "skipped", "flaky", "result"]
           table.rows = rows
         end
       end
@@ -99,11 +111,12 @@ module Publisher
       # @param [Hash] entry
       # @param [Hash] summary
       # @return [Hash]
-      def fetch_results(entry, summary = { passed: 0, failed: 0, skipped: 0 })
+      def fetch_results(entry, summary = { passed: 0, failed: 0, skipped: 0, flaky: 0 })
         entry[:children].each { |item| fetch_results(item, summary) } if entry.key?(:children)
 
         summary[:passed] += 1 if entry[:status] == "passed"
         summary[:skipped] += 1 if entry[:status] == "skipped"
+        summary[:flaky] += 1 if entry[:flaky]
         summary[:failed] += 1 if %w[failed broken].include?(entry[:status])
 
         summary
