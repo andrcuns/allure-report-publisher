@@ -45,6 +45,7 @@ jobs:
           coverageCommand: bundle exec rspec --force-color
           coverageLocations: coverage/coverage.json:simplecov
       - uses: actions/upload-artifact@v3
+        if: always()
         with:
           name: allure-reports
           path: reports/allure-results/
