@@ -97,5 +97,6 @@ jobs:
               --bucket="allure-test-reports" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="comment" \
+              --summary="behaviors" \
               --copy-latest \
               --color
