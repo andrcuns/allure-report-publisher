@@ -23,9 +23,13 @@ module Publisher
       #
       # @return [Terminal::Table]
       def table
-        return terminal_table([short_summary]) if summary_type == TOTAL
+        return terminal_table { |table| table << short_summary } if summary_type == TOTAL
 
-        terminal_table(expanded_summary)
+        terminal_table do |table|
+          expanded_summary.each { |row| table << row }
+          table << :separator
+          table << short_summary
+        end
       end
 
       # Test run status emoji
@@ -44,7 +48,7 @@ module Publisher
       # @return [Array<Array>]
       def expanded_summary
         @expanded_summary ||= summary_data.map do |name, summary|
-          [name, *summary.values, status_icon(summary[:failed], summary[:flaky])]
+          [name, *summary.values, status_icon(summary[:passed], summary[:failed], summary[:flaky])]
         end
       end
 
@@ -67,16 +71,18 @@ module Publisher
           sum[:failed],
           sum[:skipped],
           sum[:flaky],
-          status_icon(sum[:failed], sum[:flaky])
+          status_icon(sum[:passed], sum[:failed], sum[:flaky])
         ]
       end
 
       # Status icon based on run results
       #
+      # @param [Integer] passed
       # @param [Integer] failed
       # @param [Integer] flaky
       # @return [String]
-      def status_icon(failed, flaky)
+      def status_icon(passed, failed, flaky)
+        return "➖" if passed.zero? && failed.zero?
         return flaky.zero? ? "✅" : "⚠️" if failed.zero?
 
         "❌"
@@ -84,13 +90,12 @@ module Publisher
 
       # Summary terminal table
       #
-      # @param [Array] rows
       # @return [Terminal::Table]
-      def terminal_table(rows)
+      def terminal_table
         Terminal::Table.new do |table|
           table.title = "#{summary_type} summary"
           table.headings = ["", "passed", "failed", "skipped", "flaky", "result"]
-          table.rows = rows
+          yield(table)
         end
       end
 

@@ -5,7 +5,7 @@ RSpec.shared_examples "summary fetcher" do
     Terminal::Table.new do |table|
       table.title = "#{summary_type || 'total'} summary"
       table.headings = ["", "passed", "failed", "skipped", "flaky", "result"]
-      table.rows = rows
+      rows.call(table)
     end
   end
 
@@ -22,10 +22,11 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
 
   context "with expanded summary" do
     let(:rows) do
-      [
-        ["epic name", 2, 2, 1, 1, "❌"],
-        ["epic name 2", 1, 0, 0, 0, "✅"]
-      ]
+      lambda do |table|
+        [["epic name", 2, 2, 1, 1, "❌"], ["epic name 2", 1, 0, 0, 0, "✅"]].each { |row| table << row }
+        table << :separator
+        table << ["Total", 3, 2, 1, 1, "❌"]
+      end
     end
 
     context "with behavior summary" do
@@ -43,11 +44,13 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
     context "with suites summary" do
       let(:summary_type) { Publisher::Helpers::Summary::SUITES }
       let(:status) { "✅" }
+
       let(:rows) do
-        [
-          ["epic name", 4, 0, 1, 0, "✅"],
-          ["epic name 2", 1, 0, 0, 0, "✅"]
-        ]
+        lambda do |table|
+          [["epic name", 4, 0, 1, 0, "✅"], ["epic name 2", 1, 0, 0, 0, "✅"]].each { |row| table << row }
+          table << :separator
+          table << ["Total", 5, 0, 1, 0, "✅"]
+        end
       end
 
       it_behaves_like "summary fetcher"
@@ -57,7 +60,10 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
   context "with short summary" do
     let(:summary_type) { Publisher::Helpers::Summary::TOTAL }
     let(:status) { "✅" }
-    let(:rows) { [["Total", 5, 0, 1, 0, "✅"]] }
+
+    let(:rows) do
+      ->(table) { table << ["Total", 5, 0, 1, 0, "✅"] }
+    end
 
     context "with explicitly provided provided type" do
       it_behaves_like "summary fetcher"
