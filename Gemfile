@@ -5,7 +5,7 @@ source "https://rubygems.org"
 gemspec
 
 group :release do
-  gem "git", "~> 1.10"
+  gem "git", "~> 1.11"
   gem "semver2", "~> 3.4"
   gem "yard", "~> 0.9.27"
 end
