@@ -3,9 +3,9 @@ require_relative "common_uploader"
 RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   include_context "with uploader"
 
-  let(:client) { instance_double("Google::Cloud::Storage::Project", bucket: bucket) }
-  let(:bucket) { instance_double("Google::Cloud::Storage::Bucket", file: file, create_file: nil) }
-  let(:file) { instance_double("Google::Cloud::Storage::File", download: nil) }
+  let(:client) { instance_double(Google::Cloud::Storage::Project, bucket: bucket) }
+  let(:bucket) { instance_double(Google::Cloud::Storage::Bucket, file: file, create_file: nil) }
+  let(:file) { instance_double(Google::Cloud::Storage::File, download: nil) }
   let(:history_run) { ["spec/fixture/fake_report/history/history.json", "#{prefix}/#{run_id}/history/history.json"] }
   let(:history) { ["spec/fixture/fake_report/history/history.json", "#{prefix}/history/history.json"] }
   let(:report_run) { ["spec/fixture/fake_report/index.html", "#{prefix}/#{run_id}/index.html"] }
@@ -49,7 +49,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   context "with ci run" do
     let(:ci_provider) { Publisher::Providers::Github }
     let(:ci_provider_instance) do
-      instance_double("Publisher::Providers::Github", executor_info: executor_info, add_report_url: nil)
+      instance_double(Publisher::Providers::Github, executor_info: executor_info, add_report_url: nil)
     end
 
     before do

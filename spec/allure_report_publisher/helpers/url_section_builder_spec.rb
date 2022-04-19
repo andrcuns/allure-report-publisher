@@ -9,7 +9,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
     )
   end
 
-  let(:summary) { instance_double("Publisher::Helpers::Summary", status: status, table: summary_table) }
+  let(:summary) { instance_double(Publisher::Helpers::Summary, status: status, table: summary_table) }
   let(:report_url) { "https://report.com" }
   let(:build_name) { "build-name" }
   let(:sha_url) { "sha-url" }

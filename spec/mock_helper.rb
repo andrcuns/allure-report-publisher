@@ -1,5 +1,5 @@
 RSpec.shared_context("with mock helper") do
-  let(:spinner) { instance_double("Publisher::Helpers::Spinner") }
+  let(:spinner) { instance_double(Publisher::Helpers::Spinner) }
 
   let(:status_fake) { double("status", success?: cmd_status) }
   let(:cmd_out) { "cmd-out" }

@@ -26,7 +26,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
 
   let(:client) do
     instance_double(
-      "Gitlab::Client",
+      Gitlab::Client,
       merge_request: double("mr", description: full_pr_description),
       merge_request_comments: comment_double,
       update_merge_request: nil,

@@ -13,7 +13,7 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
 
   let(:client) do
     instance_double(
-      "Octokit::Client",
+      Octokit::Client,
       pull_request: { body: full_pr_description },
       issue_comments: comments,
       update_pull_request: nil,
