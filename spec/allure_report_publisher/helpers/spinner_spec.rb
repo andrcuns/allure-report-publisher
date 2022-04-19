@@ -8,7 +8,7 @@ RSpec.describe Publisher::Helpers::Spinner, epic: "helpers" do
   let(:error_message) { "failed\nError" }
 
   let(:spinner) do
-    instance_double("TTY::Spinner", auto_spin: nil, stop: nil, success: nil, error: nil, tty?: tty)
+    instance_double(TTY::Spinner, auto_spin: nil, stop: nil, success: nil, error: nil, tty?: tty)
   end
   let(:fake) do
     double("fake", run: nil)

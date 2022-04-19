@@ -3,7 +3,7 @@ RSpec.shared_context "with uploader" do
 
   let(:report_generator) do
     instance_double(
-      "Publisher::ReportGenerator",
+      Publisher::ReportGenerator,
       generate: nil,
       results_path: results_path,
       report_path: report_path

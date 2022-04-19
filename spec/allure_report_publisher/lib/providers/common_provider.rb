@@ -10,7 +10,7 @@ RSpec.shared_context "with provider helper" do
 
   let(:url_builder) do
     instance_double(
-      "Publesher::Helpers::UrlSectionBuilder",
+      Publisher::Helpers::UrlSectionBuilder,
       updated_pr_description: updated_pr_description,
       comment_body: updated_comment_body
     )

@@ -4,7 +4,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   include_context "with uploader"
   include_context "with mock helper"
 
-  let(:s3_client) { instance_double("Aws::S3::Client", get_object: nil) }
+  let(:s3_client) { instance_double(Aws::S3::Client, get_object: nil) }
   let(:put_object_args) { [] }
   let(:run_report_files) do
     [
@@ -115,7 +115,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   context "with ci run" do
     let(:ci_provider) { Publisher::Providers::Github }
     let(:ci_provider_instance) do
-      instance_double("Publisher::Providers::Github", executor_info: executor_info, add_report_url: nil)
+      instance_double(Publisher::Providers::Github, executor_info: executor_info, add_report_url: nil)
     end
 
     before do

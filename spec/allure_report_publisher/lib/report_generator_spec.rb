@@ -3,7 +3,7 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
 
   include_context "with mock helper"
 
-  let(:capture_status) { instance_double("Process::Status", success?: status) }
+  let(:capture_status) { instance_double(Process::Status, success?: status) }
 
   let(:results_glob) { "spec/fixture/fake_results/*" }
   let(:results_dir) { "/results_dir" }

@@ -10,7 +10,7 @@ RSpec.describe Publisher::Commands::Upload, epic: "commands" do
 
   describe "gcs uploader" do
     let(:uploader) { Publisher::Uploaders::GCS }
-    let(:uploader_stub) { instance_double("Publisher::Uploaders::GCS", execute: nil) }
+    let(:uploader_stub) { instance_double(Publisher::Uploaders::GCS, execute: nil) }
     let(:command) { %w[upload gcs] }
 
     it_behaves_like "upload command"
