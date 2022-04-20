@@ -83,7 +83,7 @@ module Publisher
       # @return [String]
       def status_icon(passed, failed, flaky)
         return "➖" if passed.zero? && failed.zero?
-        return flaky.zero? ? "✅" : "⚠️" if failed.zero?
+        return flaky.zero? ? "✅" : "❗" if failed.zero?
 
         "❌"
       end
