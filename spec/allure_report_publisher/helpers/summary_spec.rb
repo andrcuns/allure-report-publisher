@@ -18,25 +18,33 @@ end
 RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
   subject(:summary) { described_class.new(report_path, summary_type) }
 
-  let(:status) { "❌" }
-
   context "with expanded summary" do
-    let(:rows) do
-      lambda do |table|
-        [["epic name", 2, 2, 1, 1, "❌"], ["epic name 2", 1, 0, 0, 0, "✅"]].each { |row| table << row }
-        table << :separator
-        table << ["Total", 3, 2, 1, 1, "❌"]
-      end
-    end
-
     context "with behavior summary" do
       let(:summary_type) { Publisher::Helpers::Summary::BEHAVIORS }
+      let(:status) { "❌" }
+
+      let(:rows) do
+        lambda do |table|
+          [["epic name", 2, 2, 1, 1, "❌"], ["epic name 2", 1, 0, 0, 0, "✅"]].each { |row| table << row }
+          table << :separator
+          table << ["Total", 3, 2, 1, 1, "❌"]
+        end
+      end
 
       it_behaves_like "summary fetcher"
     end
 
     context "with packages summary" do
       let(:summary_type) { Publisher::Helpers::Summary::PACKAGES }
+      let(:status) { "❗" }
+
+      let(:rows) do
+        lambda do |table|
+          [["epic name", 4, 0, 1, 0, "✅"], ["epic name 2", 1, 0, 0, 1, "❗"]].each { |row| table << row }
+          table << :separator
+          table << ["Total", 5, 0, 1, 1, "❗"]
+        end
+      end
 
       it_behaves_like "summary fetcher"
     end
