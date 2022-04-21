@@ -62,7 +62,6 @@ jobs:
           load: true
           tags: publisher:latest
           cache-from: type=gha
-          cache-to: type=gha,mode=max
       - name: Download allure reports
         uses: actions/download-artifact@v3
         with:
