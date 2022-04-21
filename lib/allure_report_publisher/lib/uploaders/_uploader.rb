@@ -154,7 +154,7 @@ module Publisher
       #
       # @return [String]
       def full_prefix
-        @full_prefix ||= [prefix, run_id].compact.yield_self do |pre|
+        @full_prefix ||= [prefix, run_id].compact.then do |pre|
           break if pre.empty?
 
           pre.join("/")
