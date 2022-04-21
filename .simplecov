@@ -10,7 +10,7 @@ SimpleCov.start do
   enable_coverage :branch
 
   formatter(
-    [].yield_self do |formatters|
+    [].then do |formatters|
       formatters << SimpleCov::Formatter::Console
       formatters << SimpleCov::Formatter::HTMLFormatter if ENV["COV_HTML_REPORT"]
       formatters << SimpleCov::Formatter::JSONFormatter if ENV["CC_TEST_REPORTER_ID"]

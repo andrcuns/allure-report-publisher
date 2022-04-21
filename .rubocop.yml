@@ -38,6 +38,9 @@ Style/FrozenStringLiteralComment:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
+Style/FetchEnvVar:
+  Enabled: false
+
 Layout/LineLength:
   Max: 120
 
