@@ -25,7 +25,7 @@ RUN gem build -o ${GEMFILE}
 FROM ruby as production
 
 # Install allure
-ARG ALLURE_VERSION=2.17.2
+ARG ALLURE_VERSION=2.17.3
 ENV PATH=$PATH:/usr/local/allure-${ALLURE_VERSION}/bin
 RUN apk --no-cache add openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 RUN set -eux; \
