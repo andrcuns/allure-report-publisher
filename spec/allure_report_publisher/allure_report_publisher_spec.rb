@@ -7,7 +7,7 @@ RSpec.describe Publisher, epic: "cli" do
     USE
 
     expect { system("bin/allure-report-publisher") }.to(
-      output(usage).to_stderr_from_any_process
+      output(/#{usage}/).to_stderr_from_any_process
     )
   end
 end
