@@ -61,7 +61,8 @@ module Publisher
                   :report_path,
                   :build_name,
                   :sha_url,
-                  :summary_type
+                  :summary_type,
+                  :collapse_summary
 
       private
 
@@ -86,7 +87,10 @@ module Publisher
         @job_entry ||= begin
           entry = ["<!-- #{build_name} -->"]
           entry << "**#{build_name}**: #{summary.status} [test report](#{report_url}) for #{sha_url}"
+          entry << "<details>" if collapse_summary
+          entry << "<summary>expand summary</summary>" if collapse_summary
           entry << "```markdown\n#{summary.table}\n```" if summary_type
+          entry << "</details>" if collapse_summary
           entry << "<!-- #{build_name} -->"
 
           entry.join("\n")
