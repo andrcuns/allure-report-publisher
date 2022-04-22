@@ -88,7 +88,7 @@ module Publisher
           entry = ["<!-- #{build_name} -->"]
           entry << "**#{build_name}**: #{summary.status} [test report](#{report_url}) for #{sha_url}"
           entry << "<details>" if collapse_summary
-          entry << "<summary>expand summary</summary>" if collapse_summary
+          entry << "<summary>expand test summary</summary>" if collapse_summary
           entry << "```markdown\n#{summary.table}\n```" if summary_type
           entry << "</details>" if collapse_summary
           entry << "<!-- #{build_name} -->"
