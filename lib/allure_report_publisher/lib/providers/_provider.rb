@@ -19,11 +19,12 @@ module Publisher
       #
       # @param [String] report_url
       # @param [Boolean] update_pr
-      def initialize(report_url:, report_path:, update_pr:, summary_type:)
+      def initialize(report_url:, report_path:, update_pr:, summary_type:, collapse_summary:)
         @report_url = report_url
         @report_path = report_path
         @update_pr = update_pr
         @summary_type = summary_type
+        @collapse_summary = collapse_summary
       end
 
       # :nocov:
@@ -67,7 +68,8 @@ module Publisher
       attr_reader :report_url,
                   :report_path,
                   :update_pr,
-                  :summary_type
+                  :summary_type,
+                  :collapse_summary
 
       # Current pull request description
       #
@@ -128,7 +130,8 @@ module Publisher
           report_path: report_path,
           build_name: build_name,
           sha_url: sha_url,
-          summary_type: summary_type
+          summary_type: summary_type,
+          collapse_summary: collapse_summary
         )
       end
     end

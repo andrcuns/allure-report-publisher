@@ -13,12 +13,14 @@ module Publisher
       # @param [String] build_name
       # @param [String] sha_url
       # @param [String] summary_type
-      def initialize(report_url:, report_path:, build_name:, sha_url:, summary_type:)
-        @report_url = report_url
-        @report_path = report_path
-        @build_name = build_name
-        @sha_url = sha_url
-        @summary_type = summary_type
+      # @param [String] collapse_summary
+      def initialize(**args)
+        @report_url = args[:report_url]
+        @report_path = args[:report_path]
+        @build_name = args[:build_name]
+        @sha_url = args[:sha_url]
+        @summary_type = args[:summary_type]
+        @collapse_summary = args[:collapse_summary]
       end
 
       # Matches url section pattern

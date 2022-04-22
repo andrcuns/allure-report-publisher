@@ -32,6 +32,10 @@ module Publisher
                Publisher::Helpers::Summary::PACKAGES,
                Publisher::Helpers::Summary::TOTAL
              ]
+      option :collapse_summary,
+             type: :boolean,
+             default: false,
+             desc: "Create summary as a collapsable section"
       option :copy_latest,
              type: :boolean,
              default: false,
@@ -83,7 +87,8 @@ module Publisher
             :bucket,
             :prefix,
             :copy_latest,
-            :update_pr
+            :update_pr,
+            :collapse_summary
           )
         )
       end

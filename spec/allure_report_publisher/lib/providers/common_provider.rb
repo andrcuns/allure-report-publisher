@@ -4,7 +4,8 @@ RSpec.shared_context "with provider helper" do
       report_url: report_url,
       report_path: report_path,
       update_pr: update_pr,
-      summary_type: summary_type
+      summary_type: summary_type,
+      collapse_summary: collapse_summary
     )
   end
 
@@ -25,6 +26,7 @@ RSpec.shared_context "with provider helper" do
   let(:update_pr) { "description" }
   let(:sha) { "cfdef23b4b06df32ab1e98ee4091504948daf2a9" }
   let(:summary_type) { nil }
+  let(:collapse_summary) { false }
 
   before do
     allow(Publisher::Helpers::UrlSectionBuilder).to receive(:new)
@@ -33,7 +35,8 @@ RSpec.shared_context "with provider helper" do
         report_path: report_path,
         build_name: build_name,
         sha_url: sha_url,
-        summary_type: summary_type
+        summary_type: summary_type,
+        collapse_summary: collapse_summary
       )
       .and_return(url_builder)
   end
