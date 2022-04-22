@@ -30,7 +30,8 @@ RSpec.shared_examples "upload command" do
       bucket: bucket,
       prefix: prefix,
       copy_latest: false,
-      summary_type: nil
+      summary_type: nil,
+      collapse_summary: false
     }
   end
 
@@ -53,7 +54,7 @@ RSpec.shared_examples "upload command" do
 
       aggregate_failures do
         expect(uploader).to have_received(:new).with(
-          args.slice(:results_glob, :bucket, :copy_latest, :update_pr, :summary_type)
+          args.slice(:results_glob, :bucket, :copy_latest, :update_pr, :summary_type, :collapse_summary)
         )
         expect(uploader_stub).to have_received(:generate_report)
         expect(uploader_stub).to have_received(:upload)

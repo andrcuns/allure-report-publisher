@@ -19,13 +19,24 @@ module Publisher
         "retry-trend.json"
       ].freeze
 
-      def initialize(results_glob:, bucket:, update_pr: nil, prefix: nil, copy_latest: false, summary_type: nil) # rubocop:disable Metrics/ParameterLists
-        @results_glob = results_glob
-        @bucket_name = bucket
-        @prefix = prefix
-        @update_pr = update_pr
-        @summary_type = summary_type
-        @copy_latest = !!(Providers.provider && copy_latest) # copy latest for ci only
+      # Uploader instance
+      #
+      # @param [Hash] args
+      # @option args [String] :results_glob
+      # @option args [String] :bucket
+      # @option args [String] :prefix
+      # @option args [Boolean] :update_pr
+      # @option args [String] :summary_type
+      # @option args [Boolean] :collapse_summary
+      # @option args [String] :copy_latest
+      def initialize(**args)
+        @results_glob = args[:results_glob]
+        @bucket_name = args[:bucket]
+        @prefix = args[:prefix]
+        @update_pr = args[:update_pr]
+        @summary_type = args[:summary_type]
+        @copy_latest = (Providers.provider && args[:copy_latest]) # copy latest for ci only
+        @collapse_summary = args[:collapse_summary]
       end
 
       # Execute allure report generation and upload
@@ -87,7 +98,8 @@ module Publisher
                   :prefix,
                   :update_pr,
                   :copy_latest,
-                  :summary_type
+                  :summary_type,
+                  :collapse_summary
 
       def_delegators :report_generator, :results_path, :report_path
 
@@ -187,7 +199,8 @@ module Publisher
           report_url: report_url,
           report_path: report_path,
           update_pr: update_pr,
-          summary_type: summary_type
+          summary_type: summary_type,
+          collapse_summary: collapse_summary
         )
       end
 

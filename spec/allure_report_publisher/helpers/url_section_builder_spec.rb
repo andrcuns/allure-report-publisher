@@ -5,7 +5,8 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
       report_path: report_path,
       build_name: build_name,
       sha_url: sha_url,
-      summary_type: summary_type
+      summary_type: summary_type,
+      collapse_summary: collapse_summary
     )
   end
 
@@ -16,6 +17,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
   let(:report_path) { "report_path" }
   let(:status) { "✅" }
   let(:summary_type) { nil }
+  let(:collapse_summary) { false }
 
   let(:rows) { [["Total", 3, 0, 1, "✅"]] }
   let(:summary_table) do
@@ -26,13 +28,16 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
     end
   end
 
-  def jobs(jobs = [{ name: build_name, url: report_url, sha_url: sha_url }])
+  def jobs(jobs: [{ name: build_name, url: report_url, sha_url: sha_url }], collapse: false)
     markdowns = jobs.map do |job|
       name = job[:name]
 
       entry = ["<!-- #{name} -->"]
       entry << "**#{name}**: #{status} [test report](#{job[:url]}) for #{sha_url}"
+      entry << "<details>" if collapse
+      entry << "<summary>expand test summary</summary>\n" if collapse
       entry << "```markdown\n#{summary_table}\n```" if summary_type
+      entry << "</details>" if collapse
       entry << "<!-- #{name} -->"
 
       entry.join("\n")
@@ -41,7 +46,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
     markdowns.join("\n")
   end
 
-  def urls_section(job_section: jobs)
+  def urls_section(job_section = jobs)
     <<~URLS.strip
       <!-- allure -->
       ---
@@ -70,12 +75,26 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
       ]
     end
 
-    it "return initial pr description with summary" do
-      expect(builder.updated_pr_description("pr")).to eq("pr\n\n#{urls_section}")
+    context "without collapsed summary" do
+      it "return initial pr description with full summary" do
+        expect(builder.updated_pr_description("pr")).to eq("pr\n\n#{urls_section}")
+      end
+
+      it "returns initial comment with full summary" do
+        expect(builder.comment_body).to eq(urls_section.gsub("---\n", ""))
+      end
     end
 
-    it "returns initial comment with summary" do
-      expect(builder.comment_body).to eq(urls_section.gsub("---\n", ""))
+    context "with collapsed summary" do
+      let(:collapse_summary) { true }
+
+      it "return initial pr description with collapsed summary" do
+        expect(builder.updated_pr_description("pr")).to eq("pr\n\n#{urls_section(jobs(collapse: true))}")
+      end
+
+      it "returns initial comment with collapsed summary" do
+        expect(builder.comment_body).to eq(urls_section(jobs(collapse: true)).gsub("---\n", ""))
+      end
     end
   end
 
@@ -98,7 +117,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
   end
 
   context "with previous result for single job" do
-    let(:existing_block) { urls_section(job_section: jobs([{ name: build_name, url: "old", sha_url: "old" }])) }
+    let(:existing_block) { urls_section(jobs(jobs: [{ name: build_name, url: "old", sha_url: "old" }])) }
 
     it "updates existing job in pr description" do
       expect(builder.updated_pr_description("pr\n\n#{existing_block}")).to eq("pr\n\n#{urls_section}")
@@ -116,7 +135,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
   context "with previous result for multiple jobs" do
     let(:existing_block) do
       urls_section(
-        job_section: jobs([
+        jobs(jobs: [
           { name: "build-1", url: "test", sha_url: "old" },
           { name: "build-2", url: "test", sha_url: "old" }
         ])
@@ -124,7 +143,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
     end
     let(:result) do
       urls_section(
-        job_section: jobs([
+        jobs(jobs: [
           { name: "build-1", url: "test", sha_url: sha_url },
           { name: "build-2", url: "test", sha_url: sha_url },
           { name: build_name, url: report_url, sha_url: sha_url }
