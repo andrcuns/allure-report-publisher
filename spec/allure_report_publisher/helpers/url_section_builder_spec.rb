@@ -35,7 +35,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
       entry = ["<!-- #{name} -->"]
       entry << "**#{name}**: #{status} [test report](#{job[:url]}) for #{sha_url}"
       entry << "<details>" if collapse
-      entry << "<summary>expand test summary</summary>" if collapse
+      entry << "<summary>expand test summary</summary>\n" if collapse
       entry << "```markdown\n#{summary_table}\n```" if summary_type
       entry << "</details>" if collapse
       entry << "<!-- #{name} -->"
