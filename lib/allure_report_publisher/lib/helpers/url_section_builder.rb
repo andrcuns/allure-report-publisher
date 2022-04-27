@@ -91,7 +91,7 @@ module Publisher
           entry << "<summary>expand test summary</summary>\n" if collapse_summary
           entry << "```markdown\n#{summary.table}\n```" if summary_type
           entry << "</details>" if collapse_summary
-          entry << "<!-- #{build_name} -->"
+          entry << "<!-- #{build_name} -->\n"
 
           entry.join("\n")
         end
@@ -101,7 +101,7 @@ module Publisher
       #
       # @return [RegExp]
       def job_entry_pattern
-        @job_entry_pattern ||= /<!-- #{build_name} -->\n([\s\S]+)\n<!-- #{build_name} -->/
+        @job_entry_pattern ||= /<!-- #{build_name} -->\n([\s\S]+)\n<!-- #{build_name} -->\n/
       end
 
       # Allure report url section
