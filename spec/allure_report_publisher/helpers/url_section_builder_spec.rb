@@ -38,7 +38,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
       entry << "<summary>expand test summary</summary>\n" if collapse
       entry << "```markdown\n#{summary_table}\n```" if summary_type
       entry << "</details>" if collapse
-      entry << "<!-- #{name} -->"
+      entry << "<!-- #{name} -->\n"
 
       entry.join("\n")
     end
@@ -98,7 +98,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
     end
   end
 
-  context "without prior result" do
+  context "without previous result" do
     it "returns initial pr description" do
       expect(builder.updated_pr_description("pr")).to eq("pr\n\n#{urls_section}")
     end
