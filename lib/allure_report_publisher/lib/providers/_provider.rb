@@ -17,14 +17,20 @@ module Publisher
 
       # CI provider base
       #
-      # @param [String] report_url
-      # @param [Boolean] update_pr
-      def initialize(report_url:, report_path:, update_pr:, summary_type:, collapse_summary:)
-        @report_url = report_url
-        @report_path = report_path
-        @update_pr = update_pr
-        @summary_type = summary_type
-        @collapse_summary = collapse_summary
+      # @param [Hash] args
+      # @option args [String] :report_url
+      # @option args [String] :report_path
+      # @option args [Boolean] :update_pr
+      # @option args [String] :summary_type
+      # @option args [Boolean] :collapse_summay
+      # @option args [Symbol] :summary_table_type
+      def initialize(**args)
+        @report_url = args[:report_url]
+        @report_path = args[:report_path]
+        @update_pr = args[:update_pr]
+        @summary_type = args[:summary_type]
+        @summary_table_type = args[:summary_table_type]
+        @collapse_summary = args[:collapse_summary]
       end
 
       # :nocov:
@@ -69,7 +75,8 @@ module Publisher
                   :report_path,
                   :update_pr,
                   :summary_type,
-                  :collapse_summary
+                  :collapse_summary,
+                  :summary_table_type
 
       # Current pull request description
       #
@@ -131,6 +138,7 @@ module Publisher
           build_name: build_name,
           sha_url: sha_url,
           summary_type: summary_type,
+          summary_table_type: summary_table_type,
           collapse_summary: collapse_summary
         )
       end
