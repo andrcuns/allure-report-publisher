@@ -32,7 +32,7 @@ module Publisher
                   else
                     terminal_table do |table|
                       expanded_summary.each { |row| table << row }
-                      table << :separator
+                      table << :separator unless markdown?
                       table << short_summary
                     end
                   end
@@ -103,7 +103,7 @@ module Publisher
       # @return [Terminal::Table]
       def terminal_table
         Terminal::Table.new do |table|
-          table.title = "#{summary_type} summary"
+          table.title = "#{summary_type} summary" unless markdown?
           table.style = { border: table_type }
           table.headings = ["", "passed", "failed", "skipped", "flaky", "result"]
           yield(table)
@@ -143,6 +143,13 @@ module Publisher
         summary[:failed] += 1 if %w[failed broken].include?(entry[:status])
 
         summary
+      end
+
+      # Render markdown border tables
+      #
+      # @return [Boolean]
+      def markdown?
+        table_type == MARKDOWN
       end
     end
   end

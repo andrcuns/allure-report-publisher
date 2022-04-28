@@ -1,20 +1,21 @@
-RSpec.shared_examples "summary fetcher" do |table_style|
-  subject(:summary) { described_class.new(report_path, summary_type, table_style) }
+RSpec.shared_examples "summary fetcher" do |summary_table_style|
+  subject(:summary) { described_class.new(report_path, summary_type, summary_table_style) }
 
   let(:report_path) { "spec/fixture/fake_report" }
+  let(:markdown) { summary_table_style == :markdown }
 
   let(:summary_table) do
     terminal_table = Terminal::Table.new do |table|
-      table.title = "#{summary_type || 'total'} summary"
-      table.style = { border: table_style }
+      table.title = "#{summary_type || 'total'} summary" unless markdown
+      table.style = { border: summary_table_style }
       table.headings = ["", "passed", "failed", "skipped", "flaky", "result"]
       rows.call(table)
     end
 
-    table_style == :ascii ? "```markdown\n#{terminal_table}\n```" : terminal_table.to_s
+    summary_table_style == :ascii ? "```markdown\n#{terminal_table}\n```" : terminal_table.to_s
   end
 
-  it "fetches #{table_style} summary table", :aggregate_failures do
+  it "fetches #{summary_table_style} summary table", :aggregate_failures do
     expect(summary.status).to eq(status)
     expect(summary.table).to eq(summary_table.to_s)
   end
@@ -29,7 +30,7 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
       let(:rows) do
         lambda do |table|
           [["epic name", 2, 2, 1, 1, "❌"], ["epic name 2", 1, 0, 0, 0, "✅"]].each { |row| table << row }
-          table << :separator
+          table << :separator unless markdown
           table << ["Total", 3, 2, 1, 1, "❌"]
         end
       end
@@ -45,7 +46,7 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
       let(:rows) do
         lambda do |table|
           [["epic name", 4, 0, 1, 0, "✅"], ["epic name 2", 1, 0, 0, 1, "❗"]].each { |row| table << row }
-          table << :separator
+          table << :separator unless markdown
           table << ["Total", 5, 0, 1, 1, "❗"]
         end
       end
@@ -61,7 +62,7 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
       let(:rows) do
         lambda do |table|
           [["epic name", 4, 0, 1, 0, "✅"], ["epic name 2", 1, 0, 0, 0, "✅"]].each { |row| table << row }
-          table << :separator
+          table << :separator unless markdown
           table << ["Total", 5, 0, 1, 0, "✅"]
         end
       end
