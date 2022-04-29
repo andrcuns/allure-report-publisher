@@ -32,12 +32,12 @@ module Publisher
                   else
                     terminal_table do |table|
                       expanded_summary.each { |row| table << row }
-                      table << :separator unless markdown?
+                      table << :separator
                       table << short_summary
                     end
                   end
 
-        return summary.to_s if table_type == MARKDOWN
+        return summary.to_s if markdown?
 
         "```markdown\n#{summary}\n```"
       end

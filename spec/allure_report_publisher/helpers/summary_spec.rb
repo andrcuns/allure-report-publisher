@@ -30,7 +30,7 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
       let(:rows) do
         lambda do |table|
           [["epic name", 2, 2, 1, 1, "❌"], ["epic name 2", 1, 0, 0, 0, "✅"]].each { |row| table << row }
-          table << :separator unless markdown
+          table << :separator
           table << ["Total", 3, 2, 1, 1, "❌"]
         end
       end
@@ -46,7 +46,7 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
       let(:rows) do
         lambda do |table|
           [["epic name", 4, 0, 1, 0, "✅"], ["epic name 2", 1, 0, 0, 1, "❗"]].each { |row| table << row }
-          table << :separator unless markdown
+          table << :separator
           table << ["Total", 5, 0, 1, 1, "❗"]
         end
       end
@@ -62,7 +62,7 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
       let(:rows) do
         lambda do |table|
           [["epic name", 4, 0, 1, 0, "✅"], ["epic name 2", 1, 0, 0, 0, "✅"]].each { |row| table << row }
-          table << :separator unless markdown
+          table << :separator
           table << ["Total", 5, 0, 1, 0, "✅"]
         end
       end
