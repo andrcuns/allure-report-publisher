@@ -31,7 +31,8 @@ RSpec.shared_examples "upload command" do
       prefix: prefix,
       copy_latest: false,
       summary_type: nil,
-      collapse_summary: false
+      collapse_summary: false,
+      summary_table_type: :ascii
     }
   end
 
@@ -54,7 +55,15 @@ RSpec.shared_examples "upload command" do
 
       aggregate_failures do
         expect(uploader).to have_received(:new).with(
-          args.slice(:results_glob, :bucket, :copy_latest, :update_pr, :summary_type, :collapse_summary)
+          args.slice(
+            :results_glob,
+            :bucket,
+            :copy_latest,
+            :update_pr,
+            :summary_type,
+            :summary_table_type,
+            :collapse_summary
+          )
         )
         expect(uploader_stub).to have_received(:generate_report)
         expect(uploader_stub).to have_received(:upload)
@@ -98,6 +107,19 @@ RSpec.shared_examples "upload command" do
 
       aggregate_failures do
         expect(uploader).to have_received(:new).with({ **args, update_pr: "comment", summary_type: "behaviors" })
+        expect(uploader_stub).to have_received(:generate_report)
+        expect(uploader_stub).to have_received(:upload)
+        expect(uploader_stub).to have_received(:add_url_to_pr)
+      end
+    end
+
+    it "executes uploader with --summary-table-type=markdown" do
+      run_cli(*command, *cli_args, "--update-pr=comment", "--summary=behaviors", "--summary-table-type=markdown")
+
+      aggregate_failures do
+        expect(uploader).to have_received(:new).with(
+          { **args, update_pr: "comment", summary_type: "behaviors", summary_table_type: :markdown }
+        )
         expect(uploader_stub).to have_received(:generate_report)
         expect(uploader_stub).to have_received(:upload)
         expect(uploader_stub).to have_received(:add_url_to_pr)

@@ -20,6 +20,7 @@ module Publisher
         @build_name = args[:build_name]
         @sha_url = args[:sha_url]
         @summary_type = args[:summary_type]
+        @summary_table_type = args[:summary_table_type]
         @collapse_summary = args[:collapse_summary]
       end
 
@@ -62,6 +63,7 @@ module Publisher
                   :build_name,
                   :sha_url,
                   :summary_type,
+                  :summary_table_type,
                   :collapse_summary
 
       private
@@ -77,7 +79,7 @@ module Publisher
       #
       # @return [Helpers::Summary]
       def summary
-        @summary ||= Helpers::Summary.new(report_path, summary_type)
+        @summary ||= Helpers::Summary.new(report_path, summary_type, summary_table_type)
       end
 
       # Single job report URL entry
@@ -89,7 +91,7 @@ module Publisher
           entry << "**#{build_name}**: #{summary.status} [test report](#{report_url}) for #{sha_url}"
           entry << "<details>" if collapse_summary
           entry << "<summary>expand test summary</summary>\n" if collapse_summary
-          entry << "```markdown\n#{summary.table}\n```" if summary_type
+          entry << summary.table if summary_type
           entry << "</details>" if collapse_summary
           entry << "<!-- #{build_name} -->\n"
 

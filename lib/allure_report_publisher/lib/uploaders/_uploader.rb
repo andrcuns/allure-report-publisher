@@ -27,6 +27,7 @@ module Publisher
       # @option args [String] :prefix
       # @option args [Boolean] :update_pr
       # @option args [String] :summary_type
+      # @option args [Symbol] :summary_table_type
       # @option args [Boolean] :collapse_summary
       # @option args [String] :copy_latest
       def initialize(**args)
@@ -35,6 +36,7 @@ module Publisher
         @prefix = args[:prefix]
         @update_pr = args[:update_pr]
         @summary_type = args[:summary_type]
+        @summary_table_type = args[:summary_table_type]
         @copy_latest = (Providers.provider && args[:copy_latest]) # copy latest for ci only
         @collapse_summary = args[:collapse_summary]
       end
@@ -99,7 +101,8 @@ module Publisher
                   :update_pr,
                   :copy_latest,
                   :summary_type,
-                  :collapse_summary
+                  :collapse_summary,
+                  :summary_table_type
 
       def_delegators :report_generator, :results_path, :report_path
 
@@ -200,6 +203,7 @@ module Publisher
           report_path: report_path,
           update_pr: update_pr,
           summary_type: summary_type,
+          summary_table_type: summary_table_type,
           collapse_summary: collapse_summary
         )
       end

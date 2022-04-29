@@ -93,5 +93,6 @@ jobs:
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="comment" \
               --summary="behaviors" \
+              --summary-table-type="markdown" \
               --copy-latest \
               --color

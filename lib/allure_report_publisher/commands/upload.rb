@@ -32,6 +32,14 @@ module Publisher
                Publisher::Helpers::Summary::PACKAGES,
                Publisher::Helpers::Summary::TOTAL
              ]
+      option :summary_table_type,
+             type: :string,
+             desc: "Summary table type. Required: false",
+             default: Publisher::Helpers::Summary::ASCII,
+             values: [
+               Publisher::Helpers::Summary::ASCII,
+               Publisher::Helpers::Summary::MARKDOWN
+             ]
       option :collapse_summary,
              type: :boolean,
              default: false,
@@ -88,7 +96,8 @@ module Publisher
             :prefix,
             :copy_latest,
             :update_pr,
-            :collapse_summary
+            :collapse_summary,
+            :summary_table_type
           )
         )
       end

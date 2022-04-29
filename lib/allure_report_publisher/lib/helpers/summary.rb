@@ -9,27 +9,37 @@ module Publisher
       PACKAGES = "packages".freeze
       SUITES = "suites".freeze
       TOTAL = "total".freeze
+      MARKDOWN = :markdown
+      ASCII = :ascii
 
       # Summary table generator
       #
       # @param [String] report_path
       # @param [String] summary_type
-      def initialize(report_path, summary_type)
+      # @param [String] markdown
+      def initialize(report_path, summary_type, table_type = ASCII)
         @report_path = report_path
         @summary_type = summary_type || TOTAL
+        @table_type = table_type
       end
 
       # Summary table
       #
-      # @return [Terminal::Table]
+      # @return [String]
       def table
-        return terminal_table { |table| table << short_summary } if summary_type == TOTAL
+        summary = if summary_type == TOTAL
+                    terminal_table { |table| table << short_summary }
+                  else
+                    terminal_table do |table|
+                      expanded_summary.each { |row| table << row }
+                      table << :separator
+                      table << short_summary
+                    end
+                  end
 
-        terminal_table do |table|
-          expanded_summary.each { |row| table << row }
-          table << :separator
-          table << short_summary
-        end
+        return summary.to_s if markdown?
+
+        "```markdown\n#{summary}\n```"
       end
 
       # Test run status emoji
@@ -41,7 +51,7 @@ module Publisher
 
       private
 
-      attr_reader :report_path, :summary_type
+      attr_reader :report_path, :summary_type, :table_type
 
       # Expanded summary table
       #
@@ -93,7 +103,8 @@ module Publisher
       # @return [Terminal::Table]
       def terminal_table
         Terminal::Table.new do |table|
-          table.title = "#{summary_type} summary"
+          table.title = "#{summary_type} summary" unless markdown?
+          table.style = { border: table_type }
           table.headings = ["", "passed", "failed", "skipped", "flaky", "result"]
           yield(table)
         end
@@ -132,6 +143,13 @@ module Publisher
         summary[:failed] += 1 if %w[failed broken].include?(entry[:status])
 
         summary
+      end
+
+      # Render markdown border tables
+      #
+      # @return [Boolean]
+      def markdown?
+        table_type == MARKDOWN
       end
     end
   end
