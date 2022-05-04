@@ -49,6 +49,7 @@ Options:
   --prefix=VALUE                    # Optional prefix for report path. Required: false
   --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description)
   --summary=VALUE                   # Additionally add summary table to PR comment or description. Required: false: (behaviors/suites/packages/total)
+  --summary-table-type=VALUE        # Summary table type. Required: false: (ascii/markdown), default: :ascii
   --[no-]collapse-summary           # Create summary as a collapsable section, default: false
   --[no-]copy-latest                # Keep copy of latest report at base prefix path, default: false
   --[no-]color                      # Force color output
@@ -109,7 +110,8 @@ Following CI providers are supported:
 It is possible to update pull requests with urls to published reports and execution summary.
 
 - `--update-pr=(comment|description)`: post report urls in pr description or as a comment
-- `--summary=(behaviors/suites/packages/total)`: add execution summary table
+- `--summary=(behaviors|suites|packages|total)`: add execution summary table
+- `--summary-table-type=(ascii|markdown)`: use markdown or ascii table formatting
 - `--[no-]collapse-summary`: add summary in collapsable section
 
 Example:
