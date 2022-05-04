@@ -58,21 +58,29 @@ module Publisher
       # @return [Array<Array>]
       def expanded_summary
         @expanded_summary ||= summary_data.map do |name, summary|
-          [name, *summary.values, status_icon(summary[:passed], summary[:failed], summary[:flaky])]
+          [
+            name,
+            *summary.values,
+            summary[:passed] + summary[:failed] + summary[:skipped],
+            status_icon(summary[:passed], summary[:failed], summary[:flaky])
+          ]
         end
       end
 
       # Short summary table
       #
       # @return [Array<String>]
-      def short_summary
+      def short_summary # rubocop:disable Metrics/MethodLength
         return @short_summary if defined?(@short_summary)
 
-        sum = summary_data.values.each_with_object({ passed: 0, failed: 0, skipped: 0, flaky: 0 }) do |entry, hsh|
+        sum = summary_data.values.each_with_object({
+          passed: 0, failed: 0, skipped: 0, flaky: 0, total: 0
+        }) do |entry, hsh|
           hsh[:passed] += entry[:passed]
           hsh[:failed] += entry[:failed]
           hsh[:skipped] += entry[:skipped]
           hsh[:flaky] += entry[:flaky]
+          hsh[:total] += (entry[:passed] + entry[:failed] + entry[:skipped])
         end
 
         @short_summary = [
@@ -81,6 +89,7 @@ module Publisher
           sum[:failed],
           sum[:skipped],
           sum[:flaky],
+          sum[:total],
           status_icon(sum[:passed], sum[:failed], sum[:flaky])
         ]
       end
@@ -105,7 +114,7 @@ module Publisher
         Terminal::Table.new do |table|
           table.title = "#{summary_type} summary" unless markdown?
           table.style = { border: table_type }
-          table.headings = ["", "passed", "failed", "skipped", "flaky", "result"]
+          table.headings = ["", "passed", "failed", "skipped", "flaky", "total", "result"]
           yield(table)
         end
       end

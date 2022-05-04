@@ -8,7 +8,7 @@ RSpec.shared_examples "summary fetcher" do |summary_table_style|
     terminal_table = Terminal::Table.new do |table|
       table.title = "#{summary_type || 'total'} summary" unless markdown
       table.style = { border: summary_table_style }
-      table.headings = ["", "passed", "failed", "skipped", "flaky", "result"]
+      table.headings = ["", "passed", "failed", "skipped", "flaky", "total", "result"]
       rows.call(table)
     end
 
@@ -29,9 +29,9 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
 
       let(:rows) do
         lambda do |table|
-          [["epic name", 2, 2, 1, 1, "❌"], ["epic name 2", 1, 0, 0, 0, "✅"]].each { |row| table << row }
+          [["epic name", 2, 2, 1, 1, 5, "❌"], ["epic name 2", 1, 0, 0, 0, 1, "✅"]].each { |row| table << row }
           table << :separator
-          table << ["Total", 3, 2, 1, 1, "❌"]
+          table << ["Total", 3, 2, 1, 1, 6, "❌"]
         end
       end
 
@@ -45,9 +45,9 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
 
       let(:rows) do
         lambda do |table|
-          [["epic name", 4, 0, 1, 0, "✅"], ["epic name 2", 1, 0, 0, 1, "❗"]].each { |row| table << row }
+          [["epic name", 4, 0, 1, 0, 5, "✅"], ["epic name 2", 1, 0, 0, 1, 1, "❗"]].each { |row| table << row }
           table << :separator
-          table << ["Total", 5, 0, 1, 1, "❗"]
+          table << ["Total", 5, 0, 1, 1, 6, "❗"]
         end
       end
 
@@ -61,9 +61,9 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
 
       let(:rows) do
         lambda do |table|
-          [["epic name", 4, 0, 1, 0, "✅"], ["epic name 2", 1, 0, 0, 0, "✅"]].each { |row| table << row }
+          [["epic name", 4, 0, 1, 0, 5, "✅"], ["epic name 2", 1, 0, 0, 0, 1, "✅"]].each { |row| table << row }
           table << :separator
-          table << ["Total", 5, 0, 1, 0, "✅"]
+          table << ["Total", 5, 0, 1, 0, 6, "✅"]
         end
       end
 
@@ -77,7 +77,7 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
     let(:status) { "✅" }
 
     let(:rows) do
-      ->(table) { table << ["Total", 5, 0, 1, 0, "✅"] }
+      ->(table) { table << ["Total", 5, 0, 1, 0, 6, "✅"] }
     end
 
     context "with explicitly provided provided type" do
