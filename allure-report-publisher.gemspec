@@ -52,5 +52,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop-rspec", "~> 2.9"
   spec.add_development_dependency "simplecov", "~> 0.21.2"
   spec.add_development_dependency "simplecov-console", "~> 0.9.1"
-  spec.add_development_dependency "solargraph", "~> 0.44.3"
+  spec.add_development_dependency "solargraph", "~> 0.45.0"
 end
