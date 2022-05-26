@@ -42,7 +42,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "tty-spinner", "~> 0.9.3"
 
   spec.add_development_dependency "allure-rspec", "~> 2.18.0"
-  spec.add_development_dependency "climate_control", "~> 1.0.1"
+  spec.add_development_dependency "climate_control", "~> 1.1.0"
   spec.add_development_dependency "pry-byebug", "~> 3.9"
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec", "~> 3.11"
