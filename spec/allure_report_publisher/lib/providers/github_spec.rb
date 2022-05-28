@@ -64,7 +64,7 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
 
     context "with adding report urls to pr description" do
       it "updates pr description" do
-        provider.add_report_url
+        provider.add_result_summary
 
         expect(url_builder).to have_received(:updated_pr_description).with(full_pr_description)
         expect(client).to have_received(:update_pull_request).with(repository, 1, body: updated_pr_description)
@@ -76,7 +76,7 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
 
       context "without existing comment" do
         it "adds new comment" do
-          provider.add_report_url
+          provider.add_result_summary
 
           expect(url_builder).to have_received(:comment_body).with(no_args)
           expect(client).to have_received(:add_comment).with(repository, 1, updated_comment_body)
@@ -98,7 +98,7 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
         end
 
         it "updates existing comment" do
-          provider.add_report_url
+          provider.add_result_summary
 
           expect(url_builder).to have_received(:comment_body).with(comments.first[:body])
           expect(client).to have_received(:update_comment).with(repository, 2, updated_comment_body)
@@ -111,7 +111,7 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
     let(:event_name) { "push" }
 
     it "skips adding allure link to pr with not a pr message" do
-      expect { provider.add_report_url }.to raise_error("Not a pull request, skipped!")
+      expect { provider.add_result_summary }.to raise_error("Not a pull request, skipped!")
     end
   end
 
@@ -119,7 +119,7 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
     let(:auth_token) { nil }
 
     it "skips adding allure link to pr with not configured auth token message" do
-      expect { provider.add_report_url }.to raise_error("Missing GITHUB_AUTH_TOKEN environment variable!")
+      expect { provider.add_result_summary }.to raise_error("Missing GITHUB_AUTH_TOKEN environment variable!")
     end
   end
 end

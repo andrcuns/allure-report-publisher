@@ -47,7 +47,7 @@ module Publisher
       def execute
         generate_report
         upload
-        add_url_to_pr
+        add_result_summary
       end
 
       # Generate allure report
@@ -70,10 +70,10 @@ module Publisher
       # Add allure report url to pull request description
       #
       # @return [void]
-      def add_url_to_pr
+      def add_result_summary
         return unless update_pr && ci_provider
 
-        ci_provider.add_report_url
+        ci_provider.add_result_summary
       end
 
       # Uploaded report urls

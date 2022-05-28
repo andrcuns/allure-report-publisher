@@ -22,7 +22,7 @@ module Publisher
       option :update_pr,
              type: :string,
              desc: "Add report url to PR via comment or description update. Required: false",
-             values: %w[comment description]
+             values: %w[comment description actions]
       option :summary,
              type: :string,
              desc: "Additionally add summary table to PR comment or description. Required: false",
@@ -77,7 +77,7 @@ module Publisher
         return unless args[:update_pr] && uploader.pr?
 
         log("Adding reports urls")
-        Spinner.spin("updating", exit_on_error: false) { uploader.add_url_to_pr }
+        Spinner.spin("updating", exit_on_error: false) { uploader.add_result_summary }
       end
 
       private

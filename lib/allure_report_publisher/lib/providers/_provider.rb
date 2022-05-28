@@ -53,7 +53,7 @@ module Publisher
       # Add report url to pull request description
       #
       # @return [void]
-      def add_report_url
+      def add_result_summary
         raise("Not a pull request, skipped!") unless pr?
         return add_comment if comment?
 
