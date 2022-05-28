@@ -8,6 +8,7 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
   let(:repository) { env[:GITHUB_REPOSITORY] }
   let(:run_id) { env[:GITHUB_RUN_ID] }
   let(:api_url) { env[:GITHUB_API_URL] }
+  let(:step_summary_file) { env[:GITHUB_STEP_SUMMARY] }
   let(:event_name) { "pull_request" }
   let(:sha_url) { "[#{sha[0..7]}](#{server_url}/#{repository}/pull/1/commits/#{sha})" }
 
@@ -31,6 +32,7 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
       GITHUB_RUN_ID: "123",
       GITHUB_API_URL: "https://api.github.com",
       GITHUB_EVENT_PATH: "spec/fixture/workflow_event.json",
+      GITHUB_STEP_SUMMARY: "step/summary/file",
       GITHUB_AUTH_TOKEN: auth_token,
       GITHUB_EVENT_NAME: event_name
     }.compact
@@ -103,6 +105,22 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
           expect(url_builder).to have_received(:comment_body).with(comments.first[:body])
           expect(client).to have_received(:update_comment).with(repository, 2, updated_comment_body)
         end
+      end
+    end
+
+    context "with adding report urls to step summary" do
+      let(:update_pr) { "actions" }
+
+      before do
+        allow(File).to receive(:write)
+        allow(File).to receive(:exist?).with(step_summary_file).and_return(true)
+      end
+
+      it "writes to step summary file" do
+        provider.add_result_summary
+
+        expect(url_builder).to have_received(:comment_body).with(no_args)
+        expect(File).to have_received(:write).with(step_summary_file, updated_comment_body)
       end
     end
   end

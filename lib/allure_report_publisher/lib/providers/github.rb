@@ -154,7 +154,7 @@ module Publisher
         @step_summary_file ||= begin
           summary_file = ENV["GITHUB_STEP_SUMMARY"]
           raise("Environment variable GITHUB_STEP_SUMMARY is empty!") unless summary_file
-          raise("Step summary file '#{step_summary_file}' does not exist!") unless File.exist?(summary_file)
+          raise("Step summary file '#{summary_file}' does not exist!") unless File.exist?(summary_file)
 
           summary_file
         end
