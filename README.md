@@ -47,7 +47,7 @@ Options:
   --results-glob=VALUE              # Allure results files glob. Required: true
   --bucket=VALUE                    # Bucket name. Required: true
   --prefix=VALUE                    # Optional prefix for report path. Required: false
-  --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description)
+  --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description/actions)
   --summary=VALUE                   # Additionally add summary table to PR comment or description. Required: false: (behaviors/suites/packages/total)
   --summary-table-type=VALUE        # Summary table type. Required: false: (ascii/markdown), default: :ascii
   --[no-]collapse-summary           # Create summary as a collapsable section, default: false
@@ -109,7 +109,7 @@ Following CI providers are supported:
 
 It is possible to update pull requests with urls to published reports and execution summary.
 
-- `--update-pr=(comment|description)`: post report urls in pr description or as a comment
+- `--update-pr=(comment|description|actions)`: post report urls in pr description, as a comment or step summary for github actions
 - `--summary=(behaviors|suites|packages|total)`: add execution summary table
 - `--summary-table-type=(ascii|markdown)`: use markdown or ascii table formatting
 - `--[no-]collapse-summary`: add summary in collapsable section

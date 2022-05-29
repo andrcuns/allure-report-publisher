@@ -75,6 +75,7 @@ jobs:
           docker run --rm \
             -v "$(pwd)":/workspace \
             -v "$GITHUB_EVENT_PATH:$GITHUB_EVENT_PATH" \
+            -v "$GITHUB_STEP_SUMMARY:$GITHUB_STEP_SUMMARY" \
             -e GITHUB_WORKFLOW="$GITHUB_WORKFLOW" \
             -e GITHUB_EVENT_NAME="$GITHUB_EVENT_NAME" \
             -e GITHUB_EVENT_PATH="$GITHUB_EVENT_PATH" \
@@ -84,6 +85,7 @@ jobs:
             -e GITHUB_RUN_ID="$GITHUB_RUN_ID" \
             -e GITHUB_AUTH_TOKEN="$GITHUB_AUTH_TOKEN" \
             -e GITHUB_SHA="$GITHUB_SHA" \
+            -e GITHUB_STEP_SUMMARY="$GITHUB_STEP_SUMMARY" \
             -e GOOGLE_CLOUD_CREDENTIALS_JSON="$GOOGLE_CLOUD_CREDENTIALS_JSON" \
             -e ALLURE_JOB_NAME="rspec" \
             publisher:latest \
@@ -91,7 +93,7 @@ jobs:
               --results-glob="/workspace/reports/allure-results/*" \
               --bucket="allure-test-reports" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
-              --update-pr="comment" \
+              --update-pr="actions" \
               --summary="behaviors" \
               --summary-table-type="markdown" \
               --copy-latest \

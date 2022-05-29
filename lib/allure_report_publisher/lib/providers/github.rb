@@ -58,6 +58,8 @@ module Publisher
       #
       # @return [void]
       def update_pr_description
+        return File.write(step_summary_file, url_section_builder.comment_body) if actions?
+
         client.update_pull_request(repository, pr_id, body: url_section_builder.updated_pr_description(pr_description))
       end
 
@@ -136,6 +138,26 @@ module Publisher
         short_sha = sha[0..7]
 
         "[#{short_sha}](#{server_url}/#{repository}/pull/#{pr_id}/commits/#{sha})"
+      end
+
+      # Use actions summary for results
+      #
+      # @return [Boolean]
+      def actions?
+        update_pr == "actions"
+      end
+
+      # Github actions summary file
+      #
+      # @return [String]
+      def step_summary_file
+        @step_summary_file ||= begin
+          summary_file = ENV["GITHUB_STEP_SUMMARY"]
+          raise("Environment variable GITHUB_STEP_SUMMARY is empty!") unless summary_file
+          raise("Step summary file '#{summary_file}' does not exist!") unless File.exist?(summary_file)
+
+          summary_file
+        end
       end
     end
   end

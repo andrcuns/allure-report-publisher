@@ -115,7 +115,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   context "with ci run" do
     let(:ci_provider) { Publisher::Providers::Github }
     let(:ci_provider_instance) do
-      instance_double(Publisher::Providers::Github, executor_info: executor_info, add_report_url: nil)
+      instance_double(Publisher::Providers::Github, executor_info: executor_info, add_result_summary: nil)
     end
 
     before do
@@ -146,7 +146,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
 
     it "updates pr description with allure report link" do
       described_class.new(**{ **args, update_pr: true }).execute
-      expect(ci_provider_instance).to have_received(:add_report_url)
+      expect(ci_provider_instance).to have_received(:add_result_summary)
     end
 
     it "returns correct uploader report urls" do

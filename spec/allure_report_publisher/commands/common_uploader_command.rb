@@ -11,7 +11,7 @@ RSpec.shared_examples "upload command" do
       generate_report: nil,
       upload: nil,
       report_urls: { "Report url" => "http://report.com" },
-      add_url_to_pr: nil,
+      add_result_summary: nil,
       pr?: true
     )
   end
@@ -78,7 +78,7 @@ RSpec.shared_examples "upload command" do
       expect(uploader).to have_received(:new).with({ **args, update_pr: "comment" })
       expect(uploader_stub).to have_received(:generate_report)
       expect(uploader_stub).to have_received(:upload)
-      expect(uploader_stub).to have_received(:add_url_to_pr)
+      expect(uploader_stub).to have_received(:add_result_summary)
     end
 
     it "executes uploader with --update-pr=description" do
@@ -88,7 +88,7 @@ RSpec.shared_examples "upload command" do
         expect(uploader).to have_received(:new).with({ **args, update_pr: "description" })
         expect(uploader_stub).to have_received(:generate_report)
         expect(uploader_stub).to have_received(:upload)
-        expect(uploader_stub).to have_received(:add_url_to_pr)
+        expect(uploader_stub).to have_received(:add_result_summary)
       end
     end
 
@@ -109,7 +109,7 @@ RSpec.shared_examples "upload command" do
         expect(uploader).to have_received(:new).with({ **args, update_pr: "comment", summary_type: "behaviors" })
         expect(uploader_stub).to have_received(:generate_report)
         expect(uploader_stub).to have_received(:upload)
-        expect(uploader_stub).to have_received(:add_url_to_pr)
+        expect(uploader_stub).to have_received(:add_result_summary)
       end
     end
 
@@ -122,7 +122,7 @@ RSpec.shared_examples "upload command" do
         )
         expect(uploader_stub).to have_received(:generate_report)
         expect(uploader_stub).to have_received(:upload)
-        expect(uploader_stub).to have_received(:add_url_to_pr)
+        expect(uploader_stub).to have_received(:add_result_summary)
       end
     end
   end

@@ -79,7 +79,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
   context "with pr context" do
     context "with adding report urls to pr description" do
       it "updates pr description" do
-        provider.add_report_url
+        provider.add_result_summary
 
         expect(url_builder).to have_received(:updated_pr_description)
           .with(full_pr_description)
@@ -93,7 +93,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
 
       context "without existing comment" do
         it "adds new comment" do
-          provider.add_report_url
+          provider.add_result_summary
 
           expect(url_builder).to have_received(:comment_body).with(no_args)
           expect(client).to have_received(:create_merge_request_comment).with(project, mr_id, updated_comment_body)
@@ -113,7 +113,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
         end
 
         it "updates existing comment" do
-          provider.add_report_url
+          provider.add_result_summary
 
           expect(url_builder).to have_received(:comment_body)
             .with(comment.body)
@@ -128,7 +128,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
     let(:event_name) { "push" }
 
     it "skips adding allure link to mr with not a pr message" do
-      expect { provider.add_report_url }.to raise_error("Not a pull request, skipped!")
+      expect { provider.add_result_summary }.to raise_error("Not a pull request, skipped!")
     end
   end
 
@@ -136,7 +136,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
     let(:auth_token) { nil }
 
     it "skips adding allure link to pr with not configured auth token message" do
-      expect { provider.add_report_url }.to raise_error("Missing GITLAB_AUTH_TOKEN environment variable!")
+      expect { provider.add_result_summary }.to raise_error("Missing GITLAB_AUTH_TOKEN environment variable!")
     end
   end
 
@@ -147,7 +147,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
     let(:sha_url) { custom_sha_url }
 
     it "updates mr description with custom parameters for non mr runs" do
-      provider.add_report_url
+      provider.add_result_summary
 
       expect(url_builder).to have_received(:updated_pr_description)
         .with(full_pr_description)
