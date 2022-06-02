@@ -240,7 +240,7 @@ GEM
     uuid (2.3.9)
       macaddr (~> 1.0)
     webrick (1.7.0)
-    yard (0.9.27)
+    yard (0.9.28)
       webrick (~> 1.7.0)
 
 PLATFORMS
@@ -262,7 +262,7 @@ DEPENDENCIES
   simplecov (~> 0.21.2)
   simplecov-console (~> 0.9.1)
   solargraph (~> 0.45.0)
-  yard (~> 0.9.27)
+  yard (~> 0.9.28)
 
 BUNDLED WITH
    2.3.14
