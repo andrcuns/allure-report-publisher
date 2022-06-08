@@ -148,6 +148,10 @@ Following environment variables can override default CI values:
 
 - `ALLURE_JOB_NAME`: overrides default `GITHUB_JOB` value which is used as name for report url section
 
+### allure-publish-action
+
+[allure-publish-action](https://github.com/marketplace/actions/allure-publish-action) can be used to easily run report publishing from any github actions job.
+
 ## Gitlab CI
 
 Additional configuration is done via environment variables
