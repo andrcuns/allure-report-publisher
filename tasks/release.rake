@@ -17,7 +17,7 @@ module Publisher
     def add_build_task
       desc("Build allure-report-publisher")
       task(:build) do
-        FileUtils.mkdir_p("pkg") unless File.exist?("pkg")
+        FileUtils.mkdir_p("pkg")
         sh("gem build -o #{GEMFILE}")
       end
     end
