@@ -4,16 +4,6 @@ on:
   release:
     types:
       - published
-  push:
-    branches:
-      - main
-    paths:
-      - bin/bin/allure-report-publisher
-      - lib/**/*
-      - .dockerignore
-      - Dockerfile
-      - allure-report-publisher.gemspec
-      - Gemfile
 
 jobs:
   docker:
@@ -31,14 +21,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2.0.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push
-        if: github.event_name == 'push'
         uses: docker/build-push-action@v3.1.1
         with:
           push: true
@@ -46,23 +29,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
-            ghcr.io/andrcuns/allure-report-publisher:latest
-      - name: Build and push
-        if: github.event_name == 'release'
-        uses: docker/build-push-action@v3.1.1
-        with:
-          push: true
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          tags: |
-            ghcr.io/andrcuns/allure-report-publisher:latest
-            andrcuns/allure-report-publisher:${{ github.event.release.tag_name }}
             andrcuns/allure-report-publisher:latest
+            andrcuns/allure-report-publisher:${{ github.event.release.tag_name }}
 
   gem:
     runs-on: ubuntu-20.04
-    if: github.event_name == 'release'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
