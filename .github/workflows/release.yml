@@ -6,6 +6,12 @@ on:
       - main
     tags:
       - v[0-9]+.[0-9]+.[0-9]+
+    paths:
+      - lib/**/*
+      - bin/allure-report-publisher
+      - allure-report-publisher.gemspec
+      - Dockerfile
+      - Gemfile.lock
 
 jobs:
   docker:
