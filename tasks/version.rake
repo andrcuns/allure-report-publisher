@@ -53,8 +53,8 @@ module Publisher
     def commit_and_tag(new_version)
       git = Git.init
       git.add([VERSION_FILE, "Gemfile.lock"])
-      git.commit("Update to #{new_version}")
-      git.add_tag(new_version.to_s)
+      git.commit("Update to v#{new_version}")
+      git.add_tag("v#{new_version}")
     end
 
     # Semver of ref from
