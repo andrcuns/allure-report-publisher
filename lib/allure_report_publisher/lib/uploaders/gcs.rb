@@ -65,23 +65,27 @@ module Publisher
       #
       # @return [void]
       def upload_latest_copy
-        upload_to_gcs(report_files, prefix)
+        upload_to_gcs(report_files, prefix, cache_control: 60)
       end
 
-      # Upload files to s3
+      # Upload files to gcs
       #
       # @param [Array<Pathname>] files
       # @param [String] key_prefix
+      # @param [Hash] params
       # @return [Array<Hash>]
-      def upload_to_gcs(files, key_prefix)
+      def upload_to_gcs(files, key_prefix, cache_control: 3600)
         args = files.map do |file|
           {
             file: file.to_s,
-            path: key(key_prefix, file.relative_path_from(report_path))
+            path: key(key_prefix, file.relative_path_from(report_path)),
+            cache_control: "public, max-age=#{cache_control}"
           }
         end
 
-        Parallel.each(args, in_threads: 8) { |obj| bucket.create_file(obj[:file], obj[:path]) }
+        Parallel.each(args, in_threads: 8) do |obj|
+          bucket.create_file(*obj.slice(:file, :path).values, **obj.slice(:cache_control))
+        end
       end
 
       # Fabricate key for s3 object
