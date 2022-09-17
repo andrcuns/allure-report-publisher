@@ -76,7 +76,7 @@ module Publisher
       #
       # @return [void]
       def upload_latest_copy
-        upload_to_s3(report_files, prefix)
+        upload_to_s3(report_files, prefix, cache_control: 60)
       end
 
       # Upload files to s3
@@ -84,13 +84,14 @@ module Publisher
       # @param [Array<Pathname>] files
       # @param [String] key_prefix
       # @return [Array<Hash>]
-      def upload_to_s3(files, key_prefix)
+      def upload_to_s3(files, key_prefix, cache_control: 3600)
         args = files.map do |file|
           {
             body: File.new(file),
             bucket: bucket_name,
             key: key(key_prefix, file.relative_path_from(report_path)),
-            content_type: MiniMime.lookup_by_filename(file).content_type
+            content_type: MiniMime.lookup_by_filename(file).content_type,
+            cache_control: "max-age=#{cache_control}"
           }
         end
 
