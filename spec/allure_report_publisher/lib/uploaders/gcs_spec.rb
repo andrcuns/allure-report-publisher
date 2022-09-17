@@ -6,10 +6,15 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   let(:client) { instance_double(Google::Cloud::Storage::Project, bucket: bucket) }
   let(:bucket) { instance_double(Google::Cloud::Storage::Bucket, file: file, create_file: nil) }
   let(:file) { instance_double(Google::Cloud::Storage::File, download: nil) }
+
   let(:history_run) { ["spec/fixture/fake_report/history/history.json", "#{prefix}/#{run_id}/history/history.json"] }
   let(:history) { ["spec/fixture/fake_report/history/history.json", "#{prefix}/history/history.json"] }
   let(:report_run) { ["spec/fixture/fake_report/index.html", "#{prefix}/#{run_id}/index.html"] }
   let(:report) { ["spec/fixture/fake_report/index.html", "#{prefix}/index.html"] }
+
+  def cache_control(max_age = 3600)
+    { cache_control: "public, max-age=#{max_age}" }
+  end
 
   before do
     allow(Google::Cloud::Storage).to receive(:new) { client }
@@ -29,8 +34,8 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
       described_class.new(**args).execute
 
       aggregate_failures do
-        expect(bucket).to have_received(:create_file).with(*report)
-        expect(bucket).to have_received(:create_file).with(*history)
+        expect(bucket).to have_received(:create_file).with(*report, cache_control)
+        expect(bucket).to have_received(:create_file).with(*history, cache_control)
       end
     end
 
@@ -67,17 +72,17 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
           expect(file).to have_received(:download).with("#{results_path}/history/#{f}")
         end
 
-        expect(bucket).to have_received(:create_file).with(*history)
-        expect(bucket).to have_received(:create_file).with(*history_run)
-        expect(bucket).to have_received(:create_file).with(*report_run)
+        expect(bucket).to have_received(:create_file).with(*history, cache_control)
+        expect(bucket).to have_received(:create_file).with(*history_run, cache_control)
+        expect(bucket).to have_received(:create_file).with(*report_run, cache_control)
       end
     end
 
     it "uploads latest allure report copy" do
       described_class.new(**{ **args, copy_latest: true }).execute
 
-      expect(bucket).to have_received(:create_file).with(*report)
-      expect(bucket).to have_received(:create_file).with(*report_run)
+      expect(bucket).to have_received(:create_file).with(*report, cache_control(60))
+      expect(bucket).to have_received(:create_file).with(*report_run, cache_control)
     end
 
     it "adds executor info" do
