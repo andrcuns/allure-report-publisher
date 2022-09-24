@@ -5,7 +5,7 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
 
   let(:capture_status) { instance_double(Process::Status, success?: status) }
 
-  let(:results_glob) { "spec/fixture/fake_results/*" }
+  let(:results_glob) { "spec/fixture/fake_results" }
   let(:results_dir) { "/results_dir" }
   let(:report_dir) { "/report_dir" }
   let(:status) { true }
@@ -13,7 +13,6 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
   before do
     allow(Dir).to receive(:mktmpdir).with("allure-results") { results_dir }
     allow(Dir).to receive(:mktmpdir).with("allure-report") { report_dir }
-    allow(FileUtils).to receive(:cp)
     allow(Open3).to receive(:capture3) { ["Allure output", "", capture_status] }
   end
 
@@ -22,8 +21,9 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
       aggregate_failures do
         report_generator.generate
 
-        expect(FileUtils).to have_received(:cp).with(Dir.glob(results_glob), results_dir)
-        expect(Open3).to have_received(:capture3).with("allure generate --clean --output #{report_dir} #{results_dir}")
+        expect(Open3).to have_received(:capture3).with(
+          "allure generate --clean --output #{report_dir} #{results_dir} #{results_glob}"
+        )
       end
     end
   end

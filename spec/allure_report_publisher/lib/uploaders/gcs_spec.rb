@@ -45,7 +45,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
       aggregate_failures do
         history_files.each do |f|
           expect(bucket).to have_received(:file).with("#{prefix}/history/#{f}")
-          expect(file).to have_received(:download).with("#{results_path}/history/#{f}")
+          expect(file).to have_received(:download).with("#{common_info_path}/history/#{f}")
         end
       end
     end
@@ -69,7 +69,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
       aggregate_failures do
         history_files.each do |f|
           expect(bucket).to have_received(:file).with("#{prefix}/history/#{f}")
-          expect(file).to have_received(:download).with("#{results_path}/history/#{f}")
+          expect(file).to have_received(:download).with("#{common_info_path}/history/#{f}")
         end
 
         expect(bucket).to have_received(:create_file).with(*history, cache_control)
@@ -87,7 +87,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
 
     it "adds executor info" do
       described_class.new(**args).execute
-      expect(File).to have_received(:write).with("#{results_path}/executor.json", executor_info.to_json)
+      expect(File).to have_received(:write).with("#{common_info_path}/executor.json", executor_info.to_json)
     end
 
     it "updates pr description with allure report link" do

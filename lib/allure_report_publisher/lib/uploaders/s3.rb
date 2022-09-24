@@ -49,7 +49,7 @@ module Publisher
       def download_history
         HISTORY.each do |file|
           client.get_object(
-            response_target: path(results_path, "history", file),
+            response_target: path(common_info_path, "history", file),
             key: key(prefix, "history", file),
             bucket: bucket_name
           )

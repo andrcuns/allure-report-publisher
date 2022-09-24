@@ -14,7 +14,7 @@ module Publisher
                desc: "Cloud storage type"
 
       option :results_glob,
-             desc: "Allure results files glob. Required: true"
+             desc: "Glob pattern to return allure results directories. Required: true"
       option :bucket,
              desc: "Bucket name. Required: true"
       option :prefix,
@@ -57,8 +57,8 @@ module Publisher
              desc: "Ignore missing allure results"
 
       example [
-        "s3 --results-glob='path/to/allure-result/**/*' --bucket=my-bucket",
-        "gcs --results-glob='path/to/allure-result/**/*' --bucket=my-bucket --prefix=my-project/prs"
+        "s3 --results-glob='path/to/allure-results' --bucket=my-bucket",
+        "gcs --results-glob='paths/to/**/allure-results' --bucket=my-bucket --prefix=my-project/prs"
       ]
 
       def call(**args)
