@@ -98,7 +98,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
       aggregate_failures do
         history_files.each do |file|
           expect(s3_client).to have_received(:get_object).with(
-            response_target: "#{results_path}/history/#{file}",
+            response_target: "#{common_info_path}/history/#{file}",
             key: "#{prefix}/history/#{file}",
             bucket: bucket_name
           )
@@ -141,7 +141,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
 
     it "adds executor info" do
       described_class.new(**args).execute
-      expect(File).to have_received(:write).with("#{results_path}/executor.json", executor_info.to_json)
+      expect(File).to have_received(:write).with("#{common_info_path}/executor.json", executor_info.to_json)
     end
 
     it "updates pr description with allure report link" do

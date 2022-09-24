@@ -5,7 +5,7 @@ RSpec.shared_context "with uploader" do
     instance_double(
       Publisher::ReportGenerator,
       generate: nil,
-      results_path: results_path,
+      common_info_path: common_info_path,
       report_path: report_path
     )
   end
@@ -37,7 +37,7 @@ RSpec.shared_context "with uploader" do
     }
   end
 
-  let(:results_path) { "spec/fixture/fake_results" }
+  let(:common_info_path) { "spec/fixture/fake_results" }
   let(:report_path) { "spec/fixture/fake_report" }
 
   before do

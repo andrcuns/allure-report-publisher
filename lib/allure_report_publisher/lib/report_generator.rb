@@ -18,15 +18,14 @@ module Publisher
     #
     # @return [void]
     def generate
-      aggregate_results
       generate_report
     end
 
-    # Aggregated results directory
+    # Common path for history and executor info
     #
     # @return [String]
-    def results_path
-      @results_path ||= Dir.mktmpdir("allure-results")
+    def common_info_path
+      @common_info_path ||= Dir.mktmpdir("allure-results")
     end
 
     # Allure report directory
@@ -40,14 +39,16 @@ module Publisher
 
     attr_reader :results_glob
 
-    # Copy all results files to results directory
+    # Return all allure results paths from glob
     #
-    # @return [void]
-    def aggregate_results
-      results = Dir.glob(results_glob)
-      raise(NoAllureResultsError, "Missing allure results") if results.empty?
+    # @return [String]
+    def result_paths
+      @result_paths ||= begin
+        paths = Dir.glob(results_glob)
+        raise(NoAllureResultsError, "Missing allure results") if paths.empty?
 
-      FileUtils.cp(results, results_path)
+        paths.join(" ")
+      end
     end
 
     # Generate allure report
@@ -55,7 +56,7 @@ module Publisher
     # @return [void]
     def generate_report
       out, _err, status = Open3.capture3(
-        "allure generate --clean --output #{report_path} #{results_path}"
+        "allure generate --clean --output #{report_path} #{common_info_path} #{result_paths}"
       )
       raise(AllureError, out) unless status.success?
     end

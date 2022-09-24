@@ -104,7 +104,7 @@ module Publisher
                   :collapse_summary,
                   :summary_table_type
 
-      def_delegators :report_generator, :results_path, :report_path
+      def_delegators :report_generator, :common_info_path, :report_path
 
       # :nocov:
 
@@ -224,7 +224,7 @@ module Publisher
       def add_executor_info
         return unless ci_provider
 
-        File.write("#{results_path}/#{EXECUTOR_JSON}", ci_provider.executor_info.to_json)
+        File.write("#{common_info_path}/#{EXECUTOR_JSON}", ci_provider.executor_info.to_json)
       end
 
       # Run upload commands
@@ -240,7 +240,7 @@ module Publisher
       #
       # @return [void]
       def create_history_dir
-        FileUtils.mkdir_p(path(results_path, "history"))
+        FileUtils.mkdir_p(path(common_info_path, "history"))
       end
     end
   end

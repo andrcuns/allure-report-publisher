@@ -103,7 +103,7 @@ jobs:
             -e ALLURE_JOB_NAME="rspec" \
             publisher:latest \
             upload gcs \
-              --results-glob="/workspace/reports/allure-results/*" \
+              --results-glob="/workspace/reports/allure-results" \
               --bucket="allure-test-reports" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="actions" \
@@ -136,7 +136,7 @@ jobs:
             -e ALLURE_JOB_NAME="rspec" \
             publisher:latest \
             upload s3 \
-              --results-glob="/workspace/reports/allure-results/*" \
+              --results-glob="/workspace/reports/allure-results" \
               --bucket="allure-tests-reports" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="description" \
