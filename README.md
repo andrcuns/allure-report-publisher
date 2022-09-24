@@ -43,7 +43,7 @@ Arguments:
   TYPE                              # REQUIRED Cloud storage type: (s3/gcs)
 
 Options:
-  --results-glob=VALUE              # Allure results files glob. Required: true
+  --results-glob=VALUE              # Glob pattern to return allure results directories. Required: true
   --bucket=VALUE                    # Bucket name. Required: true
   --prefix=VALUE                    # Optional prefix for report path. Required: false
   --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description/actions)
@@ -56,8 +56,8 @@ Options:
   --help, -h                        # Print this help
 
 Examples:
-  allure-report-publisher upload s3 --results-glob='path/to/allure-result/**/*' --bucket=my-bucket
-  allure-report-publisher upload gcs --results-glob='path/to/allure-result/**/*' --bucket=my-bucket --prefix=my-project/prs
+  allure-report-publisher upload s3 --results-glob='path/to/allure-results' --bucket=my-bucket
+  allure-report-publisher upload gcs --results-glob='paths/to/**/allure-results' --bucket=my-bucket --prefix=my-project/prs
 ```
 
 # Storage providers
