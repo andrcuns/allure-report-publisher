@@ -56,7 +56,7 @@ jobs:
   publish-report:
     runs-on: ubuntu-22.04
     needs: rspec
-    if: github.actor == 'andrcuns'
+    if: github.actor == 'andrcuns' && always()
     steps:
       -
         name: Checkout
