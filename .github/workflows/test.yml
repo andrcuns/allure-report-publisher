@@ -64,11 +64,11 @@ jobs:
         include:
           - provider: gcs
             bucket: allure-test-reports
-            table: ascii
+            table: markdown
             results: actions
           - provider: s3
             bucket: allure-tests-reports
-            table: markdown
+            table: ascii
             results: description
     steps:
       -
