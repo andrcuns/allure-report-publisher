@@ -9,9 +9,10 @@ module Publisher
     class Spinner
       include Helpers
 
-      def initialize(spinner_message, exit_on_error: true)
+      def initialize(spinner_message, exit_on_error: true, debug: false)
         @spinner_message = spinner_message
         @exit_on_error = exit_on_error
+        @debug = debug
       end
 
       # Run code block inside spinner
@@ -33,15 +34,29 @@ module Publisher
         spinner.auto_spin
         yield
         spinner_success(done_message)
+        print_debug
       rescue StandardError => e
-        spinner_error(e.message)
+        spinner_error(e)
         exit(1) if exit_on_error
+      ensure
+        Helpers.reset_debug_io!
       end
     end
 
     private
 
-    attr_reader :spinner_message, :exit_on_error
+    attr_reader :spinner_message,
+                :exit_on_error,
+                :debug
+
+    # Print debug contents
+    #
+    # @return [void]
+    def print_debug
+      return unless debug
+
+      puts Helpers.debug_io.string
+    end
 
     # Error message color
     #
@@ -96,10 +111,12 @@ module Publisher
 
     # Return spinner error
     #
-    # @param [String] error_message
+    # @param [StandardError] error
     # @return [void]
-    def spinner_error(error_message)
-      colored_message = colorize("failed\n#{error_message}", error_color)
+    def spinner_error(error)
+      message = ["failed", error.message]
+      message << error.backtrace if debug
+      colored_message = colorize(message.compact.join("\n"), error_color)
       return spinner.error(colored_message) if tty?
 
       spinner.stop
