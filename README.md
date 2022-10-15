@@ -53,6 +53,7 @@ Options:
   --[no-]copy-latest                # Keep copy of latest report at base prefix path, default: false
   --[no-]color                      # Force color output
   --[no-]ignore-missing-results     # Ignore missing allure results, default: false
+  --[no-]debug                      # Print additional debug output, default: false
   --help, -h                        # Print this help
 
 Examples:

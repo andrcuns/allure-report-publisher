@@ -39,11 +39,14 @@ module Publisher
       #
       # @return [void]
       def download_history
+        log_debug("Downloading previous run history")
         HISTORY.each do |file_name|
           file = bucket.file(key(prefix, "history", file_name))
           raise(HistoryNotFoundError, "Allure history from previous runs not found!") unless file
 
-          file.download(path(common_info_path, "history", file_name))
+          file_path = path(common_info_path, "history", file_name)
+          file.download(file_path)
+          log_debug("Downloaded '#{file_name}' as '#{file_path}'")
         end
       end
 
@@ -51,6 +54,7 @@ module Publisher
       #
       # @return [void]
       def upload_history
+        log_debug("Uploading report history")
         upload_to_gcs(report_files.select { |file| file.fnmatch?("*/history/*") }, prefix)
       end
 
@@ -58,6 +62,7 @@ module Publisher
       #
       # @return [void]
       def upload_report
+        log_debug("Uploading report files")
         upload_to_gcs(report_files, full_prefix)
       end
 
@@ -65,6 +70,7 @@ module Publisher
       #
       # @return [void]
       def upload_latest_copy
+        log_debug("Uploading report copy as latest report")
         upload_to_gcs(report_files, prefix, cache_control: 60)
       end
 
@@ -75,6 +81,7 @@ module Publisher
       # @param [Hash] params
       # @return [Array<Hash>]
       def upload_to_gcs(files, key_prefix, cache_control: 3600)
+        threads = 8
         args = files.map do |file|
           {
             file: file.to_s,
@@ -83,9 +90,11 @@ module Publisher
           }
         end
 
-        Parallel.each(args, in_threads: 8) do |obj|
+        log_debug("Uploading '#{args.size}' files in '#{threads}' threads")
+        Parallel.each(args, in_threads: threads) do |obj|
           bucket.create_file(*obj.slice(:file, :path).values, **obj.slice(:cache_control))
         end
+        log_debug("Finished upload successfully")
       end
 
       # Fabricate key for s3 object

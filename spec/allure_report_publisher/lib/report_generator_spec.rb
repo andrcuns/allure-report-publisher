@@ -40,7 +40,9 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
     let(:status) { false }
 
     it "exits with output of allure command" do
-      expect { report_generator.generate }.to raise_error("Allure output")
+      expect { report_generator.generate }.to raise_error(<<~ERR.strip)
+        Allure report generation failed, cmd: 'allure generate --clean --output #{report_dir} #{results_dir} #{results_glob}', output: Allure output
+      ERR
     end
   end
 end

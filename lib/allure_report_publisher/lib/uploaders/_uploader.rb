@@ -1,4 +1,5 @@
 require "forwardable"
+require "json"
 
 module Publisher
   module Uploaders
@@ -73,6 +74,7 @@ module Publisher
       def add_result_summary
         return unless update_pr && ci_provider
 
+        log_debug("Adding test result summary")
         ci_provider.add_result_summary
       end
 
@@ -214,7 +216,8 @@ module Publisher
       def add_history
         create_history_dir
         download_history
-      rescue HistoryNotFoundError
+      rescue HistoryNotFoundError => e
+        log_debug(e.message)
         nil
       end
 
@@ -224,7 +227,11 @@ module Publisher
       def add_executor_info
         return unless ci_provider
 
-        File.write("#{common_info_path}/#{EXECUTOR_JSON}", ci_provider.executor_info.to_json)
+        json_path = "#{common_info_path}/#{EXECUTOR_JSON}"
+        json = ci_provider.executor_info.to_json
+        log_debug("Saving ci executor info")
+        File.write(json_path, json)
+        log_debug("Saved '#{EXECUTOR_JSON}' as '#{json_path}'\n#{JSON.pretty_generate(ci_provider.executor_info)}")
       end
 
       # Run upload commands
@@ -240,7 +247,8 @@ module Publisher
       #
       # @return [void]
       def create_history_dir
-        FileUtils.mkdir_p(path(common_info_path, "history"))
+        path = FileUtils.mkdir_p(path(common_info_path, "history"))
+        log_debug("Created tmp folder for history data: '#{path.first}'")
       end
     end
   end

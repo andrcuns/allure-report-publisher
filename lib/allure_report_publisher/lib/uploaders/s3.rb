@@ -47,12 +47,15 @@ module Publisher
       #
       # @return [void]
       def download_history
-        HISTORY.each do |file|
+        log_debug("Downloading previous run history")
+        HISTORY.each do |file_name|
+          file_path = path(common_info_path, "history", file_name)
           client.get_object(
-            response_target: path(common_info_path, "history", file),
-            key: key(prefix, "history", file),
+            response_target: file_path,
+            key: key(prefix, "history", file_name),
             bucket: bucket_name
           )
+          log_debug("Downloaded '#{file_name}' as '#{file_path}'")
         end
       rescue Aws::S3::Errors::NoSuchKey
         raise(HistoryNotFoundError, "Allure history from previous runs not found!")
@@ -62,6 +65,7 @@ module Publisher
       #
       # @return [void]
       def upload_history
+        log_debug("Uploading report history")
         upload_to_s3(report_files.select { |file| file.fnmatch?("*/history/*") }, prefix)
       end
 
@@ -69,6 +73,7 @@ module Publisher
       #
       # @return [void]
       def upload_report
+        log_debug("Uploading report files")
         upload_to_s3(report_files, full_prefix)
       end
 
@@ -76,6 +81,7 @@ module Publisher
       #
       # @return [void]
       def upload_latest_copy
+        log_debug("Uploading report copy as latest report")
         upload_to_s3(report_files, prefix, cache_control: 60)
       end
 
@@ -85,6 +91,7 @@ module Publisher
       # @param [String] key_prefix
       # @return [Array<Hash>]
       def upload_to_s3(files, key_prefix, cache_control: 3600)
+        threads = 8
         args = files.map do |file|
           {
             body: File.new(file),
@@ -95,7 +102,9 @@ module Publisher
           }
         end
 
-        Parallel.each(args, in_threads: 8) { |obj| client.put_object(obj) }
+        log_debug("Uploading '#{args.size}' files in '#{threads}' threads")
+        Parallel.each(args, in_threads: threads) { |obj| client.put_object(obj) }
+        log_debug("Finished upload successfully")
       end
 
       # Fabricate key for s3 object

@@ -18,6 +18,9 @@ module Publisher
     #
     # @return [void]
     def generate
+      create_common_path
+      create_report_path
+
       generate_report
     end
 
@@ -25,15 +28,21 @@ module Publisher
     #
     # @return [String]
     def common_info_path
-      @common_info_path ||= Dir.mktmpdir("allure-results")
+      @common_info_path ||= Dir.mktmpdir("allure-results").tap do |path|
+        log_debug("Created tmp folder for common data: '#{path}'")
+      end
     end
+    alias create_common_path common_info_path
 
     # Allure report directory
     #
     # @return [String]
     def report_path
-      @report_path ||= Dir.mktmpdir("allure-report")
+      @report_path ||= Dir.mktmpdir("allure-report").tap do |path|
+        log_debug("Created tmp folder for allure report: '#{path}'")
+      end
     end
+    alias create_report_path report_path
 
     private
 
@@ -55,10 +64,16 @@ module Publisher
     #
     # @return [void]
     def generate_report
-      out, _err, status = Open3.capture3(
-        "allure generate --clean --output #{report_path} #{common_info_path} #{result_paths}"
-      )
-      raise(AllureError, out) unless status.success?
+      log_debug("Generating allure report from following paths: #{result_paths}")
+      cmd = "allure generate --clean --output #{report_path} #{common_info_path} #{result_paths}"
+      log_debug("Executing command: '#{cmd}'")
+      out, err, status = Open3.capture3(cmd)
+
+      out_err = "#{out}#{err}".strip
+      output = out_err.empty? ? "" : ", output: #{out_err}"
+      raise(AllureError, "Allure report generation failed, cmd: '#{cmd}'#{output}") unless status.success?
+
+      log_debug("Generated allure report#{output}")
     end
   end
 end

@@ -9,9 +9,12 @@ module Publisher
     class Spinner
       include Helpers
 
-      def initialize(spinner_message, exit_on_error: true)
+      class Failure < StandardError; end
+
+      def initialize(spinner_message, exit_on_error: true, debug: false)
         @spinner_message = spinner_message
         @exit_on_error = exit_on_error
+        @debug = debug
       end
 
       # Run code block inside spinner
@@ -21,8 +24,8 @@ module Publisher
       # @param [Boolean] exit_on_error
       # @param [Proc] &block
       # @return [void]
-      def self.spin(spinner_message, done_message: "done", exit_on_error: true, &block)
-        new(spinner_message, exit_on_error: exit_on_error).spin(done_message, &block)
+      def self.spin(spinner_message, done_message: "done", exit_on_error: true, debug: false, &block)
+        new(spinner_message, exit_on_error: exit_on_error, debug: debug).spin(done_message, &block)
       end
 
       # Run code block inside spinner
@@ -34,14 +37,32 @@ module Publisher
         yield
         spinner_success(done_message)
       rescue StandardError => e
-        spinner_error(e.message)
-        exit(1) if exit_on_error
+        spinner_error(e)
+        raise(Failure, e.message) if exit_on_error
+      ensure
+        print_debug
+        Helpers.reset_debug_io!
       end
     end
 
     private
 
-    attr_reader :spinner_message, :exit_on_error
+    attr_reader :spinner_message,
+                :exit_on_error,
+                :debug
+
+    # Print debug contents
+    #
+    # @return [void]
+    def print_debug
+      return if !debug || Helpers.debug_io.string.empty?
+
+      puts <<~OUT.strip
+        == DEBUG LOG OUTPUT ==
+        #{Helpers.debug_io.string.strip}
+        == DEBUG LOG OUTPUT ==
+      OUT
+    end
 
     # Error message color
     #
@@ -96,10 +117,12 @@ module Publisher
 
     # Return spinner error
     #
-    # @param [String] error_message
+    # @param [StandardError] error
     # @return [void]
-    def spinner_error(error_message)
-      colored_message = colorize("failed\n#{error_message}", error_color)
+    def spinner_error(error)
+      message = ["failed", error.message]
+      message << error.backtrace if debug
+      colored_message = colorize(message.compact.join("\n"), error_color)
       return spinner.error(colored_message) if tty?
 
       spinner.stop

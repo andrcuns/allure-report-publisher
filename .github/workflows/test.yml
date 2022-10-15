@@ -127,4 +127,5 @@ jobs:
               --summary="behaviors" \
               --summary-table-type="${{ matrix.table }}" \
               --copy-latest \
-              --color
+              --color \
+              --debug
