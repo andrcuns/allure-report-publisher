@@ -57,6 +57,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: rspec
     if: github.actor == 'andrcuns' && always()
+    name: Publish report to ${{ matrix.provider }}
     strategy:
       fail-fast: false
       matrix:
