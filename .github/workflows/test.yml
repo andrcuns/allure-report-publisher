@@ -27,15 +27,19 @@ jobs:
 
   rspec:
     runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['2.7', '3.0', '3.1']
     steps:
       -
         name: Checkout
         uses: actions/checkout@v3
       -
-        name: Set up Ruby 3.1
+        name: Set up Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.2
+          ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
       -
         name: RSpec
@@ -43,6 +47,7 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: c782e3e534f6aac1bb5a0d595723167ed145d03567242c2ce848ef46ba36672a
           COVERAGE: "true"
+          ALLURE_ENVIRONMENT: ruby-${{ matrix.ruby }}
         with:
           coverageCommand: bundle exec rspec --force-color
           coverageLocations: coverage/coverage.json:simplecov
@@ -52,6 +57,7 @@ jobs:
         with:
           name: allure-reports
           path: reports/allure-results/
+          retention-days: 1
 
   publish-report:
     runs-on: ubuntu-22.04
