@@ -50,7 +50,7 @@ RSpec.describe Publisher::Helpers::Spinner, epic: "helpers" do
 
     it "exits program on error and prints red error message" do
       aggregate_failures do
-        expect { described_class.spin(spinner_message) { raise("Error") } }.to raise_error(SystemExit)
+        expect { described_class.spin(spinner_message) { raise("Error") } }.to raise_error("Error")
         expect(spinner).to have_received(:error).with(pastel.decorate(error_message, :red))
       end
     end
@@ -98,7 +98,7 @@ RSpec.describe Publisher::Helpers::Spinner, epic: "helpers" do
     it "prints plain red error message and exits" do
       aggregate_failures do
         expect do
-          expect { described_class.spin(spinner_message) { raise("Error") } }.to raise_error(SystemExit)
+          expect { described_class.spin(spinner_message) { raise("Error") } }.to raise_error("Error")
         end.to output("[#{error_mark_red}] #{spinner_message} ... #{pastel.decorate(error_message, :red)}\n").to_stdout
         expect(spinner).to have_received(:stop)
       end

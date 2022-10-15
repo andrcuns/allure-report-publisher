@@ -5,6 +5,8 @@ module Publisher
     # Github implementation
     #
     class Github < Provider
+      include Helpers
+
       # Set octokit to autopaginate
       #
       Octokit.configure do |config|
@@ -60,6 +62,7 @@ module Publisher
       def update_pr_description
         return File.write(step_summary_file, url_section_builder.comment_body) if actions?
 
+        log_debug("Updating pr description for pr !#{pr_id}")
         client.update_pull_request(repository, pr_id, body: url_section_builder.updated_pr_description(pr_description))
       end
 
@@ -67,8 +70,12 @@ module Publisher
       #
       # @return [void]
       def add_comment
-        return client.add_comment(repository, pr_id, url_section_builder.comment_body) unless comment
+        unless comment
+          log_debug("Creating comment with summary for pr ! #{pr_id}")
+          return client.add_comment(repository, pr_id, url_section_builder.comment_body)
+        end
 
+        log_debug("Updating summary in comment with id #{comment[:id]} in pr !#{pr_id}")
         client.update_comment(repository, comment[:id], url_section_builder.comment_body(comment[:body]))
       end
 

@@ -9,6 +9,8 @@ module Publisher
     class Spinner
       include Helpers
 
+      class Failure < StandardError; end
+
       def initialize(spinner_message, exit_on_error: true, debug: false)
         @spinner_message = spinner_message
         @exit_on_error = exit_on_error
@@ -22,8 +24,8 @@ module Publisher
       # @param [Boolean] exit_on_error
       # @param [Proc] &block
       # @return [void]
-      def self.spin(spinner_message, done_message: "done", exit_on_error: true, &block)
-        new(spinner_message, exit_on_error: exit_on_error).spin(done_message, &block)
+      def self.spin(spinner_message, done_message: "done", exit_on_error: true, debug: false, &block)
+        new(spinner_message, exit_on_error: exit_on_error, debug: debug).spin(done_message, &block)
       end
 
       # Run code block inside spinner
@@ -34,11 +36,11 @@ module Publisher
         spinner.auto_spin
         yield
         spinner_success(done_message)
-        print_debug
       rescue StandardError => e
         spinner_error(e)
-        exit(1) if exit_on_error
+        raise(Failure, e.message) if exit_on_error
       ensure
+        print_debug
         Helpers.reset_debug_io!
       end
     end
@@ -53,9 +55,13 @@ module Publisher
     #
     # @return [void]
     def print_debug
-      return unless debug
+      return if !debug || Helpers.debug_io.string.empty?
 
-      puts Helpers.debug_io.string
+      puts <<~OUT.strip
+        == DEBUG LOG OUTPUT ==
+        #{Helpers.debug_io.string.strip}
+        == DEBUG LOG OUTPUT ==
+      OUT
     end
 
     # Error message color

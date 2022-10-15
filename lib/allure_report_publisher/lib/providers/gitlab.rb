@@ -5,6 +5,8 @@ module Publisher
     # Gitlab implementation
     #
     class Gitlab < Provider
+      include Helpers
+
       # Get ci run ID without creating instance of ci provider
       #
       # @return [String]
@@ -48,6 +50,7 @@ module Publisher
       #
       # @return [void]
       def update_pr_description
+        log_debug("Updating mr description for mr !#{mr_iid}")
         client.update_merge_request(
           project,
           mr_iid,
@@ -59,8 +62,12 @@ module Publisher
       #
       # @return [void]
       def add_comment
-        return client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body) unless comment
+        unless comment
+          log_debug("Creating comment with summary for mr ! #{mr_iid}")
+          return client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body)
+        end
 
+        log_debug("Updating summary in comment with id #{comment.id} in mr !#{mr_iid}")
         client.edit_merge_request_note(project, mr_iid, comment.id, url_section_builder.comment_body(comment.body))
       end
 

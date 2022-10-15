@@ -55,6 +55,10 @@ module Publisher
              type: :boolean,
              default: false,
              desc: "Ignore missing allure results"
+      option :debug,
+             type: :boolean,
+             default: false,
+             desc: "Print additional debug output"
 
       example [
         "s3 --results-glob='path/to/allure-results' --bucket=my-bucket",
@@ -68,16 +72,13 @@ module Publisher
         validate_args
         validate_result_files
 
-        log("Generating allure report")
-        Spinner.spin("generating") { uploader.generate_report }
-
-        log("Uploading allure report to #{args[:type]}")
-        Spinner.spin("uploading") { uploader.upload }
-        uploader.report_urls.each { |k, v| log("#{k}: #{v}", :green) }
+        generate_report
+        upload_report
         return unless args[:update_pr] && uploader.pr?
 
-        log("Adding reports urls")
-        Spinner.spin("updating", exit_on_error: false) { uploader.add_result_summary }
+        add_report_urls
+      rescue StandardError => e
+        handle_error(e)
       end
 
       private
@@ -132,6 +133,40 @@ module Publisher
 
         log("Glob '#{results_glob}' did not match any files!", ignore ? :yellow : :red)
         exit(ignore ? 0 : 1)
+      end
+
+      # Generate allure report
+      #
+      # @return [void]
+      def generate_report
+        log("Generating allure report")
+        Spinner.spin("generating", debug: args[:debug]) { uploader.generate_report }
+      end
+
+      # Upload report to cloud storage
+      #
+      # @return [void]
+      def upload_report
+        log("Uploading allure report to #{args[:type]}")
+        Spinner.spin("uploading", debug: args[:debug]) { uploader.upload }
+        uploader.report_urls.each { |k, v| log("#{k}: #{v}", :green) }
+      end
+
+      # Add report results to pr/mr
+      #
+      # @return [void]
+      def add_report_urls
+        log("Adding reports urls")
+        Spinner.spin("updating", exit_on_error: false, debug: args[:debug]) { uploader.add_result_summary }
+      end
+
+      # Handle error during upload command
+      #
+      # @param [StandardError] error
+      # @return [void]
+      def handle_error(error)
+        exit(1) if error.is_a?(Spinner::Failure)
+        error(error)
       end
     end
   end

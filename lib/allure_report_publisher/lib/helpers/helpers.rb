@@ -41,6 +41,16 @@ module Publisher
       def reset_debug_io!
         @debug_io = nil
       end
+
+      # Logger instance
+      #
+      # @return [Logger]
+      def logger
+        Logger.new(debug_io).tap do |logger|
+          logger.datetime_format = "%Y-%m-%d %H:%M:%S"
+          logger.formatter = proc { |_severity, time, _progname, msg| "[#{time}] #{msg}\n" }
+        end
+      end
     end
 
     # Colorize string
@@ -66,7 +76,7 @@ module Publisher
     # @param [String] message
     # @return [void]
     def log_debug(message)
-      Logger.new(Publisher::Helpers.debug_io).info(message)
+      Helpers.logger.info(message)
     end
 
     # Print error message and exit
