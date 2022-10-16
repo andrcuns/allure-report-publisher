@@ -25,6 +25,7 @@ module Publisher
 
         log_debug("Checking google credentials")
         check_credentials
+        log_debug("Credentials valid, gsutil initialized")
         self
       rescue StandardError => e
         case e
