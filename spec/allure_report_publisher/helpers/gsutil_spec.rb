@@ -25,7 +25,7 @@ RSpec.shared_examples "unsuccessful initialization" do
   end
 end
 
-RSpec.describe Publisher::Helpers::Gsutil do
+RSpec.describe Publisher::Helpers::Gsutil, epic: "helpers" do
   subject(:gsutil) { described_class.init }
 
   let(:status) { instance_double(Process::Status, success?: command_status) }
