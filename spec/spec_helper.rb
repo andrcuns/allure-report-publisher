@@ -5,7 +5,7 @@ require "rspec"
 require "allure-rspec"
 require "stringio"
 require "climate_control"
-require "pry" unless ENV["CI"]
+require "debug" unless ENV["CI"]
 
 require "allure_report_publisher"
 

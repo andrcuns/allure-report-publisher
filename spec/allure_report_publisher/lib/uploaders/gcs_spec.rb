@@ -6,6 +6,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   let(:client) { instance_double(Google::Cloud::Storage::Project, bucket: bucket) }
   let(:bucket) { instance_double(Google::Cloud::Storage::Bucket, file: file, create_file: nil) }
   let(:file) { instance_double(Google::Cloud::Storage::File, download: nil) }
+  let(:gsutil) { instance_double(Publisher::Helpers::Gsutil, valid?: false) }
 
   let(:history_run) { ["spec/fixture/fake_report/history/history.json", "#{prefix}/#{run_id}/history/history.json"] }
   let(:history) { ["spec/fixture/fake_report/history/history.json", "#{prefix}/history/history.json"] }
@@ -18,6 +19,8 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
 
   before do
     allow(Google::Cloud::Storage).to receive(:new) { client }
+    allow(Publisher::Helpers).to receive(:gsutil?).and_return(false)
+    allow(Publisher::Helpers::Gsutil).to receive(:init).and_return(gsutil)
   end
 
   context "with non ci run" do

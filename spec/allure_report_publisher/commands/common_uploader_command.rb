@@ -38,7 +38,7 @@ RSpec.shared_examples "upload command" do
 
   before do
     allow(uploader).to receive(:new) { uploader_stub }
-    allow(Publisher::Helpers).to receive(:validate_allure_cli_present)
+    allow(Publisher::Helpers).to receive(:allure_cli?)
   end
 
   context "with required args", :aggregate_failures do

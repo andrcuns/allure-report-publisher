@@ -16,13 +16,13 @@ RSpec.describe Publisher::Helpers, epic: "helpers" do
   context "with successful shell command execution" do
     it "executes shell command" do
       aggregate_failures do
-        expect(helpers.execute_shell("command")).to eq(cmd_out)
+        expect(helpers.execute_shell("command")).to eq("Out: #{cmd_out}\nErr: #{cmd_err}")
         expect(Open3).to have_received(:capture3).with("command")
       end
     end
 
     it "passes allure executable check" do
-      expect { helpers.validate_allure_cli_present }.not_to raise_error
+      expect { helpers.allure_cli? }.not_to raise_error
     end
   end
 
@@ -30,7 +30,9 @@ RSpec.describe Publisher::Helpers, epic: "helpers" do
     let(:cmd_status) { false }
 
     it "raises error with command output" do
-      expect { helpers.execute_shell("command") }.to raise_error("Out:\n#{cmd_out}\n\nErr:\n#{cmd_err}")
+      expect { helpers.execute_shell("command") }.to raise_error(
+        "Command 'command' failed!\nOut: #{cmd_out}\nErr: #{cmd_err}"
+      )
     end
 
     it "raises error that allure is missing" do
@@ -39,7 +41,7 @@ RSpec.describe Publisher::Helpers, epic: "helpers" do
         :red
       )
       expect do
-        expect { helpers.validate_allure_cli_present }.to raise_error(SystemExit)
+        expect { helpers.allure_cli? }.to raise_error(SystemExit)
       end.to output("#{error}\n").to_stderr
     end
   end

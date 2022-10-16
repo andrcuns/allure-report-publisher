@@ -18,4 +18,4 @@ module Publisher
   end
 end
 
-Publisher::Commands.before("upload") { Publisher::Helpers.validate_allure_cli_present }
+Publisher::Commands.before("upload") { Publisher::Helpers.allure_cli? }

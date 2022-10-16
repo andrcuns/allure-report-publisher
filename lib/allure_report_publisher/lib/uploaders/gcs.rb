@@ -14,6 +14,13 @@ module Publisher
         @client ||= Google::Cloud::Storage.new
       end
 
+      # Gsutil class
+      #
+      # @return [Helpers::Gsutil]
+      def gsutil
+        @gsutil ||= Helpers::Gsutil.init
+      end
+
       # GCS bucket
       #
       # @return [Google::Cloud::Storage::Bucket]
@@ -63,6 +70,8 @@ module Publisher
       # @return [void]
       def upload_report
         log_debug("Uploading report files")
+        return batch_upload_to_gcs(report_path, full_prefix) if gsutil.valid?
+
         upload_to_gcs(report_files, full_prefix)
       end
 
@@ -71,6 +80,8 @@ module Publisher
       # @return [void]
       def upload_latest_copy
         log_debug("Uploading report copy as latest report")
+        return batch_upload_to_gcs(report_path, prefix, cache_control: 60) if gsutil.valid?
+
         upload_to_gcs(report_files, prefix, cache_control: 60)
       end
 
@@ -90,11 +101,25 @@ module Publisher
           }
         end
 
-        log_debug("Uploading '#{args.size}' files in '#{threads}' threads")
+        log_debug("Uploading '#{args.size}' files in '#{threads}' threads to bucker '#{bucket_name}'")
         Parallel.each(args, in_threads: threads) do |obj|
           bucket.create_file(*obj.slice(:file, :path).values, **obj.slice(:cache_control))
         end
         log_debug("Finished upload successfully")
+      end
+
+      # Batch upload whole directory
+      #
+      # @param [String] source_dir
+      # @param [String] destination_dir
+      # @return [void]
+      def batch_upload_to_gcs(source_dir, destination_dir, cache_control: 3600)
+        gsutil.batch_copy(
+          source_dir: source_dir,
+          destination_dir: destination_dir,
+          bucket: bucket_name,
+          cache_control: cache_control
+        )
       end
 
       # Fabricate key for s3 object
