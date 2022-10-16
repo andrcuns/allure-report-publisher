@@ -1,4 +1,8 @@
+require "active_support/testing/time_helpers"
+
 RSpec.describe Publisher::ReportGenerator, epic: "generator" do
+  include ActiveSupport::Testing::TimeHelpers
+
   subject(:report_generator) { described_class.new(results_glob) }
 
   include_context "with mock helper"
@@ -6,23 +10,24 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
   let(:capture_status) { instance_double(Process::Status, success?: status) }
 
   let(:results_glob) { "spec/fixture/fake_results" }
-  let(:results_dir) { "/results_dir" }
-  let(:report_dir) { "/report_dir" }
+  let(:common_info_dir) { "/common_info_results" }
+  let(:report_dir) { File.join(tmpdir, "allure-report-#{Time.now.to_i}") }
   let(:status) { true }
+  let(:tmpdir) { "/tmp/dir" }
 
   before do
-    allow(Dir).to receive(:mktmpdir).with("allure-results") { results_dir }
-    allow(Dir).to receive(:mktmpdir).with("allure-report") { report_dir }
+    allow(Dir).to receive(:mktmpdir).with("allure-results") { common_info_dir }
+    allow(Dir).to receive(:tmpdir) { tmpdir }
     allow(Open3).to receive(:capture3) { ["Allure output", "", capture_status] }
   end
 
   context "with present allure results" do
     it "generates allure report" do
-      aggregate_failures do
+      freeze_time do
         report_generator.generate
 
         expect(Open3).to have_received(:capture3).with(
-          "allure generate --clean --output #{report_dir} #{results_dir} #{results_glob}"
+          "allure generate --clean --output #{report_dir} #{common_info_dir} #{results_glob}"
         )
       end
     end
@@ -40,13 +45,15 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
     let(:status) { false }
     let(:error_output) do
       <<~ERR.strip
-        Command 'allure generate --clean --output /report_dir /results_dir spec/fixture/fake_results' failed!
+        Command 'allure generate --clean --output #{report_dir} #{common_info_dir} #{results_glob}' failed!
         Out: Allure output
       ERR
     end
 
     it "exits with output of allure command" do
-      expect { report_generator.generate }.to raise_error(error_output)
+      freeze_time do
+        expect { report_generator.generate }.to raise_error(error_output)
+      end
     end
   end
 end

@@ -42,6 +42,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "terminal-table", "~> 3.0"
   spec.add_dependency "tty-spinner", "~> 0.9.3"
 
+  spec.add_development_dependency "activesupport", "~> 7.0"
   spec.add_development_dependency "allure-rspec", "~> 2.18.0"
   spec.add_development_dependency "climate_control", "~> 1.2.0"
   spec.add_development_dependency "debug", ">= 1.0.0"

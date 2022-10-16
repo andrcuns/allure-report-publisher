@@ -19,7 +19,6 @@ module Publisher
     # @return [void]
     def generate
       create_common_path
-      create_report_path
 
       generate_report
     end
@@ -38,11 +37,8 @@ module Publisher
     #
     # @return [String]
     def report_path
-      @report_path ||= Dir.mktmpdir("allure-report").tap do |path|
-        log_debug("Created tmp folder for allure report: '#{path}'")
-      end
+      @report_path ||= File.join(Dir.tmpdir, "allure-report-#{Time.now.to_i}")
     end
-    alias create_report_path report_path
 
     private
 
