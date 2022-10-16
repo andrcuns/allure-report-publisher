@@ -6,12 +6,14 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   let(:client) { instance_double(Google::Cloud::Storage::Project, bucket: bucket) }
   let(:bucket) { instance_double(Google::Cloud::Storage::Bucket, file: file, create_file: nil) }
   let(:file) { instance_double(Google::Cloud::Storage::File, download: nil) }
-  let(:gsutil) { instance_double(Publisher::Helpers::Gsutil, valid?: false) }
+  let(:gsutil) { instance_double(Publisher::Helpers::Gsutil, valid?: with_gsutil) }
 
-  let(:history_run) { ["spec/fixture/fake_report/history/history.json", "#{prefix}/#{run_id}/history/history.json"] }
-  let(:history) { ["spec/fixture/fake_report/history/history.json", "#{prefix}/history/history.json"] }
-  let(:report_run) { ["spec/fixture/fake_report/index.html", "#{prefix}/#{run_id}/index.html"] }
-  let(:report) { ["spec/fixture/fake_report/index.html", "#{prefix}/index.html"] }
+  let(:report_path) { "spec/fixture/fake_report" }
+  let(:history_run) { ["#{report_path}/history/history.json", "#{prefix}/#{run_id}/history/history.json"] }
+  let(:history) { ["#{report_path}/history/history.json", "#{prefix}/history/history.json"] }
+  let(:report_run) { ["#{report_path}/index.html", "#{prefix}/#{run_id}/index.html"] }
+  let(:report) { ["#{report_path}/index.html", "#{prefix}/index.html"] }
+  let(:with_gsutil) { false }
 
   def cache_control(max_age = 3600)
     { cache_control: "public, max-age=#{max_age}" }
@@ -66,26 +68,66 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
       allow(Publisher::Providers::Github).to receive(:new) { ci_provider_instance }
     end
 
-    it "uploads allure report" do
-      described_class.new(**args).execute
+    context "with gcs client" do
+      it "uploads allure report" do
+        described_class.new(**args).execute
 
-      aggregate_failures do
-        history_files.each do |f|
-          expect(bucket).to have_received(:file).with("#{prefix}/history/#{f}")
-          expect(file).to have_received(:download).with("#{common_info_path}/history/#{f}")
+        aggregate_failures do
+          history_files.each do |f|
+            expect(bucket).to have_received(:file).with("#{prefix}/history/#{f}")
+            expect(file).to have_received(:download).with("#{common_info_path}/history/#{f}")
+          end
+
+          expect(bucket).to have_received(:create_file).with(*history, cache_control)
+          expect(bucket).to have_received(:create_file).with(*history_run, cache_control)
+          expect(bucket).to have_received(:create_file).with(*report_run, cache_control)
         end
+      end
 
-        expect(bucket).to have_received(:create_file).with(*history, cache_control)
-        expect(bucket).to have_received(:create_file).with(*history_run, cache_control)
+      it "uploads latest allure report copy" do
+        described_class.new(**{ **args, copy_latest: true }).execute
+
+        expect(bucket).to have_received(:create_file).with(*report, cache_control(60))
         expect(bucket).to have_received(:create_file).with(*report_run, cache_control)
       end
     end
 
-    it "uploads latest allure report copy" do
-      described_class.new(**{ **args, copy_latest: true }).execute
+    context "with gsutil" do
+      let(:with_gsutil) { true }
 
-      expect(bucket).to have_received(:create_file).with(*report, cache_control(60))
-      expect(bucket).to have_received(:create_file).with(*report_run, cache_control)
+      before do
+        allow(gsutil).to receive(:batch_copy)
+      end
+
+      it "uploads allure report" do
+        described_class.new(**args).execute
+
+        aggregate_failures do
+          history_files.each do |f|
+            expect(bucket).to have_received(:file).with("#{prefix}/history/#{f}")
+            expect(file).to have_received(:download).with("#{common_info_path}/history/#{f}")
+          end
+
+          expect(bucket).to have_received(:create_file).with(*history, cache_control)
+          expect(gsutil).to have_received(:batch_copy).with(
+            source_dir: report_path,
+            destination_dir: "#{prefix}/#{run_id}",
+            bucket: bucket_name,
+            cache_control: 3600
+          )
+        end
+      end
+
+      it "uploads latest allure report copy" do
+        described_class.new(**{ **args, copy_latest: true }).execute
+
+        expect(gsutil).to have_received(:batch_copy).with(
+          source_dir: report_path,
+          destination_dir: prefix,
+          bucket: bucket_name,
+          cache_control: 60
+        )
+      end
     end
 
     it "adds executor info" do
