@@ -63,7 +63,7 @@ module Publisher
       log_debug("Generating allure report from following paths: #{result_paths}")
       cmd = "allure generate --clean --output #{report_path} #{common_info_path} #{result_paths}"
       out = execute_shell(cmd)
-      log_debug("Generated allure report, output: #{out}")
+      log_debug("Generated allure report. #{out}")
     rescue StandardError => e
       raise(AllureError, e.message)
     end
