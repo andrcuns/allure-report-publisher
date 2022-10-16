@@ -19,7 +19,6 @@ module Publisher
     # @return [void]
     def generate
       create_common_path
-      create_report_path
 
       generate_report
     end
@@ -38,11 +37,8 @@ module Publisher
     #
     # @return [String]
     def report_path
-      @report_path ||= Dir.mktmpdir("allure-report").tap do |path|
-        log_debug("Created tmp folder for allure report: '#{path}'")
-      end
+      @report_path ||= File.join(Dir.tmpdir, "allure-report-#{Time.now.to_i}")
     end
-    alias create_report_path report_path
 
     private
 
@@ -67,7 +63,7 @@ module Publisher
       log_debug("Generating allure report from following paths: #{result_paths}")
       cmd = "allure generate --clean --output #{report_path} #{common_info_path} #{result_paths}"
       out = execute_shell(cmd)
-      log_debug("Generated allure report, output: #{out}")
+      log_debug("Generated allure report. #{out}")
     rescue StandardError => e
       raise(AllureError, e.message)
     end

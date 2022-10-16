@@ -15,9 +15,9 @@ changelog:
     - title: '📄 Documentation updates'
       labels: 
         - 'documentation'
-    - title: '🛠️ Chore'
+    - title: '🧰 Maintenance'
       labels: 
-        - 'chore'
+        - 'maintenance'
     - title: '👷 CI'
       labels: 
         - 'ci'

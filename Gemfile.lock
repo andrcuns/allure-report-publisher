@@ -18,6 +18,11 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    activesupport (7.0.4)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
     allure-rspec (2.18.0)
@@ -49,6 +54,7 @@ GEM
     backport (1.2.0)
     benchmark (0.2.0)
     climate_control (1.2.0)
+    concurrent-ruby (1.1.10)
     debug (1.6.2)
       irb (>= 1.3.6)
       reline (>= 0.3.1)
@@ -109,6 +115,8 @@ GEM
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
+    i18n (1.12.0)
+      concurrent-ruby (~> 1.0)
     io-console (0.5.11)
     irb (1.4.2)
       reline (>= 0.3.0)
@@ -127,6 +135,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
+    minitest (5.16.3)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     nokogiri (1.13.8-aarch64-linux)
@@ -240,6 +249,8 @@ GEM
     tty-cursor (0.7.1)
     tty-spinner (0.9.3)
       tty-cursor (~> 0.7)
+    tzinfo (2.0.5)
+      concurrent-ruby (~> 1.0)
     uber (0.1.0)
     unicode-display_width (2.3.0)
     uuid (2.3.9)
@@ -254,6 +265,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activesupport (~> 7.0)
   allure-report-publisher!
   allure-rspec (~> 2.18.0)
   climate_control (~> 1.2.0)
