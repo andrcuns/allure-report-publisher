@@ -140,4 +140,14 @@ RSpec.shared_examples "upload command" do
       expect(uploader_stub).not_to have_received(:upload)
     end
   end
+
+  context "with failure in spinner block" do
+    before do
+      allow(uploader_stub).to receive(:generate_report).and_raise(Publisher::Helpers::Spinner::Failure)
+    end
+
+    it "exits without printing error" do
+      expect { run_cli(*command, *cli_args) }.to raise_error(SystemExit)
+    end
+  end
 end
