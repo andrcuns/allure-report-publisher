@@ -79,7 +79,7 @@ module Publisher
       # @param [Array<Pathname>] files
       # @param [String] key_prefix
       # @param [Hash] params
-      # @return [Array<Hash>]
+      # @return [void]
       def upload_to_gcs(files, key_prefix, cache_control: 3600)
         threads = 8
         args = files.map do |file|
