@@ -38,11 +38,15 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
 
   context "with allure command failure" do
     let(:status) { false }
+    let(:error_output) do
+      <<~ERR.strip
+        Command 'allure generate --clean --output /report_dir /results_dir spec/fixture/fake_results' failed!
+        Out: Allure output
+      ERR
+    end
 
     it "exits with output of allure command" do
-      expect { report_generator.generate }.to raise_error(<<~ERR.strip)
-        Allure report generation failed, cmd: 'allure generate --clean --output #{report_dir} #{results_dir} #{results_glob}', output: Allure output
-      ERR
+      expect { report_generator.generate }.to raise_error(error_output)
     end
   end
 end

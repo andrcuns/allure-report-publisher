@@ -70,7 +70,7 @@ module Publisher
       # Short summary table
       #
       # @return [Array<String>]
-      def short_summary # rubocop:disable Metrics/MethodLength
+      def short_summary
         return @short_summary if defined?(@short_summary)
 
         sum = summary_data.values.each_with_object({

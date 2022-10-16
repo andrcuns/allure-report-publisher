@@ -18,7 +18,7 @@ Metrics/BlockLength:
     - "*.gemspec"
 
 Metrics/MethodLength:
-  Max: 15
+  Max: 25
 
 Metrics/ClassLength:
   Max: 200
@@ -28,6 +28,9 @@ Layout/FirstHashElementIndentation:
 
 Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
+
+Layout/LineLength:
+  Max: 120
 
 Style/MethodCallWithArgsParentheses:
   Enabled: false
@@ -40,9 +43,6 @@ Style/StringLiterals:
 
 Style/FetchEnvVar:
   Enabled: false
-
-Layout/LineLength:
-  Max: 120
 
 RSpec/MultipleExpectations:
   Max: 4

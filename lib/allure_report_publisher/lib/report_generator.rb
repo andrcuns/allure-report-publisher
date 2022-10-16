@@ -66,14 +66,10 @@ module Publisher
     def generate_report
       log_debug("Generating allure report from following paths: #{result_paths}")
       cmd = "allure generate --clean --output #{report_path} #{common_info_path} #{result_paths}"
-      log_debug("Executing command: '#{cmd}'")
-      out, err, status = Open3.capture3(cmd)
-
-      out_err = "#{out}#{err}".strip
-      output = out_err.empty? ? "" : ", output: #{out_err}"
-      raise(AllureError, "Allure report generation failed, cmd: '#{cmd}'#{output}") unless status.success?
-
-      log_debug("Generated allure report#{output}")
+      out = execute_shell(cmd)
+      log_debug("Generated allure report, output: #{out}")
+    rescue StandardError => e
+      raise(AllureError, e.message)
     end
   end
 end
