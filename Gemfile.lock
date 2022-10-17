@@ -265,7 +265,7 @@ DEPENDENCIES
   allure-report-publisher!
   allure-rspec (~> 2.18.0)
   climate_control (~> 1.2.0)
-  debug (>= 1.0.0)
+  debug (~> 1.0, >= 1.0.0)
   rake (~> 13.0)
   rspec (~> 3.11)
   rubocop (~> 1.27)
