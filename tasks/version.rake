@@ -1,5 +1,4 @@
 require "semver"
-require "git"
 
 module Publisher
   # Update app version
@@ -19,9 +18,10 @@ module Publisher
     def add_version_task
       desc("Bump application version [major, minor, patch]")
       task(:version, [:semver]) do |_task, args|
+        Helpers.pastel(force_color: args[:color])
         new_version = send(args[:semver]).format("%M.%m.%p").to_s
 
-        Helpers::Spinner.spin("Updating app version", done_message: "updated to v#{new_version}") do
+        Helpers::Spinner.spin("Updating app version", done_message: "updated to v#{new_version}", debug: true) do
           update_version(new_version)
           update_lock
           commit_and_tag(new_version)
@@ -51,10 +51,10 @@ module Publisher
     #
     # @return [void]
     def commit_and_tag(new_version)
-      git = Git.init
-      git.add([VERSION_FILE, "Gemfile.lock"])
-      git.commit("Update to v#{new_version}")
-      git.add_tag("v#{new_version}")
+      execute_shell("git add #{VERSION_FILE} Gemfile.lock")
+      execute_shell("git commit -m 'Update to v#{new_version}'")
+      execute_shell("git tag v#{new_version}")
+      execute_shell("git push && git push --tags")
     end
 
     # Semver of ref from
