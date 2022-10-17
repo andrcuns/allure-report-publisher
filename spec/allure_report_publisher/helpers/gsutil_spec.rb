@@ -10,7 +10,7 @@ RSpec.shared_examples "successfull gsutil upload" do
     expect(Open3).to have_received(:capture3).with([
       "gsutil -o 'Credentials:gs_service_key_file=#{credentials_file}' -m",
       "-h 'Cache-Control:private, max-age=#{cache_control}'",
-      "cp -r #{report_path} gs://#{bucket_name}/#{destination_dir}"
+      "rsync -r #{report_path} gs://#{bucket_name}/#{destination_dir}"
     ].join(" "))
   end
 
