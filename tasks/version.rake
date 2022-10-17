@@ -21,7 +21,7 @@ module Publisher
         Helpers.pastel(force_color: args[:color])
         new_version = send(args[:semver]).format("%M.%m.%p").to_s
 
-        Helpers::Spinner.spin("Updating app version", done_message: "updated to v#{new_version}") do
+        Helpers::Spinner.spin("Updating app version", done_message: "updated to v#{new_version}", debug: true) do
           update_version(new_version)
           update_lock
           commit_and_tag(new_version)
