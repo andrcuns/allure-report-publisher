@@ -49,7 +49,8 @@ FROM ruby as production
 RUN set -eux; \
     apt-get update && apt-get install --no-install-recommends -y \
     openjdk-17-jdk-headless \
-    python3
+    python3; \
+    apt-get clean
 
 # Install gsutil
 COPY --from=build /build/gsutil /usr/local/gsutil
