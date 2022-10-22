@@ -130,7 +130,7 @@ module Publisher
         results_glob = args[:results_glob]
         ignore = args[:ignore_missing_results]
         @result_paths = Dir.glob(results_glob)
-        log_debug("Found #{@result_paths.size} allure results paths")
+        log_debug("Glob '#{results_glob}' found #{@result_paths.size} paths")
         return unless @result_paths.empty?
 
         log("Glob '#{results_glob}' did not match any paths!", ignore ? :yellow : :red)
