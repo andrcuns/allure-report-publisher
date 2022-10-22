@@ -2,7 +2,8 @@ RSpec.shared_examples "upload command" do
   include_context "with cli helper"
   include_context "with output capture"
 
-  let(:result_glob) { "**/*" }
+  let(:result_glob) { "spec/fixture/fake_results" }
+  let(:result_paths) { [result_glob] }
   let(:bucket) { "bucket" }
   let(:prefix) { "my-project/prs" }
   let(:uploader_stub) do
@@ -26,7 +27,7 @@ RSpec.shared_examples "upload command" do
 
   let(:args) do
     {
-      results_glob: result_glob,
+      result_paths: result_paths,
       bucket: bucket,
       prefix: prefix,
       copy_latest: false,
@@ -55,8 +56,8 @@ RSpec.shared_examples "upload command" do
 
       aggregate_failures do
         expect(uploader).to have_received(:new).with(
-          args.slice(
-            :results_glob,
+          **args.slice(
+            :result_paths,
             :bucket,
             :copy_latest,
             :update_pr,

@@ -3,13 +3,13 @@ require "active_support/testing/time_helpers"
 RSpec.describe Publisher::ReportGenerator, epic: "generator" do
   include ActiveSupport::Testing::TimeHelpers
 
-  subject(:report_generator) { described_class.new(results_glob) }
+  subject(:report_generator) { described_class.new(result_paths) }
 
   include_context "with mock helper"
 
   let(:capture_status) { instance_double(Process::Status, success?: status) }
 
-  let(:results_glob) { "spec/fixture/fake_results" }
+  let(:result_paths) { ["spec/fixture/fake_results"] }
   let(:common_info_dir) { "/common_info_results" }
   let(:report_dir) { File.join(tmpdir, "allure-report-#{Time.now.to_i}") }
   let(:status) { true }
@@ -27,17 +27,9 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
         report_generator.generate
 
         expect(Open3).to have_received(:capture3).with(
-          "allure generate --clean --output #{report_dir} #{common_info_dir} #{results_glob}"
+          "allure generate --clean --output #{report_dir} #{common_info_dir} #{result_paths.join(' ')}"
         )
       end
-    end
-  end
-
-  context "with empty allure results" do
-    let(:results_glob) { "spec/*.tar.gz" }
-
-    it "exits with missing allure results message" do
-      expect { report_generator.generate }.to raise_error("Missing allure results")
     end
   end
 
@@ -45,7 +37,7 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
     let(:status) { false }
     let(:error_output) do
       <<~ERR.strip
-        Command 'allure generate --clean --output #{report_dir} #{common_info_dir} #{results_glob}' failed!
+        Command 'allure generate --clean --output #{report_dir} #{common_info_dir} #{result_paths.join(' ')}' failed!
         Out: Allure output
       ERR
     end

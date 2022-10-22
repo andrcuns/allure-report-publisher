@@ -70,7 +70,7 @@ module Publisher
         @args = args
 
         validate_args
-        validate_result_files
+        scan_results_paths
 
         generate_report
         upload_report
@@ -91,8 +91,8 @@ module Publisher
       def uploader
         @uploader ||= uploaders(args[:type]).new(
           summary_type: args[:summary],
+          result_paths: @result_paths,
           **args.slice(
-            :results_glob,
             :bucket,
             :prefix,
             :copy_latest,
@@ -122,16 +122,18 @@ module Publisher
         error("Missing argument --bucket!") unless args[:bucket]
       end
 
-      # Check if allure results present
+      # Scan for allure results paths
       #
       # @param [String] results_glob
       # @return [void]
-      def validate_result_files
+      def scan_results_paths
         results_glob = args[:results_glob]
         ignore = args[:ignore_missing_results]
-        return unless Dir.glob(results_glob).empty?
+        @result_paths = Dir.glob(results_glob)
+        log_debug("Found #{@result_paths.size} allure results paths")
+        return unless @result_paths.empty?
 
-        log("Glob '#{results_glob}' did not match any files!", ignore ? :yellow : :red)
+        log("Glob '#{results_glob}' did not match any paths!", ignore ? :yellow : :red)
         exit(ignore ? 0 : 1)
       end
 
