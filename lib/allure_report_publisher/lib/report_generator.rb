@@ -10,8 +10,8 @@ module Publisher
   class ReportGenerator
     include Helpers
 
-    def initialize(results_glob)
-      @results_glob = results_glob
+    def initialize(result_paths)
+      @result_paths = result_paths.join(" ")
     end
 
     # Generate allure report
@@ -42,25 +42,14 @@ module Publisher
 
     private
 
-    attr_reader :results_glob
-
-    # Return all allure results paths from glob
-    #
-    # @return [String]
-    def result_paths
-      @result_paths ||= begin
-        paths = Dir.glob(results_glob)
-        raise(NoAllureResultsError, "Missing allure results") if paths.empty?
-
-        paths.join(" ")
-      end
-    end
+    # @return [String] result paths string
+    attr_reader :result_paths
 
     # Generate allure report
     #
     # @return [void]
     def generate_report
-      log_debug("Generating allure report from following paths: #{result_paths}")
+      log_debug("Generating allure report")
       cmd = "allure generate --clean --output #{report_path} #{common_info_path} #{result_paths}"
       out = execute_shell(cmd)
       log_debug("Generated allure report. #{out}")

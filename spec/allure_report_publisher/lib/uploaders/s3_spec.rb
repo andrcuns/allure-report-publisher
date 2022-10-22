@@ -68,7 +68,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
       described_class.new(**args).execute
 
       aggregate_failures do
-        expect(Publisher::ReportGenerator).to have_received(:new).with(results_glob)
+        expect(Publisher::ReportGenerator).to have_received(:new).with(result_paths)
         expect(report_generator).to have_received(:generate)
       end
     end

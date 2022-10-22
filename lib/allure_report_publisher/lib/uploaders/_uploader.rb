@@ -23,7 +23,7 @@ module Publisher
       # Uploader instance
       #
       # @param [Hash] args
-      # @option args [String] :results_glob
+      # @option args [Array] :result_paths
       # @option args [String] :bucket
       # @option args [String] :prefix
       # @option args [Boolean] :update_pr
@@ -32,7 +32,7 @@ module Publisher
       # @option args [Boolean] :collapse_summary
       # @option args [String] :copy_latest
       def initialize(**args)
-        @results_glob = args[:results_glob]
+        @result_paths = args[:result_paths]
         @bucket_name = args[:bucket]
         @prefix = args[:prefix]
         @update_pr = args[:update_pr]
@@ -97,7 +97,7 @@ module Publisher
 
       private
 
-      attr_reader :results_glob,
+      attr_reader :result_paths,
                   :bucket_name,
                   :prefix,
                   :update_pr,
@@ -164,7 +164,7 @@ module Publisher
       #
       # @return [Publisher::ReportGenerator]
       def report_generator
-        @report_generator ||= ReportGenerator.new(results_glob)
+        @report_generator ||= ReportGenerator.new(result_paths)
       end
 
       # Report path prefix

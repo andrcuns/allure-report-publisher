@@ -10,7 +10,7 @@ RSpec.shared_context "with uploader" do
     )
   end
 
-  let(:results_glob) { "spec/fixture/fake_results/*" }
+  let(:result_paths) { ["spec/fixture/fake_results"] }
   let(:bucket_name) { "bucket" }
   let(:prefix) { "project" }
   let(:ci_provider) { nil }
@@ -29,7 +29,7 @@ RSpec.shared_context "with uploader" do
 
   let(:args) do
     {
-      results_glob: results_glob,
+      result_paths: result_paths,
       bucket: bucket_name,
       prefix: prefix,
       update_pr: false,
