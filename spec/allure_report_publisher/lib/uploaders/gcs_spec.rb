@@ -6,7 +6,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   let(:client) { instance_double(Google::Cloud::Storage::Project, bucket: bucket) }
   let(:bucket) { instance_double(Google::Cloud::Storage::Bucket, file: file, create_file: nil) }
   let(:file) { instance_double(Google::Cloud::Storage::File, download: nil) }
-  let(:gsutil) { instance_double(Publisher::Helpers::Gsutil, valid?: with_gsutil) }
+  let(:gsutil) { instance_double(Publisher::Helpers::Gsutil, valid?: with_gsutil, batch_upload: nil, batch_copy: nil) }
 
   let(:report_path) { "spec/fixture/fake_report" }
   let(:history_run) { ["#{report_path}/history/history.json", "#{prefix}/#{run_id}/history/history.json"] }
@@ -95,10 +95,6 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
     context "with gsutil" do
       let(:with_gsutil) { true }
 
-      before do
-        allow(gsutil).to receive(:batch_copy)
-      end
-
       it "uploads allure report" do
         described_class.new(**args).execute
 
@@ -109,7 +105,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
           end
 
           expect(bucket).to have_received(:create_file).with(*history, cache_control)
-          expect(gsutil).to have_received(:batch_copy).with(
+          expect(gsutil).to have_received(:batch_upload).with(
             source_dir: report_path,
             destination_dir: "#{prefix}/#{run_id}",
             bucket: bucket_name,
@@ -122,7 +118,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
         described_class.new(**{ **args, copy_latest: true }).execute
 
         expect(gsutil).to have_received(:batch_copy).with(
-          source_dir: report_path,
+          source_dir: "#{prefix}/#{run_id}",
           destination_dir: prefix,
           bucket: bucket_name,
           cache_control: 60

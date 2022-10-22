@@ -1,4 +1,21 @@
 RSpec.shared_examples "successfull gsutil upload" do
+  it "performs upload command" do
+    gsutil.batch_upload(
+      source_dir: report_path,
+      destination_dir: destination_dir,
+      bucket: bucket_name,
+      cache_control: cache_control
+    )
+
+    expect(Open3).to have_received(:capture3).with([
+      "gsutil -o 'Credentials:gs_service_key_file=#{credentials_file}' -m",
+      "-h 'Cache-Control:private, max-age=#{cache_control}'",
+      "rsync",
+      "-j json,csv,txt,js,css",
+      "-r #{report_path} gs://#{bucket_name}/#{destination_dir}"
+    ].join(" "))
+  end
+
   it "performs copy command" do
     gsutil.batch_copy(
       source_dir: report_path,
@@ -12,7 +29,7 @@ RSpec.shared_examples "successfull gsutil upload" do
       "-h 'Cache-Control:private, max-age=#{cache_control}'",
       "rsync",
       "-j json,csv,txt,js,css",
-      "-r #{report_path} gs://#{bucket_name}/#{destination_dir}"
+      "-r gs://#{bucket_name}/#{report_path} gs://#{bucket_name}/#{destination_dir}"
     ].join(" "))
   end
 
