@@ -29,8 +29,8 @@ ARG ALLURE_VERSION=2.19.0
 ENV PATH=$PATH:/usr/local/allure-${ALLURE_VERSION}/bin
 RUN apk --no-cache add openjdk17 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 RUN set -eux; \
-    wget https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz; \
-    tar -xzf allure-${ALLURE_VERSION}.tgz -C /usr/local && rm allure-${ALLURE_VERSION}.tgz; \
+    wget -O allure.tgz https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz; \
+    tar -xzf allure.tgz -C /usr/local && rm allure.tgz; \
     allure --version
 
 # Install allure-report-publisher
