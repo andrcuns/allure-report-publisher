@@ -1,19 +1,30 @@
 require_relative "common_uploader"
 
+# rubocop:disable Layout/LineLength
 RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   include_context "with uploader"
 
   let(:client) { instance_double(Google::Cloud::Storage::Project, bucket: bucket) }
-  let(:bucket) { instance_double(Google::Cloud::Storage::Bucket, file: file, create_file: nil) }
-  let(:file) { instance_double(Google::Cloud::Storage::File, download: nil) }
+  let(:bucket) { instance_double(Google::Cloud::Storage::Bucket, create_file: nil, file: file) }
+  let(:file) { instance_double(Google::Cloud::Storage::File, download: nil, copy: nil) }
+  let(:cache_control) { { cache_control: "public, max-age=3600" } }
 
-  let(:history_run) { ["spec/fixture/fake_report/history/history.json", "#{prefix}/#{run_id}/history/history.json"] }
-  let(:history) { ["spec/fixture/fake_report/history/history.json", "#{prefix}/history/history.json"] }
-  let(:report_run) { ["spec/fixture/fake_report/index.html", "#{prefix}/#{run_id}/index.html"] }
-  let(:report) { ["spec/fixture/fake_report/index.html", "#{prefix}/index.html"] }
+  let(:history) do
+    {
+      file: instance_double(Google::Cloud::Storage::File, download: nil, copy: nil),
+      path: "spec/fixture/fake_report/history/history.json",
+      gcs_path_run: "#{prefix}/#{run_id}/history/history.json",
+      gcs_path_latest: "#{prefix}/history/history.json"
+    }
+  end
 
-  def cache_control(max_age = 3600)
-    { cache_control: "public, max-age=#{max_age}" }
+  let(:report) do
+    {
+      file: instance_double(Google::Cloud::Storage::File, download: nil, copy: nil),
+      path: "spec/fixture/fake_report/index.html",
+      gcs_path_run: "#{prefix}/#{run_id}/index.html",
+      gcs_path_latest: "#{prefix}/index.html"
+    }
   end
 
   before do
@@ -34,8 +45,8 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
       described_class.new(**args).execute
 
       aggregate_failures do
-        expect(bucket).to have_received(:create_file).with(*report, cache_control)
-        expect(bucket).to have_received(:create_file).with(*history, cache_control)
+        expect(bucket).to have_received(:create_file).with(*report.slice(:path, :gcs_path_latest).values, cache_control)
+        expect(bucket).to have_received(:create_file).with(*history.slice(:path, :gcs_path_latest).values, cache_control)
       end
     end
 
@@ -61,6 +72,9 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
       allow(File).to receive(:write)
       allow(Publisher::Providers::Github).to receive(:run_id).and_return(1)
       allow(Publisher::Providers::Github).to receive(:new) { ci_provider_instance }
+
+      allow(bucket).to receive(:file).with(history[:gcs_path_run]) { history[:file] }
+      allow(bucket).to receive(:file).with(report[:gcs_path_run]) { report[:file] }
     end
 
     it "uploads allure report" do
@@ -72,17 +86,17 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
           expect(file).to have_received(:download).with("#{common_info_path}/history/#{f}")
         end
 
-        expect(bucket).to have_received(:create_file).with(*history, cache_control)
-        expect(bucket).to have_received(:create_file).with(*history_run, cache_control)
-        expect(bucket).to have_received(:create_file).with(*report_run, cache_control)
+        expect(bucket).to have_received(:create_file).with(*history.slice(:path, :gcs_path_latest).values, cache_control)
+        expect(bucket).to have_received(:create_file).with(*history.slice(:path, :gcs_path_run).values, cache_control)
+        expect(bucket).to have_received(:create_file).with(*report.slice(:path, :gcs_path_run).values, cache_control)
       end
     end
 
     it "uploads latest allure report copy" do
       described_class.new(**{ **args, copy_latest: true }).execute
 
-      expect(bucket).to have_received(:create_file).with(*report, cache_control(60))
-      expect(bucket).to have_received(:create_file).with(*report_run, cache_control)
+      expect(history[:file]).to have_received(:copy).with(history[:gcs_path_latest], force_copy_metadata: true)
+      expect(report[:file]).to have_received(:copy).with(report[:gcs_path_latest], force_copy_metadata: true)
     end
 
     it "adds executor info" do
@@ -103,3 +117,4 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
     end
   end
 end
+# rubocop:enable Layout/LineLength

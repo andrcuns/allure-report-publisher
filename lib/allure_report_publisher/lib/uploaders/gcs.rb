@@ -70,8 +70,21 @@ module Publisher
       #
       # @return [void]
       def upload_latest_copy
-        log_debug("Uploading report copy as latest report")
-        upload_to_gcs(report_files, prefix, cache_control: 60)
+        log_debug("Copying report as latest")
+
+        args = report_files.map do |file|
+          {
+            source_file: bucket.file(key(full_prefix, file.relative_path_from(report_path))),
+            destination: key(prefix, file.relative_path_from(report_path))
+          }
+        end
+
+        Parallel.each(args, in_threads: PARALLEL_THREADS) do |obj|
+          obj[:source_file].copy(obj[:destination], force_copy_metadata: true) do |f|
+            f.cache_control = "public, max-age=60"
+          end
+        end
+        log_debug("Finished latest report copy successfully")
       end
 
       # Upload files to gcs
@@ -80,19 +93,17 @@ module Publisher
       # @param [String] key_prefix
       # @param [Hash] params
       # @return [Array<Hash>]
-      def upload_to_gcs(files, key_prefix, cache_control: 3600)
-        threads = 8
+      def upload_to_gcs(files, key_prefix)
         args = files.map do |file|
           {
             file: file.to_s,
-            path: key(key_prefix, file.relative_path_from(report_path)),
-            cache_control: "public, max-age=#{cache_control}"
+            path: key(key_prefix, file.relative_path_from(report_path))
           }
         end
 
-        log_debug("Uploading '#{args.size}' files in '#{threads}' threads")
-        Parallel.each(args, in_threads: threads) do |obj|
-          bucket.create_file(*obj.slice(:file, :path).values, **obj.slice(:cache_control))
+        log_debug("Uploading '#{args.size}' files in '#{PARALLEL_THREADS}' threads")
+        Parallel.each(args, in_threads: PARALLEL_THREADS) do |obj|
+          bucket.create_file(*obj.slice(:file, :path).values, cache_control: "public, max-age=3600")
         end
         log_debug("Finished upload successfully")
       end

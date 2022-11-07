@@ -5,6 +5,8 @@ module Publisher
   module Uploaders
     class HistoryNotFoundError < StandardError; end
 
+    PARALLEL_THREADS = 8
+
     # Uploader implementation
     #
     class Uploader
@@ -65,7 +67,9 @@ module Publisher
       #
       # @return [void]
       def upload
-        run_uploads
+        upload_history unless !run_id || copy_latest
+        upload_report
+        upload_latest_copy if copy_latest
       end
 
       # Add allure report url to pull request description
@@ -232,15 +236,6 @@ module Publisher
         log_debug("Saving ci executor info")
         File.write(json_path, json)
         log_debug("Saved '#{EXECUTOR_JSON}' as '#{json_path}'\n#{JSON.pretty_generate(ci_provider.executor_info)}")
-      end
-
-      # Run upload commands
-      #
-      # @return [void]
-      def run_uploads
-        upload_history unless !run_id || copy_latest
-        upload_report
-        upload_latest_copy if copy_latest
       end
 
       # Fetch allure report history

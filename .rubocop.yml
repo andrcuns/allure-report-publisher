@@ -52,6 +52,10 @@ RSpec/MultipleMemoizedHelpers:
 
 RSpec/ExampleLength:
   Max: 20
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
 
 RSpec/FilePath:
   Enabled: false

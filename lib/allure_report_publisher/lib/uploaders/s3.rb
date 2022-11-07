@@ -81,8 +81,21 @@ module Publisher
       #
       # @return [void]
       def upload_latest_copy
-        log_debug("Uploading report copy as latest report")
-        upload_to_s3(report_files, prefix, cache_control: 60)
+        log_debug("Copying report as latest")
+
+        args = report_files.map do |file|
+          {
+            bucket: bucket_name,
+            copy_source: "/#{bucket_name}/#{key(full_prefix, file.relative_path_from(report_path))}",
+            key: key(prefix, file.relative_path_from(report_path)),
+            metadata_directive: "REPLACE",
+            content_type: MiniMime.lookup_by_filename(file).content_type,
+            cache_control: "max-age=60"
+          }
+        end
+
+        Parallel.each(args, in_threads: PARALLEL_THREADS) { |obj| client.copy_object(obj) }
+        log_debug("Finished latest report copy successfully")
       end
 
       # Upload files to s3
@@ -90,20 +103,19 @@ module Publisher
       # @param [Array<Pathname>] files
       # @param [String] key_prefix
       # @return [Array<Hash>]
-      def upload_to_s3(files, key_prefix, cache_control: 3600)
-        threads = 8
+      def upload_to_s3(files, key_prefix)
         args = files.map do |file|
           {
             body: File.new(file),
             bucket: bucket_name,
             key: key(key_prefix, file.relative_path_from(report_path)),
             content_type: MiniMime.lookup_by_filename(file).content_type,
-            cache_control: "max-age=#{cache_control}"
+            cache_control: "max-age=3600"
           }
         end
 
-        log_debug("Uploading '#{args.size}' files in '#{threads}' threads")
-        Parallel.each(args, in_threads: threads) { |obj| client.put_object(obj) }
+        log_debug("Uploading '#{args.size}' files in '#{PARALLEL_THREADS}' threads")
+        Parallel.each(args, in_threads: PARALLEL_THREADS) { |obj| client.put_object(obj) }
         log_debug("Finished upload successfully")
       end
 
