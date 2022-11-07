@@ -99,7 +99,7 @@ module Publisher
         args = files.map do |file|
           {
             file: file.to_s,
-            path: key(key_prefix, file.relative_path_from(report_path)),
+            path: key(key_prefix, file.relative_path_from(report_path))
           }
         end
 
