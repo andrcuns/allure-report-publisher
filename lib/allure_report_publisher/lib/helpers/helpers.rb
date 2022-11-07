@@ -29,15 +29,6 @@ module Publisher
         )
       end
 
-      # Check if gsutil is installed and executable
-      #
-      # @return [Boolean]
-      def gsutil?
-        execute_shell("which gsutil") && true
-      rescue StandardError
-        false
-      end
-
       # Debug logging session output
       #
       # @return [StringIO]

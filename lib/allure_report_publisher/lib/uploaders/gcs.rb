@@ -14,13 +14,6 @@ module Publisher
         @client ||= Google::Cloud::Storage.new
       end
 
-      # Gsutil class
-      #
-      # @return [Helpers::Gsutil]
-      def gsutil
-        @gsutil ||= Helpers::Gsutil.init
-      end
-
       # GCS bucket
       #
       # @return [Google::Cloud::Storage::Bucket]
@@ -62,7 +55,7 @@ module Publisher
       # @return [void]
       def upload_history
         log_debug("Uploading report history")
-        file_upload(report_files.select { |file| file.fnmatch?("*/history/*") }, prefix)
+        upload_to_gcs(report_files.select { |file| file.fnmatch?("*/history/*") }, prefix)
       end
 
       # Upload allure report
@@ -70,9 +63,7 @@ module Publisher
       # @return [void]
       def upload_report
         log_debug("Uploading report files")
-        return batch_upload(report_path, full_prefix) if gsutil.valid?
-
-        file_upload(report_files, full_prefix)
+        upload_to_gcs(report_files, full_prefix)
       end
 
       # Upload copy of latest run
@@ -80,9 +71,7 @@ module Publisher
       # @return [void]
       def upload_latest_copy
         log_debug("Uploading report copy as latest report")
-        return batch_copy(full_prefix, prefix, cache_control: 60) if gsutil.valid?
-
-        file_upload(report_files, prefix, cache_control: 60)
+        upload_to_gcs(report_files, prefix, cache_control: 60)
       end
 
       # Upload files to gcs
@@ -90,8 +79,8 @@ module Publisher
       # @param [Array<Pathname>] files
       # @param [String] key_prefix
       # @param [Hash] params
-      # @return [void]
-      def file_upload(files, key_prefix, cache_control: 3600)
+      # @return [Array<Hash>]
+      def upload_to_gcs(files, key_prefix, cache_control: 3600)
         threads = 8
         args = files.map do |file|
           {
@@ -101,40 +90,11 @@ module Publisher
           }
         end
 
-        log_debug("Uploading '#{args.size}' files in '#{threads}' threads to bucker '#{bucket_name}'")
+        log_debug("Uploading '#{args.size}' files in '#{threads}' threads")
         Parallel.each(args, in_threads: threads) do |obj|
           bucket.create_file(*obj.slice(:file, :path).values, **obj.slice(:cache_control))
         end
         log_debug("Finished upload successfully")
-      end
-
-      # Upload directory recursively
-      #
-      # @param [String] source_dir
-      # @param [String] destination_dir
-      # @return [void]
-      def batch_upload(source_dir, destination_dir, cache_control: 3600)
-        gsutil.batch_upload(
-          source_dir: source_dir,
-          destination_dir: destination_dir,
-          bucket: bucket_name,
-          cache_control: cache_control
-        )
-      end
-
-      # Copy directory within the bucket
-      #
-      # @param [String] source_dir
-      # @param [String] destination_dir
-      # @param [String] cache_control
-      # @return [void]
-      def batch_copy(source_dir, destination_dir, cache_control: 3600)
-        gsutil.batch_copy(
-          source_dir: source_dir,
-          destination_dir: destination_dir,
-          bucket: bucket_name,
-          cache_control: cache_control
-        )
       end
 
       # Fabricate key for s3 object
