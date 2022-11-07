@@ -63,9 +63,7 @@ module Publisher
           execute_shell([
             base_cmd(key_file),
             "-h 'Cache-Control:private, max-age=#{cache_control}'",
-            "rsync",
-            "-j json,csv,txt,js,css",
-            "-r #{source_dir} gs://#{bucket}/#{destination_dir}"
+            "rsync -r #{source_dir} gs://#{bucket}/#{destination_dir}"
           ].join(" "))
         end
         log_debug("Finished upload successfully")
