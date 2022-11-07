@@ -7,6 +7,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   let(:client) { instance_double(Google::Cloud::Storage::Project, bucket: bucket) }
   let(:bucket) { instance_double(Google::Cloud::Storage::Bucket, create_file: nil, file: file) }
   let(:file) { instance_double(Google::Cloud::Storage::File, download: nil, copy: nil) }
+  let(:cache_control) { { cache_control: "public, max-age=3600" } }
 
   let(:history) do
     {
@@ -24,10 +25,6 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
       gcs_path_run: "#{prefix}/#{run_id}/index.html",
       gcs_path_latest: "#{prefix}/index.html"
     }
-  end
-
-  def cache_control(max_age = 3600)
-    { cache_control: "public, max-age=#{max_age}" }
   end
 
   before do

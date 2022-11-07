@@ -95,18 +95,17 @@ module Publisher
       # @param [String] key_prefix
       # @param [Hash] params
       # @return [Array<Hash>]
-      def upload_to_gcs(files, key_prefix, cache_control: 3600)
+      def upload_to_gcs(files, key_prefix)
         args = files.map do |file|
           {
             file: file.to_s,
             path: key(key_prefix, file.relative_path_from(report_path)),
-            cache_control: "public, max-age=#{cache_control}"
           }
         end
 
         log_debug("Uploading '#{args.size}' files in '#{PARALLEL_THREADS}' threads")
         Parallel.each(args, in_threads: PARALLEL_THREADS) do |obj|
-          bucket.create_file(*obj.slice(:file, :path).values, **obj.slice(:cache_control))
+          bucket.create_file(*obj.slice(:file, :path).values, cache_control: "public, max-age=3600")
         end
         log_debug("Finished upload successfully")
       end
