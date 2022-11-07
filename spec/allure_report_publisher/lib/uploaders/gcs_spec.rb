@@ -98,8 +98,8 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
     it "uploads latest allure report copy" do
       described_class.new(**{ **args, copy_latest: true }).execute
 
-      expect(history[:file]).to have_received(:copy).with(bucket_name, history[:gcs_path_latest])
-      expect(report[:file]).to have_received(:copy).with(bucket_name, report[:gcs_path_latest])
+      expect(history[:file]).to have_received(:copy).with(history[:gcs_path_latest], force_copy_metadata: true)
+      expect(report[:file]).to have_received(:copy).with(report[:gcs_path_latest], force_copy_metadata: true)
     end
 
     it "adds executor info" do

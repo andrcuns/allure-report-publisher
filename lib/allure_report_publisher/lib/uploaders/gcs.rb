@@ -82,7 +82,9 @@ module Publisher
         end
 
         Parallel.each(args, in_threads: PARALLEL_THREADS) do |obj|
-          obj[:source_file].copy(bucket_name, obj[:destination])
+          obj[:source_file].copy(obj[:destination], force_copy_metadata: true) do |f|
+            f.metadata["cache_control"] = "public, max-age=60"
+          end
         end
         log_debug("Finished latest report copy successfully")
       end
