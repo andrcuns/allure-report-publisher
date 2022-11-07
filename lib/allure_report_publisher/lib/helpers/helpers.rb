@@ -7,8 +7,6 @@ module Publisher
   # Helpers
   #
   module Helpers
-    class ShellCommandFailure < StandardError; end
-
     class << self
       # Global instance of pastel
       #
@@ -21,21 +19,13 @@ module Publisher
       # Check allure cli is installed and executable
       #
       # @return [void]
-      def allure_cli?
-        execute_shell("which allure")
-      rescue StandardError
+      def validate_allure_cli_present
+        _out, status = Open3.capture2("which allure")
+        return if status.success?
+
         Helpers.error(
           "Allure cli is missing! See https://docs.qameta.io/allure/#_installing_a_commandline on how to install it!"
         )
-      end
-
-      # Check if gsutil is installed and executable
-      #
-      # @return [Boolean]
-      def gsutil?
-        execute_shell("which gsutil") && true
-      rescue StandardError
-        false
       end
 
       # Debug logging session output
@@ -110,25 +100,13 @@ module Publisher
     #
     # @param [String] command
     # @return [String] output
-    def execute_shell(command, mask: nil)
-      loggable_command = mask ? command.gsub(mask, "***") : command
-      log_debug("Executing command '#{loggable_command}'")
+    def execute_shell(command)
       out, err, status = Open3.capture3(command)
+      raise("Out:\n#{out}\n\nErr:\n#{err}") unless status.success?
 
-      cmd_output = []
-      cmd_output << "Out: #{out}" unless out.empty?
-      cmd_output << "Err: #{err}" unless err.empty?
-      output = cmd_output.join("\n")
-
-      unless status.success?
-        err_msg = "Command '#{loggable_command}' failed!\n#{output}"
-        err_msg = mask ? err_msg.gsub(mask, "***") : err_msg
-        raise(ShellCommandFailure, err_msg)
-      end
-
-      mask ? output.gsub(mask, "***") : output
+      out
     end
 
-    module_function :colorize, :log, :log_debug, :error, :path, :execute_shell
+    module_function :colorize, :log, :error, :path, :execute_shell
   end
 end
