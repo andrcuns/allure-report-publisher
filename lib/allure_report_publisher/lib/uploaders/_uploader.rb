@@ -5,6 +5,8 @@ module Publisher
   module Uploaders
     class HistoryNotFoundError < StandardError; end
 
+    PARALLEL_THREADS = 8
+
     # Uploader implementation
     #
     class Uploader

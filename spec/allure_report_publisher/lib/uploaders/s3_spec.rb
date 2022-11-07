@@ -4,41 +4,35 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   include_context "with uploader"
   include_context "with mock helper"
 
-  let(:s3_client) { instance_double(Aws::S3::Client, get_object: nil) }
-  let(:put_object_args) { [] }
-  let(:run_report_files) do
-    [
-      {
-        body: "spec/fixture/fake_report/history/history.json",
-        bucket: bucket_name,
-        key: "#{prefix}/1/history/history.json"
-      },
-      {
-        body: "spec/fixture/fake_report/index.html",
-        bucket: bucket_name,
-        key: "#{prefix}/1/index.html"
-      }
-    ]
+  let(:s3_client) { instance_double(Aws::S3::Client, get_object: nil, put_object: nil, copy_object: nil) }
+
+  let(:history_latest) { history_run.merge(key: "#{prefix}/history/history.json") }
+  let(:history_run) do
+    {
+      body: File.new("spec/fixture/fake_report/history/history.json"),
+      bucket: bucket_name,
+      key: "#{prefix}/1/history/history.json",
+      content_type: "application/json",
+      cache_control: "max-age=3600"
+    }
   end
-  let(:latest_report_files) do
-    [
-      {
-        body: "spec/fixture/fake_report/index.html",
-        bucket: bucket_name,
-        key: "#{prefix}/index.html"
-      }
-    ]
+
+  let(:report_latest) { report_run.merge(key: "#{prefix}/index.html") }
+  let(:report_run) do
+    {
+      body: File.new("spec/fixture/fake_report/index.html"),
+      bucket: bucket_name,
+      key: "#{prefix}/1/index.html",
+      content_type: "text/html",
+      cache_control: "max-age=3600"
+    }
   end
 
   before do
     allow(Aws::S3::Client).to receive(:new).with({ region: "us-east-1", force_path_style: false }) { s3_client }
-    allow(s3_client).to receive(:put_object) do |arg|
-      put_object_args.push({
-        body: arg[:body].path,
-        bucket: arg[:bucket],
-        key: arg[:key]
-      })
-    end
+    allow(File).to receive(:new).and_call_original
+    allow(File).to receive(:new).with(Pathname.new(history_latest[:body].path)) { history_latest[:body] }
+    allow(File).to receive(:new).with(Pathname.new(report_latest[:body].path)) { report_latest[:body] }
   end
 
   context "with missing aws credentials" do
@@ -76,20 +70,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
     it "uploads allure report to s3" do
       described_class.new(**args).execute
 
-      aggregate_failures do
-        expect(put_object_args).to include(
-          {
-            body: "spec/fixture/fake_report/history/history.json",
-            bucket: bucket_name,
-            key: "#{prefix}/history/history.json"
-          },
-          {
-            body: "spec/fixture/fake_report/index.html",
-            bucket: bucket_name,
-            key: "#{prefix}/index.html"
-          }
-        )
-      end
+      expect(s3_client).to have_received(:put_object).with(report_latest)
     end
 
     it "fetches and saves history info" do
@@ -103,11 +84,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
             bucket: bucket_name
           )
         end
-        expect(put_object_args).to include({
-          body: "spec/fixture/fake_report/history/history.json",
-          bucket: bucket_name,
-          key: "#{prefix}/history/history.json"
-        })
+        expect(s3_client).to have_received(:put_object).with(history_latest)
       end
     end
   end
@@ -119,24 +96,49 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
     end
 
     before do
-      allow(File).to receive(:write)
       allow(Publisher::Providers::Github).to receive(:run_id).and_return(1)
       allow(Publisher::Providers::Github).to receive(:new) { ci_provider_instance }
+
+      allow(File).to receive(:write)
+      allow(File).to receive(:new).with(Pathname.new(history_run[:body].path)) { history_run[:body] }
+      allow(File).to receive(:new).with(Pathname.new(report_run[:body].path)) { report_run[:body] }
     end
 
     it "uploads allure report to s3" do
       described_class.new(**args).execute
 
       aggregate_failures do
-        expect(put_object_args).to include(*run_report_files)
-        expect(put_object_args).not_to include(*latest_report_files)
+        expect(s3_client).to have_received(:put_object).with(report_run)
+        expect(s3_client).to have_received(:put_object).with(history_run)
+        expect(s3_client).to have_received(:put_object).with(history_latest)
+        expect(s3_client).not_to have_received(:put_object).with(report_latest)
       end
     end
 
     it "uploads latest allure report copy to s3" do
       described_class.new(**{ **args, copy_latest: true }).execute
 
-      expect(put_object_args).to include(*latest_report_files)
+      aggregate_failures do
+        expect(s3_client).to have_received(:put_object).with(report_run)
+        expect(s3_client).to have_received(:put_object).with(history_run)
+
+        expect(s3_client).to have_received(:copy_object).with({
+          bucket: bucket_name,
+          copy_source: "/#{bucket_name}/#{report_run[:key]}",
+          key: report_latest[:key],
+          metadata_directive: "REPLACE",
+          content_type: "text/html",
+          cache_control: "max-age=60"
+        })
+        expect(s3_client).to have_received(:copy_object).with({
+          bucket: bucket_name,
+          copy_source: "/#{bucket_name}/#{history_run[:key]}",
+          key: history_latest[:key],
+          metadata_directive: "REPLACE",
+          content_type: "application/json",
+          cache_control: "max-age=60"
+        })
+      end
     end
 
     it "adds executor info" do

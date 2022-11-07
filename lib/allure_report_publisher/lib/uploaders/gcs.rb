@@ -5,8 +5,6 @@ module Publisher
     # Google cloud storage uploader implementation
     #
     class GCS < Uploader
-      PARALLEL_THREADS = 8
-
       private
 
       # GCS client
