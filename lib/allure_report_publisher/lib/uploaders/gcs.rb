@@ -5,6 +5,8 @@ module Publisher
     # Google cloud storage uploader implementation
     #
     class GCS < Uploader
+      PARALLEL_THREADS = 8
+
       private
 
       # GCS client
@@ -70,8 +72,19 @@ module Publisher
       #
       # @return [void]
       def upload_latest_copy
-        log_debug("Uploading report copy as latest report")
-        upload_to_gcs(report_files, prefix, cache_control: 60)
+        log_debug("Copying report as latest")
+
+        args = report_files.map do |file|
+          {
+            source_file: bucket.file(key(full_prefix, file.relative_path_from(report_path))),
+            destination: key(prefix, file.relative_path_from(report_path))
+          }
+        end
+
+        Parallel.each(args, in_threads: PARALLEL_THREADS) do |obj|
+          obj[:source_file].copy(bucket_name, obj[:destination])
+        end
+        log_debug("Finished latest report copy successfully")
       end
 
       # Upload files to gcs
@@ -81,7 +94,6 @@ module Publisher
       # @param [Hash] params
       # @return [Array<Hash>]
       def upload_to_gcs(files, key_prefix, cache_control: 3600)
-        threads = 8
         args = files.map do |file|
           {
             file: file.to_s,
@@ -90,8 +102,8 @@ module Publisher
           }
         end
 
-        log_debug("Uploading '#{args.size}' files in '#{threads}' threads")
-        Parallel.each(args, in_threads: threads) do |obj|
+        log_debug("Uploading '#{args.size}' files in '#{PARALLEL_THREADS}' threads")
+        Parallel.each(args, in_threads: PARALLEL_THREADS) do |obj|
           bucket.create_file(*obj.slice(:file, :path).values, **obj.slice(:cache_control))
         end
         log_debug("Finished upload successfully")
