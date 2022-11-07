@@ -48,43 +48,24 @@ module Publisher
         @valid
       end
 
-      # Perform copy operation within a single bucket
-      #
-      # @param [String] source_dir
-      # @param [String] destination_dir
-      # @param [String] bucket
-      # @param [Integer] cache_control
-      # @return [void]
-      def batch_copy(source_dir:, destination_dir:, bucket:, cache_control: 3600)
-        batch_upload(
-          source_dir: "gs://#{bucket}/#{source_dir}",
-          destination_dir: destination_dir,
-          bucket: bucket,
-          cache_control: cache_control
-        )
-      end
-
-      # Perform batch upload operation
+      # Perform batch copy operation
       #
       # @param [String] source_dir
       # @param [String] destination_dir
       # @param [String] bucket
       # @param [String] cache_control
       # @return [void]
-      def batch_upload(source_dir:, destination_dir:, bucket:, cache_control: 3600)
+      def batch_copy(source_dir:, destination_dir:, bucket:, cache_control: 3600)
         raise(Uninitialised, "gsutil has not been properly set up!") unless valid?
 
-        action = source_dir.start_with?("gs://") ? "Copying" : "Uploading"
-        destination = "gs://#{bucket}/#{destination_dir}"
-
-        log_debug("#{action} '#{source_dir}' to '#{destination}'")
+        log_debug("Uploading '#{source_dir}' using gsutil to bucket '#{bucket}' with destination '#{destination_dir}'")
         with_credentials do |key_file|
           execute_shell([
             base_cmd(key_file),
             "-h 'Cache-Control:private, max-age=#{cache_control}'",
             "rsync",
             "-j json,csv,txt,js,css",
-            "-r #{source_dir} #{destination}"
+            "-r #{source_dir} gs://#{bucket}/#{destination_dir}"
           ].join(" "))
         end
         log_debug("Finished upload successfully")
