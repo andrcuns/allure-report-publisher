@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "aws-sdk-s3", ">= 1.93.1", "< 1.118.0"
-  spec.add_dependency "dry-cli", ">= 0.6", "< 0.8"
+  spec.add_dependency "dry-cli", ">= 0.6", "< 1.1"
   spec.add_dependency "faraday-retry", ">= 1", "< 3"
   spec.add_dependency "gitlab", "~> 4.17"
   spec.add_dependency "google-cloud-storage", "~> 1.31"
