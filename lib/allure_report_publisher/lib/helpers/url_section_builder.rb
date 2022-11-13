@@ -77,9 +77,14 @@ module Publisher
 
       # Test run summary
       #
-      # @return [Helpers::Summary]
+      # @return [Helpers::TestResults]
       def summary
-        @summary ||= Helpers::Summary.new(report_path, summary_type, summary_table_type)
+        @summary ||= Helpers::TestResults.new(
+          report_path: report_path,
+          report_url: report_url,
+          summary_type: summary_type,
+          table_type: summary_table_type
+        )
       end
 
       # Single job report URL entry
@@ -91,7 +96,7 @@ module Publisher
           entry << "**#{build_name}**: #{summary.status} [test report](#{report_url}) for #{sha_url}"
           entry << "<details>" if collapse_summary
           entry << "<summary>expand test summary</summary>\n" if collapse_summary
-          entry << summary.table if summary_type
+          entry << summary.results if summary_type
           entry << "</details>" if collapse_summary
           entry << "<!-- #{build_name} -->\n"
 

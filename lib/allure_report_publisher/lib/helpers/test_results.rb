@@ -4,12 +4,16 @@ module Publisher
   module Helpers
     # Test summary table generator
     #
-    class Summary
+    class TestResults
       BEHAVIORS = "behaviors".freeze
       PACKAGES = "packages".freeze
       SUITES = "suites".freeze
       TOTAL = "total".freeze
+      FULL_REPORT = "full-report".freeze
+
+      # @return [Symbol] summary in markdown format
       MARKDOWN = :markdown
+      # @return [Symbol] summary in ascii format
       ASCII = :ascii
 
       # Summary table generator
@@ -17,16 +21,19 @@ module Publisher
       # @param [String] report_path
       # @param [String] summary_type
       # @param [String] markdown
-      def initialize(report_path, summary_type, table_type = ASCII)
+      def initialize(report_path:, report_url:, summary_type:, table_type: ASCII)
         @report_path = report_path
+        @report_url = report_url
         @summary_type = summary_type || TOTAL
         @table_type = table_type
       end
 
-      # Summary table
+      # Test results
       #
       # @return [String]
-      def table
+      def results
+        return iframe if summary_type == FULL_REPORT
+
         summary = if summary_type == TOTAL
                     terminal_table { |table| table << short_summary }
                   else
@@ -51,7 +58,14 @@ module Publisher
 
       private
 
-      attr_reader :report_path, :summary_type, :table_type
+      attr_reader :report_path, :report_url, :summary_type, :table_type
+
+      # Iframe templated string
+      #
+      # @return [String]
+      def iframe
+        "<iframe src=\"#{report_url}\" loading=\"lazy\" width=\"100%\" height=\"500\" frameborder=\"0\""
+      end
 
       # Expanded summary table
       #
@@ -122,18 +136,25 @@ module Publisher
       # Data json
       #
       # @return [Hash]
+      def data
+        @data ||= JSON.parse(data_json, symbolize_names: true)
+      end
+
+      # Test data json
+      #
+      # @return [String]
       def data_json
-        @data_json ||= JSON.parse(
-          File.read(File.join(report_path, "data", "#{summary_type == TOTAL ? SUITES : summary_type}.json")),
-          symbolize_names: true
-        )
+        return @data_json if defined?(@data_json)
+
+        type = [TOTAL, FULL_REPORT].include?(summary_type) ? SUITES : summary_type
+        @data_json = File.read(File.join(report_path, "data", "#{type}.json"))
       end
 
       # Summary data
       #
       # @return [Hash<Hash>]
       def summary_data
-        data_json[:children].each_with_object({}) do |entry, result|
+        data[:children].each_with_object({}) do |entry, result|
           result[entry[:name]] = fetch_results(entry)
         end
       end

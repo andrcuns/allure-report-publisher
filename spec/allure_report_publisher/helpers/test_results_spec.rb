@@ -1,7 +1,15 @@
 RSpec.shared_examples "summary fetcher" do |summary_table_style|
-  subject(:summary) { described_class.new(report_path, summary_type, summary_table_style) }
+  subject(:summary) do
+    described_class.new(
+      report_path: report_path,
+      report_url: report_url,
+      summary_type: summary_type,
+      table_type: summary_table_style
+    )
+  end
 
   let(:report_path) { "spec/fixture/fake_report" }
+  let(:report_url) { "report_url" }
   let(:markdown) { summary_table_style == :markdown }
 
   let(:summary_table) do
@@ -21,10 +29,10 @@ RSpec.shared_examples "summary fetcher" do |summary_table_style|
   end
 end
 
-RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
+RSpec.describe Publisher::Helpers::TestResults, epic: "helpers" do
   context "with expanded summary" do
     context "with behavior summary" do
-      let(:summary_type) { Publisher::Helpers::Summary::BEHAVIORS }
+      let(:summary_type) { Publisher::Helpers::TestResults::BEHAVIORS }
       let(:status) { "❌" }
 
       let(:rows) do
@@ -40,7 +48,7 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
     end
 
     context "with packages summary" do
-      let(:summary_type) { Publisher::Helpers::Summary::PACKAGES }
+      let(:summary_type) { Publisher::Helpers::TestResults::PACKAGES }
       let(:status) { "❗" }
 
       let(:rows) do
@@ -56,7 +64,7 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
     end
 
     context "with suites summary" do
-      let(:summary_type) { Publisher::Helpers::Summary::SUITES }
+      let(:summary_type) { Publisher::Helpers::TestResults::SUITES }
       let(:status) { "✅" }
 
       let(:rows) do
@@ -73,7 +81,7 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
   end
 
   context "with short summary" do
-    let(:summary_type) { Publisher::Helpers::Summary::TOTAL }
+    let(:summary_type) { Publisher::Helpers::TestResults::TOTAL }
     let(:status) { "✅" }
 
     let(:rows) do

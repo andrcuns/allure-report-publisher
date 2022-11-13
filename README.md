@@ -47,7 +47,7 @@ Options:
   --bucket=VALUE                    # Bucket name. Required: true
   --prefix=VALUE                    # Optional prefix for report path. Required: false
   --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description/actions)
-  --summary=VALUE                   # Additionally add summary table to PR comment or description. Required: false: (behaviors/suites/packages/total)
+  --results=VALUE                   # Additionally add test result summary or full report to pr description, comment or github actions step summay. Required: false: (behaviors/suites/packages/total/full-report)
   --summary-table-type=VALUE        # Summary table type. Required: false: (ascii/markdown), default: :ascii
   --[no-]collapse-summary           # Create summary as a collapsable section, default: false
   --[no-]copy-latest                # Keep copy of latest report at base prefix path, default: false

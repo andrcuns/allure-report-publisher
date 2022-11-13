@@ -11,7 +11,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
   end
 
   let(:summary) do
-    instance_double(Publisher::Helpers::Summary, status: status, table: "```markdown\n#{summary_table}\n```")
+    instance_double(Publisher::Helpers::TestResults, status: status, table: "```markdown\n#{summary_table}\n```")
   end
 
   let(:report_url) { "https://report.com" }
@@ -64,11 +64,11 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
   end
 
   before do
-    allow(Publisher::Helpers::Summary).to receive(:new) { summary }
+    allow(Publisher::Helpers::TestResults).to receive(:new) { summary }
   end
 
   context "with summary" do
-    let(:summary_type) { Publisher::Helpers::Summary::BEHAVIORS }
+    let(:summary_type) { Publisher::Helpers::TestResults::BEHAVIORS }
     let(:status) { "❌" }
 
     let(:rows) do

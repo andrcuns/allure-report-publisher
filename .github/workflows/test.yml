@@ -72,10 +72,12 @@ jobs:
             bucket: allure-test-reports
             table: markdown
             results: actions
+            result_type: full-report
           - provider: s3
             bucket: allure-tests-reports
             table: ascii
             results: description
+            result_type: behaviors
     steps:
       -
         name: Checkout
@@ -130,7 +132,7 @@ jobs:
               --bucket="${{ matrix.bucket }}" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="${{ matrix.results }}" \
-              --summary="behaviors" \
+              --results="${{ matrix.result_type }}" \
               --summary-table-type="${{ matrix.table }}" \
               --copy-latest \
               --color \

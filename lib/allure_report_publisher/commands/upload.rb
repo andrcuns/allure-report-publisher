@@ -23,22 +23,25 @@ module Publisher
              type: :string,
              desc: "Add report url to PR via comment or description update. Required: false",
              values: %w[comment description actions]
-      option :summary,
+      option :results,
              type: :string,
-             desc: "Additionally add summary table to PR comment or description. Required: false",
+             desc: <<~DSC.strip,
+               Additionally add test result summary or full report to pr description, comment or github actions step summay. Required: false
+             DSC
              values: [
-               Publisher::Helpers::Summary::BEHAVIORS,
-               Publisher::Helpers::Summary::SUITES,
-               Publisher::Helpers::Summary::PACKAGES,
-               Publisher::Helpers::Summary::TOTAL
+               Publisher::Helpers::TestResults::BEHAVIORS,
+               Publisher::Helpers::TestResults::SUITES,
+               Publisher::Helpers::TestResults::PACKAGES,
+               Publisher::Helpers::TestResults::TOTAL,
+               Publisher::Helpers::TestResults::FULL_REPORT
              ]
       option :summary_table_type,
              type: :string,
              desc: "Summary table type. Required: false",
-             default: Publisher::Helpers::Summary::ASCII,
+             default: Publisher::Helpers::TestResults::ASCII,
              values: [
-               Publisher::Helpers::Summary::ASCII,
-               Publisher::Helpers::Summary::MARKDOWN
+               Publisher::Helpers::TestResults::ASCII,
+               Publisher::Helpers::TestResults::MARKDOWN
              ]
       option :collapse_summary,
              type: :boolean,
@@ -90,7 +93,7 @@ module Publisher
       # @return [Publisher::Uploaders::Uploader]
       def uploader
         @uploader ||= uploaders(args[:type]).new(
-          summary_type: args[:summary],
+          summary_type: args[:results],
           result_paths: @result_paths,
           **args.slice(
             :bucket,
