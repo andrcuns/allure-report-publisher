@@ -64,7 +64,7 @@ module Publisher
       #
       # @return [String]
       def iframe
-        "<iframe src=\"#{report_url}\" loading=\"lazy\" width=\"100%\" height=\"500\" frameborder=\"0\""
+        "<iframe src=\"#{report_url}\" loading=\"lazy\" width=\"100%\" height=\"500\" frameborder=\"0\"></iframe>"
       end
 
       # Expanded summary table
