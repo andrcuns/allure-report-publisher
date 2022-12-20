@@ -49,7 +49,8 @@ Options:
   --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description/actions)
   --summary=VALUE                   # Additionally add summary table to PR comment or description. Required: false: (behaviors/suites/packages/total)
   --summary-table-type=VALUE        # Summary table type. Required: false: (ascii/markdown), default: :ascii
-  --[no-]collapse-summary           # Create summary as a collapsable section, default: false
+  --base-url=VALUE                  # Use custom base url instead of default cloud provider one. Required: false
+  --[no-]collapse-summary           # Create summary as a collapsible section, default: false
   --[no-]copy-latest                # Keep copy of latest report at base prefix path, default: false
   --[no-]color                      # Force color output
   --[no-]ignore-missing-results     # Ignore missing allure results, default: false

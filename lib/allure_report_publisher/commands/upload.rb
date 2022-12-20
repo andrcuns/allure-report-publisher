@@ -48,7 +48,7 @@ module Publisher
       option :collapse_summary,
              type: :boolean,
              default: false,
-             desc: "Create summary as a collapsable section"
+             desc: "Create summary as a collapsible section"
       option :copy_latest,
              type: :boolean,
              default: false,
