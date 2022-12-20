@@ -132,7 +132,7 @@ module Publisher
       # @param [String] path_prefix
       # @return [String]
       def url(path_prefix)
-        ["http://#{bucket_name}.s3.amazonaws.com", path_prefix, "index.html"].compact.join("/")
+        [base_url || "http://#{bucket_name}.s3.amazonaws.com", path_prefix, "index.html"].compact.join("/")
       end
     end
   end

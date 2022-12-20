@@ -1,3 +1,5 @@
+require "uri"
+
 module Publisher
   module Commands
     # Upload allure report
@@ -40,10 +42,13 @@ module Publisher
                Publisher::Helpers::Summary::ASCII,
                Publisher::Helpers::Summary::MARKDOWN
              ]
+      option :base_url,
+             type: :string,
+             desc: "Use custom base url instead of default cloud provider one. Required: false"
       option :collapse_summary,
              type: :boolean,
              default: false,
-             desc: "Create summary as a collapsable section"
+             desc: "Create summary as a collapsible section"
       option :copy_latest,
              type: :boolean,
              default: false,
@@ -95,6 +100,7 @@ module Publisher
           **args.slice(
             :bucket,
             :prefix,
+            :base_url,
             :copy_latest,
             :update_pr,
             :collapse_summary,
@@ -120,6 +126,9 @@ module Publisher
       def validate_args
         error("Missing argument --results-glob!") unless args[:results_glob]
         error("Missing argument --bucket!") unless args[:bucket]
+        URI.parse(args[:base_url]) if args[:base_url]
+      rescue URI::InvalidURIError
+        error("Invalid --base-url value!")
       end
 
       # Scan for allure results paths
