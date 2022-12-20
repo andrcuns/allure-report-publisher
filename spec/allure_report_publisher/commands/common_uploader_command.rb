@@ -126,6 +126,18 @@ RSpec.shared_examples "upload command" do
         expect(uploader_stub).to have_received(:add_result_summary)
       end
     end
+
+    it "executes uploader with custom --base-url" do
+      base_url = "https://custom"
+
+      run_cli(*command, *cli_args, "--base-url=#{base_url}")
+
+      aggregate_failures do
+        expect(uploader).to have_received(:new).with({ **args, base_url: base_url })
+        expect(uploader_stub).to have_received(:generate_report)
+        expect(uploader_stub).to have_received(:upload)
+      end
+    end
   end
 
   context "with missing args", :aggregate_failures do
@@ -137,6 +149,14 @@ RSpec.shared_examples "upload command" do
 
     it "exits when bucket is missing" do
       expect { run_cli(*command, cli_args[0]) }.to raise_error(SystemExit)
+      expect(uploader_stub).not_to have_received(:generate_report)
+      expect(uploader_stub).not_to have_received(:upload)
+    end
+  end
+
+  context "with invalid base-url" do
+    it "fails with invalid url error" do
+      expect { run_cli(*command, *cli_args, "--base-url=https://bla bla") }.to raise_error(SystemExit)
       expect(uploader_stub).not_to have_received(:generate_report)
       expect(uploader_stub).not_to have_received(:upload)
     end
