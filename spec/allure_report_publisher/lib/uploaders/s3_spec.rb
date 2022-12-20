@@ -116,7 +116,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
     end
 
     it "uploads latest allure report copy to s3" do
-      described_class.new(**{ **args, copy_latest: true }).execute
+      described_class.new(**args, copy_latest: true).execute
 
       aggregate_failures do
         expect(s3_client).to have_received(:put_object).with(report_run)
@@ -147,12 +147,12 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
     end
 
     it "updates pr description with allure report link" do
-      described_class.new(**{ **args, update_pr: true }).execute
+      described_class.new(**args, update_pr: true).execute
       expect(ci_provider_instance).to have_received(:add_result_summary)
     end
 
     it "returns correct uploader report urls" do
-      expect(described_class.new(**{ **args, copy_latest: true }).report_urls).to eq({
+      expect(described_class.new(**args, copy_latest: true).report_urls).to eq({
         "Report url" => "http://bucket.s3.amazonaws.com/project/1/index.html",
         "Latest report url" => "http://bucket.s3.amazonaws.com/project/index.html"
       })

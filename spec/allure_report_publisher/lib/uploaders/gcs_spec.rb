@@ -93,7 +93,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
     end
 
     it "uploads latest allure report copy" do
-      described_class.new(**{ **args, copy_latest: true }).execute
+      described_class.new(**args, copy_latest: true).execute
 
       expect(history[:file]).to have_received(:copy).with(history[:gcs_path_latest], force_copy_metadata: true)
       expect(report[:file]).to have_received(:copy).with(report[:gcs_path_latest], force_copy_metadata: true)
@@ -105,12 +105,12 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
     end
 
     it "updates pr description with allure report link" do
-      described_class.new(**{ **args, update_pr: true }).execute
+      described_class.new(**args, update_pr: true).execute
       expect(ci_provider_instance).to have_received(:add_result_summary)
     end
 
     it "returns correct uploader report urls" do
-      expect(described_class.new(**{ **args, copy_latest: true }).report_urls).to eq({
+      expect(described_class.new(**args, copy_latest: true).report_urls).to eq({
         "Report url" => "https://storage.googleapis.com/bucket/project/1/index.html",
         "Latest report url" => "https://storage.googleapis.com/bucket/project/index.html"
       })
