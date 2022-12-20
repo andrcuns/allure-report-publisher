@@ -13,6 +13,7 @@ RSpec.shared_context "with uploader" do
   let(:result_paths) { ["spec/fixture/fake_results"] }
   let(:bucket_name) { "bucket" }
   let(:prefix) { "project" }
+  let(:base_url) { nil }
   let(:ci_provider) { nil }
   let(:run_id) { 1 }
   let(:executor_info) { { name: "Github" } }
@@ -32,6 +33,7 @@ RSpec.shared_context "with uploader" do
       result_paths: result_paths,
       bucket: bucket_name,
       prefix: prefix,
+      base_url: base_url,
       update_pr: false,
       copy_latest: false
     }

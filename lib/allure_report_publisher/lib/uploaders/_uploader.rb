@@ -28,6 +28,7 @@ module Publisher
       # @option args [Array] :result_paths
       # @option args [String] :bucket
       # @option args [String] :prefix
+      # @option args [String] :base_url
       # @option args [Boolean] :update_pr
       # @option args [String] :summary_type
       # @option args [Symbol] :summary_table_type
@@ -37,6 +38,7 @@ module Publisher
         @result_paths = args[:result_paths]
         @bucket_name = args[:bucket]
         @prefix = args[:prefix]
+        @base_url = args[:base_url]
         @update_pr = args[:update_pr]
         @summary_type = args[:summary_type]
         @summary_table_type = args[:summary_table_type]
@@ -104,6 +106,7 @@ module Publisher
       attr_reader :result_paths,
                   :bucket_name,
                   :prefix,
+                  :base_url,
                   :update_pr,
                   :copy_latest,
                   :summary_type,

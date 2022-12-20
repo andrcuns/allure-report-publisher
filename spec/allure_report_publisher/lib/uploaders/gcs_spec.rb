@@ -109,11 +109,24 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
       expect(ci_provider_instance).to have_received(:add_result_summary)
     end
 
-    it "returns correct uploader report urls" do
-      expect(described_class.new(**args, copy_latest: true).report_urls).to eq({
-        "Report url" => "https://storage.googleapis.com/bucket/project/1/index.html",
-        "Latest report url" => "https://storage.googleapis.com/bucket/project/index.html"
-      })
+    context "with default base url" do
+      it "returns correct report urls" do
+        expect(described_class.new(**args, copy_latest: true).report_urls).to eq({
+          "Report url" => "https://storage.googleapis.com/bucket/project/1/index.html",
+          "Latest report url" => "https://storage.googleapis.com/bucket/project/index.html"
+        })
+      end
+    end
+
+    context "with custom base url" do
+      let(:base_url) { "http://custom-url" }
+
+      it "returns correct report urls" do
+        expect(described_class.new(**args, copy_latest: true).report_urls).to eq({
+          "Report url" => "#{base_url}/bucket/project/1/index.html",
+          "Latest report url" => "#{base_url}/bucket/project/index.html"
+        })
+      end
     end
   end
 end
