@@ -4,7 +4,23 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   include_context "with uploader"
   include_context "with mock helper"
 
-  let(:s3_client) { instance_double(Aws::S3::Client, get_object: nil, put_object: nil, copy_object: nil) }
+  let(:s3_client) do
+    instance_double(
+      Aws::S3::Client,
+      get_object: nil,
+      put_object: nil,
+      copy_object: nil,
+      list_objects_v2: nil,
+      delete_objects: nil
+    )
+  end
+
+  let(:existing_file) { "file" }
+  let(:existing_files) do
+    [
+      double("objects", contents: [double("object", key: existing_file)])
+    ]
+  end
 
   let(:history_latest) { history_run.merge(key: "#{prefix}/history/history.json") }
   let(:history_run) do
@@ -99,6 +115,9 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
       allow(Publisher::Providers::Github).to receive(:run_id).and_return(1)
       allow(Publisher::Providers::Github).to receive(:new) { ci_provider_instance }
 
+      allow(s3_client).to receive(:list_objects_v2).with(bucket: bucket_name, prefix: "#{prefix}/data")
+                                                   .and_return(existing_files)
+
       allow(File).to receive(:write)
       allow(File).to receive(:new).with(Pathname.new(history_run[:body].path)) { history_run[:body] }
       allow(File).to receive(:new).with(Pathname.new(report_run[:body].path)) { report_run[:body] }
@@ -122,6 +141,10 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
         expect(s3_client).to have_received(:put_object).with(report_run)
         expect(s3_client).to have_received(:put_object).with(history_run)
 
+        expect(s3_client).to have_received(:delete_objects).with({
+          bucket: bucket_name,
+          delete: { objects: [{ key: existing_file }] }
+        })
         expect(s3_client).to have_received(:copy_object).with({
           bucket: bucket_name,
           copy_source: "/#{bucket_name}/#{report_run[:key]}",
