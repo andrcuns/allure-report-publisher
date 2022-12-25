@@ -21,6 +21,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   let(:report) do
     {
       file: instance_double(Google::Cloud::Storage::File, download: nil, copy: nil),
+      existing_file: instance_double(Google::Cloud::Storage::File, delete: nil),
       path: "spec/fixture/fake_report/index.html",
       gcs_path_run: "#{prefix}/#{run_id}/index.html",
       gcs_path_latest: "#{prefix}/index.html"
@@ -75,6 +76,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
 
       allow(bucket).to receive(:file).with(history[:gcs_path_run]) { history[:file] }
       allow(bucket).to receive(:file).with(report[:gcs_path_run]) { report[:file] }
+      allow(bucket).to receive(:files).with(prefix: "#{prefix}/data") { [report[:existing_file]] }
     end
 
     it "uploads allure report" do
@@ -97,6 +99,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
 
       expect(history[:file]).to have_received(:copy).with(history[:gcs_path_latest], force_copy_metadata: true)
       expect(report[:file]).to have_received(:copy).with(report[:gcs_path_latest], force_copy_metadata: true)
+      expect(report[:existing_file]).to have_received(:delete)
     end
 
     it "adds executor info" do
