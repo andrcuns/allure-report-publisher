@@ -83,6 +83,18 @@ module Publisher
       def upload_latest_copy
         log_debug("Copying report as latest")
 
+        # it's not possible to overwrite whole directory so we clean out unique data files from last run
+        log_debug("Cleaning data files")
+        client.list_objects_v2(bucket: bucket_name, prefix: key(prefix, "data")).each do |resp|
+          client.delete_objects({
+            bucket: bucket_name,
+            delete: {
+              objects: resp.contents.map { |obj| { key: obj.key } }
+            }
+          })
+        end
+
+        log_debug("Copying report files")
         args = report_files.map do |file|
           {
             bucket: bucket_name,
@@ -93,7 +105,6 @@ module Publisher
             cache_control: "max-age=60"
           }
         end
-
         Parallel.each(args, in_threads: PARALLEL_THREADS) { |obj| client.copy_object(obj) }
         log_debug("Finished latest report copy successfully")
       end
