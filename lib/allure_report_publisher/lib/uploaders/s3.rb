@@ -86,12 +86,10 @@ module Publisher
         # it's not possible to overwrite whole directory so we clean out unique data files from last run
         log_debug("Cleaning data files")
         client.list_objects_v2(bucket: bucket_name, prefix: key(prefix, "data")).each do |resp|
-          client.delete_objects({
-            bucket: bucket_name,
-            delete: {
-              objects: resp.contents.map { |obj| { key: obj.key } }
-            }
-          })
+          data_files = resp.contents.map { |obj| { key: obj.key } }
+          next if data_files.empty?
+
+          client.delete_objects({ bucket: bucket_name, delete: { objects: data_files } })
         end
 
         log_debug("Copying report files")
