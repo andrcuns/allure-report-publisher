@@ -18,7 +18,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.0.4)
+    activesupport (7.0.4.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -55,7 +55,7 @@ GEM
     backport (1.2.0)
     benchmark (0.2.1)
     climate_control (1.2.0)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.0)
     debug (1.7.1)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
@@ -134,7 +134,7 @@ GEM
     mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
-    minitest (5.16.3)
+    minitest (5.17.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     nokogiri (1.13.10)
