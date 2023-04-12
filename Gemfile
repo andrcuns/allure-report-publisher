@@ -6,5 +6,5 @@ gemspec
 
 group :release do
   gem "semver2", "~> 3.4"
-  gem "yard", "~> 0.9.28"
+  gem "yard", "~> 0.9.33"
 end
