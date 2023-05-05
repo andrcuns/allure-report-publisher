@@ -255,9 +255,8 @@ GEM
     unicode-display_width (2.4.2)
     uuid (2.3.9)
       macaddr (~> 1.0)
-    webrick (1.7.0)
-    yard (0.9.28)
-      webrick (~> 1.7.0)
+    webrick (1.8.1)
+    yard (0.9.34)
 
 PLATFORMS
   ruby
@@ -278,7 +277,7 @@ DEPENDENCIES
   simplecov (~> 0.22.0)
   simplecov-console (~> 0.9.1)
   solargraph (~> 0.49.0)
-  yard (~> 0.9.28)
+  yard (~> 0.9.34)
 
 BUNDLED WITH
    2.3.25
