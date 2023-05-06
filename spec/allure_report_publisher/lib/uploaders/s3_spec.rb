@@ -115,7 +115,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
       allow(Publisher::Providers::Github).to receive(:run_id).and_return(1)
       allow(Publisher::Providers::Github).to receive(:new) { ci_provider_instance }
 
-      allow(s3_client).to receive(:list_objects_v2).with(bucket: bucket_name, prefix: "#{prefix}/data")
+      allow(s3_client).to receive(:list_objects_v2).with({ bucket: bucket_name, prefix: "#{prefix}/data" })
                                                    .and_return(existing_files)
 
       allow(File).to receive(:write)
