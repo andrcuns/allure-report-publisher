@@ -76,7 +76,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
 
       allow(bucket).to receive(:file).with(history[:gcs_path_run]) { history[:file] }
       allow(bucket).to receive(:file).with(report[:gcs_path_run]) { report[:file] }
-      allow(bucket).to receive(:files).with(prefix: "#{prefix}/data") { [report[:existing_file]] }
+      allow(bucket).to receive(:files).with({ prefix: "#{prefix}/data" }) { [report[:existing_file]] }
     end
 
     it "uploads allure report" do
