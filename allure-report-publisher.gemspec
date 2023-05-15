@@ -41,18 +41,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "require_all", "~> 3.0.0"
   spec.add_dependency "terminal-table", "~> 3.0"
   spec.add_dependency "tty-spinner", "~> 0.9.3"
-
-  spec.add_development_dependency "activesupport", "~> 7.0"
-  spec.add_development_dependency "allure-rspec", "~> 2.20.0"
-  spec.add_development_dependency "climate_control", "~> 1.2.0"
-  spec.add_development_dependency "debug", "~> 1.0", ">= 1.0.0"
-  spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rspec", "~> 3.11"
-  spec.add_development_dependency "rubocop", "~> 1.27"
-  spec.add_development_dependency "rubocop-performance", "~> 1.13"
-  spec.add_development_dependency "rubocop-rake", "~> 0.6.0"
-  spec.add_development_dependency "rubocop-rspec", "~> 2.9"
-  spec.add_development_dependency "simplecov", "~> 0.22.0"
-  spec.add_development_dependency "simplecov-console", "~> 0.9.1"
-  spec.add_development_dependency "solargraph", "~> 0.49.0"
 end
