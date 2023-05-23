@@ -7,6 +7,13 @@ module Publisher
     class Gitlab < Provider
       include Helpers
 
+      def initialize(**args)
+        @alert_comment_text = ENV["ALLURE_FAILURE_ALERT_COMMENT"] ||
+                              "There are some test failures that need attention"
+
+        super(**args)
+      end
+
       # Get ci run ID without creating instance of ci provider
       #
       # @return [String]
@@ -46,13 +53,6 @@ module Publisher
         @pr_description ||= client.merge_request(project, mr_iid).description
       end
 
-      # Returns a comment text for failure alert
-      #
-      # @return [String]
-      def alert_comment_text
-        env("ALLURE_FAILURE_ALERT_COMMENT") || 'There are some test failures that need attention'
-      end
-
       # Update pull request description
       #
       # @return [void]
@@ -69,26 +69,27 @@ module Publisher
       #
       # @return [void]
       def add_comment
-        if comment
-          log_debug("Updating summary in comment with id #{comment.id} in mr !#{mr_iid}")
-          client.update_merge_request_discussion_note(project, mr_iid, comment.id, main_comment.id, body: url_section_builder.comment_body(main_comment.body))
+        if discussion
+          log_debug("Updating summary in comment with id #{discussion.id} in mr !#{mr_iid}")
+          client.update_merge_request_discussion_note(project, mr_iid, discussion.id, main_comment.id,
+                                                      body: url_section_builder.comment_body(main_comment.body))
         else
           log_debug("Creating comment with summary for mr ! #{mr_iid}")
           client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body)
         end
 
-        if url_section_builder.summary_has_failures?
-          client.delete_merge_request_discussion_note(project, mr_iid, comment.id, alert_comment.id) if alert_comment
-          client.create_merge_request_discussion_note(project, mr_iid, comment.id, body: alert_comment_text)
-        end
+        return unless url_section_builder.summary_has_failures?
+
+        client.delete_merge_request_discussion_note(project, mr_iid, discussion.id, alert_comment.id) if alert_comment
+        client.create_merge_request_discussion_note(project, mr_iid, discussion.id, body: @alert_comment_text)
       end
 
       # Existing discussion that has comment with allure urls
       #
       # @return [Gitlab::ObjectifiedHash]
-      def comment
-        client.merge_request_discussions(project, mr_iid).auto_paginate.detect do |comment|
-          comment.notes.any? { |note| Helpers::UrlSectionBuilder.match?(note.body) }
+      def discussion
+        client.merge_request_discussions(project, mr_iid).auto_paginate.detect do |discussion|
+          discussion.notes.any? { |note| Helpers::UrlSectionBuilder.match?(note.body) }
         end
       end
 
@@ -96,14 +97,14 @@ module Publisher
       #
       # @return [Gitlab::ObjectifiedHash]
       def main_comment
-        comment.notes.detect { |note| Helpers::UrlSectionBuilder.match?(note.body) }
+        discussion.notes.detect { |note| Helpers::UrlSectionBuilder.match?(note.body) }
       end
 
       # Comment with alert text
       #
       # @return [Gitlab::ObjectifiedHash]
       def alert_comment
-        comment.notes.detect { |note| note.body.include?(alert_comment_text) }
+        discussion.notes.detect { |note| note.body.include?(@alert_comment_text) }
       end
 
       # Get gitlab client
@@ -111,13 +112,13 @@ module Publisher
       # @return [Gitlab::Client]
       def client
         @client ||= begin
-                      raise("Missing GITLAB_AUTH_TOKEN environment variable!") unless env("GITLAB_AUTH_TOKEN")
+          raise("Missing GITLAB_AUTH_TOKEN environment variable!") unless env("GITLAB_AUTH_TOKEN")
 
-                      ::Gitlab::Client.new(
-                        endpoint: "#{server_url}/api/v4",
-                        private_token: env("GITLAB_AUTH_TOKEN")
-                      )
-                    end
+          ::Gitlab::Client.new(
+            endpoint: "#{server_url}/api/v4",
+            private_token: env("GITLAB_AUTH_TOKEN")
+          )
+        end
       end
 
       # Custom repository name

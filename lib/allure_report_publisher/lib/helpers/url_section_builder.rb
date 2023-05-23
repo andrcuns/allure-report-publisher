@@ -62,7 +62,7 @@ module Publisher
       #
       # @return [Boolean]
       def summary_has_failures?
-        summary.status == "✅" ? false : true
+        summary.status != "✅"
       end
 
       attr_reader :report_url,
