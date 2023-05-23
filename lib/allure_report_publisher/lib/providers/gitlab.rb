@@ -7,13 +7,6 @@ module Publisher
     class Gitlab < Provider
       include Helpers
 
-      def initialize(**args)
-        @alert_comment_text = ENV["ALLURE_FAILURE_ALERT_COMMENT"] ||
-                              "There are some test failures that need attention"
-
-        super(**args)
-      end
-
       # Get ci run ID without creating instance of ci provider
       #
       # @return [String]
@@ -82,7 +75,8 @@ module Publisher
 
         return unless url_section_builder.summary_has_failures?
 
-        client.create_merge_request_discussion_note(project, mr_iid, discussion.id, body: @alert_comment_text)
+        client.create_merge_request_discussion_note(project, mr_iid, discussion.id,
+                                                    body: alert_comment_text)
       end
 
       # Existing discussion that has comment with allure urls
@@ -105,7 +99,16 @@ module Publisher
       #
       # @return [Gitlab::ObjectifiedHash]
       def alert_comment
-        @alert_comment ||= discussion&.notes&.detect { |note| note.body.include?(@alert_comment_text) }
+        @alert_comment ||= discussion&.notes&.detect do |note|
+          note.body.include?(alert_comment_text)
+        end
+      end
+
+      # Text for alert comment
+      #
+      # @return [String]
+      def alert_comment_text
+        env("ALLURE_FAILURE_ALERT_COMMENT") || "There are some test failures that need attention"
       end
 
       # Get gitlab client
@@ -186,16 +189,6 @@ module Publisher
         short_sha = sha[0..7]
 
         "[#{short_sha}](#{server_url}/#{project}/-/merge_requests/#{mr_iid}/diffs?commit_id=#{sha})"
-      end
-
-      # Return non empty environment variable value
-      #
-      # @param [String] name
-      # @return [String, nil]
-      def env(name)
-        return unless ENV[name] && !ENV[name].empty?
-
-        ENV[name]
       end
     end
   end
