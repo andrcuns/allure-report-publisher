@@ -110,8 +110,6 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
             .and_return(true)
           allow(url_builder).to receive(:summary_has_failures?)
             .and_return(true)
-
-          allow(provider).to receive(:alert_comment).and_return(existing_alert_note)
         end
 
         let(:alert_comment_text) { "There are some test failures that need attention" }
@@ -135,8 +133,34 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
           expect(client).to have_received(:create_merge_request_discussion_note)
             .with(project, mr_id, comment_id, body: alert_comment_text)
         end
+      end
 
-        it "removes existing alert comment and adds new" do
+      context "with existing alert comment" do
+        let(:comment_id) { 2 }
+        let(:note_id) { "abc" }
+        let(:note) do
+          double("note", id: note_id, body: "existing comment")
+        end
+
+        let(:discussion) do
+          double("comment", id: comment_id, body: "existing comment", notes: [note])
+        end
+
+        let(:alert_comment_text) { "There are some test failures that need attention" }
+
+        let(:existing_alert_note) do
+          double("alert note", id: note_id, body: alert_comment_text)
+        end
+
+        before do
+          allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
+            .with(discussion.body)
+            .and_return(true)
+
+          allow(provider).to receive(:alert_comment).and_return(existing_alert_note)
+        end
+
+        it "removes the alert comment" do
           provider.add_result_summary
 
           expect(client).to have_received(:delete_merge_request_discussion_note)

@@ -69,6 +69,8 @@ module Publisher
       #
       # @return [void]
       def add_comment
+        client.delete_merge_request_discussion_note(project, mr_iid, discussion.id, alert_comment.id) if alert_comment
+
         if discussion
           log_debug("Updating summary in comment with id #{discussion.id} in mr !#{mr_iid}")
           client.update_merge_request_discussion_note(project, mr_iid, discussion.id, main_comment.id,
@@ -80,7 +82,6 @@ module Publisher
 
         return unless url_section_builder.summary_has_failures?
 
-        client.delete_merge_request_discussion_note(project, mr_iid, discussion.id, alert_comment.id) if alert_comment
         client.create_merge_request_discussion_note(project, mr_iid, discussion.id, body: @alert_comment_text)
       end
 
@@ -88,7 +89,7 @@ module Publisher
       #
       # @return [Gitlab::ObjectifiedHash]
       def discussion
-        client.merge_request_discussions(project, mr_iid).auto_paginate.detect do |discussion|
+        @discussion ||= client.merge_request_discussions(project, mr_iid).auto_paginate.detect do |discussion|
           discussion.notes.any? { |note| Helpers::UrlSectionBuilder.match?(note.body) }
         end
       end
@@ -97,14 +98,14 @@ module Publisher
       #
       # @return [Gitlab::ObjectifiedHash]
       def main_comment
-        discussion.notes.detect { |note| Helpers::UrlSectionBuilder.match?(note.body) }
+        @main_comment ||= discussion&.notes&.detect { |note| Helpers::UrlSectionBuilder.match?(note.body) }
       end
 
       # Comment with alert text
       #
       # @return [Gitlab::ObjectifiedHash]
       def alert_comment
-        discussion.notes.detect { |note| note.body.include?(@alert_comment_text) }
+        @alert_comment ||= discussion&.notes&.detect { |note| note.body.include?(@alert_comment_text) }
       end
 
       # Get gitlab client
