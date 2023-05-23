@@ -46,6 +46,13 @@ module Publisher
         @pr_description ||= client.merge_request(project, mr_iid).description
       end
 
+      # Returns a comment text for failure alert
+      #
+      # @return [String]
+      def alert_comment_text
+        env("ALLURE_FAILURE_ALERT_COMMENT") || 'There are some test failures that need attention'
+      end
+
       # Update pull request description
       #
       # @return [void]
@@ -62,22 +69,41 @@ module Publisher
       #
       # @return [void]
       def add_comment
-        unless comment
+        if comment
+          log_debug("Updating summary in comment with id #{comment.id} in mr !#{mr_iid}")
+          client.update_merge_request_discussion_note(project, mr_iid, comment.id, main_comment.id, body: url_section_builder.comment_body(main_comment.body))
+        else
           log_debug("Creating comment with summary for mr ! #{mr_iid}")
-          return client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body)
+          client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body)
         end
 
-        log_debug("Updating summary in comment with id #{comment.id} in mr !#{mr_iid}")
-        client.edit_merge_request_note(project, mr_iid, comment.id, url_section_builder.comment_body(comment.body))
+        if url_section_builder.summary_has_failures?
+          client.delete_merge_request_discussion_note(project, mr_iid, comment.id, alert_comment.id) if alert_comment
+          client.create_merge_request_discussion_note(project, mr_iid, comment.id, body: alert_comment_text)
+        end
       end
 
-      # Existing comment with allure urls
+      # Existing discussion that has comment with allure urls
       #
       # @return [Gitlab::ObjectifiedHash]
       def comment
-        client.merge_request_comments(project, mr_iid).auto_paginate.detect do |comment|
-          Helpers::UrlSectionBuilder.match?(comment.body)
+        client.merge_request_discussions(project, mr_iid).auto_paginate.detect do |comment|
+          comment.notes.any? { |note| Helpers::UrlSectionBuilder.match?(note.body) }
         end
+      end
+
+      # Comment/note with allure urls
+      #
+      # @return [Gitlab::ObjectifiedHash]
+      def main_comment
+        comment.notes.detect { |note| Helpers::UrlSectionBuilder.match?(note.body) }
+      end
+
+      # Comment with alert text
+      #
+      # @return [Gitlab::ObjectifiedHash]
+      def alert_comment
+        comment.notes.detect { |note| note.body.include?(alert_comment_text) }
       end
 
       # Get gitlab client
@@ -85,13 +111,13 @@ module Publisher
       # @return [Gitlab::Client]
       def client
         @client ||= begin
-          raise("Missing GITLAB_AUTH_TOKEN environment variable!") unless env("GITLAB_AUTH_TOKEN")
+                      raise("Missing GITLAB_AUTH_TOKEN environment variable!") unless env("GITLAB_AUTH_TOKEN")
 
-          ::Gitlab::Client.new(
-            endpoint: "#{server_url}/api/v4",
-            private_token: env("GITLAB_AUTH_TOKEN")
-          )
-        end
+                      ::Gitlab::Client.new(
+                        endpoint: "#{server_url}/api/v4",
+                        private_token: env("GITLAB_AUTH_TOKEN")
+                      )
+                    end
       end
 
       # Custom repository name

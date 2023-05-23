@@ -58,6 +58,13 @@ module Publisher
         url_section(job_entries: job_entries, separator: false)
       end
 
+      # Test run status emoji
+      #
+      # @return [Boolean]
+      def summary_has_failures?
+        summary.status == "✅" ? false : true
+      end
+
       attr_reader :report_url,
                   :report_path,
                   :build_name,
