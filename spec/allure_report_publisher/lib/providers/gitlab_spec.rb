@@ -119,10 +119,6 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
           double("note", id: note_id, body: "existing comment")
         end
 
-        let(:existing_alert_note) do
-          double("alert note", id: note_id, body: alert_comment_text)
-        end
-
         let(:discussion) do
           double("comment", id: comment_id, body: "existing comment", notes: [note])
         end

@@ -58,7 +58,7 @@ module Publisher
         url_section(job_entries: job_entries, separator: false)
       end
 
-      # Test run status emoji
+      # Check if summary has failed tests
       #
       # @return [Boolean]
       def summary_has_failures?
