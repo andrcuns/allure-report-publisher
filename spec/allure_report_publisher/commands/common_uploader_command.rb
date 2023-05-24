@@ -33,6 +33,7 @@ RSpec.shared_examples "upload command" do
       copy_latest: false,
       summary_type: nil,
       collapse_summary: false,
+      unresolved_discussion_on_failure: false,
       summary_table_type: :ascii
     }
   end
@@ -63,7 +64,8 @@ RSpec.shared_examples "upload command" do
             :update_pr,
             :summary_type,
             :summary_table_type,
-            :collapse_summary
+            :collapse_summary,
+            :unresolved_discussion_on_failure
           )
         )
         expect(uploader_stub).to have_received(:generate_report)

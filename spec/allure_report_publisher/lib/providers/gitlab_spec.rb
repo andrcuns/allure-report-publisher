@@ -31,10 +31,10 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
       merge_request_discussions: comment_double,
       update_merge_request: nil,
       create_merge_request_discussion: nil,
-      update_merge_request_discussion_note: nil,
       create_merge_request_discussion_note: nil,
       create_merge_request_comment: nil,
-      delete_merge_request_discussion_note: nil
+      delete_merge_request_discussion_note: nil,
+      edit_merge_request_note: nil
     )
   end
 
@@ -112,6 +112,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
             .and_return(true)
         end
 
+        let(:unresolved_discussion_on_failure) { true }
         let(:alert_comment_text) { "There are some test failures that need attention" }
         let(:comment_id) { 2 }
         let(:note_id) { "abc" }
@@ -186,8 +187,8 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
 
           expect(url_builder).to have_received(:comment_body)
             .with(discussion.body)
-          expect(client).to have_received(:update_merge_request_discussion_note)
-            .with(project, mr_id, comment_id, note_id, body: updated_comment_body)
+          expect(client).to have_received(:edit_merge_request_note)
+            .with(project, mr_id, note_id, updated_comment_body)
         end
       end
     end

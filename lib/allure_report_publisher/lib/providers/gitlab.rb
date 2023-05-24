@@ -64,16 +64,17 @@ module Publisher
       def add_comment
         client.delete_merge_request_discussion_note(project, mr_iid, discussion.id, alert_comment.id) if alert_comment
 
-        if discussion
+        if main_comment
           log_debug("Updating summary in comment with id #{discussion.id} in mr !#{mr_iid}")
-          client.update_merge_request_discussion_note(project, mr_iid, discussion.id, main_comment.id,
-                                                      body: url_section_builder.comment_body(main_comment.body))
+
+          client.edit_merge_request_note(project, mr_iid, main_comment.id,
+                                         url_section_builder.comment_body(main_comment.body))
         else
           log_debug("Creating comment with summary for mr ! #{mr_iid}")
           client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body)
         end
 
-        return unless url_section_builder.summary_has_failures?
+        return unless url_section_builder.summary_has_failures? && unresolved_discussion_on_failure
 
         client.create_merge_request_discussion_note(project, mr_iid, discussion.id,
                                                     body: alert_comment_text)
@@ -108,7 +109,8 @@ module Publisher
       #
       # @return [String]
       def alert_comment_text
-        env("ALLURE_FAILURE_ALERT_COMMENT") || "There are some test failures that need attention"
+        @alert_comment_text ||=
+          env("ALLURE_FAILURE_ALERT_COMMENT") || "There are some test failures that need attention"
       end
 
       # Get gitlab client
