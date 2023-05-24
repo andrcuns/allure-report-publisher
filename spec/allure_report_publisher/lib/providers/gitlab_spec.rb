@@ -106,19 +106,14 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
       context "when there are test failures in summary" do
         before do
           allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
-            .with(discussion.body)
-            .and_return(true)
-          allow(url_builder).to receive(:summary_has_failures?)
+            .with(any_args)
             .and_return(true)
         end
 
         let(:unresolved_discussion_on_failure) { true }
         let(:alert_comment_text) { "There are some test failures that need attention" }
         let(:comment_id) { 2 }
-        let(:note_id) { "abc" }
-        let(:note) do
-          double("note", id: note_id, body: "existing comment")
-        end
+        let(:note) { double("note", id: "abc", body: "existing comment ❌") }
 
         let(:discussion) do
           double("comment", id: comment_id, body: "existing comment", notes: [note])

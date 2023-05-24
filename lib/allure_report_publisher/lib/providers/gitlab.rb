@@ -58,12 +58,12 @@ module Publisher
         )
       end
 
+      # rubocop:disable Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/PerceivedComplexity
       # Add comment with report url
       #
       # @return [void]
       def add_comment
-        client.delete_merge_request_discussion_note(project, mr_iid, discussion.id, alert_comment.id) if alert_comment
-
         if main_comment
           log_debug("Updating summary in comment with id #{discussion.id} in mr !#{mr_iid}")
 
@@ -74,11 +74,17 @@ module Publisher
           client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body)
         end
 
-        return unless url_section_builder.summary_has_failures? && unresolved_discussion_on_failure
+        @discussion = nil
 
-        client.create_merge_request_discussion_note(project, mr_iid, discussion.id,
-                                                    body: alert_comment_text)
+        if unresolved_discussion_on_failure && main_comment&.body&.include?("❌") && !alert_comment
+          client.create_merge_request_discussion_note(project, mr_iid, discussion.id,
+                                                      body: alert_comment_text)
+        elsif alert_comment
+          client.delete_merge_request_discussion_note(project, mr_iid, discussion.id, alert_comment.id)
+        end
       end
+      # rubocop:enable Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/PerceivedComplexity
 
       # Existing discussion that has comment with allure urls
       #
@@ -93,7 +99,7 @@ module Publisher
       #
       # @return [Gitlab::ObjectifiedHash]
       def main_comment
-        @main_comment ||= discussion&.notes&.detect { |note| Helpers::UrlSectionBuilder.match?(note.body) }
+        discussion&.notes&.detect { |note| Helpers::UrlSectionBuilder.match?(note.body) }
       end
 
       # Comment with alert text

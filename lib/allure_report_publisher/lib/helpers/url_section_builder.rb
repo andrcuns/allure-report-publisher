@@ -58,13 +58,6 @@ module Publisher
         url_section(job_entries: job_entries, separator: false)
       end
 
-      # Check if summary has failed tests
-      #
-      # @return [Boolean]
-      def summary_has_failures?
-        summary.status == "❌"
-      end
-
       attr_reader :report_url,
                   :report_path,
                   :build_name,

@@ -15,8 +15,7 @@ RSpec.shared_context "with provider helper" do
     instance_double(
       Publisher::Helpers::UrlSectionBuilder,
       updated_pr_description: updated_pr_description,
-      comment_body: updated_comment_body,
-      summary_has_failures?: false
+      comment_body: updated_comment_body
     )
   end
 
