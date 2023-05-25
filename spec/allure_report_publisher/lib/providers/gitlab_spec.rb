@@ -12,7 +12,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
   let(:mr_id) { "1" }
   let(:custom_mr_id) { nil }
   let(:event_name) { "merge_request_event" }
-  let(:comment) { nil }
+  let(:discussion) { nil }
 
   let(:sha_url) do
     "[#{sha[0..7]}](#{server_url}/#{project}/-/merge_requests/#{mr_id}/diffs?commit_id=#{sha})"
@@ -22,15 +22,18 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
     "[#{sha[0..7]}](#{server_url}/#{custom_project}/-/merge_requests/#{custom_mr_id}/diffs?commit_id=#{sha})"
   end
 
-  let(:comment_double) { double("comments", auto_paginate: [comment].compact) }
+  let(:comment_double) { double("comments", auto_paginate: [discussion].compact) }
 
   let(:client) do
     instance_double(
       Gitlab::Client,
       merge_request: double("mr", description: full_pr_description),
-      merge_request_comments: comment_double,
+      merge_request_discussions: comment_double,
       update_merge_request: nil,
+      create_merge_request_discussion: nil,
+      create_merge_request_discussion_note: nil,
       create_merge_request_comment: nil,
+      delete_merge_request_discussion_note: nil,
       edit_merge_request_note: nil
     )
   end
@@ -100,15 +103,77 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
         end
       end
 
-      context "with existing comment" do
+      context "when there are test failures in summary" do
+        before do
+          allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
+            .with(any_args)
+            .and_return(true)
+        end
+
+        let(:unresolved_discussion_on_failure) { true }
+        let(:alert_comment_text) { "There are some test failures that need attention" }
         let(:comment_id) { 2 }
-        let(:comment) do
-          double("comment", id: comment_id, body: "existing comment")
+        let(:note) { double("note", id: "abc", body: "existing comment ❌") }
+
+        let(:discussion) do
+          double("comment", id: comment_id, body: "existing comment", notes: [note])
+        end
+
+        it "adds a resolvable attention comment" do
+          provider.add_result_summary
+
+          expect(client).to have_received(:create_merge_request_discussion_note)
+            .with(project, mr_id, comment_id, body: alert_comment_text)
+        end
+      end
+
+      context "with existing alert comment" do
+        let(:comment_id) { 2 }
+        let(:note_id) { "abc" }
+        let(:note) do
+          double("note", id: note_id, body: "existing comment")
+        end
+
+        let(:discussion) do
+          double("comment", id: comment_id, body: "existing comment", notes: [note])
+        end
+
+        let(:alert_comment_text) { "There are some test failures that need attention" }
+
+        let(:existing_alert_note) do
+          double("alert note", id: note_id, body: alert_comment_text)
         end
 
         before do
           allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
-            .with(comment.body)
+            .with(discussion.body)
+            .and_return(true)
+
+          allow(provider).to receive(:alert_comment).and_return(existing_alert_note)
+        end
+
+        it "removes the alert comment" do
+          provider.add_result_summary
+
+          expect(client).to have_received(:delete_merge_request_discussion_note)
+            .with(project, mr_id, comment_id, note_id)
+        end
+      end
+
+      context "with existing comment" do
+        let(:comment_id) { 2 }
+        let(:note_id) { "abc" }
+        let(:note) do
+          double("note", id: note_id, body: "existing comment")
+        end
+
+        let(:discussion) do
+          double("comment", id: comment_id, body: "existing comment", notes: [note])
+        end
+
+        before do
+          allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
+            .with(discussion.body)
             .and_return(true)
         end
 
@@ -116,9 +181,9 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
           provider.add_result_summary
 
           expect(url_builder).to have_received(:comment_body)
-            .with(comment.body)
+            .with(discussion.body)
           expect(client).to have_received(:edit_merge_request_note)
-            .with(project, mr_id, comment_id, updated_comment_body)
+            .with(project, mr_id, note_id, updated_comment_body)
         end
       end
     end

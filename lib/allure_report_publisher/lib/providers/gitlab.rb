@@ -58,26 +58,66 @@ module Publisher
         )
       end
 
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       # Add comment with report url
       #
       # @return [void]
       def add_comment
-        unless comment
+        if main_comment
+          log_debug("Updating summary in comment with id #{discussion.id} in mr !#{mr_iid}")
+
+          client.edit_merge_request_note(
+            project,
+            mr_iid,
+            main_comment.id,
+            url_section_builder.comment_body(main_comment.body)
+          )
+        else
           log_debug("Creating comment with summary for mr ! #{mr_iid}")
-          return client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body)
+          client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body)
         end
 
-        log_debug("Updating summary in comment with id #{comment.id} in mr !#{mr_iid}")
-        client.edit_merge_request_note(project, mr_iid, comment.id, url_section_builder.comment_body(comment.body))
-      end
+        @discussion = nil
 
-      # Existing comment with allure urls
+        if unresolved_discussion_on_failure && main_comment&.body&.include?("❌") && !alert_comment
+          client.create_merge_request_discussion_note(project, mr_iid, discussion.id, body: alert_comment_text)
+        elsif alert_comment
+          client.delete_merge_request_discussion_note(project, mr_iid, discussion.id, alert_comment.id)
+        end
+      end
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+      # Existing discussion that has comment with allure urls
       #
       # @return [Gitlab::ObjectifiedHash]
-      def comment
-        client.merge_request_comments(project, mr_iid).auto_paginate.detect do |comment|
-          Helpers::UrlSectionBuilder.match?(comment.body)
+      def discussion
+        @discussion ||= client.merge_request_discussions(project, mr_iid).auto_paginate.detect do |discussion|
+          discussion.notes.any? { |note| Helpers::UrlSectionBuilder.match?(note.body) }
         end
+      end
+
+      # Comment/note with allure urls
+      #
+      # @return [Gitlab::ObjectifiedHash]
+      def main_comment
+        discussion&.notes&.detect { |note| Helpers::UrlSectionBuilder.match?(note.body) }
+      end
+
+      # Comment with alert text
+      #
+      # @return [Gitlab::ObjectifiedHash]
+      def alert_comment
+        @alert_comment ||= discussion&.notes&.detect do |note|
+          note.body.include?(alert_comment_text)
+        end
+      end
+
+      # Text for alert comment
+      #
+      # @return [String]
+      def alert_comment_text
+        @alert_comment_text ||=
+          env("ALLURE_FAILURE_ALERT_COMMENT") || "There are some test failures that need attention"
       end
 
       # Get gitlab client
@@ -158,16 +198,6 @@ module Publisher
         short_sha = sha[0..7]
 
         "[#{short_sha}](#{server_url}/#{project}/-/merge_requests/#{mr_iid}/diffs?commit_id=#{sha})"
-      end
-
-      # Return non empty environment variable value
-      #
-      # @param [String] name
-      # @return [String, nil]
-      def env(name)
-        return unless ENV[name] && !ENV[name].empty?
-
-        ENV[name]
       end
     end
   end

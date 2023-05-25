@@ -54,6 +54,16 @@ module Publisher
       end
     end
 
+    # Return non empty environment variable value
+    #
+    # @param [String] name
+    # @return [String, nil]
+    def env(name)
+      return unless ENV[name] && !ENV[name].empty?
+
+      ENV[name]
+    end
+
     # Colorize string
     #
     # @param [String] message

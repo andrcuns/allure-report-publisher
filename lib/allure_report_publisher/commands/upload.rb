@@ -60,6 +60,10 @@ module Publisher
              type: :boolean,
              default: false,
              desc: "Ignore missing allure results"
+      option :unresolved_discussion_on_failure,
+             type: :boolean,
+             default: false,
+             desc: "Add an unresolved discussion comment on test failure"
       option :debug,
              type: :boolean,
              default: false,
@@ -104,7 +108,8 @@ module Publisher
             :copy_latest,
             :update_pr,
             :collapse_summary,
-            :summary_table_type
+            :summary_table_type,
+            :unresolved_discussion_on_failure
           )
         )
       end
