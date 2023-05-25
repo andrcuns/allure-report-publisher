@@ -16,7 +16,7 @@ on:
 jobs:
   docker:
     name: Docker image
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       -
         name: Checkout
@@ -73,7 +73,7 @@ jobs:
 
   gem:
     name: Ruby gem
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       -
