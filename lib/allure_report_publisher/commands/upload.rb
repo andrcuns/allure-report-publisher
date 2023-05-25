@@ -63,7 +63,7 @@ module Publisher
       option :unresolved_discussion_on_failure,
              type: :boolean,
              default: false,
-             desc: "Add an unresolved discussion comment on test failure"
+             desc: "Add an unresolved discussion comment on test failure. GitLab only"
       option :debug,
              type: :boolean,
              default: false,

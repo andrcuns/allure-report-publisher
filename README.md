@@ -54,6 +54,7 @@ Options:
   --[no-]copy-latest                # Keep copy of latest report at base prefix path, default: false
   --[no-]color                      # Force color output
   --[no-]ignore-missing-results     # Ignore missing allure results, default: false
+  --[no-]unresolved-discussion-on-failure  # Add an unresolved discussion comment on test failure. GitLab only, default: false
   --[no-]debug                      # Print additional debug output, default: false
   --help, -h                        # Print this help
 
