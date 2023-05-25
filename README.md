@@ -158,9 +158,13 @@ Following environment variables can override default CI values:
 
 Additional configuration is done via environment variables
 
+### Authentication
+
 Authentication for MR updates:
 
 - `GITLAB_AUTH_TOKEN`: gitlab access token with api access
+
+### CI values
 
 Following environment variables can override default CI values:
 
@@ -171,6 +175,12 @@ In case merge request triggers a downstream pipeline yet you want to update orig
 - `ALLURE_PROJECT_PATH`: overrides default `CI_PROJECT_PATH` value
 - `ALLURE_MERGE_REQUEST_IID`: overrides default `CI_MERGE_REQUEST_IID` value
 - `ALLURE_COMMIT_SHA`: overrides default `CI_MERGE_REQUEST_SOURCE_BRANCH_SHA` or `CI_COMMIT_SHA` values
+
+### Summary comment behavior
+
+If reporter is executed with options `--update-pr=comment` and `--unresolved-discussion-on-failure`, it's possible to additionally configure the unresolved discussion note:
+
+- `ALLURE_FAILURE_ALERT_COMMENT`: comment added to create unresolved discussion note, default: `There are some test failures that need attention`
 
 # Development
 
