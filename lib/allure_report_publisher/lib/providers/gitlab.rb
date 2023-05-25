@@ -58,8 +58,7 @@ module Publisher
         )
       end
 
-      # rubocop:disable Metrics/CyclomaticComplexity
-      # rubocop:disable Metrics/PerceivedComplexity
+      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       # Add comment with report url
       #
       # @return [void]
@@ -67,8 +66,12 @@ module Publisher
         if main_comment
           log_debug("Updating summary in comment with id #{discussion.id} in mr !#{mr_iid}")
 
-          client.edit_merge_request_note(project, mr_iid, main_comment.id,
-                                         url_section_builder.comment_body(main_comment.body))
+          client.edit_merge_request_note(
+            project,
+            mr_iid,
+            main_comment.id,
+            url_section_builder.comment_body(main_comment.body)
+          )
         else
           log_debug("Creating comment with summary for mr ! #{mr_iid}")
           client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body)
@@ -77,14 +80,12 @@ module Publisher
         @discussion = nil
 
         if unresolved_discussion_on_failure && main_comment&.body&.include?("❌") && !alert_comment
-          client.create_merge_request_discussion_note(project, mr_iid, discussion.id,
-                                                      body: alert_comment_text)
+          client.create_merge_request_discussion_note(project, mr_iid, discussion.id, body: alert_comment_text)
         elsif alert_comment
           client.delete_merge_request_discussion_note(project, mr_iid, discussion.id, alert_comment.id)
         end
       end
-      # rubocop:enable Metrics/CyclomaticComplexity
-      # rubocop:enable Metrics/PerceivedComplexity
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       # Existing discussion that has comment with allure urls
       #
