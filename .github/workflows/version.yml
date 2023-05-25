@@ -16,20 +16,17 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
-      -
-        name: Set up Ruby 3.1
+      - name: Set up Ruby 3.1
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1.2
           bundler-cache: true
-      -
-        name: Update version
+      - name: Update version
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com

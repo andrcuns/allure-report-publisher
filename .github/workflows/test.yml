@@ -10,39 +10,33 @@ on:
 
 jobs:
   rubocop:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Set up Ruby 3.2
+      - name: Set up Ruby 3.2
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2
           bundler-cache: true
-      -
-        name: Rubocop
+      - name: Rubocop
         run: bundle exec rubocop --color
 
   rspec:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        ruby: ['3.0', '3.1', '3.2']
+        ruby: ["3.0", "3.1", "3.2"]
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Set up Ruby ${{ matrix.ruby }}
+      - name: Set up Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      -
-        name: RSpec
+      - name: RSpec
         uses: paambaati/codeclimate-action@v4.0.0
         env:
           CC_TEST_REPORTER_ID: c782e3e534f6aac1bb5a0d595723167ed145d03567242c2ce848ef46ba36672a
@@ -51,8 +45,7 @@ jobs:
         with:
           coverageCommand: bundle exec rspec --force-color
           coverageLocations: coverage/coverage.json:simplecov
-      -
-        uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: allure-reports
@@ -60,9 +53,9 @@ jobs:
           retention-days: 1
 
   publish-report:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: rspec
-    if: github.actor == 'andrcuns' && always()
+    if: always()
     name: Publish report to ${{ matrix.provider }}
     strategy:
       fail-fast: false
@@ -77,14 +70,11 @@ jobs:
             table: ascii
             results: description
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2.5.0
-      -
-        name: Build
+      - name: Build
         uses: docker/build-push-action@v4.0.0
         with:
           context: .
@@ -93,14 +83,12 @@ jobs:
           tags: publisher:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      -
-        name: Download allure reports
+      - name: Download allure reports
         uses: actions/download-artifact@v3
         with:
           name: allure-reports
           path: reports/allure-results
-      -
-        name: Publish allure report
+      - name: Publish allure report
         env:
           GOOGLE_CLOUD_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CLOUD_CREDENTIALS_JSON }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
