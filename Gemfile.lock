@@ -25,10 +25,10 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.3)
       public_suffix (>= 2.0.2, < 6.0)
-    allure-rspec (2.21.1)
-      allure-ruby-commons (= 2.21.1)
+    allure-rspec (2.21.2)
+      allure-ruby-commons (= 2.21.2)
       rspec-core (>= 3.8, < 4)
-    allure-ruby-commons (2.21.1)
+    allure-ruby-commons (2.21.2)
       mime-types (>= 3.3, < 4)
       require_all (>= 2, < 4)
       rspec-expectations (~> 3.12)
@@ -265,7 +265,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport (~> 7.0)
   allure-report-publisher!
-  allure-rspec (~> 2.21.1)
+  allure-rspec (~> 2.21.2)
   climate_control (~> 1.2.0)
   debug (~> 1.0, >= 1.0.0)
   rake (~> 13.0)
