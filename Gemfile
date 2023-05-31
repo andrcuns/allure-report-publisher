@@ -11,7 +11,7 @@ end
 
 group :development do
   gem "activesupport", "~> 7.0"
-  gem "allure-rspec", "~> 2.21.1"
+  gem "allure-rspec", "~> 2.21.2"
   gem "climate_control", "~> 1.2.0"
   gem "debug", "~> 1.0", ">= 1.0.0"
   gem "rake", "~> 13.0"
