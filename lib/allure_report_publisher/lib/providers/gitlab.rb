@@ -81,7 +81,7 @@ module Publisher
 
         if unresolved_discussion_on_failure && main_comment&.body&.include?("❌") && !alert_comment
           client.create_merge_request_discussion_note(project, mr_iid, discussion.id, body: alert_comment_text)
-        elsif alert_comment
+        elsif alert_comment && !main_comment&.body&.include?("❌")
           client.delete_merge_request_discussion_note(project, mr_iid, discussion.id, alert_comment.id)
         end
       end
