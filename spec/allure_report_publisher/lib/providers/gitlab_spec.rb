@@ -161,7 +161,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
         end
       end
 
-      context "with alert comment exists and no ❌ in main comment" do
+      context "when alert comment exists and no ❌ in main comment" do
         let(:discussion_id) { 2 }
         let(:alert_note_id) { "def" }
 
@@ -193,7 +193,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
         end
       end
 
-      context "with alert comment exists and ❌ in main comment" do
+      context "when alert comment exists and ❌ in main comment" do
         let(:discussion) do
           double("comment", id: 2, notes: [main_comment, existing_alert_note])
         end
@@ -214,7 +214,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
           allow(provider).to receive(:alert_comment).and_return(existing_alert_note)
         end
 
-        it "removes the alert comment" do
+        it "does not remove the alert comment" do
           provider.add_result_summary
 
           expect(client).not_to have_received(:delete_merge_request_discussion_note)
