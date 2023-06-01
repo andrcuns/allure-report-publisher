@@ -58,7 +58,7 @@ module Publisher
         )
       end
 
-      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      # rubocop:disable Metrics/PerceivedComplexity
       # Add comment with report url
       #
       # @return [void]
@@ -79,13 +79,21 @@ module Publisher
 
         @discussion = nil
 
-        if unresolved_discussion_on_failure && main_comment&.body&.include?("❌") && !alert_comment
+        if unresolved_discussion_on_failure && report_has_failures? && !alert_comment
           client.create_merge_request_discussion_note(project, mr_iid, discussion.id, body: alert_comment_text)
-        elsif alert_comment
+        elsif alert_comment && !report_has_failures?
           client.delete_merge_request_discussion_note(project, mr_iid, discussion.id, alert_comment.id)
         end
       end
-      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+      # Check if allure report has failures
+      #
+      # @return [Boolean]
+      def report_has_failures?
+        main_comment&.body&.include?("❌")
+      end
+
+      # rubocop:enable Metrics/PerceivedComplexity
 
       # Existing discussion that has comment with allure urls
       #

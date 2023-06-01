@@ -103,6 +103,33 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
         end
       end
 
+      context "when there are no test failures in summary" do
+        before do
+          allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
+            .with(any_args)
+            .and_return(true)
+        end
+
+        let(:unresolved_discussion_on_failure) { true }
+        let(:discussion) do
+          double("comment", id: 2, notes: [main_comment])
+        end
+
+        let(:main_comment) do
+          double("main comment", id: "abc", body: "Allure report body")
+        end
+
+        let(:existing_alert_note) do
+          double("alert note", id: "def", body: "There are some test failures that need attention")
+        end
+
+        it "does not add a resolvable attention comment" do
+          provider.add_result_summary
+
+          expect(client).not_to have_received(:create_merge_request_discussion_note)
+        end
+      end
+
       context "when there are test failures in summary" do
         before do
           allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
@@ -111,42 +138,48 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
         end
 
         let(:unresolved_discussion_on_failure) { true }
-        let(:alert_comment_text) { "There are some test failures that need attention" }
-        let(:comment_id) { 2 }
-        let(:note) { double("note", id: "abc", body: "existing comment ❌") }
 
+        let(:discussion_id) { 2 }
+        let(:alert_comment_text) { "There are some test failures that need attention" }
         let(:discussion) do
-          double("comment", id: comment_id, body: "existing comment", notes: [note])
+          double("comment", id: discussion_id, notes: [main_comment])
+        end
+
+        let(:main_comment) do
+          double("main comment", id: "abc", body: "Allure report body with ❌")
+        end
+
+        let(:existing_alert_note) do
+          double("alert note", id: "def", body: alert_comment_text)
         end
 
         it "adds a resolvable attention comment" do
           provider.add_result_summary
 
           expect(client).to have_received(:create_merge_request_discussion_note)
-            .with(project, mr_id, comment_id, body: alert_comment_text)
+            .with(project, mr_id, discussion_id, body: alert_comment_text)
         end
       end
 
-      context "with existing alert comment" do
-        let(:comment_id) { 2 }
-        let(:note_id) { "abc" }
-        let(:note) do
-          double("note", id: note_id, body: "existing comment")
-        end
+      context "when alert comment exists and no ❌ in main comment" do
+        let(:discussion_id) { 2 }
+        let(:alert_note_id) { "def" }
 
         let(:discussion) do
-          double("comment", id: comment_id, body: "existing comment", notes: [note])
+          double("comment", id: discussion_id, notes: [main_comment, existing_alert_note])
         end
 
-        let(:alert_comment_text) { "There are some test failures that need attention" }
+        let(:main_comment) do
+          double("main comment", id: "abc", body: "Allure report body")
+        end
 
         let(:existing_alert_note) do
-          double("alert note", id: note_id, body: alert_comment_text)
+          double("alert note", id: alert_note_id, body: "There are some test failures that need attention")
         end
 
         before do
           allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
-            .with(discussion.body)
+            .with(any_args)
             .and_return(true)
 
           allow(provider).to receive(:alert_comment).and_return(existing_alert_note)
@@ -156,7 +189,35 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
           provider.add_result_summary
 
           expect(client).to have_received(:delete_merge_request_discussion_note)
-            .with(project, mr_id, comment_id, note_id)
+            .with(project, mr_id, discussion_id, alert_note_id)
+        end
+      end
+
+      context "when alert comment exists and ❌ in main comment" do
+        let(:discussion) do
+          double("comment", id: 2, notes: [main_comment, existing_alert_note])
+        end
+
+        let(:main_comment) do
+          double("main comment", id: "abc", body: "Allure report body with ❌")
+        end
+
+        let(:existing_alert_note) do
+          double("alert note", id: "def", body: "There are some test failures that need attention")
+        end
+
+        before do
+          allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
+            .with(any_args)
+            .and_return(true)
+
+          allow(provider).to receive(:alert_comment).and_return(existing_alert_note)
+        end
+
+        it "does not remove the alert comment" do
+          provider.add_result_summary
+
+          expect(client).not_to have_received(:delete_merge_request_discussion_note)
         end
       end
 
