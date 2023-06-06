@@ -99,7 +99,7 @@ module Publisher
             copy_source: "/#{bucket_name}/#{key(full_prefix, file.relative_path_from(report_path))}",
             key: key(prefix, file.relative_path_from(report_path)),
             metadata_directive: "REPLACE",
-            content_type: MiniMime.lookup_by_filename(file).content_type,
+            content_type: content_type(file),
             cache_control: "max-age=60"
           }
         end
@@ -142,6 +142,18 @@ module Publisher
       # @return [String]
       def url(path_prefix)
         [base_url || "http://#{bucket_name}.s3.amazonaws.com", path_prefix, "index.html"].compact.join("/")
+      end
+
+      # Get file content type
+      #
+      # @param [Pathname] file
+      # @return [String]
+      def content_type(file)
+        c_type = MiniMime.lookup_by_filename(file)&.content_type
+        return c_type if c_type
+
+        log_debug("Content type for '#{file}' not found, using default 'application/octet-stream'")
+        "application/octet-stream"
       end
     end
   end
