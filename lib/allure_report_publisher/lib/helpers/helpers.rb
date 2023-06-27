@@ -123,7 +123,7 @@ module Publisher
 
       unless status.success?
         err_msg = "Command '#{loggable_command}' failed!\n#{output}"
-        err_msg = mask ? err_msg.gsub(mask, "***") : err_msg
+        err_msg = err_msg.gsub(mask, "***") if mask
         raise(ShellCommandFailure, err_msg)
       end
 
