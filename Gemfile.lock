@@ -18,10 +18,15 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.0.8)
+    activesupport (7.1.1)
+      base64
+      bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
+      mutex_m
       tzinfo (~> 2.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
@@ -54,8 +59,10 @@ GEM
     backport (1.2.0)
     base64 (0.1.1)
     benchmark (0.2.1)
+    bigdecimal (3.1.4)
     climate_control (1.2.0)
     concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
@@ -64,6 +71,8 @@ GEM
     digest-crc (0.6.4)
       rake (>= 12.0.0, < 14.0.0)
     docile (1.4.0)
+    drb (2.1.1)
+      ruby2_keywords
     dry-cli (1.0.0)
     e2mmap (0.1.0)
     faraday (2.7.11)
@@ -139,6 +148,7 @@ GEM
     minitest (5.20.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
+    mutex_m (0.1.2)
     nokogiri (1.15.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -269,7 +279,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (~> 7.0)
+  activesupport (~> 7.1)
   allure-report-publisher!
   allure-rspec (~> 2.21.2)
   climate_control (~> 1.2.0)

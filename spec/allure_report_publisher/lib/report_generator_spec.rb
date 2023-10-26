@@ -1,3 +1,4 @@
+require "active_support"
 require "active_support/testing/time_helpers"
 
 RSpec.describe Publisher::ReportGenerator, epic: "generator" do
