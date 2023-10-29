@@ -52,9 +52,25 @@ module Publisher
       log_debug("Generating allure report")
       cmd = "allure generate --clean --output #{report_path} #{common_info_path} #{result_paths}"
       out = execute_shell(cmd)
-      log_debug("Generated allure report. #{out}")
+      log_debug("Generated allure report. #{out}".strip)
+
+      deduplicate_executors
     rescue StandardError => e
       raise(AllureError, e.message)
+    end
+
+    # Remove duplicate entries from executors widget
+    # This is a workaround for making history work with multiple result paths
+    # allure-report requires executors.json in every results folder but it will create duplicate entries
+    # in executors widget of the final report
+    #
+    # @return [void]
+    def deduplicate_executors
+      executors_file = File.join(report_path, "widgets", "executors.json")
+      executors_json = JSON.parse(File.read(executors_file)).uniq
+
+      log_debug("Removing duplicate entries in '#{executors_file}'")
+      File.write(executors_file, JSON.generate(executors_json))
     end
   end
 end
