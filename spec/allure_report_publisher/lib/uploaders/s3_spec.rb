@@ -166,7 +166,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
 
     it "adds executor info" do
       described_class.new(**args).execute
-      expect(File).to have_received(:write).with("#{common_info_path}/executor.json", executor_info.to_json)
+      expect(File).to have_received(:write).with("#{common_info_path}/executor.json", executor_info.to_json).twice
     end
 
     it "updates pr description with allure report link" do

@@ -23,6 +23,14 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
   end
 
   context "with present allure results" do
+    let(:executors) { File.read("spec/fixture/fake_report/widgets/executors.json") }
+    let(:deduped_executors) { [JSON.parse(executors).first].to_json }
+
+    before do
+      allow(File).to receive(:read).with("#{report_dir}/widgets/executors.json").and_return(executors)
+      allow(File).to receive(:write).with("#{report_dir}/widgets/executors.json", deduped_executors)
+    end
+
     it "generates allure report" do
       freeze_time do
         report_generator.generate
@@ -30,6 +38,7 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
         expect(Open3).to have_received(:capture3).with(
           "allure generate --clean --output #{report_dir} #{common_info_dir} #{result_paths.join(' ')}"
         )
+        expect(File).to have_received(:write).with("#{report_dir}/widgets/executors.json", deduped_executors)
       end
     end
   end

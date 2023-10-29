@@ -238,11 +238,16 @@ module Publisher
       def add_executor_info
         return unless ci_provider
 
-        json_path = "#{common_info_path}/#{EXECUTOR_JSON}"
         json = ci_provider.executor_info.to_json
-        log_debug("Saving ci executor info")
-        File.write(json_path, json)
-        log_debug("Saved '#{EXECUTOR_JSON}' as '#{json_path}'\n#{JSON.pretty_generate(ci_provider.executor_info)}")
+        log_debug("Saving ci executor info:\n#{JSON.pretty_generate(ci_provider.executor_info)}")
+        # allure-report will fail to pick up reportUrl in history tab if executor.json is not present alongside results
+        [common_info_path, *result_paths].each do |path|
+          file = File.join(path, EXECUTOR_JSON)
+          next log_debug("Skipping '#{file}', executor info already exists") if File.exist?(file)
+
+          File.write(File.join(path, EXECUTOR_JSON), json)
+          log_debug("Saved ci executor info to '#{file}'")
+        end
       end
 
       # Fetch allure report history
