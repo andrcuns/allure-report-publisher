@@ -3,8 +3,8 @@ module Publisher
     # Urls section builder
     #
     class UrlSectionBuilder
-      DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/.freeze
-      JOBS_PATTERN = /<!-- jobs -->\n([\s\S]+)\n<!-- jobs -->/.freeze
+      DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/
+      JOBS_PATTERN = /<!-- jobs -->\n([\s\S]+)\n<!-- jobs -->/
 
       # Url section builder
       #
