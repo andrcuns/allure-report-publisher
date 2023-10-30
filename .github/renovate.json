@@ -1,13 +1,19 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "platform": "github",
+  "onboarding": false,
+  "repositories": [
+    "andrcuns/allure-report-publisher"
+  ],
   "enabledManagers": [
     "regex"
   ],
   "labels": [
     "dependencies"
   ],
-  "regexManagers": [
+  "customManagers": [
     {
+      "customType": "regex",
       "fileMatch": [
         "Dockerfile"
       ],
