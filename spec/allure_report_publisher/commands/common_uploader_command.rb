@@ -142,6 +142,40 @@ RSpec.shared_examples "upload command" do
     end
   end
 
+  context "with environment variable arguments" do
+    around do |example|
+      ClimateControl.modify(env) { example.run }
+    end
+
+    context "with valid arguments" do
+      let(:env) { { ALLURE_REPORT_UPDATE_PR: "comment" } }
+
+      it "fetches option from environment variable" do
+        run_cli(*command, *cli_args)
+
+        expect(uploader).to have_received(:new).with({ **args, update_pr: "comment" })
+      end
+    end
+
+    context "with boolean type arguments" do
+      let(:env) { { ALLURE_REPORT_COPY_LATEST: "true" } }
+
+      it "correctly casts boolean type argument" do
+        run_cli(*command, *cli_args)
+
+        expect(uploader).to have_received(:new).with({ **args, copy_latest: true })
+      end
+    end
+
+    context "with invalid arguments" do
+      let(:env) { { ALLURE_REPORT_UPDATE_PR: "bla" } }
+
+      it "exits when environment variable contains invalid value" do
+        expect { run_cli(*command, *cli_args) }.to raise_error(SystemExit)
+      end
+    end
+  end
+
   context "with missing args", :aggregate_failures do
     it "exits when result glob is missing" do
       expect { run_cli(*command, cli_args[1]) }.to raise_error(SystemExit)
