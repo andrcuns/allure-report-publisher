@@ -63,6 +63,12 @@ Examples:
   allure-report-publisher upload gcs --results-glob='paths/to/**/allure-results' --bucket=my-bucket --prefix=my-project/prs
 ```
 
+## Environment variables
+
+All named options can be configured via environment variables. Environment variables are prefixed with `ALLURE_REPORT_` and uppercased.
+
+Example: `--results-glob` can be configured via `ALLURE_REPORT_RESULTS_GLOB`
+
 # Storage providers
 
 Multiple cloud storage providers are supported

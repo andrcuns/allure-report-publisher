@@ -48,9 +48,9 @@ module Dry
           name = "ALLURE_REPORT_#{option.name.to_s.upcase}"
           value = ENV[name]
           return if value.nil? || value.empty?
-          return value unless option.values&.none?(value)
+          raise(InvalidEnvValue, "#{name} contains invalid value: '#{value}'") if option.values&.none?(value)
 
-          raise InvalidEnvValue, "#{name} contains invalid value: '#{value}'"
+          option.boolean? ? value == "true" : value
         end
       end
     end
