@@ -44,14 +44,20 @@ module Dry
           end.compact
         end
 
-        def option_from_env(option) # rubocop:disable Metrics/CyclomaticComplexity
+        def option_from_env(option)
           name = "ALLURE_REPORT_#{option.name.to_s.upcase}"
           value = ENV[name]
           return if value.nil? || value.empty?
           return if option.boolean? && !%w[true false].include?(value)
-          raise(InvalidEnvValue, "#{name} contains invalid value: '#{value}'") if option.values&.none?(value)
 
+          validate_accepted_values(option, value)
           option.boolean? ? value == "true" : value
+        end
+
+        def validate_accepted_values(option, value)
+          return unless option.values&.none? { |v| v.to_s == value }
+
+          raise(InvalidEnvValue, "#{name} contains invalid value: '#{value}'")
         end
       end
     end
