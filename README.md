@@ -5,7 +5,6 @@
 ![Workflow status](https://github.com/andrcuns/allure-report-publisher/workflows/Test/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/210eaa4f74588fb08313/maintainability)](https://codeclimate.com/github/andrcuns/allure-report-publisher/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/210eaa4f74588fb08313/test_coverage)](https://codeclimate.com/github/andrcuns/allure-report-publisher/test_coverage)
-[![Known Vulnerabilities](https://snyk.io/test/github/andrcuns/allure-report-publisher/badge.svg)](https://snyk.io/test/github/andrcuns/allure-report-publisher)
 [![Test Report](https://img.shields.io/badge/report-allure-blue.svg)](https://storage.googleapis.com/allure-test-reports/allure-report-publisher/refs/heads/main/index.html)
 
 Upload your report to a file storage of your choice.
