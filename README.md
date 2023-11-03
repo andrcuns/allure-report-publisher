@@ -188,6 +188,10 @@ If reporter is executed with options `--update-pr=comment` and `--unresolved-dis
 
 - `ALLURE_FAILURE_ALERT_COMMENT`: comment added to create unresolved discussion note, default: `There are some test failures that need attention`
 
+### CI/CD catalog resource
+
+[allure-report-publisher CI/CD catalog resource](https://gitlab.com/andrcuns/allure-report-publisher) can be used to easily integrate report publishing in to Gitlab CI pipelines.
+
 # Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
