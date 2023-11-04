@@ -64,7 +64,7 @@ Examples:
 
 ## Environment variables
 
-All named options can be configured via environment variables. Environment variables are prefixed with `ALLURE_REPORT_` and uppercased.
+All named options can be configured via environment variables. Environment variables are prefixed with `ALLURE_` and uppercased.
 
 Example: `--results-glob` can be configured via `ALLURE_REPORT_RESULTS_GLOB`
 

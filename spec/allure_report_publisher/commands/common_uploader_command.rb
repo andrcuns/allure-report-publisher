@@ -148,7 +148,7 @@ RSpec.shared_examples "upload command" do
     end
 
     context "with valid arguments" do
-      let(:env) { { ALLURE_REPORT_UPDATE_PR: "comment" } }
+      let(:env) { { ALLURE_UPDATE_PR: "comment" } }
 
       it "fetches option from environment variable" do
         run_cli(*command, *cli_args)
@@ -158,7 +158,7 @@ RSpec.shared_examples "upload command" do
     end
 
     context "with boolean type arguments" do
-      let(:env) { { ALLURE_REPORT_COPY_LATEST: "true" } }
+      let(:env) { { ALLURE_COPY_LATEST: "true" } }
 
       it "correctly casts boolean type argument" do
         run_cli(*command, *cli_args)
@@ -168,7 +168,7 @@ RSpec.shared_examples "upload command" do
     end
 
     context "with invalid arguments" do
-      let(:env) { { ALLURE_REPORT_UPDATE_PR: "bla" } }
+      let(:env) { { ALLURE_UPDATE_PR: "bla" } }
 
       it "exits when environment variable contains invalid value" do
         expect { run_cli(*command, *cli_args) }.to raise_error(SystemExit)
