@@ -5,6 +5,8 @@ module Dry
     module Parser
       class InvalidEnvValue < StandardError; end
 
+      ENV_VAR_PREFIX = "ALLURE_".freeze
+
       class << self
         def call(command, arguments, prog_name)
           original_arguments = arguments.dup
@@ -45,7 +47,7 @@ module Dry
         end
 
         def option_from_env(option)
-          name = "ALLURE_REPORT_#{option.name.to_s.upcase}"
+          name = "#{ENV_VAR_PREFIX}#{option.name.to_s.upcase}"
           value = ENV[name]
           return if value.nil? || value.empty?
           return if option.boolean? && !%w[true false].include?(value)
