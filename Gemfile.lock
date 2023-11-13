@@ -18,7 +18,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.1.1)
+    activesupport (7.1.2)
       base64
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -57,7 +57,7 @@ GEM
     aws-sigv4 (1.6.0)
       aws-eventstream (~> 1, >= 1.0.2)
     backport (1.2.0)
-    base64 (0.1.1)
+    base64 (0.2.0)
     benchmark (0.2.1)
     bigdecimal (3.1.4)
     climate_control (1.2.0)
@@ -71,7 +71,7 @@ GEM
     digest-crc (0.6.5)
       rake (>= 12.0.0, < 14.0.0)
     docile (1.4.0)
-    drb (2.1.1)
+    drb (2.2.0)
       ruby2_keywords
     dry-cli (1.0.0)
     e2mmap (0.1.0)
@@ -146,7 +146,7 @@ GEM
     minitest (5.20.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
-    mutex_m (0.1.2)
+    mutex_m (0.2.0)
     nokogiri (1.15.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
