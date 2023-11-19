@@ -1,4 +1,4 @@
-FROM ruby:3.2.2-alpine3.17 as ruby
+FROM ruby:3.2.2-alpine3.18 as ruby
 
 ARG GEMFILE=allure-report-publisher.gem
 
@@ -27,7 +27,7 @@ FROM ruby as production
 # Install allure
 ARG ALLURE_VERSION=2.24.1
 ENV PATH=$PATH:/usr/local/allure-${ALLURE_VERSION}/bin
-RUN apk --no-cache add openjdk20 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
+RUN apk --no-cache add openjdk21 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 RUN set -eux; \
     wget -O allure.tgz https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz; \
     tar -xzf allure.tgz -C /usr/local && rm allure.tgz; \
