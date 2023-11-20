@@ -40,15 +40,15 @@ jobs:
         id: images
         run: |
           if [[ "${{ startsWith(github.ref, 'refs/tags/') }}" == "true" ]]; then
-            echo "{images}={andrcuns/allure-report-publisher,ghcr.io/andrcuns/allure-report-publisher}" >> $GITHUB_OUTPUT
+            echo "IMAGES=andrcuns/allure-report-publisher,ghcr.io/andrcuns/allure-report-publisher" >> "$GITHUB_OUTPUT"
           else
-            echo "{images}={ghcr.io/andrcuns/allure-report-publisher}" >> $GITHUB_OUTPUT
+            echo "IMAGES=ghcr.io/andrcuns/allure-report-publisher" >> "$GITHUB_OUTPUT"
           fi
       - name: Docker tags
         id: tags
         uses: docker/metadata-action@v5
         with:
-          images: ${{ steps.images.outputs.images }}
+          images: ${{ steps.images.outputs.IMAGES }}
           flavor: latest=false
           tags: |
             type=raw,value=latest
