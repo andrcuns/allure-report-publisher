@@ -43,7 +43,7 @@ module Publisher
         @update_pr = args[:update_pr]
         @summary_type = args[:summary_type]
         @summary_table_type = args[:summary_table_type]
-        @copy_latest = (Providers.provider && args[:copy_latest]) # copy latest for ci only
+        @copy_latest = Providers.provider && args[:copy_latest] # copy latest for ci only
         @collapse_summary = args[:collapse_summary]
         @unresolved_discussion_on_failure = args[:unresolved_discussion_on_failure]
       end
