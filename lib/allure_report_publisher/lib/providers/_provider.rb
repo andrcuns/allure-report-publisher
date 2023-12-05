@@ -34,6 +34,7 @@ module Publisher
         @summary_table_type = args[:summary_table_type]
         @collapse_summary = args[:collapse_summary]
         @unresolved_discussion_on_failure = args[:unresolved_discussion_on_failure]
+        @report_title = args[:report_title]
       end
 
       # :nocov:
@@ -80,7 +81,8 @@ module Publisher
                   :summary_type,
                   :collapse_summary,
                   :summary_table_type,
-                  :unresolved_discussion_on_failure
+                  :unresolved_discussion_on_failure,
+                  :report_title
 
       # Current pull request description
       #
@@ -143,7 +145,8 @@ module Publisher
           sha_url: sha_url,
           summary_type: summary_type,
           summary_table_type: summary_table_type,
-          collapse_summary: collapse_summary
+          collapse_summary: collapse_summary,
+          report_title: report_title
         )
       end
     end

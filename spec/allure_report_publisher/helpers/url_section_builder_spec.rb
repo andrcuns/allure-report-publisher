@@ -6,7 +6,8 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
       build_name: build_name,
       sha_url: sha_url,
       summary_type: summary_type,
-      collapse_summary: collapse_summary
+      collapse_summary: collapse_summary,
+      report_title: report_title
     )
   end
 
@@ -18,6 +19,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
   let(:build_name) { "build-name" }
   let(:sha_url) { "sha-url" }
   let(:report_path) { "report_path" }
+  let(:report_title) { "Report title" }
   let(:status) { "✅" }
   let(:summary_type) { nil }
   let(:collapse_summary) { false }
@@ -53,7 +55,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
     <<~URLS.strip
       <!-- allure -->
       ---
-      # Allure report
+      # #{report_title}
       `allure-report-publisher` generated test report!
 
       <!-- jobs -->

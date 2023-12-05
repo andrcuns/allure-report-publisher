@@ -7,7 +7,8 @@ RSpec.shared_context "with provider helper" do
       summary_type: summary_type,
       summary_table_type: summary_table_type,
       collapse_summary: collapse_summary,
-      unresolved_discussion_on_failure: unresolved_discussion_on_failure
+      unresolved_discussion_on_failure: unresolved_discussion_on_failure,
+      report_title: report_title
     )
   end
 
@@ -31,6 +32,7 @@ RSpec.shared_context "with provider helper" do
   let(:summary_table_type) { nil }
   let(:collapse_summary) { false }
   let(:unresolved_discussion_on_failure) { false }
+  let(:report_title) { "Report title" }
 
   before do
     allow(Publisher::Helpers::UrlSectionBuilder).to receive(:new)
@@ -41,7 +43,8 @@ RSpec.shared_context "with provider helper" do
         sha_url: sha_url,
         summary_type: summary_type,
         summary_table_type: summary_table_type,
-        collapse_summary: collapse_summary
+        collapse_summary: collapse_summary,
+        report_title: report_title
       )
       .and_return(url_builder)
   end

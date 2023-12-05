@@ -46,6 +46,7 @@ Options:
   --bucket=VALUE                    # Bucket name. Required: true
   --prefix=VALUE                    # Optional prefix for report path. Required: false
   --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description/actions)
+  --report-title=VALUE              # Title for url section in PR comment/description. Required: false, default: "Allure Report"
   --summary=VALUE                   # Additionally add summary table to PR comment or description. Required: false: (behaviors/suites/packages/total)
   --summary-table-type=VALUE        # Summary table type. Required: false: (ascii/markdown), default: :ascii
   --base-url=VALUE                  # Use custom base url instead of default cloud provider one. Required: false

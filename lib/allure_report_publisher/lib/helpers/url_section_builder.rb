@@ -14,6 +14,7 @@ module Publisher
       # @param [String] sha_url
       # @param [String] summary_type
       # @param [String] collapse_summary
+      # @param [String] report_title
       def initialize(**args)
         @report_url = args[:report_url]
         @report_path = args[:report_path]
@@ -22,6 +23,7 @@ module Publisher
         @summary_type = args[:summary_type]
         @summary_table_type = args[:summary_table_type]
         @collapse_summary = args[:collapse_summary]
+        @report_title = args[:report_title]
       end
 
       # Matches url section pattern
@@ -64,7 +66,8 @@ module Publisher
                   :sha_url,
                   :summary_type,
                   :summary_table_type,
-                  :collapse_summary
+                  :collapse_summary,
+                  :report_title
 
       private
 
@@ -72,7 +75,7 @@ module Publisher
       #
       # @return [String]
       def heading
-        @heading ||= "# Allure report\n`allure-report-publisher` generated test report!"
+        @heading ||= "# #{report_title}\n`allure-report-publisher` generated test report!"
       end
 
       # Test run summary
