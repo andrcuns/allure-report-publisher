@@ -25,6 +25,10 @@ module Publisher
              type: :string,
              desc: "Add report url to PR via comment or description update. Required: false",
              values: %w[comment description actions]
+      option :report_title,
+             type: :string,
+             default: "Allure Report",
+             desc: "Title for url section in PR comment/description. Required: false"
       option :summary,
              type: :string,
              desc: "Additionally add summary table to PR comment or description. Required: false",

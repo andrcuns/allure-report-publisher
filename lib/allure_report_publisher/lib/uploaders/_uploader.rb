@@ -35,6 +35,7 @@ module Publisher
       # @option args [Boolean] :collapse_summary
       # @option args [Boolean] :unresolved_discussion_on_failure
       # @option args [String] :copy_latest
+      # @option args [String] :report_title
       def initialize(**args)
         @result_paths = args[:result_paths]
         @bucket_name = args[:bucket]
@@ -46,6 +47,7 @@ module Publisher
         @copy_latest = Providers.provider && args[:copy_latest] # copy latest for ci only
         @collapse_summary = args[:collapse_summary]
         @unresolved_discussion_on_failure = args[:unresolved_discussion_on_failure]
+        @report_title = args[:report_title]
       end
 
       # Execute allure report generation and upload
@@ -114,7 +116,8 @@ module Publisher
                   :summary_type,
                   :collapse_summary,
                   :summary_table_type,
-                  :unresolved_discussion_on_failure
+                  :unresolved_discussion_on_failure,
+                  :report_title
 
       def_delegators :report_generator, :common_info_path, :report_path
 
@@ -217,7 +220,8 @@ module Publisher
           summary_type: summary_type,
           summary_table_type: summary_table_type,
           collapse_summary: collapse_summary,
-          unresolved_discussion_on_failure: unresolved_discussion_on_failure
+          unresolved_discussion_on_failure: unresolved_discussion_on_failure,
+          report_title: report_title
         )
       end
 
