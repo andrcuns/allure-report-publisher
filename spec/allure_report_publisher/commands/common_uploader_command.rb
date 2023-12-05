@@ -6,6 +6,7 @@ RSpec.shared_examples "upload command" do
   let(:result_paths) { [result_glob] }
   let(:bucket) { "bucket" }
   let(:prefix) { "my-project/prs" }
+  let(:report_title) { "Allure Report" }
   let(:uploader_stub) do
     instance_double(
       uploader.to_s,
@@ -34,7 +35,8 @@ RSpec.shared_examples "upload command" do
       summary_type: nil,
       collapse_summary: false,
       unresolved_discussion_on_failure: false,
-      summary_table_type: :ascii
+      summary_table_type: :ascii,
+      report_title: report_title
     }
   end
 
@@ -65,7 +67,8 @@ RSpec.shared_examples "upload command" do
             :summary_type,
             :summary_table_type,
             :collapse_summary,
-            :unresolved_discussion_on_failure
+            :unresolved_discussion_on_failure,
+            :report_title
           )
         )
         expect(uploader_stub).to have_received(:generate_report)
