@@ -87,6 +87,14 @@ RSpec.shared_examples "upload command" do
       expect(uploader_stub).to have_received(:add_result_summary)
     end
 
+    it "executes uploader with --report-title=title" do
+      run_cli(*command, *cli_args, "--report-title=custom title")
+
+      expect(uploader).to have_received(:new).with({ **args, report_title: "custom title" })
+      expect(uploader_stub).to have_received(:generate_report)
+      expect(uploader_stub).to have_received(:upload)
+    end
+
     it "executes uploader with --update-pr=description" do
       run_cli(*command, *cli_args, "--update-pr=description")
 
