@@ -22,5 +22,5 @@ group :development do
   gem "rubocop-rspec", "~> 2.25"
   gem "simplecov", "~> 0.22.0"
   gem "simplecov-console", "~> 0.9.1"
-  gem "solargraph", "~> 0.49.0"
+  gem "solargraph", "~> 0.50.0"
 end
