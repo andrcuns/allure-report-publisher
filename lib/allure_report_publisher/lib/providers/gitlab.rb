@@ -10,7 +10,11 @@ module Publisher
 
       private
 
-      def_delegators :"Publisher::Providers::Info::Gitlab.instance", :allure_project, :allure_mr_iid, :server_url
+      def_delegators :"Publisher::Providers::Info::Gitlab.instance",
+                     :allure_project,
+                     :allure_mr_iid,
+                     :server_url,
+                     :build_name
 
       # Current pull request description
       #

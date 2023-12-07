@@ -30,9 +30,10 @@ module Publisher
       # @option args [String] :report_path
       # @option args [Boolean] :update_pr
       # @option args [String] :summary_type
+      # @option args [Symbol] :summary_table_type
       # @option args [Boolean] :collapse_summay
       # @option args [Boolean] :unresolved_discussion_on_failure
-      # @option args [Symbol] :summary_table_type
+      # @option args [String] :report_title
       def initialize(**args)
         @report_url = args[:report_url]
         @report_path = args[:report_path]
@@ -84,28 +85,7 @@ module Publisher
       def add_comment
         raise("Not implemented!")
       end
-
-      # Build name
-      #
-      # @return [String]
-      def build_name
-        raise("Not implemented!")
-      end
-
-      # Commit SHA url
-      #
-      # @return [String]
-      def sha_url
-        raise("Not implemented!")
-      end
       # :nocov:
-
-      # CI run id
-      #
-      # @return [String]
-      def run_id
-        self.class.run_id
-      end
 
       # Add report url as comment
       #
