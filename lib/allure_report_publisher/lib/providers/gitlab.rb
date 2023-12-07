@@ -7,37 +7,9 @@ module Publisher
     class Gitlab < Provider
       include Helpers
 
-      # Get ci run ID without creating instance of ci provider
-      #
-      # @return [String]
-      def self.run_id
-        @run_id ||= ENV["CI_PIPELINE_ID"]
-      end
-
-      # Pull request run
-      #
-      # @return [Boolean]
-      def pr?
-        (allure_project && allure_mr_iid) || ENV["CI_PIPELINE_SOURCE"] == "merge_request_event"
-      end
-
-      # Get executor info
-      #
-      # @return [Hash]
-      def executor_info
-        {
-          name: "Gitlab",
-          type: "gitlab",
-          reportName: "AllureReport",
-          url: server_url,
-          reportUrl: report_url,
-          buildUrl: build_url,
-          buildOrder: run_id,
-          buildName: build_name
-        }
-      end
-
       private
+
+      def_delegators :"Info::Gitlab.instance", :allure_project, :allure_mr_iid, :server_url
 
       # Current pull request description
       #
@@ -142,20 +114,6 @@ module Publisher
         end
       end
 
-      # Custom repository name
-      #
-      # @return [String]
-      def allure_project
-        @allure_project ||= env("ALLURE_PROJECT_PATH")
-      end
-
-      # Custom mr iid name
-      #
-      # @return [String]
-      def allure_mr_iid
-        @allure_mr_iid ||= env("ALLURE_MERGE_REQUEST_IID")
-      end
-
       # Custom sha
       #
       # @return [String]
@@ -175,27 +133,6 @@ module Publisher
       # @return [Integer]
       def mr_iid
         @mr_iid ||= allure_mr_iid || env("CI_MERGE_REQUEST_IID")
-      end
-
-      # Server url
-      #
-      # @return [String]
-      def server_url
-        @server_url ||= env("CI_SERVER_URL")
-      end
-
-      # Build url
-      #
-      # @return [String]
-      def build_url
-        @build_url ||= env("CI_PIPELINE_URL")
-      end
-
-      # Job name
-      #
-      # @return [String]
-      def build_name
-        @build_name ||= env(ALLURE_JOB_NAME) || env("CI_JOB_NAME")
       end
 
       # Commit sha url

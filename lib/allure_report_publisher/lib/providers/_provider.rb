@@ -2,13 +2,22 @@ module Publisher
   # Namespace for providers executing tests
   #
   module Providers
-    # Detect CI provider
+    # CI provider class
     #
     # @return [Publisher::Providers::Base]
     def self.provider
       return Github if ENV["GITHUB_WORKFLOW"]
 
       Gitlab if ENV["GITLAB_CI"]
+    end
+
+    # CI info class
+    #
+    # @return [Info::Base]
+    def self.info
+      return Info::Github if ENV["GITHUB_WORKFLOW"]
+
+      Info::Gitlab if ENV["GITLAB_CI"]
     end
 
     # Base class for CI executor info
@@ -37,40 +46,13 @@ module Publisher
         @report_title = args[:report_title]
       end
 
-      # :nocov:
-
-      # Get ci run ID without creating instance of ci provider
-      #
-      # @return [String]
-      def self.run_id
-        raise("Not implemented!")
-      end
-
-      # Get executor info
-      #
-      # @return [Hash]
-      def executor_info
-        raise("Not implemented!")
-      end
-      # :nocov:
-
       # Add report url to pull request description
       #
       # @return [void]
       def add_result_summary
-        raise("Not a pull request, skipped!") unless pr?
         return add_comment if comment?
 
         update_pr_description
-      end
-
-      # :nocov:
-
-      # Pull request run
-      #
-      # @return [Boolean]
-      def pr?
-        raise("Not implemented!")
       end
 
       private

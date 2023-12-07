@@ -29,25 +29,13 @@ module Publisher
       # @option args [String] :bucket
       # @option args [String] :prefix
       # @option args [String] :base_url
-      # @option args [Boolean] :update_pr
-      # @option args [String] :summary_type
-      # @option args [Symbol] :summary_table_type
-      # @option args [Boolean] :collapse_summary
-      # @option args [Boolean] :unresolved_discussion_on_failure
       # @option args [String] :copy_latest
-      # @option args [String] :report_title
       def initialize(**args)
         @result_paths = args[:result_paths]
         @bucket_name = args[:bucket]
         @prefix = args[:prefix]
         @base_url = args[:base_url]
-        @update_pr = args[:update_pr]
-        @summary_type = args[:summary_type]
-        @summary_table_type = args[:summary_table_type]
-        @copy_latest = Providers.provider && args[:copy_latest] # copy latest for ci only
-        @collapse_summary = args[:collapse_summary]
-        @unresolved_discussion_on_failure = args[:unresolved_discussion_on_failure]
-        @report_title = args[:report_title]
+        @copy_latest = ci_info && args[:copy_latest] # copy latest for ci only
       end
 
       # Execute allure report generation and upload
@@ -78,16 +66,6 @@ module Publisher
         upload_latest_copy if copy_latest
       end
 
-      # Add allure report url to pull request description
-      #
-      # @return [void]
-      def add_result_summary
-        return unless update_pr && ci_provider
-
-        log_debug("Adding test result summary")
-        ci_provider.add_result_summary
-      end
-
       # Uploaded report urls
       #
       # @return [Hash<String, String>] uploaded report urls
@@ -98,12 +76,14 @@ module Publisher
         urls
       end
 
-      # Executed in PR pipeline
+      # Report url
       #
-      # @return [Boolean]
-      def pr?
-        ci_provider&.pr?
+      # @return [String]
+      def report_url
+        raise("Not Implemented!")
       end
+
+      def_delegator :report_generator, :report_path
 
       private
 
@@ -111,15 +91,16 @@ module Publisher
                   :bucket_name,
                   :prefix,
                   :base_url,
-                  :update_pr,
-                  :copy_latest,
-                  :summary_type,
-                  :collapse_summary,
-                  :summary_table_type,
-                  :unresolved_discussion_on_failure,
-                  :report_title
+                  :copy_latest
 
-      def_delegators :report_generator, :common_info_path, :report_path
+      def_delegator :report_generator, :common_info_path
+
+      # CI info
+      #
+      # @return [Providers::Info::Base]
+      def ci_info
+        Providers.info
+      end
 
       # :nocov:
 
@@ -127,13 +108,6 @@ module Publisher
       #
       # @return [Object]
       def client
-        raise("Not Implemented!")
-      end
-
-      # Report url
-      #
-      # @return [String]
-      def report_url
         raise("Not Implemented!")
       end
 
@@ -204,25 +178,7 @@ module Publisher
       #
       # @return [String]
       def run_id
-        @run_id ||= Providers.provider&.run_id
-      end
-
-      # Get CI provider
-      #
-      # @return [Publisher::Providers::Base]
-      def ci_provider
-        return @ci_provider if defined?(@ci_provider)
-
-        @ci_provider = Providers.provider&.new(
-          report_url: report_url,
-          report_path: report_path,
-          update_pr: update_pr,
-          summary_type: summary_type,
-          summary_table_type: summary_table_type,
-          collapse_summary: collapse_summary,
-          unresolved_discussion_on_failure: unresolved_discussion_on_failure,
-          report_title: report_title
-        )
+        @run_id ||= ci_info&.run_id
       end
 
       # Add allure history
@@ -240,10 +196,10 @@ module Publisher
       #
       # @return [void]
       def add_executor_info
-        return unless ci_provider
+        return unless ci_info
 
-        json = ci_provider.executor_info.to_json
-        log_debug("Saving ci executor info:\n#{JSON.pretty_generate(ci_provider.executor_info)}")
+        json = JSON.pretty_generate(ci_info.executor(report_url))
+        log_debug("Saving ci executor info:\n#{json}")
         # allure-report will fail to pick up reportUrl in history tab if executor.json is not present alongside results
         [common_info_path, *result_paths].each do |path|
           file = File.join(path, EXECUTOR_JSON)
