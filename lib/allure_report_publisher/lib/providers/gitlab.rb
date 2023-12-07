@@ -6,6 +6,7 @@ module Publisher
     #
     class Gitlab < Provider
       include Helpers
+      extend Forwardable
 
       private
 
