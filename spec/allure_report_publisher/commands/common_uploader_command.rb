@@ -7,16 +7,22 @@ RSpec.shared_examples "upload command" do
   let(:bucket) { "bucket" }
   let(:prefix) { "my-project/prs" }
   let(:report_title) { "Allure Report" }
+  let(:report_url) { "http://report.com" }
+  let(:report_path) { "path/to/report" }
+
   let(:uploader_stub) do
     instance_double(
       uploader.to_s,
       generate_report: nil,
       upload: nil,
-      report_urls: { "Report url" => "http://report.com" },
-      add_result_summary: nil,
-      pr?: true
+      report_urls: { "Report url" => report_url },
+      report_url: report_url,
+      report_path: report_path
     )
   end
+
+  let(:provider) { Publisher::Providers::Github }
+  let(:provider_stub) { instance_double(provider, add_result_summary: nil) }
 
   let(:cli_args) do
     [
@@ -26,134 +32,79 @@ RSpec.shared_examples "upload command" do
     ]
   end
 
-  let(:args) do
+  let(:uploader_args) do
     {
       result_paths: result_paths,
       bucket: bucket,
       prefix: prefix,
-      copy_latest: false,
+      copy_latest: false
+    }
+  end
+
+  let(:provider_args) do
+    {
+      report_url: report_url,
+      report_path: report_path,
       summary_type: nil,
+      summary_table_type: :ascii,
       collapse_summary: false,
       unresolved_discussion_on_failure: false,
-      summary_table_type: :ascii,
       report_title: report_title
     }
   end
 
   before do
-    allow(uploader).to receive(:new) { uploader_stub }
     allow(Publisher::Helpers).to receive(:allure_cli?)
+    allow(Publisher::Providers).to receive(:provider) { provider }
+    allow(Publisher::Providers).to receive_message_chain(:info, :pr?) { true } # rubocop:disable RSpec/MessageChain
+
+    allow(uploader).to receive(:new) { uploader_stub }
+    allow(provider).to receive(:new) { provider_stub }
   end
 
-  context "with required args", :aggregate_failures do
-    it "executes uploader" do
-      run_cli(*command, *cli_args)
+  shared_examples "command" do |additional_cli_args, expected_uploader_args, expected_provider_args|
+    it "with #{additional_cli_args.empty? ? 'default' : additional_cli_args.join(' ')} args", :aggregate_failures do
+      run_cli(*command, *cli_args, *additional_cli_args)
 
-      expect(uploader).to have_received(:new).with(args)
+      expect(uploader).to have_received(:new).with(uploader_args.merge(expected_uploader_args))
       expect(uploader_stub).to have_received(:generate_report)
       expect(uploader_stub).to have_received(:upload)
-    end
 
-    it "executes uploader without prefix argument" do
-      run_cli(*command, *cli_args[0, 2])
-
-      aggregate_failures do
-        expect(uploader).to have_received(:new).with(
-          **args.slice(
-            :result_paths,
-            :bucket,
-            :copy_latest,
-            :update_pr,
-            :summary_type,
-            :summary_table_type,
-            :collapse_summary,
-            :unresolved_discussion_on_failure,
-            :report_title
-          )
-        )
-        expect(uploader_stub).to have_received(:generate_report)
-        expect(uploader_stub).to have_received(:upload)
+      if additional_cli_args.any? { |arg| arg.start_with?("--update-pr") }
+        expect(provider).to have_received(:new).with(provider_args.merge(expected_provider_args))
+        expect(provider_stub).to have_received(:add_result_summary)
+      else
+        expect(provider).not_to have_received(:new)
       end
     end
   end
 
-  context "with optional args", :aggregate_failures do
-    it "executes uploader with --update-pr=comment" do
-      run_cli(*command, *cli_args, "--update-pr=comment")
-
-      expect(uploader).to have_received(:new).with({ **args, update_pr: "comment" })
-      expect(uploader_stub).to have_received(:generate_report)
-      expect(uploader_stub).to have_received(:upload)
-      expect(uploader_stub).to have_received(:add_result_summary)
-    end
-
-    it "executes uploader with --report-title=title" do
-      run_cli(*command, *cli_args, "--report-title=custom title")
-
-      expect(uploader).to have_received(:new).with({ **args, report_title: "custom title" })
-      expect(uploader_stub).to have_received(:generate_report)
-      expect(uploader_stub).to have_received(:upload)
-    end
-
-    it "executes uploader with --update-pr=description" do
-      run_cli(*command, *cli_args, "--update-pr=description")
-
-      aggregate_failures do
-        expect(uploader).to have_received(:new).with({ **args, update_pr: "description" })
-        expect(uploader_stub).to have_received(:generate_report)
-        expect(uploader_stub).to have_received(:upload)
-        expect(uploader_stub).to have_received(:add_result_summary)
-      end
-    end
-
-    it "executes uploader with --copy-latest" do
-      run_cli(*command, *cli_args, "--copy-latest")
-
-      aggregate_failures do
-        expect(uploader).to have_received(:new).with({ **args, copy_latest: true })
-        expect(uploader_stub).to have_received(:generate_report)
-        expect(uploader_stub).to have_received(:upload)
-      end
-    end
-
-    it "executes uploader with --summary=behaviors" do
-      run_cli(*command, *cli_args, "--update-pr=comment", "--summary=behaviors")
-
-      aggregate_failures do
-        expect(uploader).to have_received(:new).with({ **args, update_pr: "comment", summary_type: "behaviors" })
-        expect(uploader_stub).to have_received(:generate_report)
-        expect(uploader_stub).to have_received(:upload)
-        expect(uploader_stub).to have_received(:add_result_summary)
-      end
-    end
-
-    it "executes uploader with --summary-table-type=markdown" do
-      run_cli(*command, *cli_args, "--update-pr=comment", "--summary=behaviors", "--summary-table-type=markdown")
-
-      aggregate_failures do
-        expect(uploader).to have_received(:new).with(
-          { **args, update_pr: "comment", summary_type: "behaviors", summary_table_type: :markdown }
-        )
-        expect(uploader_stub).to have_received(:generate_report)
-        expect(uploader_stub).to have_received(:upload)
-        expect(uploader_stub).to have_received(:add_result_summary)
-      end
-    end
-
-    it "executes uploader with custom --base-url" do
-      base_url = "https://custom"
-
-      run_cli(*command, *cli_args, "--base-url=#{base_url}")
-
-      aggregate_failures do
-        expect(uploader).to have_received(:new).with({ **args, base_url: base_url })
-        expect(uploader_stub).to have_received(:generate_report)
-        expect(uploader_stub).to have_received(:upload)
-      end
-    end
+  context "with arguments via cli" do
+    it_behaves_like "command", [], {}, {}
+    it_behaves_like "command", ["--update-pr=comment"],
+                    {},
+                    { update_pr: "comment" }
+    it_behaves_like "command", ["--update-pr=description"],
+                    {},
+                    { update_pr: "description" }
+    it_behaves_like "command", ["--report-title=custom title", "--update-pr=comment"],
+                    {},
+                    { report_title: "custom title", update_pr: "comment" }
+    it_behaves_like "command", ["--copy-latest"],
+                    { copy_latest: true },
+                    {}
+    it_behaves_like "command", ["--update-pr=comment", "--summary=behaviors"],
+                    {},
+                    { update_pr: "comment", summary_type: "behaviors" }
+    it_behaves_like "command", ["--update-pr=comment", "--summary=behaviors", "--summary-table-type=markdown"],
+                    {},
+                    { update_pr: "comment", summary_type: "behaviors", summary_table_type: :markdown }
+    it_behaves_like "command", ["--base-url=https://my-url.com"],
+                    { base_url: "https://my-url.com" },
+                    {}
   end
 
-  context "with environment variable arguments" do
+  context "with arguments via environment variables" do
     around do |example|
       ClimateControl.modify(env) { example.run }
     end
@@ -164,7 +115,7 @@ RSpec.shared_examples "upload command" do
       it "fetches option from environment variable" do
         run_cli(*command, *cli_args)
 
-        expect(uploader).to have_received(:new).with({ **args, update_pr: "comment" })
+        expect(provider).to have_received(:new).with(provider_args.merge(update_pr: "comment"))
       end
     end
 
@@ -174,7 +125,7 @@ RSpec.shared_examples "upload command" do
       it "correctly casts boolean type argument" do
         run_cli(*command, *cli_args)
 
-        expect(uploader).to have_received(:new).with({ **args, copy_latest: true })
+        expect(uploader).to have_received(:new).with(uploader_args.merge(copy_latest: true))
       end
     end
 
