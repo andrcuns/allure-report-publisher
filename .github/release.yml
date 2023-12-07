@@ -1,5 +1,8 @@
 changelog:
   categories:
+    - title: '💥 Breaking Changes'
+      labels:
+        - 'breaking'
     - title: '🚀 New Features'
       labels:
         - 'feature'
