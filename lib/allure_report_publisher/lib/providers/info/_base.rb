@@ -6,6 +6,8 @@ module Publisher
       # Base class for CI executor info
       #
       class Base
+        ALLURE_JOB_NAME = "ALLURE_JOB_NAME".freeze
+
         # CI Provider executor info
         #
         # @param [String] report_url

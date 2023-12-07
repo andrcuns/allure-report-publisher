@@ -23,8 +23,6 @@ module Publisher
     # Base class for CI executor info
     #
     class Provider
-      ALLURE_JOB_NAME = "ALLURE_JOB_NAME".freeze
-
       # CI provider base
       #
       # @param [Hash] args
