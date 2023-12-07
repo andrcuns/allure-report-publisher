@@ -5,6 +5,13 @@ module Publisher
     # Google cloud storage uploader implementation
     #
     class GCS < Uploader
+      # Report url
+      #
+      # @return [String]
+      def report_url
+        @report_url ||= url(full_prefix)
+      end
+
       private
 
       # GCS client
@@ -19,13 +26,6 @@ module Publisher
       # @return [Google::Cloud::Storage::Bucket]
       def bucket
         @bucket ||= client.bucket(bucket_name, skip_lookup: true)
-      end
-
-      # Report url
-      #
-      # @return [String]
-      def report_url
-        @report_url ||= url(full_prefix)
       end
 
       # Latest report url
