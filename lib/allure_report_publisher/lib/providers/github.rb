@@ -16,7 +16,7 @@ module Publisher
 
       private
 
-      def_delegators :"Info::Github.instance", :repository, :server_url
+      def_delegators :"Publisher::Providers::Info::Github.instance", :repository, :server_url
 
       # Github api client
       #
