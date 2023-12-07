@@ -15,9 +15,9 @@ module Publisher
     #
     # @return [Info::Base]
     def self.info
-      return Info::Github if ENV["GITHUB_WORKFLOW"]
+      return Info::Github.instance if ENV["GITHUB_WORKFLOW"]
 
-      Info::Gitlab if ENV["GITLAB_CI"]
+      Info::Gitlab.instance if ENV["GITLAB_CI"]
     end
 
     # Base class for CI executor info
