@@ -42,10 +42,10 @@ module Publisher
       option :summary_table_type,
              type: :string,
              desc: "Summary table type. Required: false",
-             default: Publisher::Helpers::Summary::ASCII,
+             default: Publisher::Helpers::Summary::ASCII.to_s,
              values: [
-               Publisher::Helpers::Summary::ASCII,
-               Publisher::Helpers::Summary::MARKDOWN
+               Publisher::Helpers::Summary::ASCII.to_s,
+               Publisher::Helpers::Summary::MARKDOWN.to_s
              ]
       option :base_url,
              type: :string,
@@ -121,10 +121,10 @@ module Publisher
           report_url: uploader.report_url,
           report_path: uploader.report_path,
           summary_type: args[:summary],
+          summary_table_type: args[:summary_table_type].to_sym,
           **args.slice(
             :update_pr,
             :collapse_summary,
-            :summary_table_type,
             :flaky_warning_status,
             :unresolved_discussion_on_failure,
             :report_title
