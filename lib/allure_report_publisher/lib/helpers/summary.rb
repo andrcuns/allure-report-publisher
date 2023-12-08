@@ -9,8 +9,8 @@ module Publisher
       PACKAGES = "packages".freeze
       SUITES = "suites".freeze
       TOTAL = "total".freeze
-      MARKDOWN = :markdown
-      ASCII = :ascii
+      MARKDOWN = "markdown".freeze
+      ASCII = "ascii".freeze
 
       # Summary table generator
       #
@@ -115,7 +115,7 @@ module Publisher
       def terminal_table
         Terminal::Table.new do |table|
           table.title = "#{summary_type} summary" unless markdown?
-          table.style = { border: table_type }
+          table.style = { border: table_type.to_sym }
           table.headings = ["", "passed", "failed", "skipped", "flaky", "total", "result"]
           yield(table)
         end

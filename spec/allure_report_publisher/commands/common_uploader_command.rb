@@ -46,7 +46,7 @@ RSpec.shared_examples "upload command" do
       report_url: report_url,
       report_path: report_path,
       summary_type: Publisher::Helpers::Summary::TOTAL,
-      summary_table_type: :ascii,
+      summary_table_type: Publisher::Helpers::Summary::ASCII,
       collapse_summary: false,
       unresolved_discussion_on_failure: false,
       flaky_warning_status: false,
@@ -99,7 +99,11 @@ RSpec.shared_examples "upload command" do
                     { update_pr: "comment", summary_type: "behaviors" }
     it_behaves_like "command", ["--update-pr=comment", "--summary=behaviors", "--summary-table-type=markdown"],
                     {},
-                    { update_pr: "comment", summary_type: "behaviors", summary_table_type: :markdown }
+                    {
+                      update_pr: "comment",
+                      summary_type: "behaviors",
+                      summary_table_type: Publisher::Helpers::Summary::MARKDOWN
+                    }
     it_behaves_like "command", ["--base-url=https://my-url.com"],
                     { base_url: "https://my-url.com" },
                     {}

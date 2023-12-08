@@ -9,17 +9,18 @@ RSpec.shared_examples "summary fetcher" do |summary_table_style|
   end
 
   let(:report_path) { "spec/fixture/fake_report" }
-  let(:markdown) { summary_table_style == :markdown }
+  let(:markdown) { summary_table_style == Publisher::Helpers::Summary::MARKDOWN }
 
   let(:summary_table) do
     terminal_table = Terminal::Table.new do |table|
       table.title = "#{summary_type || 'total'} summary" unless markdown
-      table.style = { border: summary_table_style }
+      table.style = { border: summary_table_style.to_sym }
       table.headings = ["", "passed", "failed", "skipped", "flaky", "total", "result"]
       rows.call(table)
     end
+    next terminal_table.to_s if markdown
 
-    summary_table_style == :ascii ? "```markdown\n#{terminal_table}\n```" : terminal_table.to_s
+    "```markdown\n#{terminal_table}\n```"
   end
 
   it "fetches #{summary_table_style} summary table", :aggregate_failures do
@@ -45,8 +46,8 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
         end
       end
 
-      it_behaves_like "summary fetcher", :ascii
-      it_behaves_like "summary fetcher", :markdown
+      it_behaves_like "summary fetcher", Publisher::Helpers::Summary::ASCII
+      it_behaves_like "summary fetcher", Publisher::Helpers::Summary::MARKDOWN
     end
 
     context "with packages summary" do
@@ -61,8 +62,8 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
         end
       end
 
-      it_behaves_like "summary fetcher", :ascii
-      it_behaves_like "summary fetcher", :markdown
+      it_behaves_like "summary fetcher", Publisher::Helpers::Summary::ASCII
+      it_behaves_like "summary fetcher", Publisher::Helpers::Summary::MARKDOWN
     end
 
     context "with suites summary" do
@@ -77,8 +78,8 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
         end
       end
 
-      it_behaves_like "summary fetcher", :ascii
-      it_behaves_like "summary fetcher", :markdown
+      it_behaves_like "summary fetcher", Publisher::Helpers::Summary::ASCII
+      it_behaves_like "summary fetcher", Publisher::Helpers::Summary::MARKDOWN
     end
   end
 
@@ -91,15 +92,15 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
     end
 
     context "with explicitly provided provided type" do
-      it_behaves_like "summary fetcher", :ascii
-      it_behaves_like "summary fetcher", :markdown
+      it_behaves_like "summary fetcher", Publisher::Helpers::Summary::ASCII
+      it_behaves_like "summary fetcher", Publisher::Helpers::Summary::MARKDOWN
     end
 
     context "without explicitly provided provided type" do
       let(:summary_type) { nil }
 
-      it_behaves_like "summary fetcher", :ascii
-      it_behaves_like "summary fetcher", :markdown
+      it_behaves_like "summary fetcher", Publisher::Helpers::Summary::ASCII
+      it_behaves_like "summary fetcher", Publisher::Helpers::Summary::MARKDOWN
     end
   end
 
@@ -116,7 +117,7 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
       end
     end
 
-    it_behaves_like "summary fetcher", :ascii
-    it_behaves_like "summary fetcher", :markdown
+    it_behaves_like "summary fetcher", Publisher::Helpers::Summary::ASCII
+    it_behaves_like "summary fetcher", Publisher::Helpers::Summary::MARKDOWN
   end
 end
