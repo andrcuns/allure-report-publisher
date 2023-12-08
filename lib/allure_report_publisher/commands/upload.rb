@@ -124,8 +124,8 @@ module Publisher
           **args.slice(
             :update_pr,
             :collapse_summary,
-            :summary_table_type,
             :flaky_warning_status,
+            :summary_table_type,
             :unresolved_discussion_on_failure,
             :report_title
           )
