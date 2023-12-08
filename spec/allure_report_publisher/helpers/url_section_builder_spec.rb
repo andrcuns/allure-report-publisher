@@ -56,7 +56,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
       <!-- allure -->
       ---
       # #{report_title}
-      `allure-report-publisher` generated test report!
+      [`allure-report-publisher`](https://github.com/andrcuns/allure-report-publisher) generated test report!
 
       <!-- jobs -->
       #{job_section}
