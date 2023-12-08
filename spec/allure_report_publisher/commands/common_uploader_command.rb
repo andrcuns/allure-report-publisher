@@ -45,7 +45,7 @@ RSpec.shared_examples "upload command" do
     {
       report_url: report_url,
       report_path: report_path,
-      summary_type: nil,
+      summary_type: Publisher::Helpers::Summary::TOTAL,
       summary_table_type: :ascii,
       collapse_summary: false,
       unresolved_discussion_on_failure: false,
