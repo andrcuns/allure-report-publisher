@@ -1,6 +1,6 @@
 **
 
 !lib
-!bin/allure-report-publisher
+!exe/allure-report-publisher
 !allure-report-publisher.gemspec
 !Gemfile
