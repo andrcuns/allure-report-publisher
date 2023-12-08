@@ -121,6 +121,7 @@ jobs:
               --update-pr="${{ matrix.results }}" \
               --summary="behaviors" \
               --summary-table-type="${{ matrix.table }}" \
+              --report-title="Test Report" \
               --copy-latest \
               --color \
               --debug
