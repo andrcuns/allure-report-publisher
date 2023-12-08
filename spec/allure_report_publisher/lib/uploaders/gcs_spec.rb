@@ -1,4 +1,5 @@
 require_relative "common_uploader"
+require_relative "../providers/gitlab_env"
 
 # rubocop:disable Layout/LineLength
 RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
@@ -33,6 +34,10 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   end
 
   context "with non ci run" do
+    around do |example|
+      ClimateControl.modify(GITHUB_WORKFLOW: nil, GITLAB_CI: nil) { example.run }
+    end
+
     it "generates allure report" do
       described_class.new(**args).execute
 
@@ -64,15 +69,13 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   end
 
   context "with ci run" do
-    let(:ci_provider) { Publisher::Providers::Github }
-    let(:ci_provider_instance) do
-      instance_double(Publisher::Providers::Github, executor_info: executor_info, add_result_summary: nil)
-    end
+    include_context "with gitlab env"
+
+    let(:report_url) { "https://storage.googleapis.com/bucket/project/#{run_id}/index.html" }
+    let(:executor_info) { Publisher::Providers::Info::Gitlab.instance.executor(report_url) }
 
     before do
       allow(File).to receive(:write)
-      allow(Publisher::Providers::Github).to receive(:run_id).and_return(1)
-      allow(Publisher::Providers::Github).to receive(:new) { ci_provider_instance }
 
       allow(bucket).to receive(:file).with(history[:gcs_path_run]) { history[:file] }
       allow(bucket).to receive(:file).with(report[:gcs_path_run]) { report[:file] }
@@ -104,18 +107,14 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
 
     it "adds executor info" do
       described_class.new(**args).execute
-      expect(File).to have_received(:write).with("#{common_info_path}/executor.json", executor_info.to_json).twice
-    end
-
-    it "updates pr description with allure report link" do
-      described_class.new(**args, update_pr: true).execute
-      expect(ci_provider_instance).to have_received(:add_result_summary)
+      expect(File).to have_received(:write)
+        .with("#{common_info_path}/executor.json", JSON.pretty_generate(executor_info)).twice
     end
 
     context "with default base url" do
       it "returns correct report urls" do
         expect(described_class.new(**args, copy_latest: true).report_urls).to eq({
-          "Report url" => "https://storage.googleapis.com/bucket/project/1/index.html",
+          "Report url" => report_url,
           "Latest report url" => "https://storage.googleapis.com/bucket/project/index.html"
         })
       end
@@ -126,7 +125,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
 
       it "returns correct report urls" do
         expect(described_class.new(**args, copy_latest: true).report_urls).to eq({
-          "Report url" => "#{base_url}/bucket/project/1/index.html",
+          "Report url" => "#{base_url}/bucket/project/#{run_id}/index.html",
           "Latest report url" => "#{base_url}/bucket/project/index.html"
         })
       end

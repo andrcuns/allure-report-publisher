@@ -1,4 +1,5 @@
 require_relative "common_uploader"
+require_relative "../providers/github_env"
 
 RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   include_context "with uploader"
@@ -27,7 +28,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
     {
       body: File.new("spec/fixture/fake_report/history/history.json"),
       bucket: bucket_name,
-      key: "#{prefix}/1/history/history.json",
+      key: "#{prefix}/#{run_id}/history/history.json",
       content_type: "application/json",
       cache_control: "max-age=3600"
     }
@@ -38,7 +39,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
     {
       body: File.new("spec/fixture/fake_report/index.html"),
       bucket: bucket_name,
-      key: "#{prefix}/1/index.html",
+      key: "#{prefix}/#{run_id}/index.html",
       content_type: "text/html",
       cache_control: "max-age=3600"
     }
@@ -74,6 +75,10 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   end
 
   context "with non ci run" do
+    around do |example|
+      ClimateControl.modify(GITHUB_WORKFLOW: nil, GITLAB_CI: nil) { example.run }
+    end
+
     it "generates allure report" do
       described_class.new(**args).execute
 
@@ -106,15 +111,12 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   end
 
   context "with ci run" do
-    let(:ci_provider) { Publisher::Providers::Github }
-    let(:ci_provider_instance) do
-      instance_double(Publisher::Providers::Github, executor_info: executor_info, add_result_summary: nil)
-    end
+    include_context "with github env"
+
+    let(:report_url) { "http://bucket.s3.amazonaws.com/project/#{run_id}/index.html" }
+    let(:executor_info) { Publisher::Providers::Info::Github.instance.executor(report_url) }
 
     before do
-      allow(Publisher::Providers::Github).to receive(:run_id).and_return(1)
-      allow(Publisher::Providers::Github).to receive(:new) { ci_provider_instance }
-
       allow(s3_client).to receive(:list_objects_v2).with({ bucket: bucket_name, prefix: "#{prefix}/data" })
                                                    .and_return(existing_files)
 
@@ -166,18 +168,15 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
 
     it "adds executor info" do
       described_class.new(**args).execute
-      expect(File).to have_received(:write).with("#{common_info_path}/executor.json", executor_info.to_json).twice
-    end
 
-    it "updates pr description with allure report link" do
-      described_class.new(**args, update_pr: true).execute
-      expect(ci_provider_instance).to have_received(:add_result_summary)
+      expect(File).to have_received(:write)
+        .with("#{common_info_path}/executor.json", JSON.pretty_generate(executor_info)).twice
     end
 
     context "with default base url" do
       it "returns correct report urls" do
         expect(described_class.new(**args, copy_latest: true).report_urls).to eq({
-          "Report url" => "http://bucket.s3.amazonaws.com/project/1/index.html",
+          "Report url" => report_url,
           "Latest report url" => "http://bucket.s3.amazonaws.com/project/index.html"
         })
       end
@@ -188,7 +187,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
 
       it "returns correct report urls" do
         expect(described_class.new(**args, copy_latest: true).report_urls).to eq({
-          "Report url" => "#{base_url}/project/1/index.html",
+          "Report url" => "#{base_url}/project/#{run_id}/index.html",
           "Latest report url" => "#{base_url}/project/index.html"
         })
       end

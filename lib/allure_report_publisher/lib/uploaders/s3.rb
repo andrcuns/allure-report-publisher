@@ -6,6 +6,13 @@ module Publisher
     # Report upload to AWS S3 bucket
     #
     class S3 < Uploader
+      # Report url
+      #
+      # @return [String]
+      def report_url
+        @report_url ||= url(full_prefix)
+      end
+
       private
 
       # S3 client
@@ -27,13 +34,6 @@ module Publisher
           force_path_style: ENV["AWS_FORCE_PATH_STYLE"] == "true",
           endpoint: ENV["AWS_ENDPOINT"]
         }.compact
-      end
-
-      # Report url
-      #
-      # @return [String]
-      def report_url
-        @report_url ||= url(full_prefix)
       end
 
       # Latest report url

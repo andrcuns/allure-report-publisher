@@ -2,7 +2,7 @@ module Publisher
   # Namespace for providers executing tests
   #
   module Providers
-    # Detect CI provider
+    # CI provider class
     #
     # @return [Publisher::Providers::Base]
     def self.provider
@@ -11,11 +11,18 @@ module Publisher
       Gitlab if ENV["GITLAB_CI"]
     end
 
+    # CI info class
+    #
+    # @return [Info::Base]
+    def self.info
+      return Info::Github.instance if ENV["GITHUB_WORKFLOW"]
+
+      Info::Gitlab.instance if ENV["GITLAB_CI"]
+    end
+
     # Base class for CI executor info
     #
     class Provider
-      ALLURE_JOB_NAME = "ALLURE_JOB_NAME".freeze
-
       # CI provider base
       #
       # @param [Hash] args
@@ -23,9 +30,10 @@ module Publisher
       # @option args [String] :report_path
       # @option args [Boolean] :update_pr
       # @option args [String] :summary_type
+      # @option args [Symbol] :summary_table_type
       # @option args [Boolean] :collapse_summay
       # @option args [Boolean] :unresolved_discussion_on_failure
-      # @option args [Symbol] :summary_table_type
+      # @option args [String] :report_title
       def initialize(**args)
         @report_url = args[:report_url]
         @report_path = args[:report_path]
@@ -37,40 +45,13 @@ module Publisher
         @report_title = args[:report_title]
       end
 
-      # :nocov:
-
-      # Get ci run ID without creating instance of ci provider
-      #
-      # @return [String]
-      def self.run_id
-        raise("Not implemented!")
-      end
-
-      # Get executor info
-      #
-      # @return [Hash]
-      def executor_info
-        raise("Not implemented!")
-      end
-      # :nocov:
-
       # Add report url to pull request description
       #
       # @return [void]
       def add_result_summary
-        raise("Not a pull request, skipped!") unless pr?
         return add_comment if comment?
 
         update_pr_description
-      end
-
-      # :nocov:
-
-      # Pull request run
-      #
-      # @return [Boolean]
-      def pr?
-        raise("Not implemented!")
       end
 
       private
@@ -104,28 +85,7 @@ module Publisher
       def add_comment
         raise("Not implemented!")
       end
-
-      # Build name
-      #
-      # @return [String]
-      def build_name
-        raise("Not implemented!")
-      end
-
-      # Commit SHA url
-      #
-      # @return [String]
-      def sha_url
-        raise("Not implemented!")
-      end
       # :nocov:
-
-      # CI run id
-      #
-      # @return [String]
-      def run_id
-        self.class.run_id
-      end
 
       # Add report url as comment
       #

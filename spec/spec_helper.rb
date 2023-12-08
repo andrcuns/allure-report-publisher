@@ -29,6 +29,11 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.prepend_before do
+    allow(Publisher::Providers::Info::Gitlab).to receive(:instance) { Publisher::Providers::Info::Gitlab.send(:new) }
+    allow(Publisher::Providers::Info::Github).to receive(:instance) { Publisher::Providers::Info::Github.send(:new) }
+  end
 end
 
 AllureRspec.configure do |c|

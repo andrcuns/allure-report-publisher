@@ -6,6 +6,7 @@ module Publisher
     #
     class Github < Provider
       include Helpers
+      extend Forwardable
 
       # Set octokit to autopaginate
       #
@@ -13,37 +14,12 @@ module Publisher
         config.auto_paginate = true
       end
 
-      # Run id
-      #
-      # @return [String]
-      def self.run_id
-        @run_id ||= ENV["GITHUB_RUN_ID"]
-      end
-
-      # Pull request run
-      #
-      # @return [Boolean]
-      def pr?
-        ENV["GITHUB_EVENT_NAME"] == "pull_request"
-      end
-
-      # Executor info
-      #
-      # @return [Hash]
-      def executor_info
-        {
-          name: "Github",
-          type: "github",
-          reportName: "AllureReport",
-          url: server_url,
-          reportUrl: report_url,
-          buildUrl: build_url,
-          buildOrder: run_id,
-          buildName: build_name
-        }
-      end
-
       private
+
+      def_delegators :"Publisher::Providers::Info::Github.instance",
+                     :repository,
+                     :server_url,
+                     :build_name
 
       # Github api client
       #
@@ -107,34 +83,6 @@ module Publisher
       # @return [Integer]
       def pr_id
         @pr_id ||= github_event[:number]
-      end
-
-      # Server url
-      #
-      # @return [String]
-      def server_url
-        @server_url ||= ENV["GITHUB_SERVER_URL"]
-      end
-
-      # Build url
-      #
-      # @return [String]
-      def build_url
-        @build_url ||= "#{server_url}/#{repository}/actions/runs/#{run_id}"
-      end
-
-      # Job name
-      #
-      # @return [String]
-      def build_name
-        @build_name ||= ENV[ALLURE_JOB_NAME] || ENV["GITHUB_JOB"]
-      end
-
-      # Github repository
-      #
-      # @return [String]
-      def repository
-        @repository ||= ENV["GITHUB_REPOSITORY"]
       end
 
       # Commit sha url

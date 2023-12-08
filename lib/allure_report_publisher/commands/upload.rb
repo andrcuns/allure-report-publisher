@@ -87,7 +87,7 @@ module Publisher
 
         generate_report
         upload_report
-        return unless args[:update_pr] && uploader.pr?
+        return unless args[:update_pr] && Providers.info&.pr?
 
         add_report_urls
       rescue StandardError => e
@@ -103,16 +103,23 @@ module Publisher
       # @return [Publisher::Uploaders::Uploader]
       def uploader
         @uploader ||= uploaders(args[:type]).new(
-          summary_type: args[:summary],
           result_paths: @result_paths,
+          **args.slice(:bucket, :prefix, :base_url, :copy_latest)
+        )
+      end
+
+      # CI provider instance
+      #
+      # @return [Publisher::Providers::Base]
+      def ci_provider
+        @ci_provider = Providers.provider&.new(
+          report_url: uploader.report_url,
+          report_path: uploader.report_path,
+          summary_type: args[:summary],
           **args.slice(
-            :bucket,
-            :prefix,
-            :base_url,
-            :copy_latest,
+            :summary_table_type,
             :update_pr,
             :collapse_summary,
-            :summary_table_type,
             :unresolved_discussion_on_failure,
             :report_title
           )
@@ -178,7 +185,7 @@ module Publisher
       # @return [void]
       def add_report_urls
         log("Adding reports urls")
-        Spinner.spin("updating", exit_on_error: false, debug: args[:debug]) { uploader.add_result_summary }
+        Spinner.spin("updating", exit_on_error: false, debug: args[:debug]) { ci_provider.add_result_summary }
       end
 
       # Handle error during upload command

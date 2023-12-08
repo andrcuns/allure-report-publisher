@@ -22,12 +22,10 @@ RSpec.shared_context "with provider helper" do
 
   let(:report_url) { "https://report.com" }
   let(:report_path) { "report_path" }
-  let(:auth_token) { "token" }
   let(:full_pr_description) { "pr description" }
   let(:updated_pr_description) { "updated description" }
   let(:updated_comment_body) { "updated comment" }
   let(:update_pr) { "description" }
-  let(:sha) { "cfdef23b4b06df32ab1e98ee4091504948daf2a9" }
   let(:summary_type) { nil }
   let(:summary_table_type) { nil }
   let(:collapse_summary) { false }
@@ -47,9 +45,5 @@ RSpec.shared_context "with provider helper" do
         report_title: report_title
       )
       .and_return(url_builder)
-  end
-
-  around do |example|
-    ClimateControl.modify(env) { example.run }
   end
 end
