@@ -1,4 +1,4 @@
-RSpec.describe Publisher::Providers::Info::Github do
+RSpec.describe Publisher::Providers::Info::Github, epic: "providers" do
   subject(:pr) { described_class.instance.pr? }
 
   let(:event_name) { "push" }

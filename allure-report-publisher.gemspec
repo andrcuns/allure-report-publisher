@@ -24,8 +24,8 @@ Gem::Specification.new do |spec|
     "rubygems_mfa_required" => "true"
   }
 
-  spec.files         = Dir["README.md", "lib/**/*", "bin/allure-report-publisher"]
-  spec.bindir        = "bin"
+  spec.files         = Dir["README.md", "lib/**/*", "exe/allure-report-publisher"]
+  spec.bindir        = "exe"
   spec.executables   = ["allure-report-publisher"]
   spec.require_paths = ["lib"]
 
