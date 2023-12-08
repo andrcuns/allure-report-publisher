@@ -32,6 +32,7 @@ module Publisher
       # @option args [String] :summary_type
       # @option args [Symbol] :summary_table_type
       # @option args [Boolean] :collapse_summay
+      # @option args [Boolean] :flaky_warning_status
       # @option args [Boolean] :unresolved_discussion_on_failure
       # @option args [String] :report_title
       def initialize(**args)
@@ -41,6 +42,7 @@ module Publisher
         @summary_type = args[:summary_type]
         @summary_table_type = args[:summary_table_type]
         @collapse_summary = args[:collapse_summary]
+        @flaky_warning_status = args[:flaky_warning_status]
         @unresolved_discussion_on_failure = args[:unresolved_discussion_on_failure]
         @report_title = args[:report_title]
       end
@@ -62,6 +64,7 @@ module Publisher
                   :summary_type,
                   :collapse_summary,
                   :summary_table_type,
+                  :flaky_warning_status,
                   :unresolved_discussion_on_failure,
                   :report_title
 
@@ -106,6 +109,7 @@ module Publisher
           summary_type: summary_type,
           summary_table_type: summary_table_type,
           collapse_summary: collapse_summary,
+          flaky_warning_status: flaky_warning_status,
           report_title: report_title
         )
       end

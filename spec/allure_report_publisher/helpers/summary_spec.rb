@@ -1,5 +1,12 @@
 RSpec.shared_examples "summary fetcher" do |summary_table_style|
-  subject(:summary) { described_class.new(report_path, summary_type, summary_table_style) }
+  subject(:summary) do
+    described_class.new(
+      report_path,
+      summary_type,
+      summary_table_style,
+      flaky_warning_status: flaky_warning_status
+    )
+  end
 
   let(:report_path) { "spec/fixture/fake_report" }
   let(:markdown) { summary_table_style == :markdown }
@@ -22,6 +29,8 @@ RSpec.shared_examples "summary fetcher" do |summary_table_style|
 end
 
 RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
+  let(:flaky_warning_status) { true }
+
   context "with expanded summary" do
     context "with behavior summary" do
       let(:summary_type) { Publisher::Helpers::Summary::BEHAVIORS }
@@ -91,5 +100,22 @@ RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
       it_behaves_like "summary fetcher", :ascii
       it_behaves_like "summary fetcher", :markdown
     end
+  end
+
+  context "with flaky warning status disabled" do
+    let(:flaky_warning_status) { false }
+    let(:summary_type) { Publisher::Helpers::Summary::PACKAGES }
+    let(:status) { "✅" }
+
+    let(:rows) do
+      lambda do |table|
+        [["epic name", 4, 0, 1, 0, 5, "✅"], ["epic name 2", 1, 0, 0, 1, 1, "✅"]].each { |row| table << row }
+        table << :separator
+        table << ["Total", 5, 0, 1, 1, 6, "✅"]
+      end
+    end
+
+    it_behaves_like "summary fetcher", :ascii
+    it_behaves_like "summary fetcher", :markdown
   end
 end

@@ -14,6 +14,7 @@ module Publisher
       # @param [String] sha_url
       # @param [String] summary_type
       # @param [String] collapse_summary
+      # @param [Boolean] flaky_warning_status
       # @param [String] report_title
       def initialize(**args)
         @report_url = args[:report_url]
@@ -23,6 +24,7 @@ module Publisher
         @summary_type = args[:summary_type]
         @summary_table_type = args[:summary_table_type]
         @collapse_summary = args[:collapse_summary]
+        @flaky_warning_status = args[:flaky_warning_status]
         @report_title = args[:report_title]
       end
 
@@ -67,6 +69,7 @@ module Publisher
                   :summary_type,
                   :summary_table_type,
                   :collapse_summary,
+                  :flaky_warning_status,
                   :report_title
 
       private
@@ -82,7 +85,12 @@ module Publisher
       #
       # @return [Helpers::Summary]
       def summary
-        @summary ||= Helpers::Summary.new(report_path, summary_type, summary_table_type)
+        @summary ||= Helpers::Summary.new(
+          report_path,
+          summary_type,
+          summary_table_type,
+          flaky_warning_status: flaky_warning_status
+        )
       end
 
       # Single job report URL entry
