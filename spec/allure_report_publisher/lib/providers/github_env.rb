@@ -23,8 +23,10 @@ RSpec.shared_context "with github env" do
   end
 
   before do
-    allow(Publisher::Providers::Info::Github).to receive(:instance)
-      .and_return(Publisher::Providers::Info::Github.send(:new))
+    allow(Publisher::Providers).to receive_messages(
+      provider: Publisher::Providers::Github,
+      info: Publisher::Providers::Info::Github.instance
+    )
   end
 
   around do |example|

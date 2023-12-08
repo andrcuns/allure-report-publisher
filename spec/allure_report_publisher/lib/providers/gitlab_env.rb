@@ -11,7 +11,6 @@ RSpec.shared_context "with gitlab env" do
 
   let(:env) do
     {
-      GITHUB_WORKFLOW: nil,
       GITLAB_CI: "true",
       CI_SERVER_URL: "https://gitlab.com",
       CI_JOB_NAME: "test",
@@ -29,8 +28,10 @@ RSpec.shared_context "with gitlab env" do
   end
 
   before do
-    allow(Publisher::Providers::Info::Gitlab).to receive(:instance)
-      .and_return(Publisher::Providers::Info::Gitlab.send(:new))
+    allow(Publisher::Providers).to receive_messages(
+      provider: Publisher::Providers::Gitlab,
+      info: Publisher::Providers::Info::Gitlab.instance
+    )
   end
 
   around do |example|

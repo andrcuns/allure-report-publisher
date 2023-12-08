@@ -11,7 +11,7 @@ RSpec.describe Publisher::Providers, epic: "providers" do
     end
 
     it "returns github info instance" do
-      expect(described_class.info).to eq(Publisher::Providers::Info::Github.instance)
+      expect(described_class.info).to be_a Publisher::Providers::Info::Github
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.describe Publisher::Providers, epic: "providers" do
     end
 
     it "returns gitlab info instance" do
-      expect(described_class.info).to eq(Publisher::Providers::Info::Gitlab.instance)
+      expect(described_class.info).to be_a Publisher::Providers::Info::Gitlab
     end
   end
 end
