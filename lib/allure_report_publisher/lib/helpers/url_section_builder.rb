@@ -78,7 +78,9 @@ module Publisher
       #
       # @return [String]
       def heading
-        @heading ||= "# #{report_title}\n`allure-report-publisher` generated test report!"
+        @heading ||= "# #{report_title}\n" \
+                     "[`allure-report-publisher`](https://github.com/andrcuns/allure-report-publisher) " \
+                     "generated test report!"
       end
 
       # Test run summary
