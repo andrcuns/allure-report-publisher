@@ -27,7 +27,7 @@ module Publisher
         #
         # @return [Boolean]
         def pr?
-          (allure_project && allure_mr_iid) || ENV["CI_PIPELINE_SOURCE"] == "merge_request_event"
+          !!(allure_project && allure_mr_iid) || ENV["CI_PIPELINE_SOURCE"] == "merge_request_event"
         end
 
         # Get ci run ID without creating instance of ci provider
