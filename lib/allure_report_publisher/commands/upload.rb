@@ -15,7 +15,6 @@ module Publisher
                values: %w[s3 gcs],
                desc: "Cloud storage type"
 
-      # rubocop:disable Metrics/LineLength
       option :results_glob,
              desc: "Glob pattern to return allure results directories. Required: true"
       option :bucket,
@@ -33,6 +32,7 @@ module Publisher
       option :summary,
              type: :string,
              desc: "Additionally add summary table to PR comment or description. Required: false",
+             default: Publisher::Helpers::Summary::TOTAL,
              values: [
                Publisher::Helpers::Summary::BEHAVIORS,
                Publisher::Helpers::Summary::SUITES,
@@ -47,13 +47,13 @@ module Publisher
                Publisher::Helpers::Summary::ASCII,
                Publisher::Helpers::Summary::MARKDOWN
              ]
-      option :flaky_warning_status,
-             type: :boolean,
-             default: false,
-             desc: "Mark run with a '!' status in PR comment/description if report contains flaky tests. Required: false"
       option :base_url,
              type: :string,
              desc: "Use custom base url instead of default cloud provider one. Required: false"
+      option :flaky_warning_status,
+             type: :boolean,
+             default: false,
+             desc: "Mark run with a '!' status in PR comment/description if report contains flaky tests"
       option :collapse_summary,
              type: :boolean,
              default: false,
@@ -77,7 +77,6 @@ module Publisher
              type: :boolean,
              default: false,
              desc: "Print additional debug output"
-      # rubocop:enable Metrics/LineLength
 
       example [
         "s3 --results-glob='path/to/allure-results' --bucket=my-bucket",

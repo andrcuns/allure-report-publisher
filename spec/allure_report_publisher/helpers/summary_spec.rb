@@ -30,6 +30,7 @@ end
 
 RSpec.describe Publisher::Helpers::Summary, epic: "helpers" do
   let(:flaky_warning_status) { true }
+  let(:summary_type) { Publisher::Helpers::Summary::TOTAL }
 
   context "with expanded summary" do
     context "with behavior summary" do
