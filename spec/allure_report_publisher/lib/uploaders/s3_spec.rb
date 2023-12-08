@@ -74,6 +74,10 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   end
 
   context "with non ci run" do
+    around do |example|
+      ClimateControl.modify({ "GITHUB_WORKFLOW" => nil }) { example.run }
+    end
+
     it "generates allure report" do
       described_class.new(**args).execute
 
