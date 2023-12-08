@@ -2,7 +2,9 @@ require "tempfile"
 
 RSpec.shared_context "with github env" do
   let(:event_name) { "pull_request" }
+  let(:auth_token) { "token" }
   let(:step_summary_file) { nil }
+  let(:run_id) { "123" }
 
   let(:env) do
     {
@@ -10,7 +12,7 @@ RSpec.shared_context "with github env" do
       GITHUB_SERVER_URL: "https://github.com",
       GITHUB_REPOSITORY: "andrcuns/allure-report-publisher",
       GITHUB_JOB: "test",
-      GITHUB_RUN_ID: "123",
+      GITHUB_RUN_ID: run_id,
       GITHUB_API_URL: "https://api.github.com",
       GITHUB_EVENT_PATH: "spec/fixture/workflow_event.json",
       GITHUB_STEP_SUMMARY: step_summary_file,

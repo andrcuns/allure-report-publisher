@@ -22,7 +22,6 @@ RSpec.shared_context "with provider helper" do
 
   let(:report_url) { "https://report.com" }
   let(:report_path) { "report_path" }
-  let(:auth_token) { "token" }
   let(:full_pr_description) { "pr description" }
   let(:updated_pr_description) { "updated description" }
   let(:updated_comment_body) { "updated comment" }

@@ -15,8 +15,7 @@ RSpec.shared_context "with uploader" do
   let(:prefix) { "project" }
   let(:base_url) { nil }
   let(:ci_provider) { nil }
-  let(:run_id) { 1 }
-  let(:executor_info) { { name: "Github" } }
+  let(:run_id) { "123" }
 
   let(:history_files) do
     [
@@ -34,7 +33,6 @@ RSpec.shared_context "with uploader" do
       bucket: bucket_name,
       prefix: prefix,
       base_url: base_url,
-      update_pr: false,
       copy_latest: false
     }
   end
@@ -43,7 +41,6 @@ RSpec.shared_context "with uploader" do
   let(:report_path) { "spec/fixture/fake_report" }
 
   before do
-    allow(Publisher::Providers).to receive(:provider) { ci_provider }
     allow(Publisher::ReportGenerator).to receive(:new) { report_generator }
   end
 end

@@ -8,7 +8,6 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
   let(:build_name) { env[:CI_JOB_NAME] }
   let(:server_url) { env[:CI_SERVER_URL] }
   let(:project) { env[:CI_PROJECT_PATH] }
-  let(:run_id) { env[:CI_PIPELINE_ID] }
   let(:api_url) { env[:GITHUB_API_URL] }
   let(:discussion) { nil }
 

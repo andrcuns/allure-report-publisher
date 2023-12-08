@@ -8,7 +8,6 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
   let(:build_name) { env[:GITHUB_JOB] }
   let(:server_url) { env[:GITHUB_SERVER_URL] }
   let(:repository) { env[:GITHUB_REPOSITORY] }
-  let(:run_id) { env[:GITHUB_RUN_ID] }
   let(:api_url) { env[:GITHUB_API_URL] }
   let(:sha_url) { "[#{sha[0..7]}](#{server_url}/#{repository}/pull/1/commits/#{sha})" }
 

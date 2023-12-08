@@ -44,7 +44,6 @@ module Publisher
       def execute
         generate_report
         upload
-        add_result_summary
       end
 
       # Generate allure report

@@ -5,13 +5,15 @@ RSpec.shared_context "with gitlab env" do
   let(:event_name) { "merge_request_event" }
   let(:custom_project) { nil }
   let(:custom_mr_id) { nil }
+  let(:auth_token) { "token" }
+  let(:run_id) { "123" }
 
   let(:env) do
     {
       GITLAB_CI: "yes",
       CI_SERVER_URL: "https://gitlab.com",
       CI_JOB_NAME: "test",
-      CI_PIPELINE_ID: "123",
+      CI_PIPELINE_ID: run_id,
       CI_PIPELINE_URL: "https://gitlab.com/pipeline/url",
       CI_PROJECT_PATH: "project",
       CI_MERGE_REQUEST_IID: mr_id,
