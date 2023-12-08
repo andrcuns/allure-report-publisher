@@ -1,4 +1,4 @@
-RSpec.describe Publisher::Providers::Info::Gitlab do
+RSpec.describe Publisher::Providers::Info::Gitlab, epic: "providers" do
   subject(:pr) { described_class.instance.pr? }
 
   let(:allure_project) { nil }
