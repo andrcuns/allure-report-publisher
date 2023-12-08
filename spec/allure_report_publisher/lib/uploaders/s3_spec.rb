@@ -1,5 +1,4 @@
 require_relative "common_uploader"
-require_relative "../providers/github_env"
 
 RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   include_context "with uploader"

@@ -1,3 +1,5 @@
+require_relative "../providers/github_env"
+
 RSpec.shared_context "with uploader" do
   include_context "with mock helper"
 
