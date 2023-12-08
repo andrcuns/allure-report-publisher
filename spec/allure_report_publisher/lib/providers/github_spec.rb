@@ -1,15 +1,15 @@
 require_relative "common_provider"
+require_relative "github_env"
 
 RSpec.describe Publisher::Providers::Github, epic: "providers" do
   include_context "with provider helper"
+  include_context "with github env"
 
   let(:build_name) { env[:GITHUB_JOB] }
   let(:server_url) { env[:GITHUB_SERVER_URL] }
   let(:repository) { env[:GITHUB_REPOSITORY] }
   let(:run_id) { env[:GITHUB_RUN_ID] }
   let(:api_url) { env[:GITHUB_API_URL] }
-  let(:step_summary_file) { env[:GITHUB_STEP_SUMMARY] }
-  let(:event_name) { "pull_request" }
   let(:sha_url) { "[#{sha[0..7]}](#{server_url}/#{repository}/pull/1/commits/#{sha})" }
 
   let(:client) do
@@ -21,38 +21,6 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
       add_comment: nil,
       update_comment: nil
     )
-  end
-
-  let(:env) do
-    {
-      GITHUB_WORKFLOW: "yes",
-      GITHUB_SERVER_URL: "https://github.com",
-      GITHUB_REPOSITORY: "andrcuns/allure-report-publisher",
-      GITHUB_JOB: "test",
-      GITHUB_RUN_ID: "123",
-      GITHUB_API_URL: "https://api.github.com",
-      GITHUB_EVENT_PATH: "spec/fixture/workflow_event.json",
-      GITHUB_STEP_SUMMARY: "step/summary/file",
-      GITHUB_AUTH_TOKEN: auth_token,
-      GITHUB_EVENT_NAME: event_name
-    }.compact
-  end
-
-  context "with any context" do
-    it "returns correct executor info" do
-      expect(provider.executor_info).to eq(
-        {
-          name: "Github",
-          type: "github",
-          reportName: "AllureReport",
-          url: server_url,
-          reportUrl: report_url,
-          buildUrl: "#{server_url}/#{repository}/actions/runs/#{run_id}",
-          buildOrder: run_id,
-          buildName: build_name
-        }
-      )
-    end
   end
 
   context "with pr context" do
@@ -110,26 +78,18 @@ RSpec.describe Publisher::Providers::Github, epic: "providers" do
 
     context "with adding report urls to step summary" do
       let(:update_pr) { "actions" }
+      let(:step_summary_file) { Tempfile.create("summary", "tmp").path }
 
-      before do
-        allow(File).to receive(:write)
-        allow(File).to receive(:exist?).with(step_summary_file).and_return(true)
+      after do
+        File.unlink(step_summary_file)
       end
 
       it "writes to step summary file" do
         provider.add_result_summary
 
         expect(url_builder).to have_received(:comment_body).with(no_args)
-        expect(File).to have_received(:write).with(step_summary_file, updated_comment_body)
+        expect(File.read(step_summary_file)).to eq(updated_comment_body)
       end
-    end
-  end
-
-  context "without pr context" do
-    let(:event_name) { "push" }
-
-    it "skips adding allure link to pr with not a pr message" do
-      expect { provider.add_result_summary }.to raise_error("Not a pull request, skipped!")
     end
   end
 

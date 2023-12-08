@@ -48,8 +48,4 @@ RSpec.shared_context "with provider helper" do
       )
       .and_return(url_builder)
   end
-
-  around do |example|
-    ClimateControl.modify(env) { example.run }
-  end
 end
