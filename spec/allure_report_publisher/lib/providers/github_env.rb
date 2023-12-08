@@ -5,6 +5,7 @@ RSpec.shared_context "with github env" do
   let(:auth_token) { "token" }
   let(:step_summary_file) { nil }
   let(:run_id) { "123" }
+  let(:sha) { "cfdef23b4b06df32ab1e98ee4091504948daf2a9" }
 
   let(:env) do
     {

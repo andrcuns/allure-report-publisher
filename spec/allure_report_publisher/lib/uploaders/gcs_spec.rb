@@ -1,4 +1,5 @@
 require_relative "common_uploader"
+require_relative "../providers/gitlab_env"
 
 # rubocop:disable Layout/LineLength
 RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
@@ -34,7 +35,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
 
   context "with non ci run" do
     around do |example|
-      ClimateControl.modify({ "GITHUB_WORKFLOW" => nil }) { example.run }
+      ClimateControl.modify(GITHUB_WORKFLOW: nil) { example.run }
     end
 
     it "generates allure report" do
@@ -68,10 +69,10 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
   end
 
   context "with ci run" do
-    include_context "with github env"
+    include_context "with gitlab env"
 
     let(:report_url) { "https://storage.googleapis.com/bucket/project/#{run_id}/index.html" }
-    let(:executor_info) { Publisher::Providers::Info::Github.instance.executor(report_url) }
+    let(:executor_info) { Publisher::Providers::Info::Gitlab.instance.executor(report_url) }
 
     before do
       allow(File).to receive(:write)

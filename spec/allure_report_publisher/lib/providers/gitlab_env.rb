@@ -7,10 +7,12 @@ RSpec.shared_context "with gitlab env" do
   let(:custom_mr_id) { nil }
   let(:auth_token) { "token" }
   let(:run_id) { "123" }
+  let(:sha) { "cfdef23b4b06df32ab1e98ee4091504948daf2a9" }
 
   let(:env) do
     {
-      GITLAB_CI: "yes",
+      GITHUB_WORKFLOW: nil,
+      GITLAB_CI: "true",
       CI_SERVER_URL: "https://gitlab.com",
       CI_JOB_NAME: "test",
       CI_PIPELINE_ID: run_id,
