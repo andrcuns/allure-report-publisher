@@ -75,12 +75,16 @@ module Publisher
         urls
       end
 
+      # :nocov:
+
       # Report url
       #
       # @return [String]
       def report_url
         raise("Not Implemented!")
       end
+
+      # :nocov:
 
       def_delegator :report_generator, :report_path
 
@@ -144,6 +148,7 @@ module Publisher
       def upload_latest_copy
         raise("Not implemented!")
       end
+
       # :nocov:
 
       # Allure report generator
