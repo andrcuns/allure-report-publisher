@@ -8,6 +8,8 @@ module Publisher
       class Base
         ALLURE_JOB_NAME = "ALLURE_JOB_NAME".freeze
 
+        # :nocov:
+
         # CI Provider executor info
         #
         # @param [String] report_url
@@ -29,6 +31,8 @@ module Publisher
         def run_id
           raise("Not implemented!")
         end
+
+        # :nocov:
       end
     end
   end
