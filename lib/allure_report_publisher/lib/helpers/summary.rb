@@ -17,10 +17,12 @@ module Publisher
       # @param [String] report_path
       # @param [String] summary_type
       # @param [String] markdown
-      def initialize(report_path, summary_type, table_type = ASCII)
+      # @param [Boolean] flaky_warning_status
+      def initialize(report_path, summary_type, table_type = ASCII, flaky_warning_status: false)
         @report_path = report_path
         @summary_type = summary_type || TOTAL
         @table_type = table_type
+        @flaky_warning_status = flaky_warning_status
       end
 
       # Summary table
@@ -51,7 +53,7 @@ module Publisher
 
       private
 
-      attr_reader :report_path, :summary_type, :table_type
+      attr_reader :report_path, :summary_type, :table_type, :flaky_warning_status
 
       # Expanded summary table
       #
@@ -102,7 +104,7 @@ module Publisher
       # @return [String]
       def status_icon(passed, failed, flaky)
         return "➖" if passed.zero? && failed.zero?
-        return flaky.zero? ? "✅" : "❗" if failed.zero?
+        return !flaky_warning_status || flaky.zero? ? "✅" : "❗" if failed.zero?
 
         "❌"
       end

@@ -7,6 +7,7 @@ RSpec.shared_context "with provider helper" do
       summary_type: summary_type,
       summary_table_type: summary_table_type,
       collapse_summary: collapse_summary,
+      flaky_warning_status: false,
       unresolved_discussion_on_failure: unresolved_discussion_on_failure,
       report_title: report_title
     )
@@ -42,6 +43,7 @@ RSpec.shared_context "with provider helper" do
         summary_type: summary_type,
         summary_table_type: summary_table_type,
         collapse_summary: collapse_summary,
+        flaky_warning_status: false,
         report_title: report_title
       )
       .and_return(url_builder)
