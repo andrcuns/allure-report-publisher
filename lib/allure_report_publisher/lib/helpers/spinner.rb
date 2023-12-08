@@ -121,8 +121,7 @@ module Publisher
     # @return [void]
     def spinner_error(error)
       message = ["failed", error.message]
-      log_debug("Error: #{error.message}")
-      log_debug(error.backtrace.join("\n"))
+      log_debug("Error: #{error.message}\n#{error.backtrace.join("\n")}")
 
       colored_message = colorize(message.compact.join("\n"), error_color)
       return spinner.error(colored_message) if tty?
