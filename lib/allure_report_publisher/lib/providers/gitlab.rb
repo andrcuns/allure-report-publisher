@@ -12,6 +12,7 @@ module Publisher
 
       def_delegators :"Publisher::Providers::Info::Gitlab.instance",
                      :allure_project,
+                     :mr_iid,
                      :allure_mr_iid,
                      :server_url,
                      :build_name
@@ -66,13 +67,6 @@ module Publisher
       # @return [String]
       def project
         @project ||= allure_project || env("CI_MERGE_REQUEST_PROJECT_PATH") || env("CI_PROJECT_PATH")
-      end
-
-      # Merge request iid
-      #
-      # @return [Integer]
-      def mr_iid
-        @mr_iid ||= allure_mr_iid || env("CI_MERGE_REQUEST_IID")
       end
 
       # Commit sha url
