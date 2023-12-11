@@ -68,7 +68,7 @@ Examples:
 
 All named options can be configured via environment variables. Environment variables are prefixed with `ALLURE_` and uppercased.
 
-Example: `--results-glob` can be configured via `ALLURE_REPORT_RESULTS_GLOB`
+Example: `--results-glob` can be configured via `ALLURE_RESULTS_GLOB`
 
 # Storage providers
 
