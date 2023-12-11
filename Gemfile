@@ -13,7 +13,7 @@ group :development do
   gem "activesupport", "~> 7.1"
   gem "allure-rspec", "~> 2.23.0"
   gem "climate_control", "~> 1.2.0"
-  gem "debug", "~> 1.0", ">= 1.0.0"
+  gem "debug", "~> 1.9"
   gem "rake", "~> 13.1"
   gem "rspec", "~> 3.11"
   gem "rubocop", "~> 1.58"
