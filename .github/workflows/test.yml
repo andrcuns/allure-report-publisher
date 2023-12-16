@@ -45,10 +45,10 @@ jobs:
         with:
           coverageCommand: bundle exec rspec --force-color
           coverageLocations: coverage/coverage.json:simplecov
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: allure-reports
+          name: allure-reports-${{ matrix.ruby }}
           path: reports/allure-results/
           retention-days: 1
 
@@ -84,9 +84,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Download allure reports
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: allure-reports
           path: reports/allure-results
       - name: Publish allure report
         env:
@@ -115,7 +114,7 @@ jobs:
             -e ALLURE_JOB_NAME="rspec" \
             publisher:latest \
             upload ${{ matrix.provider }} \
-              --results-glob="/workspace/reports/allure-results" \
+              --results-glob="/workspace/reports/allure-results/*" \
               --bucket="${{ matrix.bucket }}" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="${{ matrix.results }}" \
