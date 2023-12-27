@@ -1,4 +1,4 @@
-FROM ruby:3.2.2-alpine3.18 as ruby
+FROM ruby:3.3.0-alpine3.18 as ruby
 
 ARG GEMFILE=allure-report-publisher.gem
 
