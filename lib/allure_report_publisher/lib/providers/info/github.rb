@@ -34,7 +34,7 @@ module Publisher
         #
         # @return [String]
         def run_id
-          @run_id ||= env("GITHUB_RUN_ID")
+          @run_id ||= env(ALLURE_RUN_ID) || env("GITHUB_RUN_ID")
         end
 
         # Server url

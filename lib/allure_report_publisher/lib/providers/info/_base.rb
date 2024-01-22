@@ -7,6 +7,7 @@ module Publisher
       #
       class Base
         ALLURE_JOB_NAME = "ALLURE_JOB_NAME".freeze
+        ALLURE_RUN_ID = "ALLURE_RUN_ID".freeze
 
         # :nocov:
 
