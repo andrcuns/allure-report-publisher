@@ -34,7 +34,7 @@ module Publisher
         #
         # @return [String]
         def run_id
-          @run_id ||= ENV["CI_PIPELINE_ID"]
+          @run_id ||= env(ALLURE_RUN_ID) || ENV["CI_PIPELINE_ID"]
         end
 
         # Server url

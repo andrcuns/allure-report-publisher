@@ -156,6 +156,7 @@ Authentication for PR updates:
 Following environment variables can override default CI values:
 
 - `ALLURE_JOB_NAME`: overrides default `GITHUB_JOB` value which is used as name for report url section
+- `ALLURE_RUN_ID`: overrides default `GITHUB_RUN_ID` value which is used as name for the run number
 
 ### allure-publish-action
 
@@ -176,6 +177,7 @@ Authentication for MR updates:
 Following environment variables can override default CI values:
 
 - `ALLURE_JOB_NAME`: overrides default `CI_JOB_NAME` value which is used as name for report url section
+- `ALLURE_RUN_ID`: overrides default `CI_PIPELINE_ID` value which is used as name for the run number
 
 In case merge request triggers a downstream pipeline yet you want to update original merge request, overriding following environment variables might be useful:
 
