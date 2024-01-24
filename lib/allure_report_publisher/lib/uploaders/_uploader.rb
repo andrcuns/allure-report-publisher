@@ -30,12 +30,14 @@ module Publisher
       # @option args [String] :prefix
       # @option args [String] :base_url
       # @option args [String] :copy_latest
+      # @option args [String] :report_name
       def initialize(**args)
         @result_paths = args[:result_paths]
         @bucket_name = args[:bucket]
         @prefix = args[:prefix]
         @base_url = args[:base_url]
         @copy_latest = ci_info && args[:copy_latest] # copy latest for ci only
+        @report_name = args[:report_name]
       end
 
       # Execute allure report generation and upload
@@ -94,7 +96,8 @@ module Publisher
                   :bucket_name,
                   :prefix,
                   :base_url,
-                  :copy_latest
+                  :copy_latest,
+                  :report_name
 
       def_delegator :report_generator, :common_info_path
 
@@ -155,7 +158,7 @@ module Publisher
       #
       # @return [Publisher::ReportGenerator]
       def report_generator
-        @report_generator ||= ReportGenerator.new(result_paths)
+        @report_generator ||= ReportGenerator.new(result_paths, report_name)
       end
 
       # Report path prefix

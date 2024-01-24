@@ -16,6 +16,7 @@ RSpec.shared_context "with uploader" do
   let(:base_url) { nil }
   let(:ci_provider) { nil }
   let(:run_id) { "123" }
+  let(:report_name) { nil }
 
   let(:history_files) do
     [
@@ -33,7 +34,8 @@ RSpec.shared_context "with uploader" do
       bucket: bucket_name,
       prefix: prefix,
       base_url: base_url,
-      copy_latest: false
+      copy_latest: false,
+      report_name: report_name
     }
   end
 

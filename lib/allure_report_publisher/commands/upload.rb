@@ -29,6 +29,9 @@ module Publisher
              type: :string,
              default: "Allure Report",
              desc: "Title for url section in PR comment/description. Required: false"
+      option :report_name,
+             type: :string,
+             desc: "Custom report name in final Allure report. Required: false"
       option :summary,
              type: :string,
              desc: "Additionally add summary table to PR comment or description. Required: false",
@@ -109,7 +112,7 @@ module Publisher
       def uploader
         @uploader ||= uploaders(args[:type]).new(
           result_paths: @result_paths,
-          **args.slice(:bucket, :prefix, :base_url, :copy_latest)
+          **args.slice(:bucket, :prefix, :base_url, :copy_latest, :report_name)
         )
       end
 

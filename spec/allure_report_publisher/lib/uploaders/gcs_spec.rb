@@ -42,7 +42,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
       described_class.new(**args).execute
 
       aggregate_failures do
-        expect(Publisher::ReportGenerator).to have_received(:new).with(result_paths)
+        expect(Publisher::ReportGenerator).to have_received(:new).with(result_paths, report_name)
         expect(report_generator).to have_received(:generate)
       end
     end
