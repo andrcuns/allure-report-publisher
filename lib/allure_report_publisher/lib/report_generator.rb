@@ -54,7 +54,7 @@ module Publisher
     def generate_report
       log_debug("Generating allure report")
       cmd = ["allure generate --clean"]
-      cmd << "--report-name #{report_name}" if report_name
+      cmd << "--report-name '#{report_name}'" if report_name
       cmd << "--output #{report_path} #{common_info_path} #{result_paths}"
       out = execute_shell(cmd.join(" "))
       log_debug("Generated allure report. #{out}".strip)

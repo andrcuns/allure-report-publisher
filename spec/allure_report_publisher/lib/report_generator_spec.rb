@@ -53,7 +53,7 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
           report_generator.generate
 
           expect(Open3).to have_received(:capture3).with(
-            "allure generate --clean --report-name #{report_name} " \
+            "allure generate --clean --report-name '#{report_name}' " \
             "--output #{report_dir} #{common_info_dir} #{result_paths.join(' ')}"
           )
           expect(File).to have_received(:write).with("#{report_dir}/widgets/executors.json", deduped_executors)
