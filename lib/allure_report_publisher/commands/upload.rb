@@ -29,6 +29,9 @@ module Publisher
              type: :string,
              default: "Allure Report",
              desc: "Title for url section in PR comment/description. Required: false"
+      option :report_name,
+             type: :string,
+             desc: "Custom report name in final Allure report. Required: false"
       option :summary,
              type: :string,
              desc: "Additionally add summary table to PR comment or description. Required: false",
@@ -50,9 +53,6 @@ module Publisher
       option :base_url,
              type: :string,
              desc: "Use custom base url instead of default cloud provider one. Required: false"
-      option :report_name,
-             type: :string,
-             desc: "Custom report name. Required: false"
       option :flaky_warning_status,
              type: :boolean,
              default: false,
