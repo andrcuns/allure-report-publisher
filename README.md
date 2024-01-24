@@ -50,6 +50,7 @@ Options:
   --summary=VALUE                   # Additionally add summary table to PR comment or description. Required: false: (behaviors/suites/packages/total), default: "total"
   --summary-table-type=VALUE        # Summary table type. Required: false: (ascii/markdown), default: "ascii"
   --base-url=VALUE                  # Use custom base url instead of default cloud provider one. Required: false
+  --report-name=VALUE               # Custom report name. Required: false
   --[no-]flaky-warning-status       # Mark run with a '!' status in PR comment/description if report contains flaky tests, default: false
   --[no-]collapse-summary           # Create summary as a collapsible section, default: false
   --[no-]copy-latest                # Keep copy of latest report at base prefix path, default: false

@@ -4,7 +4,7 @@ require "active_support/testing/time_helpers"
 RSpec.describe Publisher::ReportGenerator, epic: "generator" do
   include ActiveSupport::Testing::TimeHelpers
 
-  subject(:report_generator) { described_class.new(result_paths) }
+  subject(:report_generator) { described_class.new(result_paths, report_name) }
 
   include_context "with mock helper"
 
@@ -15,6 +15,7 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
   let(:report_dir) { File.join(tmpdir, "allure-report-#{Time.now.to_i}") }
   let(:status) { true }
   let(:tmpdir) { "/tmp/dir" }
+  let(:report_name) { nil }
 
   before do
     allow(Dir).to receive(:mktmpdir).with("allure-results") { common_info_dir }
@@ -31,14 +32,32 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
       allow(File).to receive(:write).with("#{report_dir}/widgets/executors.json", deduped_executors)
     end
 
-    it "generates allure report" do
-      freeze_time do
-        report_generator.generate
+    context "without custom report name" do
+      it "generates allure report" do
+        freeze_time do
+          report_generator.generate
 
-        expect(Open3).to have_received(:capture3).with(
-          "allure generate --clean --output #{report_dir} #{common_info_dir} #{result_paths.join(' ')}"
-        )
-        expect(File).to have_received(:write).with("#{report_dir}/widgets/executors.json", deduped_executors)
+          expect(Open3).to have_received(:capture3).with(
+            "allure generate --clean --output #{report_dir} #{common_info_dir} #{result_paths.join(' ')}"
+          )
+          expect(File).to have_received(:write).with("#{report_dir}/widgets/executors.json", deduped_executors)
+        end
+      end
+    end
+
+    context "with custom report name" do
+      let(:report_name) { "custom_report_name" }
+
+      it "generates allure report with custom name" do
+        freeze_time do
+          report_generator.generate
+
+          expect(Open3).to have_received(:capture3).with(
+            "allure generate --clean --report-name #{report_name} " \
+            "--output #{report_dir} #{common_info_dir} #{result_paths.join(' ')}"
+          )
+          expect(File).to have_received(:write).with("#{report_dir}/widgets/executors.json", deduped_executors)
+        end
       end
     end
   end

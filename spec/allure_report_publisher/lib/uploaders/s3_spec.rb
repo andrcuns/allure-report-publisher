@@ -52,6 +52,17 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
     allow(File).to receive(:new).with(Pathname.new(report_latest[:body].path)) { report_latest[:body] }
   end
 
+  shared_examples "report generator" do
+    it "generates allure report" do
+      described_class.new(**args).execute
+
+      aggregate_failures do
+        expect(Publisher::ReportGenerator).to have_received(:new).with(result_paths, report_name)
+        expect(report_generator).to have_received(:generate)
+      end
+    end
+  end
+
   context "with missing aws credentials" do
     let(:err_msg) do
       Pastel.new(enabled: true).decorate(<<~MSG.strip, :red)
@@ -79,13 +90,14 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
       ClimateControl.modify(GITHUB_WORKFLOW: nil, GITLAB_CI: nil) { example.run }
     end
 
-    it "generates allure report" do
-      described_class.new(**args).execute
+    context "without custom report name" do
+      it_behaves_like "report generator"
+    end
 
-      aggregate_failures do
-        expect(Publisher::ReportGenerator).to have_received(:new).with(result_paths)
-        expect(report_generator).to have_received(:generate)
-      end
+    context "with custom report name" do
+      let(:report_name) { "custom_report_name" }
+
+      it_behaves_like "report generator"
     end
 
     it "uploads allure report to s3" do

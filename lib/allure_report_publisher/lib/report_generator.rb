@@ -10,8 +10,9 @@ module Publisher
   class ReportGenerator
     include Helpers
 
-    def initialize(result_paths)
+    def initialize(result_paths, report_name)
       @result_paths = result_paths.join(" ")
+      @report_name = report_name
     end
 
     # Generate allure report
@@ -44,14 +45,18 @@ module Publisher
 
     # @return [String] result paths string
     attr_reader :result_paths
+    # @return [String] custom report name
+    attr_reader :report_name
 
     # Generate allure report
     #
     # @return [void]
     def generate_report
       log_debug("Generating allure report")
-      cmd = "allure generate --clean --output #{report_path} #{common_info_path} #{result_paths}"
-      out = execute_shell(cmd)
+      cmd = ["allure generate --clean"]
+      cmd << "--report-name #{report_name}" if report_name
+      cmd << "--output #{report_path} #{common_info_path} #{result_paths}"
+      out = execute_shell(cmd.join(" "))
       log_debug("Generated allure report. #{out}".strip)
 
       deduplicate_executors

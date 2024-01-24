@@ -50,6 +50,9 @@ module Publisher
       option :base_url,
              type: :string,
              desc: "Use custom base url instead of default cloud provider one. Required: false"
+      option :report_name,
+             type: :string,
+             desc: "Custom report name. Required: false"
       option :flaky_warning_status,
              type: :boolean,
              default: false,
@@ -109,7 +112,7 @@ module Publisher
       def uploader
         @uploader ||= uploaders(args[:type]).new(
           result_paths: @result_paths,
-          **args.slice(:bucket, :prefix, :base_url, :copy_latest)
+          **args.slice(:bucket, :prefix, :base_url, :copy_latest, :report_name)
         )
       end
 
