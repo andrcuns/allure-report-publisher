@@ -280,7 +280,7 @@ GEM
     uri (0.13.0)
     uuid (2.3.9)
       macaddr (~> 1.0)
-    yard (0.9.34)
+    yard (0.9.35)
 
 PLATFORMS
   ruby
@@ -301,7 +301,7 @@ DEPENDENCIES
   simplecov (~> 0.22.0)
   simplecov-console (~> 0.9.1)
   solargraph (~> 0.50.0)
-  yard (~> 0.9.34)
+  yard (~> 0.9.35)
 
 BUNDLED WITH
    2.4.12
