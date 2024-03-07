@@ -37,7 +37,8 @@ RSpec.shared_examples "upload command" do
       result_paths: result_paths,
       bucket: bucket,
       prefix: prefix,
-      copy_latest: false
+      copy_latest: false,
+      parallel: 8
     }
   end
 

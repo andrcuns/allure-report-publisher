@@ -5,8 +5,6 @@ module Publisher
   module Uploaders
     class HistoryNotFoundError < StandardError; end
 
-    PARALLEL_THREADS = 8
-
     # Uploader implementation
     #
     class Uploader
@@ -31,6 +29,7 @@ module Publisher
       # @option args [String] :base_url
       # @option args [String] :copy_latest
       # @option args [String] :report_name
+      # @option args [Integer] :parallel
       def initialize(**args)
         @result_paths = args[:result_paths]
         @bucket_name = args[:bucket]
@@ -38,6 +37,7 @@ module Publisher
         @base_url = args[:base_url]
         @copy_latest = ci_info && args[:copy_latest] # copy latest for ci only
         @report_name = args[:report_name]
+        @parallel = args[:parallel]
       end
 
       # Execute allure report generation and upload
@@ -97,7 +97,8 @@ module Publisher
                   :prefix,
                   :base_url,
                   :copy_latest,
-                  :report_name
+                  :report_name,
+                  :parallel
 
       def_delegator :report_generator, :common_info_path
 

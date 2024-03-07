@@ -75,7 +75,7 @@ module Publisher
         # it's not possible to overwrite whole directory so we clean out unique data files from last run
         log_debug("Cleaning data files")
         data_files = bucket.files(prefix: key(prefix, "data"))
-        Parallel.each(data_files, in_threads: PARALLEL_THREADS, &:delete)
+        Parallel.each(data_files, in_threads: parallel, &:delete)
 
         log_debug("Copying report files")
         args = report_files.map do |file|
@@ -84,7 +84,7 @@ module Publisher
             destination: key(prefix, file.relative_path_from(report_path))
           }
         end
-        Parallel.each(args, in_threads: PARALLEL_THREADS) do |obj|
+        Parallel.each(args, in_threads: parallel) do |obj|
           obj[:source_file].copy(obj[:destination], force_copy_metadata: true) do |f|
             f.cache_control = "public, max-age=60"
           end
@@ -106,8 +106,8 @@ module Publisher
           }
         end
 
-        log_debug("Uploading '#{args.size}' files in '#{PARALLEL_THREADS}' threads")
-        Parallel.each(args, in_threads: PARALLEL_THREADS) do |obj|
+        log_debug("Uploading '#{args.size}' files in '#{parallel}' threads")
+        Parallel.each(args, in_threads: parallel) do |obj|
           bucket.create_file(*obj.slice(:file, :path).values, cache_control: "public, max-age=3600")
         end
         log_debug("Finished upload successfully")

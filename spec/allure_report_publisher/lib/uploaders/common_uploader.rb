@@ -35,7 +35,8 @@ RSpec.shared_context "with uploader" do
       prefix: prefix,
       base_url: base_url,
       copy_latest: false,
-      report_name: report_name
+      report_name: report_name,
+      parallel: 8
     }
   end
 
