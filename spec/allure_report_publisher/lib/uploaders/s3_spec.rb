@@ -26,7 +26,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   let(:history_latest) { history_run.merge(key: "#{prefix}/history/history.json") }
   let(:history_run) do
     {
-      body: File.new("spec/fixture/fake_report/history/history.json"),
+      body: File.read("spec/fixture/fake_report/history/history.json"),
       bucket: bucket_name,
       key: "#{prefix}/#{run_id}/history/history.json",
       content_type: "application/json",
@@ -37,7 +37,7 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
   let(:report_latest) { report_run.merge(key: "#{prefix}/index.html") }
   let(:report_run) do
     {
-      body: File.new("spec/fixture/fake_report/index.html"),
+      body: File.read("spec/fixture/fake_report/index.html"),
       bucket: bucket_name,
       key: "#{prefix}/#{run_id}/index.html",
       content_type: "text/html",
@@ -47,9 +47,6 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
 
   before do
     allow(Aws::S3::Client).to receive(:new).with({ region: "us-east-1", force_path_style: false }) { s3_client }
-    allow(File).to receive(:new).and_call_original
-    allow(File).to receive(:new).with(Pathname.new(history_latest[:body].path)) { history_latest[:body] }
-    allow(File).to receive(:new).with(Pathname.new(report_latest[:body].path)) { report_latest[:body] }
   end
 
   shared_examples "report generator" do
@@ -133,8 +130,6 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
                                                    .and_return(existing_files)
 
       allow(File).to receive(:write)
-      allow(File).to receive(:new).with(Pathname.new(history_run[:body].path)) { history_run[:body] }
-      allow(File).to receive(:new).with(Pathname.new(report_run[:body].path)) { report_run[:body] }
     end
 
     it "uploads allure report to s3" do

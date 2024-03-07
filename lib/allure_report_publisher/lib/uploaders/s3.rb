@@ -115,7 +115,7 @@ module Publisher
       def upload_to_s3(files, key_prefix)
         args = files.map do |file|
           {
-            body: File.new(file),
+            body: file.to_s,
             bucket: bucket_name,
             key: key(key_prefix, file.relative_path_from(report_path)),
             content_type: MiniMime.lookup_by_filename(file).content_type,
@@ -124,7 +124,9 @@ module Publisher
         end
 
         log_debug("Uploading '#{args.size}' files in '#{parallel}' threads")
-        Parallel.each(args, in_threads: parallel) { |obj| client.put_object(obj) }
+        Parallel.each(args, in_threads: parallel) do |obj|
+          client.put_object(obj.tap { |o| o[:body] = File.read(o[:body]) })
+        end
         log_debug("Finished upload successfully")
       end
 
