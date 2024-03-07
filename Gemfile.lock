@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    allure-report-publisher (3.1.0)
+    allure-report-publisher (3.2.0)
       aws-sdk-s3 (>= 1.93.1, < 1.144.0)
       dry-cli (>= 0.6, < 1.1)
       faraday-retry (>= 1, < 3)
