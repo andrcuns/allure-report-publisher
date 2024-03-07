@@ -116,7 +116,8 @@ module Publisher
       def uploader
         @uploader ||= uploaders(args[:type]).new(
           result_paths: @result_paths,
-          **args.slice(:bucket, :prefix, :base_url, :copy_latest, :report_name, :parallel)
+          parallel: parallel_threads,
+          **args.slice(:bucket, :prefix, :base_url, :copy_latest, :report_name)
         )
       end
 
@@ -157,9 +158,22 @@ module Publisher
         error("Missing argument --results-glob!") unless args[:results_glob]
         error("Missing argument --bucket!") unless args[:bucket]
         URI.parse(args[:base_url]) if args[:base_url]
+        validate_parallel_args
       rescue URI::InvalidURIError
         error("Invalid --base-url value!")
       end
+
+      # Parallel threads
+      #
+      # @return [Integer]
+      def parallel_threads
+        @parallel_threads ||= Integer(args[:parallel]).tap do |threads|
+          raise ArgumentError if threads < 1
+        end
+      rescue ArgumentError
+        error("Invalid --parallel value, must be a positive number!")
+      end
+      alias validate_parallel_args parallel_threads
 
       # Scan for allure results paths
       #
