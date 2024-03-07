@@ -37,7 +37,8 @@ RSpec.shared_examples "upload command" do
       result_paths: result_paths,
       bucket: bucket,
       prefix: prefix,
-      copy_latest: false
+      copy_latest: false,
+      parallel: 8
     }
   end
 
@@ -172,6 +173,14 @@ RSpec.shared_examples "upload command" do
 
     it "exits without printing error" do
       expect { run_cli(*command, *cli_args) }.to raise_error(SystemExit)
+    end
+  end
+
+  context "with invalid parallel option" do
+    it "fails with invalid parallel option error" do
+      expect { run_cli(*command, *cli_args, "--parallel=0") }.to raise_error(SystemExit)
+      expect(uploader_stub).not_to have_received(:generate_report)
+      expect(uploader_stub).not_to have_received(:upload)
     end
   end
 end

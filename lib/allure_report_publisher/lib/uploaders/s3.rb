@@ -103,7 +103,7 @@ module Publisher
             cache_control: "max-age=60"
           }
         end
-        Parallel.each(args, in_threads: PARALLEL_THREADS) { |obj| client.copy_object(obj) }
+        Parallel.each(args, in_threads: parallel) { |obj| client.copy_object(obj) }
         log_debug("Finished latest report copy successfully")
       end
 
@@ -123,8 +123,8 @@ module Publisher
           }
         end
 
-        log_debug("Uploading '#{args.size}' files in '#{PARALLEL_THREADS}' threads")
-        Parallel.each(args, in_threads: PARALLEL_THREADS) { |obj| client.put_object(obj) }
+        log_debug("Uploading '#{args.size}' files in '#{parallel}' threads")
+        Parallel.each(args, in_threads: parallel) { |obj| client.put_object(obj) }
         log_debug("Finished upload successfully")
       end
 
