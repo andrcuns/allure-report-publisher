@@ -14,7 +14,7 @@ group :development do
   gem "allure-rspec", "~> 2.24.2"
   gem "climate_control", "~> 1.2.0"
   gem "debug", "~> 1.9"
-  gem "rake", "~> 13.1"
+  gem "rake", "~> 13.2"
   gem "rspec", "~> 3.13"
   gem "rubocop", "~> 1.62"
   gem "rubocop-performance", "~> 1.20"
