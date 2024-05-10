@@ -1,4 +1,4 @@
-FROM ruby:3.3.1-alpine3.18 as ruby
+FROM ruby:3.3.1-alpine3.19 as ruby
 
 ARG GEMFILE=allure-report-publisher.gem
 
@@ -10,6 +10,9 @@ ARG BUNDLE_WITHOUT=development:release
 ARG GEMFILE
 
 WORKDIR /build
+
+# Install build dependencies
+RUN apk update && apk add --no-cache build-base
 
 # Copy dependency files needed for install first to fetch from cache if unchanged
 COPY Gemfile allure-report-publisher.gemspec ./
