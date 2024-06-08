@@ -61,9 +61,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - table: ascii
-            results: description
           - table: markdown
+            results: description
+          - table: ascii
             results: comment
           - table: markdown
             results: actions
