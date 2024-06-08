@@ -32,7 +32,7 @@ module Publisher
         @client_args ||= {
           region: ENV["AWS_REGION"] || "us-east-1",
           force_path_style: ENV["AWS_FORCE_PATH_STYLE"] == "true",
-          endpoint: ENV["AWS_ENDPOINT"]
+          endpoint: aws_endpoint
         }.compact
       end
 
@@ -41,6 +41,13 @@ module Publisher
       # @return [String]
       def latest_report_url
         @latest_report_url ||= url(prefix)
+      end
+
+      # Custom aws endpoint
+      #
+      # @return [<String, nil>]
+      def aws_endpoint
+        @aws_endpoint ||= ENV["AWS_ENDPOINT"]
       end
 
       # Add allure history
@@ -143,7 +150,11 @@ module Publisher
       # @param [String] path_prefix
       # @return [String]
       def url(path_prefix)
-        [base_url || "http://#{bucket_name}.s3.amazonaws.com", path_prefix, "index.html"].compact.join("/")
+        [
+          base_url || aws_endpoint || "http://#{bucket_name}.s3.amazonaws.com",
+          path_prefix,
+          "index.html"
+        ].compact.join("/")
       end
 
       # Get file content type
