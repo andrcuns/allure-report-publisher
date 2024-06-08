@@ -9,7 +9,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
   let(:server_url) { env[:CI_SERVER_URL] }
   let(:project) { env[:CI_PROJECT_PATH] }
   let(:api_url) { env[:GITHUB_API_URL] }
-  let(:discussion) { nil }
+  let(:comment) { nil }
 
   let(:sha_url) do
     "[#{sha[0..7]}](#{server_url}/#{project}/-/merge_requests/#{mr_id}/diffs?commit_id=#{sha})"
@@ -19,13 +19,13 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
     "[#{sha[0..7]}](#{server_url}/#{custom_project}/-/merge_requests/#{custom_mr_id}/diffs?commit_id=#{sha})"
   end
 
-  let(:comment_double) { double("comments", auto_paginate: [discussion].compact) }
+  let(:comment_double) { double("comments", auto_paginate: [comment].compact) }
 
   let(:client) do
     instance_double(
       Gitlab::Client,
       merge_request: double("mr", description: full_pr_description),
-      merge_request_discussions: comment_double,
+      merge_request_comments: comment_double,
       update_merge_request: nil,
       create_merge_request_discussion: nil,
       create_merge_request_discussion_note: nil,
@@ -65,13 +65,11 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
 
       context "with existing comment" do
         let(:comment_id) { 2 }
-        let(:note_id) { "abc" }
-        let(:note) { double("note", id: note_id, body: "existing comment") }
-        let(:discussion) { double("comment", id: comment_id, body: "existing comment", notes: [note]) }
+        let(:comment) { double("note", id: comment_id, body: "existing comment") }
 
         before do
           allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
-            .with(discussion.body)
+            .with(comment.body)
             .and_return(true)
         end
 
@@ -79,81 +77,11 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
           provider.add_result_summary
 
           expect(url_builder).to have_received(:comment_body)
-            .with(discussion.body)
+            .with(comment.body)
           expect(client).to have_received(:edit_merge_request_note)
-            .with(project, mr_id, note_id, updated_comment_body)
+            .with(project, mr_id, comment_id, updated_comment_body)
         end
       end
-
-      # rubocop:disable RSpec/NestedGroups
-      context "with resolvable comment" do
-        let(:unresolved_discussion_on_failure) { true }
-        let(:main_comment_body) { "Allure report body" }
-        let(:alert_comment_text) { "There are some test failures that need attention" }
-        let(:discussion_id) { 2 }
-        let(:alert_note_id) { "def" }
-        let(:notes) { [main_comment] }
-
-        let(:discussion) { double("comment", id: discussion_id, notes: notes) }
-        let(:main_comment) { double("main comment", id: "abc", body: main_comment_body) }
-        let(:existing_alert_note) { double("alert note", id: alert_note_id, body: alert_comment_text) }
-
-        before do
-          allow(Publisher::Helpers::UrlSectionBuilder).to receive(:match?)
-            .with(any_args)
-            .and_return(true)
-        end
-
-        context "when there are no test failures in summary" do
-          it "does not add a resolvable attention comment" do
-            provider.add_result_summary
-
-            expect(client).not_to have_received(:create_merge_request_discussion_note)
-          end
-        end
-
-        context "when there are test failures in summary" do
-          let(:main_comment_body) { "Allure report body with ❌" }
-
-          it "adds a resolvable attention comment" do
-            provider.add_result_summary
-
-            expect(client).to have_received(:create_merge_request_discussion_note)
-              .with(project, mr_id, discussion_id, body: alert_comment_text)
-          end
-        end
-
-        context "when alert comment exists and no ❌ in main comment" do
-          let(:notes) { [main_comment, existing_alert_note] }
-
-          before do
-            allow(provider).to receive(:alert_comment).and_return(existing_alert_note)
-          end
-
-          it "removes the alert comment" do
-            provider.add_result_summary
-
-            expect(client).to have_received(:delete_merge_request_discussion_note)
-              .with(project, mr_id, discussion_id, alert_note_id)
-          end
-        end
-
-        context "when alert comment exists and ❌ in main comment" do
-          let(:notes) { [main_comment, existing_alert_note] }
-          let(:main_comment_body) { "Allure report body with ❌" }
-
-          before do
-            allow(provider).to receive(:alert_comment).and_return(existing_alert_note)
-          end
-
-          it "does not remove the alert comment" do
-            provider.add_result_summary
-
-            expect(client).not_to have_received(:delete_merge_request_discussion_note)
-          end
-        end
-      end
-      # rubocop:enable RSpec/NestedGroups
     end
   end
 

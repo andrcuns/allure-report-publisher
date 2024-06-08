@@ -49,7 +49,6 @@ RSpec.shared_examples "upload command" do
       summary_type: Publisher::Helpers::Summary::TOTAL,
       summary_table_type: Publisher::Helpers::Summary::ASCII,
       collapse_summary: false,
-      unresolved_discussion_on_failure: false,
       flaky_warning_status: false,
       report_title: report_title
     }

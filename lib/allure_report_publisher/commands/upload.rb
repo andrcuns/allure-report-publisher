@@ -76,10 +76,6 @@ module Publisher
              type: :boolean,
              default: false,
              desc: "Ignore missing allure results"
-      option :unresolved_discussion_on_failure,
-             type: :boolean,
-             default: false,
-             desc: "Add an unresolved discussion comment on test failure. GitLab only"
       option :debug,
              type: :boolean,
              default: false,
@@ -134,7 +130,6 @@ module Publisher
             :collapse_summary,
             :flaky_warning_status,
             :summary_table_type,
-            :unresolved_discussion_on_failure,
             :report_title
           )
         )
