@@ -134,10 +134,10 @@ module Publisher
 
       # Return updated jobs section
       #
-      # @param [String] urls
+      # @param [String] body
       # @return [String]
-      def jobs_section(urls_block)
-        jobs = urls_block.match(JOBS_PATTERN)[1]
+      def jobs_section(body)
+        jobs = body.match(JOBS_PATTERN)[1]
         return jobs.gsub(job_entry_pattern, job_entry) if jobs.match?(job_entry_pattern)
 
         "#{jobs}\n#{job_entry}"
