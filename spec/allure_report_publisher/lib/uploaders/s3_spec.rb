@@ -199,5 +199,20 @@ RSpec.describe Publisher::Uploaders::S3, epic: "uploaders" do
         })
       end
     end
+
+    context "with custom aws endpoint" do
+      let(:custom_endpoint) { "http://custom-endpoint" }
+
+      around do |example|
+        ClimateControl.modify(AWS_ENDPOINT: custom_endpoint, AWS_FORCE_PATH_STYLE: "true") { example.run }
+      end
+
+      it "returns correct report urls" do
+        expect(described_class.new(**args, copy_latest: true).report_urls).to eq({
+          "Report url" => "#{custom_endpoint}/#{bucket_name}/project/#{run_id}/index.html",
+          "Latest report url" => "#{custom_endpoint}/#{bucket_name}/project/index.html"
+        })
+      end
+    end
   end
 end
