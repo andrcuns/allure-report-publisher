@@ -4,7 +4,7 @@ module Publisher
     #
     class UrlSectionBuilder
       DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/
-      JOBS_PATTERN = /<!-- jobs -->\n([\s\S]+)\n<!-- jobs -->/
+      JOBS_PATTERN = /<!-- jobs -->(?<jobs>[\s\S]+)<!-- jobs -->/
 
       # Url section builder
       #
@@ -106,7 +106,7 @@ module Publisher
           entry << "<summary>expand test summary</summary>\n" if collapse_summary
           entry << summary.table if summary_type
           entry << "</details>" if collapse_summary
-          entry << "<!-- #{build_name} -->\n"
+          entry << "<!-- #{build_name} -->"
 
           entry.join("\n")
         end
@@ -116,36 +116,31 @@ module Publisher
       #
       # @return [RegExp]
       def job_entry_pattern
-        @job_entry_pattern ||= /<!-- #{build_name} -->\n([\s\S]+)\n<!-- #{build_name} -->\n/
+        @job_entry_pattern ||= /<!-- #{build_name} -->[\s\S]+<!-- #{build_name} -->/
       end
 
       # Allure report url section
       #
       # @return [String]
       def url_section(job_entries: job_entry, separator: true)
-        reports = <<~BODY.strip
-          <!-- allure -->
-          ---
-          #{heading}
-
+        <<~BODY.strip
+          <!-- allure -->#{separator ? "\n---\n" : "\n"}#{heading}\n
           <!-- jobs -->
           #{job_entries}
           <!-- jobs -->
           <!-- allurestop -->
         BODY
-
-        separator ? reports : reports.gsub("---\n", "")
       end
 
       # Return updated jobs section
       #
-      # @param [String] urls
+      # @param [String] body
       # @return [String]
-      def jobs_section(urls_block)
-        jobs = urls_block.match(JOBS_PATTERN)[1]
-        return jobs.gsub(job_entry_pattern, job_entry) if jobs.match?(job_entry_pattern)
+      def jobs_section(body)
+        jobs = body.match(JOBS_PATTERN)[:jobs]
+        return jobs.gsub(job_entry_pattern, job_entry).strip if jobs.match?(job_entry_pattern)
 
-        "#{jobs}\n#{job_entry}"
+        "#{jobs.strip}\n#{job_entry}"
       end
     end
   end
