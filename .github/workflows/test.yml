@@ -75,12 +75,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: reports/allure-results
-      - name: Restore minio store
+      - name: Cache minio store
         id: cache-primes-restore
-        uses: actions/cache/restore@v4
+        uses: actions/cache@v4
         with:
           path: minio
-          key: minio/${{ github.ref_name }}
+          key: minio/${{ github.ref_name }}/${{ github.run_id }}
+          restore-keys: minio/${{ github.ref_name }}
       - name: Set up Minio
         run: |
           mkdir -p minio/allure-reports
@@ -126,8 +127,3 @@ jobs:
               --copy-latest \
               --color \
               --debug
-      - name: Save minio store
-        uses: actions/cache/save@v4
-        with:
-          path: minio
-          key: minio/${{ github.ref_name }}
