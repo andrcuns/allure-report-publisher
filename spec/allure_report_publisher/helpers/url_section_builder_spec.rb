@@ -43,7 +43,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
       entry << "<summary>expand test summary</summary>\n" if collapse
       entry << "```markdown\n#{summary_table}\n```" if summary_type
       entry << "</details>" if collapse
-      entry << "<!-- #{name} -->\n"
+      entry << "<!-- #{name} -->"
 
       entry.join("\n")
     end
