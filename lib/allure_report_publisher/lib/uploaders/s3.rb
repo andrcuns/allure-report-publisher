@@ -158,8 +158,6 @@ module Publisher
       # @return [String]
       def url(path_prefix)
         custom_base = if aws_endpoint
-                        nil
-                      else
                         path_style? ? "#{aws_endpoint}/#{bucket_name}" : aws_endpoint
                       end
 
