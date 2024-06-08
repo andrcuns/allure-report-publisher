@@ -123,18 +123,13 @@ module Publisher
       #
       # @return [String]
       def url_section(job_entries: job_entry, separator: true)
-        reports = <<~BODY.strip
-          <!-- allure -->
-          ---
-          #{heading}
-
+        <<~BODY.strip
+          <!-- allure -->#{separator ? "\n---\n" : "\n"}#{heading}\n
           <!-- jobs -->
           #{job_entries}
           <!-- jobs -->
           <!-- allurestop -->
         BODY
-
-        separator ? reports : reports.gsub("---\n", "")
       end
 
       # Return updated jobs section
