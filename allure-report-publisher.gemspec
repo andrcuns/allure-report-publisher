@@ -16,7 +16,6 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 3.0")
 
   spec.metadata = {
-    "homepage_uri" => spec.homepage,
     "source_code_uri" => "https://github.com/andrcuns/allure-report-uploader",
     "changelog_uri" => "https://github.com/andrcuns/allure-report-uploader/releases",
     "documentation_uri" => "https://github.com/andrcuns/allure-report-uploader/blob/master/README.md",
