@@ -38,23 +38,6 @@ module Publisher
         @pr_description ||= client.merge_request(project, mr_iid).description
       end
 
-      # Comment with alert text
-      #
-      # @return [Gitlab::ObjectifiedHash]
-      def alert_comment
-        @alert_comment ||= discussion&.notes&.detect do |note|
-          note.body.include?(alert_comment_text)
-        end
-      end
-
-      # Text for alert comment
-      #
-      # @return [String]
-      def alert_comment_text
-        @alert_comment_text ||=
-          env("ALLURE_FAILURE_ALERT_COMMENT") || "There are some test failures that need attention"
-      end
-
       # Custom sha
       #
       # @return [String]
@@ -96,39 +79,19 @@ module Publisher
       # @return [void]
       def add_comment
         create_or_update_comment
-        create_or_resolve_discussion
       end
 
       # Create or update comment with report url
       #
       # @return [void]
       def create_or_update_comment
-        if main_comment
-          log_debug("Updating summary in comment with id #{discussion.id} in mr !#{mr_iid}")
-
-          return client.edit_merge_request_note(
-            project,
-            mr_iid,
-            main_comment.id,
-            url_section_builder.comment_body(main_comment.body)
-          )
+        unless comment
+          log_debug("Creating comment with summary for mr !#{mr_iid}")
+          return client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body) unless comment
         end
 
-        log_debug("Creating comment with summary for mr ! #{mr_iid}")
-        client.create_merge_request_comment(project, mr_iid, url_section_builder.comment_body)
-      end
-
-      # Create or resolve comment discussion
-      #
-      # @return [void]
-      def create_or_resolve_discussion
-        @discussion = nil
-
-        if unresolved_discussion_on_failure && report_has_failures? && !alert_comment
-          client.create_merge_request_discussion_note(project, mr_iid, discussion.id, body: alert_comment_text)
-        elsif alert_comment && !report_has_failures?
-          client.delete_merge_request_discussion_note(project, mr_iid, discussion.id, alert_comment.id)
-        end
+        log_debug("Creating comment with summary for mr !#{mr_iid}")
+        client.edit_merge_request_note(project, mr_iid, comment.id, url_section_builder.comment_body(comment.body))
       end
 
       # Check if allure report has failures
@@ -138,20 +101,13 @@ module Publisher
         main_comment&.body&.include?("❌")
       end
 
-      # Existing discussion that has comment with allure urls
+      # Existing comment with allure urls
       #
       # @return [Gitlab::ObjectifiedHash]
-      def discussion
-        @discussion ||= client.merge_request_discussions(project, mr_iid).auto_paginate.detect do |discussion|
-          discussion.notes.any? { |note| Helpers::UrlSectionBuilder.match?(note.body) }
+      def comment
+        client.merge_request_comments(project, mr_iid).auto_paginate.detect do |comment|
+          Helpers::UrlSectionBuilder.match?(comment.body)
         end
-      end
-
-      # Comment/note with allure urls
-      #
-      # @return [Gitlab::ObjectifiedHash]
-      def main_comment
-        discussion&.notes&.detect { |note| Helpers::UrlSectionBuilder.match?(note.body) }
       end
     end
   end
