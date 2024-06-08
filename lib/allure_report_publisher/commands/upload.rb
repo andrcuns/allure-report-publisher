@@ -148,13 +148,14 @@ module Publisher
         {
           "s3" => Uploaders::S3,
           "gcs" => Uploaders::GCS
-        }[uploader]
+        }.fetch(uploader)
       end
 
       # Validate required args
       #
       # @return [void]
       def validate_args
+        error("Unsupported cloud storage type! Supported types are: s3, gcs") unless %w[s3 gcs].include?(args[:type])
         error("Missing argument --results-glob!") unless args[:results_glob]
         error("Missing argument --bucket!") unless args[:bucket]
         URI.parse(args[:base_url]) if args[:base_url]
