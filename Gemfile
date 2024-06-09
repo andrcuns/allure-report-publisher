@@ -20,6 +20,7 @@ group :development do
   gem "rubocop-performance", "~> 1.21"
   gem "rubocop-rake", "~> 0.6.0"
   gem "rubocop-rspec", "~> 2.31"
+  gem "ruby-lsp", "~> 0.17.2"
   gem "simplecov", "~> 0.22.0"
   gem "simplecov-console", "~> 0.9.1"
   gem "solargraph", "~> 0.50.0"
