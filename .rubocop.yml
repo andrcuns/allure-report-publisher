@@ -4,7 +4,7 @@ require:
   - rubocop-performance
 
 AllCops:
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.1
   NewCops: enable
   Exclude:
     - vendor/**/*
@@ -42,6 +42,9 @@ Style/StringLiterals:
   EnforcedStyle: double_quotes
 
 Style/FetchEnvVar:
+  Enabled: false
+
+Style/HashSyntax:
   Enabled: false
 
 RSpec/MultipleExpectations:
