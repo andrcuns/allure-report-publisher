@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "gitlab", "~> 4.17"
   spec.add_dependency "google-cloud-storage", "~> 1.31"
   spec.add_dependency "mini_mime", "~> 1.1"
-  spec.add_dependency "octokit", ">= 4.21", "< 9.0"
+  spec.add_dependency "octokit", ">= 4.21", "< 10.0"
   spec.add_dependency "parallel", "~> 1.20"
   spec.add_dependency "pastel", "~> 0.8.0"
   spec.add_dependency "require_all", "~> 3.0.0"
