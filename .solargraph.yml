@@ -16,6 +16,7 @@ reporters:
   - rubocop
   - require_not_found
   - update_errors
-plugins: []
+plugins:
+  - solargraph-rspec
 require_paths: []
 max_files: 5000
