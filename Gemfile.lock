@@ -262,6 +262,8 @@ GEM
       thor (~> 1.0)
       tilt (~> 2.0)
       yard (~> 0.9, >= 0.9.24)
+    solargraph-rspec (0.2.2)
+      solargraph (~> 0.49, >= 0.49.0)
     sorbet-runtime (0.5.11422)
     stringio (3.1.0)
     strscan (3.1.0)
@@ -304,6 +306,7 @@ DEPENDENCIES
   simplecov (~> 0.22.0)
   simplecov-console (~> 0.9.1)
   solargraph (~> 0.50.0)
+  solargraph-rspec (~> 0.2.2)
   yard (~> 0.9.36)
 
 BUNDLED WITH
