@@ -106,7 +106,7 @@ module Publisher
           entry << "<summary>expand test summary</summary>\n" if collapse_summary
           entry << summary.table if summary_type
           entry << "</details>" if collapse_summary
-          entry << "<!-- #{build_name} -->"
+          entry << "<!-- #{build_name} -->\n"
 
           entry.join("\n")
         end
