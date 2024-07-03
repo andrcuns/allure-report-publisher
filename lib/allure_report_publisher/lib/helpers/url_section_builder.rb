@@ -140,7 +140,7 @@ module Publisher
         jobs = body.match(JOBS_PATTERN)[:jobs]
         return jobs.gsub(job_entry_pattern, job_entry).strip if jobs.match?(job_entry_pattern)
 
-        "#{jobs.strip}\n#{job_entry}"
+        "#{jobs.strip}\n\n#{job_entry}"
       end
     end
   end
