@@ -48,7 +48,7 @@ RSpec.describe Publisher::Helpers::UrlSectionBuilder, epic: "helpers" do
       entry.join("\n")
     end
 
-    markdowns.join("\n")
+    markdowns.join("\n\n")
   end
 
   def urls_section(job_section = jobs)
