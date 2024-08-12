@@ -10,7 +10,7 @@ group :release do
 end
 
 group :development do
-  gem "activesupport", "~> 7.1"
+  gem "activesupport", "~> 7.2"
   gem "allure-rspec", "~> 2.24.5"
   gem "climate_control", "~> 1.2.0"
   gem "debug", "~> 1.9"
