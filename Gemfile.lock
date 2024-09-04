@@ -279,7 +279,7 @@ GEM
     uber (0.1.0)
     unicode-display_width (2.5.0)
     uri (0.13.0)
-    yard (0.9.36)
+    yard (0.9.37)
 
 PLATFORMS
   ruby
@@ -302,7 +302,7 @@ DEPENDENCIES
   simplecov-console (~> 0.9.1)
   solargraph (~> 0.50.0)
   solargraph-rspec (~> 0.4.0)
-  yard (~> 0.9.36)
+  yard (~> 0.9.37)
 
 BUNDLED WITH
    2.5.9
