@@ -6,7 +6,7 @@ gemspec
 
 group :release do
   gem "semver2", "~> 3.4"
-  gem "yard", "~> 0.9.36"
+  gem "yard", "~> 0.9.37"
 end
 
 group :development do
