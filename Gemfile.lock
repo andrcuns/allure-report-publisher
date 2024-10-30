@@ -83,7 +83,8 @@ GEM
       net-http
     faraday-retry (2.2.1)
       faraday (~> 2.0)
-    gitlab (5.0.0)
+    gitlab (5.1.0)
+      base64 (~> 0.2.0)
       httparty (~> 0.20)
       terminal-table (>= 1.5.1)
     google-apis-core (0.15.0)
