@@ -17,7 +17,7 @@ group :development do
   gem "rake", "~> 13.2"
   gem "rspec", "~> 3.13"
   gem "rubocop", "~> 1.68"
-  gem "rubocop-performance", "~> 1.22"
+  gem "rubocop-performance", "~> 1.23"
   gem "rubocop-rake", "~> 0.6.0"
   gem "rubocop-rspec", "~> 3.2"
   gem "ruby-lsp", "~> 0.17.2"
