@@ -132,7 +132,7 @@ module Publisher
             body: file.to_s,
             bucket: bucket_name,
             key: key(key_prefix, file.relative_path_from(report_path)),
-            content_type: MiniMime.lookup_by_filename(file).content_type,
+            content_type: content_type(file),
             cache_control: "max-age=3600"
           }
         end
