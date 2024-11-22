@@ -64,6 +64,8 @@ module Publisher
       ENV[name]
     end
 
+    module_function
+
     # Colorize string
     #
     # @param [String] message
@@ -129,7 +131,5 @@ module Publisher
 
       mask ? output.gsub(mask, "***") : output
     end
-
-    module_function :colorize, :log, :log_debug, :error, :path, :execute_shell
   end
 end
