@@ -23,6 +23,6 @@ group :development do
   gem "ruby-lsp", "~> 0.23.11"
   gem "simplecov", "~> 0.22.0"
   gem "simplecov-console", "~> 0.9.3"
-  gem "solargraph", "~> 0.51.2"
+  gem "solargraph", "~> 0.52.0"
   gem "solargraph-rspec", "~> 0.4.1"
 end
