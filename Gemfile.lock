@@ -138,7 +138,7 @@ GEM
       reline (>= 0.4.2)
     jaro_winkler (1.6.0)
     jmespath (1.6.2)
-    json (2.10.1)
+    json (2.10.2)
     jwt (2.10.1)
       base64
     kramdown (2.5.1)
