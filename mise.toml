@@ -1,0 +1,2 @@
+[tools]
+pre-commit = { version = "4.2.0", postinstall = "pre-commit install --install-hooks" }

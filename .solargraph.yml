@@ -14,8 +14,6 @@ require:
 domains: []
 reporters:
   - rubocop
-  - require_not_found
-  - update_errors
 plugins:
   - solargraph-rspec
 require_paths: []
