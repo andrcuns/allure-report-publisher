@@ -5,8 +5,6 @@ updates:
     schedule:
       interval: daily
     versioning-strategy: increase
-    reviewers:
-      - andrcuns
     commit-message:
       prefix: deps
       prefix-development: deps-dev
@@ -14,16 +12,12 @@ updates:
     directory: /
     schedule:
       interval: daily
-    reviewers:
-      - andrcuns
     commit-message:
       prefix: deps
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: daily
-    reviewers:
-      - andrcuns
     commit-message:
       prefix: deps
     labels:
