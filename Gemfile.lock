@@ -270,7 +270,7 @@ GEM
       terminal-table
     simplecov-html (0.13.1)
     simplecov_json_formatter (0.1.4)
-    solargraph (0.55.4)
+    solargraph (0.55.5)
       backport (~> 1.2)
       benchmark (~> 0.4)
       bundler (~> 2.0)
@@ -282,6 +282,7 @@ GEM
       observer (~> 0.1)
       ostruct (~> 0.6)
       parser (~> 3.0)
+      prism (~> 1.4)
       rbs (~> 3.3)
       reverse_markdown (~> 3.0)
       rubocop (~> 1.38)
@@ -332,7 +333,7 @@ DEPENDENCIES
   semver2 (~> 3.4)
   simplecov (~> 0.22.0)
   simplecov-console (~> 0.9.3)
-  solargraph (~> 0.55.4)
+  solargraph (~> 0.55.5)
   solargraph-rspec (~> 0.5.2)
   yard (~> 0.9.37)
 
