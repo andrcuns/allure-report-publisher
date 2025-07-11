@@ -29,6 +29,12 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
     }
   end
 
+  def execute(allure_extra_args: [], **extra_args)
+    uploader = described_class.new(**args, **extra_args)
+    uploader.generate_report(allure_extra_args)
+    uploader.upload
+  end
+
   before do
     allow(Google::Cloud::Storage).to receive(:new) { client }
   end
@@ -39,16 +45,16 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
     end
 
     it "generates allure report" do
-      described_class.new(**args).execute
+      execute(allure_extra_args: ["--lang=en"])
 
       aggregate_failures do
         expect(Publisher::ReportGenerator).to have_received(:new).with(result_paths, report_name)
-        expect(report_generator).to have_received(:generate)
+        expect(report_generator).to have_received(:generate).with(["--lang=en"])
       end
     end
 
     it "uploads allure report" do
-      described_class.new(**args).execute
+      execute
 
       aggregate_failures do
         expect(bucket).to have_received(:create_file).with(*report.slice(:path, :gcs_path_latest).values, cache_control)
@@ -57,7 +63,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
     end
 
     it "fetches and saves history info" do
-      described_class.new(**args).execute
+      execute
 
       aggregate_failures do
         history_files.each do |f|
@@ -83,7 +89,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
     end
 
     it "uploads allure report" do
-      described_class.new(**args).execute
+      execute
 
       aggregate_failures do
         history_files.each do |f|
@@ -98,7 +104,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
     end
 
     it "uploads latest allure report copy" do
-      described_class.new(**args, copy_latest: true).execute
+      execute(copy_latest: true)
 
       expect(history[:file]).to have_received(:copy).with(history[:gcs_path_latest], force_copy_metadata: true)
       expect(report[:file]).to have_received(:copy).with(report[:gcs_path_latest], force_copy_metadata: true)
@@ -106,7 +112,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
     end
 
     it "adds executor info" do
-      described_class.new(**args).execute
+      execute
       expect(File).to have_received(:write)
         .with("#{common_info_path}/executor.json", JSON.pretty_generate(executor_info)).twice
     end
