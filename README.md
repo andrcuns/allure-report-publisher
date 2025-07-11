@@ -64,6 +64,16 @@ Examples:
   allure-report-publisher upload gcs --results-glob='paths/to/**/allure-results' --bucket=my-bucket --prefix=my-project/prs
 ```
 
+## Extra arguments
+
+You can pass any extra arguments to the `allure generate` command by using `--` before the arguments.
+
+Example:
+
+```shell
+allure-report-publisher upload s3 --results-glob='path/to/allure-results' --bucket=my-bucket -- --lang en
+```
+
 ## Environment variables
 
 All named options can be configured via environment variables. Environment variables are prefixed with `ALLURE_` and uppercased.
