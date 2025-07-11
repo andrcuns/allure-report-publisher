@@ -40,22 +40,14 @@ module Publisher
         @parallel = args[:parallel]
       end
 
-      # Execute allure report generation and upload
-      #
-      # @return [void]
-      def execute
-        generate_report
-        upload
-      end
-
       # Generate allure report
       #
       # @return [void]
-      def generate_report
+      def generate_report(extra_arguments = [])
         add_history
         add_executor_info
 
-        report_generator.generate
+        report_generator.generate(extra_arguments)
       end
 
       # Upload report to storage provider

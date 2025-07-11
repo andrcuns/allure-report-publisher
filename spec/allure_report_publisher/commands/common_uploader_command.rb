@@ -182,4 +182,12 @@ RSpec.shared_examples "upload command" do
       expect(uploader_stub).not_to have_received(:upload)
     end
   end
+
+  context "with variadic arguments" do
+    it "passes extra arguments to uploader" do
+      run_cli(*command, *cli_args, "--", "--lang", "en")
+
+      expect(uploader_stub).to have_received(:generate_report).with(["--lang", "en"])
+    end
+  end
 end

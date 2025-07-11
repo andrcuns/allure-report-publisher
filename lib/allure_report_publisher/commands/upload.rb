@@ -86,16 +86,16 @@ module Publisher
         "gcs --results-glob='paths/to/**/allure-results' --bucket=my-bucket --prefix=my-project/prs"
       ]
 
-      def call(**args)
-        Helpers.pastel(force_color: args[:color])
-        @args = args
+      def call(args: [], **arguments)
+        Helpers.pastel(force_color: arguments[:color])
+        @args = arguments
 
         validate_args
         scan_results_paths
 
-        generate_report
+        generate_report(args)
         upload_report
-        return unless args[:update_pr] && Providers.info&.pr?
+        return unless arguments[:update_pr] && Providers.info&.pr?
 
         add_report_urls
       rescue StandardError => e
@@ -188,10 +188,11 @@ module Publisher
 
       # Generate allure report
       #
+      # @param [Array<String>] extra_args
       # @return [void]
-      def generate_report
+      def generate_report(extra_args)
         log("Generating allure report")
-        Spinner.spin("generating", debug: args[:debug]) { uploader.generate_report }
+        Spinner.spin("generating", debug: args[:debug]) { uploader.generate_report(extra_args) }
       end
 
       # Upload report to cloud storage

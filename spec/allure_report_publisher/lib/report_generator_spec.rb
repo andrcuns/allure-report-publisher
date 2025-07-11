@@ -45,6 +45,18 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
       end
     end
 
+    context "with extra arguments" do
+      it "passes extra arguments to allure cli" do
+        freeze_time do
+          report_generator.generate(["--lang", "en"])
+
+          expect(Open3).to have_received(:capture3).with(
+            "allure generate --clean --output #{report_dir} #{common_info_dir} #{result_paths.join(' ')} --lang en"
+          )
+        end
+      end
+    end
+
     context "with custom report name" do
       let(:report_name) { "custom_report_name" }
 
