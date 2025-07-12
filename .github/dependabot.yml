@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: bundler
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
     versioning-strategy: increase
     commit-message:
       prefix: deps
@@ -11,13 +11,13 @@ updates:
   - package-ecosystem: docker
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
     commit-message:
       prefix: deps
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
     commit-message:
       prefix: deps
     labels:
