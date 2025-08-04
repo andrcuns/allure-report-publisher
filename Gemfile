@@ -23,7 +23,7 @@ group :development do
   gem "rubocop-rake", "~> 0.7.1"
   gem "rubocop-rspec", "~> 3.6"
   gem "simplecov", "~> 0.22.0"
-  gem "simplecov-console", "~> 0.9.3"
+  gem "simplecov-console", "~> 0.9.4"
   gem "solargraph", "~> 0.56.1"
   gem "solargraph-rspec", "~> 0.5.2"
 end
