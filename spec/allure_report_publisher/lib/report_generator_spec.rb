@@ -4,7 +4,7 @@ require "active_support/testing/time_helpers"
 RSpec.describe Publisher::ReportGenerator, epic: "generator" do
   include ActiveSupport::Testing::TimeHelpers
 
-  subject(:report_generator) { described_class.new(result_paths, report_name) }
+  subject(:report_generator) { described_class.new(result_paths, report_name, report_path) }
 
   include_context "with mock helper"
 
@@ -12,14 +12,12 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
 
   let(:result_paths) { ["spec/fixture/fake_results"] }
   let(:common_info_dir) { "/common_info_results" }
-  let(:report_dir) { File.join(tmpdir, "allure-report-#{Time.now.to_i}") }
+  let(:report_path) { "/tmp/dir/allure-report-#{Time.now.to_i}" }
   let(:status) { true }
-  let(:tmpdir) { "/tmp/dir" }
   let(:report_name) { nil }
 
   before do
     allow(Dir).to receive(:mktmpdir).with("allure-results") { common_info_dir }
-    allow(Dir).to receive(:tmpdir) { tmpdir }
     allow(Open3).to receive(:capture3) { ["Allure output", "", capture_status] }
   end
 
@@ -28,8 +26,8 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
     let(:deduped_executors) { [JSON.parse(executors).first].to_json }
 
     before do
-      allow(File).to receive(:read).with("#{report_dir}/widgets/executors.json").and_return(executors)
-      allow(File).to receive(:write).with("#{report_dir}/widgets/executors.json", deduped_executors)
+      allow(File).to receive(:read).with("#{report_path}/widgets/executors.json").and_return(executors)
+      allow(File).to receive(:write).with("#{report_path}/widgets/executors.json", deduped_executors)
     end
 
     context "without custom report name" do
@@ -38,9 +36,9 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
           report_generator.generate
 
           expect(Open3).to have_received(:capture3).with(
-            "allure generate --clean --output #{report_dir} #{common_info_dir} #{result_paths.join(' ')}"
+            "allure generate --clean --output #{report_path} #{common_info_dir} #{result_paths.join(' ')}"
           )
-          expect(File).to have_received(:write).with("#{report_dir}/widgets/executors.json", deduped_executors)
+          expect(File).to have_received(:write).with("#{report_path}/widgets/executors.json", deduped_executors)
         end
       end
     end
@@ -51,7 +49,7 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
           report_generator.generate(["--lang", "en"])
 
           expect(Open3).to have_received(:capture3).with(
-            "allure generate --clean --output #{report_dir} #{common_info_dir} #{result_paths.join(' ')} --lang en"
+            "allure generate --clean --output #{report_path} #{common_info_dir} #{result_paths.join(' ')} --lang en"
           )
         end
       end
@@ -66,9 +64,9 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
 
           expect(Open3).to have_received(:capture3).with(
             "allure generate --clean --report-name '#{report_name}' " \
-            "--output #{report_dir} #{common_info_dir} #{result_paths.join(' ')}"
+            "--output #{report_path} #{common_info_dir} #{result_paths.join(' ')}"
           )
-          expect(File).to have_received(:write).with("#{report_dir}/widgets/executors.json", deduped_executors)
+          expect(File).to have_received(:write).with("#{report_path}/widgets/executors.json", deduped_executors)
         end
       end
     end
@@ -78,7 +76,7 @@ RSpec.describe Publisher::ReportGenerator, epic: "generator" do
     let(:status) { false }
     let(:error_output) do
       <<~ERR.strip
-        Command 'allure generate --clean --output #{report_dir} #{common_info_dir} #{result_paths.join(' ')}' failed!
+        Command 'allure generate --clean --output #{report_path} #{common_info_dir} #{result_paths.join(' ')}' failed!
         Out: Allure output
       ERR
     end
