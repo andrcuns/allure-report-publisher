@@ -60,7 +60,7 @@ module Publisher
           )
         end
       rescue StandardError => e
-        log("Failed to download allure history: #{e.message}", :yellow)
+        raise(HistoryNotFoundError, e.message)
       end
 
       # Last job from previous pipeline

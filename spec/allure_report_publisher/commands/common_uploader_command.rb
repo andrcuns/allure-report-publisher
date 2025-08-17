@@ -1,4 +1,4 @@
-RSpec.shared_examples "upload command" do
+RSpec.shared_examples "upload command" do |uploader|
   include_context "with cli helper"
   include_context "with output capture"
 
@@ -88,6 +88,9 @@ RSpec.shared_examples "upload command" do
     it_behaves_like "command", ["--update-pr=description"],
                     {},
                     { update_pr: "description" }
+    it_behaves_like "command", ["--output=custom-report-dir", "--update-pr=comment"],
+                    { output: "custom-report-dir" },
+                    { report_path: "custom-report-dir", update_pr: "comment" }
     it_behaves_like "command", ["--report-title=custom title", "--update-pr=comment"],
                     {},
                     { report_title: "custom title", update_pr: "comment" }
@@ -150,18 +153,30 @@ RSpec.shared_examples "upload command" do
       expect(uploader_stub).not_to have_received(:upload)
     end
 
-    it "exits when bucket is missing" do
-      expect { run_cli(*command, cli_args[0]) }.to raise_error(SystemExit)
-      expect(uploader_stub).not_to have_received(:generate_report)
-      expect(uploader_stub).not_to have_received(:upload)
+    if uploader == Publisher::Uploaders::GitlabArtifacts
+      it "ignores bucket option" do
+        expect { run_cli(*command, cli_args[0]) }.not_to raise_error
+      end
+    else
+      it "exits when bucket is missing" do
+        expect { run_cli(*command, cli_args[0]) }.to raise_error(SystemExit)
+        expect(uploader_stub).not_to have_received(:generate_report)
+        expect(uploader_stub).not_to have_received(:upload)
+      end
     end
   end
 
   context "with invalid base-url" do
-    it "fails with invalid url error" do
-      expect { run_cli(*command, *cli_args, "--base-url=https://bla bla") }.to raise_error(SystemExit)
-      expect(uploader_stub).not_to have_received(:generate_report)
-      expect(uploader_stub).not_to have_received(:upload)
+    if uploader == Publisher::Uploaders::GitlabArtifacts
+      it "ignores base-url option" do
+        expect { run_cli(*command, *cli_args, "--base-url=https://bla bla") }.not_to raise_error
+      end
+    else
+      it "fails with invalid url error" do
+        expect { run_cli(*command, *cli_args, "--base-url=https://bla bla") }.to raise_error(SystemExit)
+        expect(uploader_stub).not_to have_received(:generate_report)
+        expect(uploader_stub).not_to have_received(:upload)
+      end
     end
   end
 
