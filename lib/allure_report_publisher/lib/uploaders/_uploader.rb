@@ -38,6 +38,7 @@ module Publisher
         @copy_latest = ci_info && args[:copy_latest] # copy latest for ci only
         @report_name = args[:report_name]
         @parallel = args[:parallel]
+        @report_path = args[:output] || File.join(Dir.tmpdir, "allure-report-#{Time.now.to_i}")
       end
 
       # Generate allure report
@@ -90,7 +91,8 @@ module Publisher
                   :base_url,
                   :copy_latest,
                   :report_name,
-                  :parallel
+                  :parallel,
+                  :report_path
 
       def_delegator :report_generator, :common_info_path
 
@@ -151,7 +153,7 @@ module Publisher
       #
       # @return [Publisher::ReportGenerator]
       def report_generator
-        @report_generator ||= ReportGenerator.new(result_paths, report_name)
+        @report_generator ||= ReportGenerator.new(result_paths, report_name, report_path)
       end
 
       # Report path prefix

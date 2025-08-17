@@ -5,11 +5,13 @@ module Publisher
     class GitlabArtifacts < Uploader
       extend Forwardable
 
-      def initialize
+      def initialize(...)
         super
 
         # gitlab artifacts do not support having url to latest report
         @copy_latest = false
+        # gitlab artifacts must use path relative to build dir instead of global tmp folder
+        @report_path = args[:output] || "allure-report"
       end
 
       # Report url
@@ -22,7 +24,9 @@ module Publisher
       # No-op method as gitlab does not expose api to upload artifacts
       #
       # @return [void]
-      def upload; end
+      def upload
+        raise("Gitlab artifacts does not support upload operation! Report upload must be configured in the CI job.")
+      end
 
       private
 
@@ -30,9 +34,10 @@ module Publisher
                      :pages_hostname,
                      :project_name,
                      :project_id,
-                     :job_id,
                      :job_name,
+                     :job_id,
                      :branch,
+                     :build_dir,
                      :build_name,
                      :server_url,
                      :client
@@ -41,47 +46,30 @@ module Publisher
       #
       # @return [void]
       def download_history
-        log_debug("Downloading allure history")
+        log_debug("Downloading allure history from previous executions")
 
-        job_id = previous_job_id || previous_pipeline_job_id
-        unless job_id
-          log_debug("No previous job with artifacts found")
+        unless previous_job_id
+          log_debug("Previous execution not found, skipping history download")
           return
         end
 
-        log_debug("Fetching history from artifacts of job: #{job_id}")
+        log_debug("Fetching history from artifacts of job: #{previous_job_id}")
         HISTORY.each do |file_name|
           download_artifact_file(
-            job_id,
+            previous_job_id,
             "#{report_path}/history/#{file_name}",
             path(common_info_path, "history", file_name)
           )
         end
       end
 
-      # Previous job id within the same pipeline
+      # Last job from previous pipeline
       #
       # @return [Integer, nil] job id or nil if not found
       def previous_job_id
         return @previous_job_id if defined?(@previous_job_id)
 
-        jobs = client.pipeline_jobs(
-          project_id,
-          pipeline_id,
-          include_retried: true,
-          scope: %w[success failed]
-        ).map(&:id)
-        return @previous_job_id = nil if jobs.size < 2
-
-        @previous_job_id = jobs[jobs.index(job_id.to_i) - 1]
-      end
-
-      # Last job from previous pipeline
-      #
-      # @return [Integer, nil] job id or nil if not found
-      def previous_pipeline_job_id
-        return @previous_pipeline_job_id if defined?(@previous_pipeline_job_id)
-
+        log_debug("Fetching previous pipelines for ref: #{branch}")
         pipelines = client.pipelines(
           project_id,
           ref: branch,
@@ -89,28 +77,15 @@ module Publisher
         ).map(&:id)
         return @previous_pipeline_job_id = nil if pipelines.size < 2
 
-        previous_index = pipelines.index(pipeline_id.to_i) - 1
-        return @previous_pipeline_job_id = nil if previous_index.negative?
+        previous_pipeline_index = pipelines.index(run_id) + 1
+        return @previous_job_id = nil if previous_pipeline_index >= pipelines.size
 
-        @previous_pipeline_job_id = client.pipeline_jobs(
+        log_debug("Fetching last job id from pipeline: #{pipelines[previous_pipeline_index]}")
+        @previous_job_id = client.pipeline_jobs(
           project_id,
-          pipelines[previous_index],
+          pipelines[previous_pipeline_index],
           scope: %w[success failed]
         ).find { |job| job.name == build_name }&.id
-      end
-
-      # Report path
-      #
-      # @return [String]
-      def report_path
-        @report_path ||= File.join(ci_info.project_dir, "allure-report")
-      end
-
-      # Allure report generator
-      #
-      # @return [Publisher::ReportGenerator]
-      def report_generator
-        @report_generator ||= ReportGenerator.new(result_paths, report_name, report_path)
       end
 
       # Current ref pipelines

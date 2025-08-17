@@ -10,7 +10,7 @@ module Publisher
   class ReportGenerator
     include Helpers
 
-    def initialize(result_paths, report_name, report_path = File.join(Dir.tmpdir, "allure-report-#{Time.now.to_i}"))
+    def initialize(result_paths, report_name, report_path)
       @result_paths = result_paths.join(" ")
       @report_name = report_name
       @report_path = report_path

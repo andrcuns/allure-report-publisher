@@ -37,7 +37,7 @@ module Publisher
         yield
         spinner_success(done_message)
       rescue StandardError => e
-        spinner_error(e)
+        spinner_error(e, done_message: exit_on_error ? "failed" : done_message)
         raise(Failure, e.message) if exit_on_error
       ensure
         print_debug
@@ -119,8 +119,8 @@ module Publisher
     #
     # @param [StandardError] error
     # @return [void]
-    def spinner_error(error)
-      message = ["failed", error.message]
+    def spinner_error(error, done_message: "failed")
+      message = [done_message, error.message]
       log_debug("Error: #{error.message}\n#{error.backtrace.join("\n")}")
 
       colored_message = colorize(message.compact.join("\n"), error_color)

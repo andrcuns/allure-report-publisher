@@ -46,41 +46,48 @@ module Publisher
 
         # Get ci run ID without creating instance of ci provider
         #
-        # @return [String]
+        # @return [Integer]
         def run_id
-          @run_id ||= env(ALLURE_RUN_ID) || ENV["CI_PIPELINE_ID"]
+          @run_id ||= (env(ALLURE_RUN_ID) || env("CI_PIPELINE_ID")).to_i
         end
 
         # CI job ID
         #
-        # @return [String]
+        # @return [Integer]
         def job_id
-          @job_id ||= env(ALLURE_JOB_ID) || ENV["CI_JOB_ID"]
+          @job_id ||= env("CI_JOB_ID").to_i
         end
 
         # Gitlab pages hostname
         #
         # @return [String]
         def pages_hostname
-          @pages_hostname ||= ENV["CI_PAGES_HOSTNAME"]
+          @pages_hostname ||= env("CI_PAGES_HOSTNAME")
         end
 
         # CI project name
         #
         # @return [String]
         def project_name
-          @project_name ||= ENV["CI_PROJECT_NAME"]
+          @project_name ||= env("CI_PROJECT_NAME")
+        end
+
+        # CI project ID
+        #
+        # @return [Integer]
+        def project_id
+          @project_id ||= env("CI_PROJECT_ID").to_i
         end
 
         # Project directory
         #
-        # @return [String] project directory
-        def project_dir
-          @project_dir ||= ENV["CI_PROJECT_DIR"]
+        # @return [String] build directory
+        def build_dir
+          @build_dir ||= env("CI_PROJECT_DIR")
         end
 
         def branch
-          @branch ||= ENV["CI_MERGE_REQUEST_SOURCE_BRANCH_NAME"] || ENV["CI_COMMIT_REF_NAME"]
+          @branch ||= env("CI_MERGE_REQUEST_SOURCE_BRANCH_NAME") || env("CI_COMMIT_REF_NAME")
         end
 
         # Server url
@@ -108,21 +115,28 @@ module Publisher
         #
         # @return [Integer]
         def mr_iid
-          @mr_iid ||= allure_mr_iid || env("CI_MERGE_REQUEST_IID")
+          @mr_iid ||= (allure_mr_iid || env("CI_MERGE_REQUEST_IID")).to_i
         end
 
         # Custom mr iid name
         #
-        # @return [String]
+        # @return [Integer]
         def allure_mr_iid
-          @allure_mr_iid ||= env("ALLURE_MERGE_REQUEST_IID")
+          @allure_mr_iid ||= env("ALLURE_MERGE_REQUEST_IID").to_i
         end
 
-        # Job name
+        # Job name used in report
         #
         # @return [String]
         def build_name
-          @build_name ||= env(ALLURE_JOB_NAME) || env("CI_JOB_NAME")
+          @build_name ||= env(ALLURE_JOB_NAME) || job_name
+        end
+
+        # CI job name
+        #
+        # @return [String]
+        def job_name
+          @job_name ||= env("CI_JOB_NAME")
         end
       end
     end
