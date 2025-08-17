@@ -8,7 +8,7 @@ RSpec.shared_examples "upload command" do
   let(:prefix) { "my-project/prs" }
   let(:report_title) { "Allure Report" }
   let(:report_url) { "http://report.com" }
-  let(:report_path) { "path/to/report" }
+  let(:output) { /allure-report-*/ }
 
   let(:uploader_stub) do
     instance_double(
@@ -16,8 +16,7 @@ RSpec.shared_examples "upload command" do
       generate_report: nil,
       upload: nil,
       report_urls: { "Report url" => report_url },
-      report_url: report_url,
-      report_path: report_path
+      report_url: report_url
     )
   end
 
@@ -38,14 +37,15 @@ RSpec.shared_examples "upload command" do
       bucket: bucket,
       prefix: prefix,
       copy_latest: false,
-      parallel: 8
+      parallel: 8,
+      output: output
     }
   end
 
   let(:provider_args) do
     {
       report_url: report_url,
-      report_path: report_path,
+      report_path: output,
       summary_type: Publisher::Helpers::Summary::TOTAL,
       summary_table_type: Publisher::Helpers::Summary::ASCII,
       collapse_summary: false,

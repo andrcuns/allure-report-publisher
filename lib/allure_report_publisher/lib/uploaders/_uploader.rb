@@ -30,6 +30,7 @@ module Publisher
       # @option args [String] :copy_latest
       # @option args [String] :report_name
       # @option args [Integer] :parallel
+      # @option args [String] :output
       def initialize(**args)
         @result_paths = args[:result_paths]
         @bucket_name = args[:bucket]
@@ -38,7 +39,7 @@ module Publisher
         @copy_latest = ci_info && args[:copy_latest] # copy latest for ci only
         @report_name = args[:report_name]
         @parallel = args[:parallel]
-        @report_path = args[:output] || File.join(Dir.tmpdir, "allure-report-#{Time.now.to_i}")
+        @report_path = args[:output]
       end
 
       # Generate allure report

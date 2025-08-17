@@ -5,13 +5,11 @@ module Publisher
     class GitlabArtifacts < Uploader
       extend Forwardable
 
-      def initialize(...)
+      def initialize(**args)
         super
 
         # gitlab artifacts do not support having url to latest report
         @copy_latest = false
-        # gitlab artifacts must use path relative to build dir instead of global tmp folder
-        @report_path = args[:output] || "allure-report"
       end
 
       # Report url

@@ -113,6 +113,17 @@ module Publisher
 
       attr_reader :args
 
+      # Report output path
+      #
+      # @return [String] output path
+      def output
+        @output ||= args[:output].then do |path|
+          next if path
+
+          gitlab_artifacts? ? "allure-report" : File.join(Dir.tmpdir, "allure-report-#{Time.now.to_i}")
+        end
+      end
+
       # Uploader instance
       #
       # @return [Publisher::Uploaders::Uploader]
@@ -120,7 +131,8 @@ module Publisher
         @uploader ||= uploaders(args[:type]).new(
           result_paths: @result_paths,
           parallel: parallel_threads,
-          **args.slice(:bucket, :prefix, :base_url, :copy_latest, :report_name, :output)
+          output: output,
+          **args.slice(:bucket, :prefix, :base_url, :copy_latest, :report_name)
         )
       end
 
@@ -130,7 +142,7 @@ module Publisher
       def ci_provider
         @ci_provider = Providers.provider&.new(
           report_url: uploader.report_url,
-          report_path: uploader.report_path,
+          report_path: output,
           summary_type: args[:summary],
           **args.slice(
             :update_pr,
