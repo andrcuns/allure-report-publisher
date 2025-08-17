@@ -7,20 +7,25 @@ module Publisher
     class Upload < Dry::CLI::Command
       include Helpers
 
+      STORAGE_PROVIDERS = %w[gcs s3 gitlab-artifacts].freeze
+
       desc "Generate and upload allure report"
 
       argument :type,
                type: :string,
                required: true,
-               values: %w[s3 gcs],
+               values: STORAGE_PROVIDERS,
                desc: "Cloud storage type"
 
+      # rubocop:disable Layout/LineLength
       option :results_glob,
              desc: "Glob pattern to return allure results directories. Required: true"
       option :bucket,
-             desc: "Bucket name. Required: true"
+             desc: "Bucket name. Required: true (gcs|s3), false (gitlab-artifacts)"
+      option :output,
+             desc: "Output directory for the report. Required: false. Defaults to 'allure-report' for gitlab-artifacts and random temporary directory for cloud based storage"
       option :prefix,
-             desc: "Optional prefix for report path. Required: false"
+             desc: "Optional prefix for report path. Required: false. Ignored for gitlab-artifacts"
       option :update_pr,
              type: :string,
              desc: "Add report url to PR via comment or description update. Required: false",
@@ -52,7 +57,7 @@ module Publisher
              ]
       option :base_url,
              type: :string,
-             desc: "Use custom base url instead of default cloud provider one. Required: false"
+             desc: "Use custom base url instead of default cloud provider one. Required: false. Ignored for gitlab-artifacts"
       option :parallel,
              type: :integer,
              desc: "Number of parallel threads to use for report file upload to cloud storage. Required: false",
@@ -68,7 +73,7 @@ module Publisher
       option :copy_latest,
              type: :boolean,
              default: false,
-             desc: "Keep copy of latest report at base prefix path"
+             desc: "Keep copy of latest report at base prefix path. Ignored for gitlab-artifacts"
       option :color,
              type: :boolean,
              desc: "Force color output"
@@ -80,17 +85,19 @@ module Publisher
              type: :boolean,
              default: false,
              desc: "Print additional debug output"
+      # rubocop:enable Layout/LineLength
 
       example [
         "s3 --results-glob='path/to/allure-results' --bucket=my-bucket",
-        "gcs --results-glob='paths/to/**/allure-results' --bucket=my-bucket --prefix=my-project/prs"
+        "gcs --results-glob='paths/to/**/allure-results' --bucket=my-bucket --prefix=my-project/prs",
+        "gitlab-artifacts --results-glob='paths/to/**/allure-results'"
       ]
 
       def call(args: [], **arguments)
         Helpers.pastel(force_color: arguments[:color])
         @args = arguments
 
-        validate_args
+        validate_args!
         scan_results_paths
 
         generate_report(args)
@@ -106,6 +113,17 @@ module Publisher
 
       attr_reader :args
 
+      # Report output path
+      #
+      # @return [String] output path
+      def output
+        @output ||= args[:output].then do |path|
+          next if path
+
+          gitlab_artifacts? ? "allure-report" : File.join(Dir.tmpdir, "allure-report-#{Time.now.to_i}")
+        end
+      end
+
       # Uploader instance
       #
       # @return [Publisher::Uploaders::Uploader]
@@ -113,6 +131,7 @@ module Publisher
         @uploader ||= uploaders(args[:type]).new(
           result_paths: @result_paths,
           parallel: parallel_threads,
+          output: output,
           **args.slice(:bucket, :prefix, :base_url, :copy_latest, :report_name)
         )
       end
@@ -123,7 +142,7 @@ module Publisher
       def ci_provider
         @ci_provider = Providers.provider&.new(
           report_url: uploader.report_url,
-          report_path: uploader.report_path,
+          report_path: output,
           summary_type: args[:summary],
           **args.slice(
             :update_pr,
@@ -142,19 +161,39 @@ module Publisher
       def uploaders(uploader)
         {
           "s3" => Uploaders::S3,
-          "gcs" => Uploaders::GCS
+          "gcs" => Uploaders::GCS,
+          "gitlab-artifacts" => Uploaders::GitlabArtifacts
         }.fetch(uploader)
       end
 
       # Validate required args
       #
       # @return [void]
-      def validate_args
-        error("Unsupported cloud storage type! Supported types are: s3, gcs") unless %w[s3 gcs].include?(args[:type])
+      def validate_args!
+        validate_base_args!
+        validate_base_url!
+        cast_parallel_threads_arg!
+      end
+
+      # Check base arguments
+      #
+      # @return [void]
+      def validate_base_args!
+        unless STORAGE_PROVIDERS.include?(args[:type])
+          error("Unsupported storage type! Supported types are: #{STORAGE_PROVIDERS.join(', ')}")
+        end
+
         error("Missing argument --results-glob!") unless args[:results_glob]
-        error("Missing argument --bucket!") unless args[:bucket]
-        URI.parse(args[:base_url]) if args[:base_url]
-        validate_parallel_args
+        error("Missing argument --bucket!") unless gitlab_artifacts? || args[:bucket]
+      end
+
+      # Check base URL is a valid URI
+      #
+      # @return [void]
+      def validate_base_url!
+        return unless args[:base_url] && !gitlab_artifacts?
+
+        URI.parse(args[:base_url])
       rescue URI::InvalidURIError
         error("Invalid --base-url value!")
       end
@@ -169,7 +208,7 @@ module Publisher
       rescue ArgumentError
         error("Invalid --parallel value, must be a positive number!")
       end
-      alias validate_parallel_args parallel_threads
+      alias cast_parallel_threads_arg! parallel_threads
 
       # Scan for allure results paths
       #
@@ -186,6 +225,13 @@ module Publisher
         exit(ignore ? 0 : 1)
       end
 
+      # Gitlab artifacts store
+      #
+      # @return [Boolean] true if gitlab artifacts store is used
+      def gitlab_artifacts?
+        args[:type] == "gitlab-artifacts"
+      end
+
       # Generate allure report
       #
       # @param [Array<String>] extra_args
@@ -200,7 +246,13 @@ module Publisher
       # @return [void]
       def upload_report
         log("Uploading allure report to #{args[:type]}")
-        Spinner.spin("uploading", debug: args[:debug]) { uploader.upload }
+        # gitlab-artifacts by default will raise error with info about upload using artifacts
+        spinner_args = {
+          debug: args[:debug],
+          exit_on_error: !gitlab_artifacts?,
+          failed_message: gitlab_artifacts? ? "skipped" : nil
+        }.compact
+        Spinner.spin("uploading", **spinner_args) { uploader.upload }
         uploader.report_urls.each { |k, v| log("#{k}: #{v}", :green) }
       end
 

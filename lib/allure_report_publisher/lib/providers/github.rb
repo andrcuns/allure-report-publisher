@@ -19,18 +19,8 @@ module Publisher
       def_delegators :"Publisher::Providers::Info::Github.instance",
                      :repository,
                      :server_url,
-                     :build_name
-
-      # Github api client
-      #
-      # @return [Octokit::Client]
-      def client
-        @client ||= begin
-          raise("Missing GITHUB_AUTH_TOKEN environment variable!") unless ENV["GITHUB_AUTH_TOKEN"]
-
-          Octokit::Client.new(access_token: ENV["GITHUB_AUTH_TOKEN"], api_endpoint: ENV["GITHUB_API_URL"])
-        end
-      end
+                     :build_name,
+                     :client
 
       # Update pull request description
       #

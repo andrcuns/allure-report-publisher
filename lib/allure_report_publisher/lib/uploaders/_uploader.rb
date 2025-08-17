@@ -30,6 +30,7 @@ module Publisher
       # @option args [String] :copy_latest
       # @option args [String] :report_name
       # @option args [Integer] :parallel
+      # @option args [String] :output
       def initialize(**args)
         @result_paths = args[:result_paths]
         @bucket_name = args[:bucket]
@@ -38,6 +39,7 @@ module Publisher
         @copy_latest = ci_info && args[:copy_latest] # copy latest for ci only
         @report_name = args[:report_name]
         @parallel = args[:parallel]
+        @report_path = args[:output]
       end
 
       # Generate allure report
@@ -90,7 +92,8 @@ module Publisher
                   :base_url,
                   :copy_latest,
                   :report_name,
-                  :parallel
+                  :parallel,
+                  :report_path
 
       def_delegator :report_generator, :common_info_path
 
@@ -151,7 +154,7 @@ module Publisher
       #
       # @return [Publisher::ReportGenerator]
       def report_generator
-        @report_generator ||= ReportGenerator.new(result_paths, report_name)
+        @report_generator ||= ReportGenerator.new(result_paths, report_name, report_path)
       end
 
       # Report path prefix
@@ -210,7 +213,7 @@ module Publisher
         end
       end
 
-      # Fetch allure report history
+      # Create allure report history dir
       #
       # @return [void]
       def create_history_dir

@@ -48,7 +48,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
       execute(allure_extra_args: ["--lang=en"])
 
       aggregate_failures do
-        expect(Publisher::ReportGenerator).to have_received(:new).with(result_paths, report_name)
+        expect(Publisher::ReportGenerator).to have_received(:new).with(result_paths, report_name, report_path)
         expect(report_generator).to have_received(:generate).with(["--lang=en"])
       end
     end
@@ -113,6 +113,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
 
     it "adds executor info" do
       execute
+
       expect(File).to have_received(:write)
         .with("#{common_info_path}/executor.json", JSON.pretty_generate(executor_info)).twice
     end

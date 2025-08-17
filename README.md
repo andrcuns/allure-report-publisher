@@ -3,8 +3,6 @@
 [![Docker Image Version (latest semver)](https://img.shields.io/docker/v/andrcuns/allure-report-publisher?color=blue&label=docker&sort=semver)](https://hub.docker.com/r/andrcuns/allure-report-publisher)
 [![Docker Pulls](https://img.shields.io/docker/pulls/andrcuns/allure-report-publisher)](https://hub.docker.com/r/andrcuns/allure-report-publisher)
 ![Workflow status](https://github.com/andrcuns/allure-report-publisher/workflows/Test/badge.svg)
-[![Maintainability](https://api.codeclimate.com/v1/badges/210eaa4f74588fb08313/maintainability)](https://codeclimate.com/github/andrcuns/allure-report-publisher/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/210eaa4f74588fb08313/test_coverage)](https://codeclimate.com/github/andrcuns/allure-report-publisher/test_coverage)
 
 Upload your report to a file storage of your choice.
 
@@ -38,22 +36,23 @@ Description:
   Generate and upload allure report
 
 Arguments:
-  TYPE                              # REQUIRED Cloud storage type: (s3/gcs)
+  TYPE                              # REQUIRED Cloud storage type: (gcs/s3/gitlab-artifacts)
 
 Options:
   --results-glob=VALUE              # Glob pattern to return allure results directories. Required: true
-  --bucket=VALUE                    # Bucket name. Required: true
-  --prefix=VALUE                    # Optional prefix for report path. Required: false
+  --bucket=VALUE                    # Bucket name. Required: true (gcs|s3), false (gitlab-artifacts)
+  --output=VALUE                    # Output directory for the report. Required: false. Defaults to 'allure-report' for gitlab-artifacts and random temporary directory for cloud based storage
+  --prefix=VALUE                    # Optional prefix for report path. Required: false. Ignored for gitlab-artifacts
   --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description/actions)
   --report-title=VALUE              # Title for url section in PR comment/description. Required: false, default: "Allure Report"
   --report-name=VALUE               # Custom report name in final Allure report. Required: false
   --summary=VALUE                   # Additionally add summary table to PR comment or description. Required: false: (behaviors/suites/packages/total), default: "total"
   --summary-table-type=VALUE        # Summary table type. Required: false: (ascii/markdown), default: "ascii"
-  --base-url=VALUE                  # Use custom base url instead of default cloud provider one. Required: false
+  --base-url=VALUE                  # Use custom base url instead of default cloud provider one. Required: false. Ignored for gitlab-artifacts
   --parallel=VALUE                  # Number of parallel threads to use for report file upload to cloud storage. Required: false, default: 8
   --[no-]flaky-warning-status       # Mark run with a '!' status in PR comment/description if report contains flaky tests, default: false
   --[no-]collapse-summary           # Create summary as a collapsible section, default: false
-  --[no-]copy-latest                # Keep copy of latest report at base prefix path, default: false
+  --[no-]copy-latest                # Keep copy of latest report at base prefix path. Ignored for gitlab-artifacts, default: false
   --[no-]color                      # Force color output
   --[no-]ignore-missing-results     # Ignore missing allure results, default: false
   --[no-]debug                      # Print additional debug output, default: false
@@ -62,6 +61,7 @@ Options:
 Examples:
   allure-report-publisher upload s3 --results-glob='path/to/allure-results' --bucket=my-bucket
   allure-report-publisher upload gcs --results-glob='paths/to/**/allure-results' --bucket=my-bucket --prefix=my-project/prs
+  allure-report-publisher upload gitlab-artifacts --results-glob='paths/to/**/allure-results'
 ```
 
 ## Extra arguments
@@ -114,6 +114,23 @@ credentials.json contents:
 - `GOOGLE_CLOUD_CREDENTIALS_JSON`
 - `GOOGLE_CLOUD_KEYFILE_JSON`
 - `GCLOUD_KEYFILE_JSON`
+
+## Gitlab Artifacts
+
+This storage provider is only supported for GitLab CI. Because GitLab does not expose public api for uploading artifacts, a job must be configured to upload the report as an artifact. Example:
+
+```yaml
+# .gitlab-ci.yml
+artifacts:
+  paths:
+    - allure-report
+```
+
+where `allure-report` is the directory containing the generated Allure report and can be overridden via `--output` option.
+
+Requires environment variable `GITLAB_AUTH_TOKEN` where token is a GitLab personal access token with `api` scope capable of downloading artifacts and retrieving job and pipeline information.
+
+This provider is meant to be used with [GitLab CI](#gitlab-ci).
 
 # CI
 
