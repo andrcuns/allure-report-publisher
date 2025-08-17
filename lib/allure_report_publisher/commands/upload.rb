@@ -234,10 +234,11 @@ module Publisher
       # @return [void]
       def upload_report
         log("Uploading allure report to #{args[:type]}")
+        # gitlab-artifacts by default will raise error with info about upload using artifacts
         spinner_args = {
           debug: args[:debug],
           exit_on_error: !gitlab_artifacts?,
-          done_message: gitlab_artifacts? ? "skipped" : nil
+          failed_message: gitlab_artifacts? ? "skipped" : nil
         }.compact
         Spinner.spin("uploading", **spinner_args) { uploader.upload }
         uploader.report_urls.each { |k, v| log("#{k}: #{v}", :green) }

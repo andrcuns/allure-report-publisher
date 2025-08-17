@@ -24,20 +24,27 @@ module Publisher
       # @param [Boolean] exit_on_error
       # @param [Proc] &block
       # @return [void]
-      def self.spin(spinner_message, done_message: "done", exit_on_error: true, debug: false, &block)
-        new(spinner_message, exit_on_error: exit_on_error, debug: debug).spin(done_message, &block)
+      def self.spin(
+        spinner_message,
+        done_message: "done",
+        failed_message: "failed",
+        exit_on_error: true,
+        debug: false,
+        &block
+      )
+        new(spinner_message, exit_on_error: exit_on_error, debug: debug).spin(done_message, failed_message, &block)
       end
 
       # Run code block inside spinner
       #
       # @param [String] done_message
       # @return [Boolean]
-      def spin(done_message = "done")
+      def spin(done_message = "done", failed_message = "failed")
         spinner.auto_spin
         yield
         spinner_success(done_message)
       rescue StandardError => e
-        spinner_error(e, done_message: exit_on_error ? "failed" : done_message)
+        spinner_error(e, done_message: failed_message)
         raise(Failure, e.message) if exit_on_error
       ensure
         print_debug
