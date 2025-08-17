@@ -48,14 +48,14 @@ module Publisher
         #
         # @return [Integer]
         def run_id
-          @run_id ||= (env(ALLURE_RUN_ID) || env("CI_PIPELINE_ID")).to_i
+          @run_id ||= env_int(ALLURE_RUN_ID) || env_int("CI_PIPELINE_ID")
         end
 
         # CI job ID
         #
         # @return [Integer]
         def job_id
-          @job_id ||= env("CI_JOB_ID").to_i
+          @job_id ||= env_int("CI_JOB_ID")
         end
 
         # Gitlab pages hostname
@@ -76,7 +76,7 @@ module Publisher
         #
         # @return [Integer]
         def project_id
-          @project_id ||= env("CI_PROJECT_ID").to_i
+          @project_id ||= env_int("CI_PROJECT_ID")
         end
 
         # Project directory
@@ -115,14 +115,14 @@ module Publisher
         #
         # @return [Integer]
         def mr_iid
-          @mr_iid ||= (allure_mr_iid || env("CI_MERGE_REQUEST_IID")).to_i
+          @mr_iid ||= allure_mr_iid || env_int("CI_MERGE_REQUEST_IID")
         end
 
         # Custom mr iid name
         #
         # @return [Integer]
         def allure_mr_iid
-          @allure_mr_iid ||= env("ALLURE_MERGE_REQUEST_IID").to_i
+          @allure_mr_iid ||= env_int("ALLURE_MERGE_REQUEST_IID")
         end
 
         # Job name used in report

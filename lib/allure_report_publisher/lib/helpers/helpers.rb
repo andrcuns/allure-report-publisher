@@ -64,6 +64,18 @@ module Publisher
       ENV[name]
     end
 
+    # Return environment variable as integer if it's numeric
+    #
+    # @param [String] name
+    # @return [Integer, nil]
+    def env_int(name)
+      value = env(name)
+      return unless value
+      raise("Invalid integer value for #{name}: #{value}") unless value.match?(/\A-?\d+\z/)
+
+      value.to_i
+    end
+
     module_function
 
     # Colorize string
