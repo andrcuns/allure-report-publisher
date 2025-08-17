@@ -118,7 +118,7 @@ module Publisher
       # @return [String] output path
       def output
         @output ||= args[:output].then do |path|
-          next if path
+          next path if path && !path.empty?
 
           gitlab_artifacts? ? "allure-report" : File.join(Dir.tmpdir, "allure-report-#{Time.now.to_i}")
         end
