@@ -59,6 +59,8 @@ module Publisher
             path(common_info_path, "history", file_name)
           )
         end
+      rescue StandardError => e
+        log("Failed to download allure history: #{e.message}", :yellow)
       end
 
       # Last job from previous pipeline
