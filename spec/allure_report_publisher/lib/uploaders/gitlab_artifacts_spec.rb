@@ -274,7 +274,6 @@ RSpec.describe Publisher::Uploaders::GitlabArtifacts, epic: "uploaders" do
       end
 
       it "handles history download errors gracefully and continues" do
-        # The uploader should handle HistoryNotFoundError without crashing
         expect { execute }.not_to raise_error
 
         # Should still try to download history files
