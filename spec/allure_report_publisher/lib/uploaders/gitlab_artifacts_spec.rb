@@ -269,7 +269,7 @@ RSpec.describe Publisher::Uploaders::GitlabArtifacts, epic: "uploaders" do
       before do
         # Use HistoryNotFoundError which is the expected error type that gets handled
         allow(client).to receive(:download_job_artifact_file).and_raise(
-          Publisher::Uploaders::HistoryNotFoundError, "History not found"
+          StandardError, "History not found"
         )
       end
 
