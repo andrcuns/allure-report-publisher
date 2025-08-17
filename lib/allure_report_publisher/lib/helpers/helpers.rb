@@ -71,7 +71,7 @@ module Publisher
     def env_int(name)
       value = env(name)
       return unless value
-      raise("Invalid integer value for #{name}: #{value}") unless value.match?(/\A-?\d+\z/)
+      raise("Invalid integer value for #{name}") unless value.match?(/\A-?\d+\z/)
 
       value.to_i
     end
