@@ -113,6 +113,7 @@ RSpec.describe Publisher::Uploaders::GCS, epic: "uploaders" do
 
     it "adds executor info" do
       execute
+
       expect(File).to have_received(:write)
         .with("#{common_info_path}/executor.json", JSON.pretty_generate(executor_info)).twice
     end

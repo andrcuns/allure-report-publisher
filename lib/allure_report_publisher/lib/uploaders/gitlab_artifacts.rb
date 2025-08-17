@@ -115,7 +115,6 @@ module Publisher
         # this will only work with history json files, see: https://github.com/NARKOZ/gitlab/issues/621
         response = client.download_job_artifact_file(project_id, job_id, artifact_path)
 
-        FileUtils.mkdir_p(File.dirname(local_path))
         File.write(local_path, response.to_json)
       end
     end

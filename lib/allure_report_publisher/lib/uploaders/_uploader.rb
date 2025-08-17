@@ -213,7 +213,7 @@ module Publisher
         end
       end
 
-      # Fetch allure report history
+      # Create allure report history dir
       #
       # @return [void]
       def create_history_dir
