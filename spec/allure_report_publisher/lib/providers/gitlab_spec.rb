@@ -96,7 +96,7 @@ RSpec.describe Publisher::Providers::Gitlab, epic: "providers" do
   context "with overridden parameters" do
     let(:event_name) { "push" }
     let(:custom_project) { "custom/project" }
-    let(:custom_mr_id) { "123" }
+    let(:custom_mr_id) { 123 }
     let(:sha_url) { custom_sha_url }
 
     it "updates mr description with custom parameters for non mr runs" do
