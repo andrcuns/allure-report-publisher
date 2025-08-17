@@ -7,12 +7,14 @@ module Publisher
     class Upload < Dry::CLI::Command
       include Helpers
 
+      STORAGE_PROVIDERS = %w[gcs s3 gitlab-artifacts].freeze
+
       desc "Generate and upload allure report"
 
       argument :type,
                type: :string,
                required: true,
-               values: %w[s3 gcs],
+               values: STORAGE_PROVIDERS,
                desc: "Cloud storage type"
 
       option :results_glob,
@@ -142,7 +144,8 @@ module Publisher
       def uploaders(uploader)
         {
           "s3" => Uploaders::S3,
-          "gcs" => Uploaders::GCS
+          "gcs" => Uploaders::GCS,
+          "gitlab-artifacts" => Uploaders::GitlabArtifacts
         }.fetch(uploader)
       end
 
@@ -150,9 +153,13 @@ module Publisher
       #
       # @return [void]
       def validate_args
-        error("Unsupported cloud storage type! Supported types are: s3, gcs") unless %w[s3 gcs].include?(args[:type])
+        unless STORAGE_PROVIDERS.include?(args[:type])
+          error("Unsupported cloud storage type! Supported types are: #{STORAGE_PROVIDERS.join(', ')}")
+        end
+
         error("Missing argument --results-glob!") unless args[:results_glob]
         error("Missing argument --bucket!") unless args[:bucket]
+
         URI.parse(args[:base_url]) if args[:base_url]
         validate_parallel_args
       rescue URI::InvalidURIError
@@ -199,6 +206,8 @@ module Publisher
       #
       # @return [void]
       def upload_report
+        return if args[:type] == "gitlab-artifacts"
+
         log("Uploading allure report to #{args[:type]}")
         Spinner.spin("uploading", debug: args[:debug]) { uploader.upload }
         uploader.report_urls.each { |k, v| log("#{k}: #{v}", :green) }

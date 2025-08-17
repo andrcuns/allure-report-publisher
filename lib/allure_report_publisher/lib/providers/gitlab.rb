@@ -15,21 +15,8 @@ module Publisher
                      :mr_iid,
                      :allure_mr_iid,
                      :server_url,
-                     :build_name
-
-      # Get gitlab client
-      #
-      # @return [Gitlab::Client]
-      def client
-        @client ||= begin
-          raise("Missing GITLAB_AUTH_TOKEN environment variable!") unless env("GITLAB_AUTH_TOKEN")
-
-          ::Gitlab::Client.new(
-            endpoint: "#{server_url}/api/v4",
-            private_token: env("GITLAB_AUTH_TOKEN")
-          )
-        end
-      end
+                     :build_name,
+                     :client
 
       # Current pull request description
       #

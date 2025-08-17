@@ -11,6 +11,13 @@ module Publisher
 
         # :nocov:
 
+        # CI provider api client
+        #
+        # @return [Object]
+        def client
+          raise("Not implemented!")
+        end
+
         # CI Provider executor info
         #
         # @param [String] report_url

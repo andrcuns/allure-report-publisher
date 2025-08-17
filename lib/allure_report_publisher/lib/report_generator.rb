@@ -10,9 +10,10 @@ module Publisher
   class ReportGenerator
     include Helpers
 
-    def initialize(result_paths, report_name)
+    def initialize(result_paths, report_name, report_path = File.join(Dir.tmpdir, "allure-report-#{Time.now.to_i}"))
       @result_paths = result_paths.join(" ")
       @report_name = report_name
+      @report_path = report_path
     end
 
     # Generate allure report
@@ -35,12 +36,8 @@ module Publisher
     end
     alias create_common_path common_info_path
 
-    # Allure report directory
-    #
-    # @return [String]
-    def report_path
-      @report_path ||= File.join(Dir.tmpdir, "allure-report-#{Time.now.to_i}")
-    end
+    # @return [String] report path
+    attr_reader :report_path
 
     private
 
