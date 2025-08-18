@@ -167,16 +167,10 @@ RSpec.shared_examples "upload command" do |uploader|
   end
 
   context "with invalid base-url" do
-    if uploader == Publisher::Uploaders::GitlabArtifacts
-      it "ignores base-url option" do
-        expect { run_cli(*command, *cli_args, "--base-url=https://bla bla") }.not_to raise_error
-      end
-    else
-      it "fails with invalid url error" do
-        expect { run_cli(*command, *cli_args, "--base-url=https://bla bla") }.to raise_error(SystemExit)
-        expect(uploader_stub).not_to have_received(:generate_report)
-        expect(uploader_stub).not_to have_received(:upload)
-      end
+    it "fails with invalid url error" do
+      expect { run_cli(*command, *cli_args, "--base-url=https://bla bla") }.to raise_error(SystemExit)
+      expect(uploader_stub).not_to have_received(:generate_report)
+      expect(uploader_stub).not_to have_received(:upload)
     end
   end
 

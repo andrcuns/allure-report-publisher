@@ -5,6 +5,8 @@ module Publisher
     class GitlabArtifacts < Uploader
       extend Forwardable
 
+      DEFAULT_PAGES_DOMAIN = "gitlab.io".freeze
+
       def initialize(**args)
         super
 
@@ -16,7 +18,7 @@ module Publisher
       #
       # @return [String]
       def report_url
-        @report_url ||= "https://#{pages_hostname}/-/#{project_name}/-/jobs/#{job_id}/artifacts/#{report_path}/index.html"
+        @report_url ||= "#{pages_hostname}/-/#{project_name}/-/jobs/#{job_id}/artifacts/#{report_path}/index.html"
       end
 
       # No-op method as gitlab does not expose api to upload artifacts
@@ -29,8 +31,7 @@ module Publisher
       private
 
       def_delegators :ci_info,
-                     :pages_hostname,
-                     :project_name,
+                     :project_path,
                      :project_id,
                      :job_name,
                      :job_id,
@@ -95,8 +96,29 @@ module Publisher
         @pipelines ||= client.pipelines(project_id, ref: branch, per_page: 10)
       end
 
-      def latest_job
-        @latest_job ||= pipelines.max_by(&:id)
+      # Top level group name
+      #
+      # @return [String]
+      def top_level_group
+        @top_level_group ||= project_path.split("/").first
+      end
+
+      # Project path without top level group name
+      #
+      # @return [String]
+      def project_name
+        @project_name ||= project_path.split("/")[1..].join("/")
+      end
+
+      # Pages hostname
+      #
+      # @return [String]
+      def pages_hostname
+        # built in variables of gitlab CI return incorrect pages hostname so it needs to be built manually
+        return "https://#{top_level_group}.#{DEFAULT_PAGES_DOMAIN}" unless base_url
+
+        host, scheme = URI.parse(base_url).then { |uri| [uri.host, uri.scheme || "https"] }
+        "#{scheme}://#{top_level_group}.#{host}"
       end
 
       # CI info
