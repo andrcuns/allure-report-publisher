@@ -58,18 +58,11 @@ module Publisher
           @job_id ||= env_int("CI_JOB_ID")
         end
 
-        # Gitlab pages hostname
+        # Full project path
         #
-        # @return [String]
-        def pages_hostname
-          @pages_hostname ||= env("CI_PAGES_HOSTNAME")
-        end
-
-        # CI project name
-        #
-        # @return [String]
-        def project_name
-          @project_name ||= env("CI_PROJECT_NAME")
+        # @return [String] full project path
+        def project_path
+          @project_path ||= env("CI_PROJECT_PATH")
         end
 
         # CI project ID

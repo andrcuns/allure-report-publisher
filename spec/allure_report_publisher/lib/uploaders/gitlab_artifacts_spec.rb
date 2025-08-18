@@ -36,17 +36,18 @@ RSpec.describe Publisher::Uploaders::GitlabArtifacts, epic: "uploaders" do
   let(:previous_job_id) { 456 }
   let(:job_name) { "test" }
   let(:job_id) { "789" }
-  let(:pages_hostname) { "gitlab.example.com" }
-  let(:project_name) { "project" }
   let(:project_id) { "123" }
   let(:branch) { "main" }
   let(:run_id) { current_pipeline_id }
 
+  let(:expected_url) do
+    "https://#{top_level_group}.gitlab.io/-/#{project_name}/-/jobs/#{job_id}/artifacts/#{report_path}/index.html"
+  end
+
   let(:ci_info) do
     instance_double(
       Publisher::Providers::Info::Gitlab,
-      pages_hostname: pages_hostname,
-      project_name: project_name,
+      project_path: "#{top_level_group}/#{project_name}",
       project_id: project_id,
       job_name: job_name,
       job_id: job_id,
@@ -79,12 +80,23 @@ RSpec.describe Publisher::Uploaders::GitlabArtifacts, epic: "uploaders" do
     end
   end
 
-  context "with report url generation" do
+  context "with default base url" do
     it "returns correct GitLab artifacts report url" do
       uploader = described_class.new(**args)
-      expected_url = "https://#{pages_hostname}/-/#{project_name}/-/jobs/#{job_id}/artifacts/#{report_path}/index.html"
 
       expect(uploader.report_url).to eq(expected_url)
+    end
+  end
+
+  context "with custom base url" do
+    let(:base_url) { "http://custom.gitlab.com" }
+
+    it "returns correct GitLab artifacts report url" do
+      uploader = described_class.new(**args)
+
+      expect(uploader.report_url).to eq(
+        "http://#{top_level_group}.custom.gitlab.com/-/#{project_name}/-/jobs/#{job_id}/artifacts/#{report_path}/index.html"
+      )
     end
   end
 
@@ -230,7 +242,6 @@ RSpec.describe Publisher::Uploaders::GitlabArtifacts, epic: "uploaders" do
   context "with report URLs" do
     it "returns only report url (no latest report url)" do
       uploader = described_class.new(**args, copy_latest: true)
-      expected_url = "https://#{pages_hostname}/-/#{project_name}/-/jobs/#{job_id}/artifacts/#{report_path}/index.html"
 
       expect(uploader.report_urls).to eq({
         "Report url" => expected_url

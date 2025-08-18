@@ -48,7 +48,7 @@ Options:
   --report-name=VALUE               # Custom report name in final Allure report. Required: false
   --summary=VALUE                   # Additionally add summary table to PR comment or description. Required: false: (behaviors/suites/packages/total), default: "total"
   --summary-table-type=VALUE        # Summary table type. Required: false: (ascii/markdown), default: "ascii"
-  --base-url=VALUE                  # Use custom base url instead of default cloud provider one. Required: false. Ignored for gitlab-artifacts
+  --base-url=VALUE                  # Use custom base url instead of default cloud provider one. Required: false. For gitlab-artifacts, replaces default gitlab.io pages hostname
   --parallel=VALUE                  # Number of parallel threads to use for report file upload to cloud storage. Required: false, default: 8
   --[no-]flaky-warning-status       # Mark run with a '!' status in PR comment/description if report contains flaky tests, default: false
   --[no-]collapse-summary           # Create summary as a collapsible section, default: false

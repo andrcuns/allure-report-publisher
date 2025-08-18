@@ -8,6 +8,8 @@ RSpec.shared_context "with gitlab env" do
   let(:auth_token) { "token" }
   let(:run_id) { 123 }
   let(:sha) { "cfdef23b4b06df32ab1e98ee4091504948daf2a9" }
+  let(:top_level_group) { "group" }
+  let(:project_name) { "nested/project" }
 
   let(:env) do
     {
@@ -16,7 +18,7 @@ RSpec.shared_context "with gitlab env" do
       CI_JOB_NAME: "test",
       CI_PIPELINE_ID: run_id.to_s,
       CI_PIPELINE_URL: "https://gitlab.com/pipeline/url",
-      CI_PROJECT_PATH: "project",
+      CI_PROJECT_PATH: "#{top_level_group}/#{project_name}",
       CI_MERGE_REQUEST_IID: mr_id.to_s,
       CI_PIPELINE_SOURCE: event_name,
       CI_MERGE_REQUEST_SOURCE_BRANCH_SHA: "",

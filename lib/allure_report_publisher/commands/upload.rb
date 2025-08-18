@@ -57,7 +57,7 @@ module Publisher
              ]
       option :base_url,
              type: :string,
-             desc: "Use custom base url instead of default cloud provider one. Required: false. Ignored for gitlab-artifacts"
+             desc: "Use custom base url instead of default cloud provider one. Required: false. For gitlab-artifacts, replaces default gitlab.io pages hostname"
       option :parallel,
              type: :integer,
              desc: "Number of parallel threads to use for report file upload to cloud storage. Required: false",
@@ -191,7 +191,7 @@ module Publisher
       #
       # @return [void]
       def validate_base_url!
-        return unless args[:base_url] && !gitlab_artifacts?
+        return unless args[:base_url]
 
         URI.parse(args[:base_url])
       rescue URI::InvalidURIError
