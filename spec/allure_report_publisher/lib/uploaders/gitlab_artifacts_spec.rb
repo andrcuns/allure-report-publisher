@@ -89,13 +89,13 @@ RSpec.describe Publisher::Uploaders::GitlabArtifacts, epic: "uploaders" do
   end
 
   context "with custom base url" do
-    let(:base_url) { "https://custom.gitlab.com" }
+    let(:base_url) { "http://custom.gitlab.com" }
 
     it "returns correct GitLab artifacts report url" do
       uploader = described_class.new(**args)
 
       expect(uploader.report_url).to eq(
-        "https://#{top_level_group}.custom.gitlab.com/-/#{project_name}/-/jobs/#{job_id}/artifacts/#{report_path}/index.html"
+        "http://#{top_level_group}.custom.gitlab.com/-/#{project_name}/-/jobs/#{job_id}/artifacts/#{report_path}/index.html"
       )
     end
   end
