@@ -63,13 +63,14 @@ module Publisher
       def download_history
         log_debug("Downloading previous run history")
         HISTORY.each do |file_name|
+          source_file = key(prefix, "history", file_name)
           file_path = path(common_info_path, "history", file_name)
           client.get_object(
             response_target: file_path,
-            key: key(prefix, "history", file_name),
+            key: source_file,
             bucket: bucket_name
           )
-          log_debug("Downloaded '#{file_name}' as '#{file_path}'")
+          log_debug("Downloaded '#{source_file}' to '#{file_path}'")
         end
       rescue Aws::S3::Errors::NoSuchKey
         raise(HistoryNotFoundError, "Allure history from previous runs not found!")

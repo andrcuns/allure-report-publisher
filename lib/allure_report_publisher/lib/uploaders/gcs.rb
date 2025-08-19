@@ -41,12 +41,13 @@ module Publisher
       def download_history
         log_debug("Downloading previous run history")
         HISTORY.each do |file_name|
-          file = bucket.file(key(prefix, "history", file_name))
+          source_file = key(prefix, "history", file_name)
+          file = bucket.file(source_file)
           raise(HistoryNotFoundError, "Allure history from previous runs not found!") unless file
 
           file_path = path(common_info_path, "history", file_name)
           file.download(file_path)
-          log_debug("Downloaded '#{file_name}' as '#{file_path}'")
+          log_debug("Downloaded '#{source_file}' to '#{file_path}'")
         end
       end
 
