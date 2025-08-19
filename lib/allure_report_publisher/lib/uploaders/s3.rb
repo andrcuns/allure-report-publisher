@@ -81,7 +81,7 @@ module Publisher
       # @return [void]
       def upload_history
         log_debug("Uploading report history")
-        upload_to_s3(report_files.select { |file| file.fnmatch?("*/history/*") }, prefix)
+        upload_to_s3(history_files, prefix)
       end
 
       # Upload allure report

@@ -177,6 +177,13 @@ module Publisher
                           .reject(&:directory?)
       end
 
+      # History files array
+      #
+      # @return [Array<Pathname>]
+      def history_files
+        @history_files ||= report_files.select { |file| file.fnmatch?("*/history/*") }
+      end
+
       # Get run id
       #
       # @return [String]

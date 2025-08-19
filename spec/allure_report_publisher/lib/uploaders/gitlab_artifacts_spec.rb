@@ -29,7 +29,7 @@ RSpec.describe Publisher::Uploaders::GitlabArtifacts, epic: "uploaders" do
     ]
   end
 
-  let(:artifact_response) { { "key" => "value" } }
+  let(:artifact_response) { double(Gitlab::FileResponse, string: '{"key":"value"}') }
   let(:current_pipeline_id) { 123 }
   let(:previous_pipeline_id) { 122 }
   let(:older_pipeline_id) { 121 }
@@ -207,7 +207,7 @@ RSpec.describe Publisher::Uploaders::GitlabArtifacts, epic: "uploaders" do
 
         history_files.each do |file_name|
           file_path = File.join(common_info_path, "history", file_name)
-          expect(File).to have_received(:write).with(file_path, artifact_response.to_json)
+          expect(File).to have_received(:write).with(file_path, artifact_response.string)
         end
       end
     end
@@ -267,7 +267,7 @@ RSpec.describe Publisher::Uploaders::GitlabArtifacts, epic: "uploaders" do
             )
 
             file_path = File.join(common_info_path, "history", file_name)
-            expect(File).to have_received(:write).with(file_path, artifact_response.to_json)
+            expect(File).to have_received(:write).with(file_path, artifact_response.string)
           end
 
           # Verify directory was created
@@ -291,7 +291,7 @@ RSpec.describe Publisher::Uploaders::GitlabArtifacts, epic: "uploaders" do
         expect(client).to have_received(:download_job_artifact_file)
 
         # But no files should be written due to the error
-        expect(File).not_to have_received(:write).with(anything, artifact_response.to_json)
+        expect(File).not_to have_received(:write).with(anything, artifact_response.string)
       end
     end
   end
