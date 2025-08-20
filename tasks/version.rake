@@ -16,10 +16,12 @@ module Publisher
     # Add version bump task
     #
     def add_version_task
-      desc("Bump application version [major, minor, patch]")
+      desc("Bump application version [major, minor, patch, rc]")
       task(:version, [:semver]) do |_task, args|
         Helpers.pastel(force_color: args[:color])
-        new_version = send(args[:semver]).format("%M.%m.%p").to_s
+        new_version = send(args[:semver]).then do |ver|
+          ver.special.empty? ? ver.format("%M.%m.%p") : "#{ver.format('%M.%m.%p')}.#{ver.special}"
+        end
 
         Helpers::Spinner.spin("Updating app version", done_message: "updated to v#{new_version}", debug: true) do
           update_version(new_version)
@@ -90,6 +92,16 @@ module Publisher
         ver.minor = 0
         ver.patch = 0
       end
+    end
+
+    # Increase rc version
+    #
+    # @return [SemVer]
+    def rc
+      return major.tap { |ver| ver.special = "rc.1" } if semver.special.empty?
+
+      # Increment the rc version
+      semver.tap { |ver| ver.special = ver.special.gsub(/rc\.(\d+)/) { |m| "rc.#{m.match(/\d+/)[0].to_i.next}" } }
     end
   end
 end
