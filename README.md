@@ -13,7 +13,7 @@ Upload your report to a file storage of your choice.
 ## Rubygems
 
 ```shell
-gem install allure-report-uploader
+gem install allure-report-publisher
 ```
 
 ## Docker
