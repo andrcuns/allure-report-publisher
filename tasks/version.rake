@@ -19,7 +19,9 @@ module Publisher
       desc("Bump application version [major, minor, patch, rc]")
       task(:version, [:semver]) do |_task, args|
         Helpers.pastel(force_color: args[:color])
-        new_version = send(args[:semver]).then { |ver| ver.special.empty? ? ver.format('%M.%m.%p') : "#{ver.format('%M.%m.%p')}.#{ver.special}" }
+        new_version = send(args[:semver]).then do |ver|
+          ver.special.empty? ? ver.format("%M.%m.%p") : "#{ver.format('%M.%m.%p')}.#{ver.special}"
+        end
 
         Helpers::Spinner.spin("Updating app version", done_message: "updated to v#{new_version}", debug: true) do
           update_version(new_version)
