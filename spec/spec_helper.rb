@@ -5,6 +5,7 @@ require "rspec"
 require "allure-rspec"
 require "stringio"
 require "climate_control"
+require "rspec_junit_formatter"
 require "debug" unless ENV["CI"]
 
 require "allure_report_publisher"
@@ -18,7 +19,10 @@ Publisher::Helpers.instance_variable_set(:@pastel, Pastel.new(enabled: true))
 
 RSpec.configure do |config|
   # Generate allure reports on CI
-  config.formatter = AllureRspecFormatter if ENV["CI"]
+  if ENV["CI"]
+    config.add_formatter(AllureRspecFormatter)
+    config.add_formatter(RspecJunitFormatter, "tmp/rspec.xml")
+  end
 
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
