@@ -48,13 +48,11 @@ jobs:
           name: allure-reports-${{ matrix.ruby }}
           path: reports/allure-results/
           retention-days: 1
-      - name: Save coverage report
-        uses: actions/upload-artifact@v4
-        if: always()
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        if: matrix.ruby == '3.4'
         with:
-          name: coverage-${{ matrix.ruby }}
-          path: coverage/coverage.json
-          retention-days: 1
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   publish-report:
     runs-on: ubuntu-latest
