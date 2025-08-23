@@ -18,6 +18,7 @@ group :development do
   gem "observer", "~> 0.1.2"
   gem "rake", "~> 13.3"
   gem "rspec", "~> 3.13"
+  gem "rspec_junit_formatter", "~> 0.6.0"
   gem "rubocop", "~> 1.79"
   gem "rubocop-performance", "~> 1.25"
   gem "rubocop-rake", "~> 0.7.1"
