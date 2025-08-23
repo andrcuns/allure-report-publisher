@@ -1,0 +1,14 @@
+component_management:
+  individual_components:
+    - component_id: commands
+      paths:
+        - lib/allure_report_publisher/commands/**
+    - component_id: uploaders
+      paths:
+        - lib/allure_report_publisher/lib/uploaders/**
+    - component_id: providers
+      paths:
+        - lib/allure_report_publisher/lib/providers/**
+    - component_id: helpers
+      paths:
+        - lib/allure_report_publisher/lib/helpers/**
