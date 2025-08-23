@@ -48,9 +48,27 @@ jobs:
           name: allure-reports-${{ matrix.ruby }}
           path: reports/allure-results/
           retention-days: 1
+      - name: Save coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-${{ matrix.ruby }}
+          path: coverage/coverage.xml
+          retention-days: 1
+
+  publish-coverage:
+    runs-on: ubuntu-latest
+    needs: rspec
+    if: always()
+    name: Publish Coverage Report
+    steps:
+      - name: Download coverage report
+        uses: actions/download-artifact@v5
+        with:
+          path: coverage/coverage.xml
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
-        if: matrix.ruby == '3.4'
+        if: always()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -58,7 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: rspec
     if: always()
-    name: publish report
+    name: Publish Allure Report
     steps:
       - name: Checkout
         uses: actions/checkout@v5
