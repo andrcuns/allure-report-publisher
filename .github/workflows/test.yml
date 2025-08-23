@@ -37,7 +37,11 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
       - name: RSpec
-        run: bundle exec rspec --force-color
+        run: |
+          bundle exec rspec --force-color \
+            --format documentation \
+            --format AllureRspecFormatter \
+            --format RspecJunitFormatter --out junit.xml
         env:
           COVERAGE: "true"
           ALLURE_ENVIRONMENT: ruby-${{ matrix.ruby }}
