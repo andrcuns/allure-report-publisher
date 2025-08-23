@@ -21,7 +21,7 @@ RSpec.configure do |config|
   # Generate allure reports on CI
   if ENV["CI"]
     config.add_formatter(AllureRspecFormatter)
-    config.add_formatter(RspecJunitFormatter, "tmp/junit.xml")
+    # config.add_formatter(RspecJunitFormatter, "tmp/junit.xml")
   end
 
   # Enable flags like --only-failures and --next-failure
