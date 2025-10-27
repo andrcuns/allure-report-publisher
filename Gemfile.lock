@@ -147,7 +147,7 @@ GEM
       reline (>= 0.4.2)
     jaro_winkler (1.6.1)
     jmespath (1.6.2)
-    json (2.15.0)
+    json (2.15.2)
     jwt (2.10.2)
       base64
     kramdown (2.5.1)
@@ -179,7 +179,7 @@ GEM
     os (1.1.4)
     ostruct (0.6.3)
     parallel (1.27.0)
-    parser (3.3.9.0)
+    parser (3.3.10.0)
       ast (~> 2.4.1)
       racc
     pastel (0.8.0)
@@ -187,7 +187,7 @@ GEM
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.5.1)
+    prism (1.6.0)
     psych (5.2.6)
       date
       stringio
@@ -225,7 +225,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.4)
-    rubocop (1.81.1)
+    rubocop (1.81.6)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
