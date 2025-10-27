@@ -42,14 +42,14 @@ jobs:
           COVERAGE: "true"
           ALLURE_ENVIRONMENT: ruby-${{ matrix.ruby }}
       - name: Save allure results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: always()
         with:
           name: allure-reports-${{ matrix.ruby }}
           path: reports/allure-results/
           retention-days: 1
       - name: Save coverage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: always()
         with:
           name: coverage-${{ matrix.ruby }}
