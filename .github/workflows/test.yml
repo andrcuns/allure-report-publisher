@@ -65,7 +65,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Download coverage report
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: coverage-3.4
       - name: Upload coverage reports to Codecov
@@ -94,7 +94,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Download allure reports
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           path: reports/allure-results
       - name: Cache minio store
