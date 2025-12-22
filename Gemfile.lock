@@ -147,7 +147,7 @@ GEM
       reline (>= 0.4.2)
     jaro_winkler (1.6.1)
     jmespath (1.6.2)
-    json (2.16.0)
+    json (2.18.0)
     jwt (3.1.2)
       base64
     kramdown (2.5.1)
@@ -187,7 +187,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.6.0)
+    prism (1.7.0)
     psych (5.3.1)
       date
       stringio
@@ -226,7 +226,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.6)
-    rubocop (1.81.7)
+    rubocop (1.82.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -234,7 +234,7 @@ GEM
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.9.3, < 3.0)
-      rubocop-ast (>= 1.47.1, < 2.0)
+      rubocop-ast (>= 1.48.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
     rubocop-ast (1.48.0)
@@ -313,7 +313,7 @@ GEM
     uber (0.1.0)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
-    unicode-emoji (4.1.0)
+    unicode-emoji (4.2.0)
     uri (1.1.1)
     yard (0.9.38)
     yard-activesupport-concern (0.0.1)
@@ -334,7 +334,7 @@ DEPENDENCIES
   observer (~> 0.1.2)
   rake (~> 13.3)
   rspec (~> 3.13)
-  rubocop (~> 1.81)
+  rubocop (~> 1.82)
   rubocop-performance (~> 1.26)
   rubocop-rake (~> 0.7.1)
   rubocop-rspec (~> 3.8)
