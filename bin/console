@@ -1,8 +1,0 @@
-#!/usr/bin/env ruby
-
-require "bundler/setup"
-require "allure_report_publisher"
-
-require "debug"
-
-binding.break # rubocop:disable Lint/Debugger

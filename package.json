@@ -1,0 +1,84 @@
+{
+  "name": "allure-report-publisher",
+  "description": "Publish allure 3 reports to cloud storage providers",
+  "version": "5.0.0-alpha.0",
+  "author": "Andrejs Cunskis",
+  "bin": {
+    "allure-report-publisher": "./bin/run.js"
+  },
+  "bugs": "https://github.com/andrcuns/allure-report-publisher/issues",
+  "dependencies": {
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "@oclif/plugin-plugins": "^5",
+    "allure": "^3.0.0",
+    "allure-mocha": "^3.4.3",
+    "chalk": "^5.6.2",
+    "cli-table3": "^0.6.5",
+    "glob": "^13.0.0",
+    "mime-types": "^3.0.2",
+    "ora": "^9.0.0",
+    "p-limit": "^7.2.0"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1",
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4",
+    "@types/chai": "^4",
+    "@types/mime-types": "^3.0.1",
+    "@types/mocha": "^10",
+    "@types/node": "^18",
+    "chai": "^4",
+    "eslint": "^9",
+    "eslint-config-oclif": "^6",
+    "eslint-config-prettier": "^10",
+    "mocha": "^10",
+    "oclif": "^4",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "files": [
+    "./bin",
+    "./dist",
+    "./oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/andrcuns/allure-report-publisher",
+  "keywords": [
+    "oclif",
+    "allure",
+    "test-report"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "type": "module",
+  "oclif": {
+    "bin": "allure-report-publisher",
+    "dirname": "allure-report-publisher",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "upload": {
+        "description": "Generate and upload allure report to cloud storage providers"
+      }
+    }
+  },
+  "repository": "andrcuns/allure-report-publisher",
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "lint": "eslint",
+    "prepack": "oclif manifest && oclif readme",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "pretest": "pnpm run lint",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif readme && git add README.md"
+  },
+  "types": "dist/index.d.ts"
+}
