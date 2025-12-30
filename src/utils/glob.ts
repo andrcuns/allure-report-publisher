@@ -1,8 +1,9 @@
 import {glob} from 'glob'
+import {statSync} from 'node:fs'
 
 import {logger} from './logger.js'
 
-export async function getAllureResultsPaths(pattern: string): Promise<string[]> {
+export async function getAllureResultsPaths(pattern: string, ignoreMissing?: boolean): Promise<string[]> {
   const paths = await glob(pattern, {
     absolute: true,
     nodir: false,
@@ -15,11 +16,21 @@ export async function getAllureResultsPaths(pattern: string): Promise<string[]> 
   }
 
   if (paths.length === 0) {
-    throw new Error(
-      `No allure results found matching pattern: ${pattern}\n` +
-        'Make sure the pattern is correct and points to directories containing allure results.\n' +
-        'Use --ignore-missing-results to skip this check.',
-    )
+    const msg = [
+      `Pattern '${pattern}' did not match any paths`,
+      'Make sure the pattern is correct and points to directories containing allure results',
+    ]
+    if (!ignoreMissing) msg.push('Use --ignore-missing-results to exit without error if no result paths are found')
+    throw new Error(msg.join('\n'))
+  }
+
+  const nonDirectories = paths.filter((path) => !statSync(path).isDirectory())
+  if (nonDirectories.length > 0) {
+    const msg = [
+      `Pattern '${pattern}' matched ${nonDirectories.length} non-directory paths`,
+      'All matched paths must be directories containing allure results',
+    ]
+    throw new Error(msg.join('\n'))
   }
 
   return paths

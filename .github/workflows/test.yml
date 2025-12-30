@@ -101,13 +101,13 @@ jobs:
             --network allure \
             publisher:latest \
             upload s3 \
-              --results-glob="/workspace/reports/allure-results/*" \
+              --results-glob="/workspace/reports/allure-results" \
               --bucket="allure-reports" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="comment" \
               --summary="behaviors" \
               --summary-table-type="ascii" \
-              --report-title="Test Report" \
+              --ci-report-title="Test Report" \
               --report-name="Test Report" \
               --copy-latest \
               --color \

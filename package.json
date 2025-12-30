@@ -18,7 +18,9 @@
     "glob": "^13.0.0",
     "mime-types": "^3.0.2",
     "ora": "^9.0.0",
-    "p-limit": "^7.2.0"
+    "nano-spawn": "^2.0.0",
+    "p-limit": "^7.2.0",
+    "yaml": "^2.8.2"
   },
   "devDependencies": {
     "@eslint/compat": "^1",
