@@ -6,22 +6,9 @@
     "andrcuns/allure-report-publisher"
   ],
   "enabledManagers": [
-    "regex"
+    "mise"
   ],
   "labels": [
     "dependencies"
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "Dockerfile"
-      ],
-      "matchStrings": [
-        "ARG ALLURE_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "allure-framework/allure2",
-      "datasourceTemplate": "github-releases"
-    }
   ]
 }
