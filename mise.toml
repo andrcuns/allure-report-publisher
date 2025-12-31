@@ -1,2 +1,2 @@
 [tools]
-pre-commit = { version = "4.2.0", postinstall = "mise x pre-commit -- pre-commit install --install-hooks" }
+pre-commit = { version = "4.5.1", postinstall = "mise x pre-commit -- pre-commit install --install-hooks" }
