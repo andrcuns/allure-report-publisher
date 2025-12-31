@@ -8,37 +8,36 @@
   },
   "bugs": "https://github.com/andrcuns/allure-report-publisher/issues",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.0.0",
     "@oclif/core": "^4",
-    "@oclif/plugin-help": "^6",
-    "@oclif/plugin-plugins": "^5",
     "allure": "^3.0.0",
-    "allure-mocha": "^3.4.3",
-    "chalk": "^5.6.2",
-    "cli-table3": "^0.6.5",
+    "chalk": "^5.0.0",
+    "cli-table3": "^0.6.0",
     "glob": "^13.0.0",
-    "mime-types": "^3.0.2",
-    "ora": "^9.0.0",
+    "mime-types": "^3.0.0",
     "nano-spawn": "^2.0.0",
-    "p-limit": "^7.2.0",
-    "yaml": "^2.8.2"
+    "ora": "^9.0.0",
+    "p-limit": "^7.0.0",
+    "yaml": "^2.0.0"
   },
   "devDependencies": {
-    "@eslint/compat": "^1",
+    "@eslint/compat": "^2.0.0",
     "@oclif/prettier-config": "^0.2.1",
-    "@oclif/test": "^4",
-    "@types/chai": "^4",
+    "@oclif/test": "^4.1.15",
+    "@types/chai": "^5.2.3",
     "@types/mime-types": "^3.0.1",
-    "@types/mocha": "^10",
-    "@types/node": "^18",
-    "chai": "^4",
-    "eslint": "^9",
-    "eslint-config-oclif": "^6",
-    "eslint-config-prettier": "^10",
-    "mocha": "^10",
-    "oclif": "^4",
-    "shx": "^0.3.3",
-    "ts-node": "^10",
-    "typescript": "^5"
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^25.0.3",
+    "allure-mocha": "^3.4.3",
+    "chai": "^6.2.2",
+    "eslint": "^9.39.2",
+    "eslint-config-oclif": "^6.0.128",
+    "eslint-config-prettier": "^10.1.8",
+    "mocha": "^11.7.5",
+    "oclif": "^4.22.61",
+    "shx": "^0.4.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=22.0.0"
@@ -61,16 +60,9 @@
     "bin": "allure-report-publisher",
     "dirname": "allure-report-publisher",
     "commands": "./dist/commands",
-    "plugins": [
-      "@oclif/plugin-help",
-      "@oclif/plugin-plugins"
-    ],
+    "plugins": [],
     "topicSeparator": " ",
-    "topics": {
-      "upload": {
-        "description": "Generate and upload allure report to cloud storage providers"
-      }
-    }
+    "topics": {}
   },
   "repository": "andrcuns/allure-report-publisher",
   "scripts": {
