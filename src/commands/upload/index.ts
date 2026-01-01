@@ -170,8 +170,6 @@ export default class Upload extends Command {
         logger.section('Updating PR/MR')
         logger.info('PR update not yet implemented')
       }
-
-      logger.success('Command completed successfully')
     } catch (error) {
       logger.error((error as Error).message)
       this.exit(1)

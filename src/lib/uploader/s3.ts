@@ -31,10 +31,14 @@ export class S3Uploader extends BaseUploader {
     return process.env.AWS_FORCE_PATH_STYLE === 'true'
   }
 
+  private get region() {
+    return process.env.AWS_REGION || 'us-east-1'
+  }
+
   protected reportUrlBase() {
     if (this._reportUrlBase) return this._reportUrlBase
 
-    let base = `http://${this.bucketName}.s3.amazonaws.com`
+    let base = `https://${this.bucketName}.s3.${this.region}.amazonaws.com`
     if (this.awsEndpoint) {
       base = this.forcePathStyle ? `${this.awsEndpoint}/${this.bucketName}` : this.awsEndpoint
     }
