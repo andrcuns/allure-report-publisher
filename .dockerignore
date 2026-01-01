@@ -1,6 +1,7 @@
 **
 
-!lib
-!exe/allure-report-publisher
-!allure-report-publisher.gemspec
-!Gemfile
+!/bin/run.js
+!/src
+!package.json
+!pnpm-lock.yaml
+!tsconfig.json

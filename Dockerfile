@@ -1,46 +1,44 @@
-FROM ruby:3.4.7-alpine3.21 as ruby
+FROM node:25.2.1-alpine3.23 AS node
 
-ARG GEMFILE=allure-report-publisher.gem
+FROM node AS pnpm
 
-# Build stage
-#
-FROM ruby as build
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 
-ARG BUNDLE_WITHOUT=development:release
-ARG GEMFILE
+RUN npm install -g pnpm@latest-10
 
 WORKDIR /build
 
-# Install build dependencies
-RUN apk update && apk add --no-cache build-base
+COPY package.json pnpm-lock.yaml ./
 
-# Copy dependency files needed for install first to fetch from cache if unchanged
-COPY Gemfile allure-report-publisher.gemspec ./
-COPY lib/allure_report_publisher/version.rb ./lib/allure_report_publisher/version.rb
-COPY exe/allure-report-publisher exe/allure-report-publisher
-RUN bundle install
+# Prod deps
+#
+FROM pnpm AS prod-deps
+
+RUN pnpm install --frozen-lockfile --prod
+
+# Build stage
+#
+FROM pnpm AS build
+
+RUN pnpm install --frozen-lockfile
 
 COPY ./ ./
-RUN gem build -o ${GEMFILE}
+RUN pnpm run build
 
 # Production stage
 #
-FROM ruby as production
+FROM node AS production
 
-# Install allure
-ARG ALLURE_VERSION=2.36.0
-ENV PATH=$PATH:/usr/local/allure-${ALLURE_VERSION}/bin
-RUN apk --no-cache add openjdk21 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
-RUN set -eux; \
-    wget -O allure.tgz https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz; \
-    tar -xzf allure.tgz -C /usr/local && rm allure.tgz; \
-    allure --version
+WORKDIR /app
 
-# Install allure-report-publisher
-ARG GEMFILE
-COPY --from=build /build/${GEMFILE} ${GEMFILE}
-RUN set -eux; \
-    gem install -N ${GEMFILE} && rm ${GEMFILE}; \
-    allure-report-publisher --version;
+COPY ./bin/run.js ./bin/
+COPY ./package.json ./
 
-ENTRYPOINT [ "allure-report-publisher" ]
+COPY --from=build /build/dist ./dist
+COPY --from=prod-deps /build/node_modules ./node_modules
+
+# Verify installation
+RUN /app/bin/run.js --version
+
+ENTRYPOINT [ "/app/bin/run.js" ]

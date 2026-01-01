@@ -1,0 +1,19 @@
+{
+  "require": [
+    "tsx"
+  ],
+  "watch-extensions": [
+    "ts"
+  ],
+  "recursive": true,
+  "reporter": "allure-mocha",
+  "reporterOptions": [
+    "resultsDir=reports/allure-results",
+    "extraReporters=spec"
+  ],
+  "timeout": 60000,
+  "node-option": [
+    "import=tsx",
+    "experimental-specifier-resolution=node"
+  ]
+}
