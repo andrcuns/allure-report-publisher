@@ -13,7 +13,8 @@ export default [
   {
     rules: {
       'perfectionist/sort-classes': 'off',
-      'perfectionist/sort-objects': 'off'
+      'perfectionist/sort-objects': 'off',
+      'perfectionist/sort-object-types': 'off',
     }
   }
 ]

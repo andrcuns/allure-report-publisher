@@ -17,7 +17,7 @@
     "mime-types": "^3.0.0",
     "nano-spawn": "^2.0.0",
     "ora": "^9.0.0",
-    "p-limit": "^7.0.0",
+    "p-all": "^5.0.1",
     "yaml": "^2.0.0"
   },
   "devDependencies": {
@@ -70,7 +70,6 @@
     "lint": "eslint",
     "prepack": "oclif manifest && oclif readme",
     "postpack": "shx rm -f oclif.manifest.json",
-    "pretest": "pnpm run lint",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif readme && git add README.md"
   },

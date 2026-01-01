@@ -4,37 +4,23 @@ updates:
     directory: /
     schedule:
       interval: weekly
-    commit-message:
-      prefix: deps
+    labels:
+      - dependencies
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
-    commit-message:
-      prefix: deps
     labels:
       - ci
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
-    commit-message:
-      prefix: deps
     labels:
       - dependencies
-    allow:
-      - dependency-type: production
-    cooldown:
-      semver-patch-days: 7
-  - package-ecosystem: npm
-    directory: /
-    schedule:
-      interval: weekly
-    commit-message:
-      prefix: deps
-    labels:
-      - maintenance
     groups:
+      prod-dependencies:
+        dependency-type: production
       dev-dependencies:
         dependency-type: development
     cooldown:

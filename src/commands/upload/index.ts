@@ -10,6 +10,7 @@ import {config} from '../../utils/config.js'
 import {getAllureResultsPaths} from '../../utils/glob.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
+import {getUploader} from '../../utils/uploader.js'
 
 export default class Upload extends Command {
   static override args = {
@@ -137,7 +138,7 @@ export default class Upload extends Command {
     const {args, flags} = await this.parse(Upload)
 
     const colorEnabled = flags.color ?? process.stdout.isTTY
-    config.initialize({color: colorEnabled, debug: flags.debug})
+    config.initialize({color: colorEnabled, debug: flags.debug, parallel: flags.parallel})
 
     try {
       const storageType = args.type
@@ -148,13 +149,21 @@ export default class Upload extends Command {
       if (resultPaths === undefined) return
 
       const allureConfig = getAllureConfig(flags.config, flags.reportName)
-      const reportGenerator = new ReportGenerator(flags.resultsGlob, allureConfig.configPath(), async () => {})
-      logger.debug(`Using report plugins: ${(await allureConfig.plugins()).join(', ')}`)
+      const uploader = getUploader(storageType, {
+        baseUrl: flags.baseUrl,
+        bucket: flags.bucket!,
+        copyLatest: flags.copyLatest,
+        parallel: flags.parallel,
+        prefix: flags.prefix,
+        output: await allureConfig.outputPath(),
+        historyPath: await allureConfig.historyPath(),
+        plugins: await allureConfig.plugins(),
+      })
+      const reportGenerator = new ReportGenerator(flags.resultsGlob, allureConfig, () => uploader.downloadHistory())
       await reportGenerator.execute()
 
-      // TODO: Upload report
       logger.section(`Uploading report to ${storageType}`)
-      logger.info('Report upload not yet implemented')
+      await uploader.upload()
 
       // TODO: Update PR if requested
       if (flags.updatePr) {

@@ -1,9 +1,11 @@
 import {mkdirSync, readFileSync, writeFileSync} from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
+import {pathToFileURL} from 'node:url'
 import yaml from 'yaml'
 
 import {PluginName} from '../../types/index.js'
+import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 
 type ConfigObject = {
@@ -57,7 +59,10 @@ class CustomConfig implements AllureConfig {
 
   public async historyPath() {
     const config = await this.customConfig()
-    return config.historyPath || defaultConfig.historyPath!
+    const path = config.historyPath
+    if (!path) throw new Error('History path is not defined in the allure config')
+
+    return path
   }
 
   public async outputPath() {
@@ -86,14 +91,34 @@ class CustomConfig implements AllureConfig {
   private async loadConfig() {
     const ext = path.extname(this._configPath).toLowerCase()
     switch (ext) {
+      case '.cjs':
+      case '.js':
+      case '.mjs': {
+        const fileUrl = pathToFileURL(this._configPath).href
+        const module = await import(fileUrl)
+        // module.default will contain the object returned by defineConfig()
+        // allure loads parser with default config setup which will create error in the output
+        // plain object should be exported to avoid that
+        const defaultConfig = module.default
+        if (defaultConfig === undefined) {
+          throw new Error(`No default export found in the config file: ${this._configPath}`)
+        }
+
+        logger.debug(`Loaded JS config: ${JSON.stringify(defaultConfig, null, 2)}`)
+
+        return defaultConfig
+      }
+
       case '.json': {
-        const content = readFileSync(this._configPath, 'utf8')
-        return JSON.parse(content)
+        const content = JSON.parse(readFileSync(this._configPath, 'utf8'))
+        logger.debug(`Loaded JSON config: ${JSON.stringify(content, null, 2)}`)
+        return content
       }
 
       case '.yaml': {
-        const content = readFileSync(this._configPath, 'utf8')
-        return yaml.parse(content)
+        const content = yaml.parse(readFileSync(this._configPath, 'utf8'))
+        logger.debug(`Loaded YAML config: ${JSON.stringify(content, null, 2)}`)
+        return content
       }
 
       default: {

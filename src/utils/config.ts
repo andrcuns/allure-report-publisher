@@ -1,11 +1,13 @@
 class Config {
   private _color: boolean
   private _debug: boolean
+  private _parallel: number
   private initialized: boolean
 
   constructor() {
     this._color = true
     this._debug = false
+    this._parallel = 8
     this.initialized = false
   }
 
@@ -19,7 +21,12 @@ class Config {
     return this._debug
   }
 
-  public initialize(options: {color?: boolean; debug?: boolean}): void {
+  public get parallel(): number {
+    if (!this.initialized) console.warn("Config has not been initialized yet, returning default value")
+    return this._parallel
+  }
+
+  public initialize(options: {color?: boolean; debug?: boolean; parallel?: number}): void {
     if (this.initialized) {
       throw new Error('Config has already been initialized')
     }
@@ -30,6 +37,10 @@ class Config {
 
     if (options.debug !== undefined) {
       this._debug = options.debug
+    }
+
+    if (options.parallel !== undefined) {
+      this._parallel = options.parallel
     }
 
     this.initialized = true

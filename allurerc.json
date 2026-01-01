@@ -1,0 +1,18 @@
+{
+  "output": "reports/allure-report",
+  "historyPath": "reports/.history.jsonl",
+  "plugins": {
+    "awesome": {
+      "options": {
+        "enabled": true,
+        "singleFile": true
+      }
+    },
+    "dashboard": {
+      "options": {
+        "enabled": true,
+        "singleFile": true
+      }
+    }
+  }
+}

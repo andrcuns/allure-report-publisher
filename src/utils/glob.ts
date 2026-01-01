@@ -3,16 +3,20 @@ import {statSync} from 'node:fs'
 
 import {logger} from './logger.js'
 
-export async function getAllureResultsPaths(pattern: string, ignoreMissing?: boolean): Promise<string[]> {
-  const paths = await glob(pattern, {
+export async function globPaths(pattern: string, opts: {nodir?: boolean} = {}) {
+  return glob(pattern, {
     absolute: true,
-    nodir: false,
+    nodir: opts.nodir ?? false,
     windowsPathsNoEscape: true,
   })
+}
+
+export async function getAllureResultsPaths(pattern: string, ignoreMissing?: boolean): Promise<string[]> {
+  const paths = await globPaths(pattern)
 
   logger.debug(`Glob '${pattern}' found ${paths.length} entries`)
   for (const path of paths) {
-    logger.debug(`  - ${path}`)
+    logger.debug(`- ${path}`)
   }
 
   if (paths.length === 0) {
