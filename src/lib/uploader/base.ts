@@ -2,19 +2,23 @@
 import {mkdirSync, readFileSync} from 'node:fs'
 import path from 'node:path'
 
+import {ciInfo} from '../../utils/ci.js'
 import {globPaths} from '../../utils/glob.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
+import {GithubCiInfo} from '../ci/info/github.js'
+import {GitlabCiInfo} from '../ci/info/gitlab.js'
 
 export abstract class BaseUploader {
+  protected copyLatest: boolean
   protected readonly bucketName: string
-  protected readonly copyLatest: boolean
   protected readonly parallel: number
   protected readonly reportPath: string
   protected readonly historyPath: string
   protected readonly plugins: string[]
   protected readonly prefix: string | undefined
   protected readonly baseUrl: string | undefined
+  private _runId: string | undefined
 
   constructor(opts: {
     bucket: string
@@ -40,6 +44,17 @@ export abstract class BaseUploader {
   protected abstract uploadReport(): Promise<void>
   protected abstract reportUrlBase(): string
   protected abstract createLatestCopy(): Promise<void>
+
+  protected get ciInfo(): GithubCiInfo | GitlabCiInfo | undefined {
+    return ciInfo
+  }
+
+  protected get runId() {
+    if (this._runId !== undefined) return this._runId
+
+    this._runId = this.ciInfo?.runId || this.historyUuid()
+    return this._runId
+  }
 
   public async downloadHistory() {
     const historyDir = path.dirname(this.historyPath)
@@ -94,12 +109,12 @@ export abstract class BaseUploader {
 
   private getReportUrls() {
     const urls = {
-      run: this.plugins.map((plugin) => `${this.reportUrlBase()}/${this.historyUuid()}/${plugin}/index.html`),
+      run: this.plugins.map((plugin) => `${this.reportUrlBase()}/${this.runId}/${plugin}/index.html`),
       latest: this.plugins.map((plugin) => `${this.reportUrlBase()}/latest/${plugin}/index.html`),
     }
 
     if (this.plugins.length > 1) {
-      urls.run.unshift(`${this.reportUrlBase()}/${this.historyUuid()}/index.html`)
+      urls.run.unshift(`${this.reportUrlBase()}/${this.runId}/index.html`)
       urls.latest.unshift(`${this.reportUrlBase()}/latest/index.html`)
     }
 

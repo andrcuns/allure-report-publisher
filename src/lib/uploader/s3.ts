@@ -82,7 +82,7 @@ export class S3Uploader extends BaseUploader {
   protected async uploadReport() {
     logger.debug(`Uploading report files with concurrency: ${this.parallel}`)
     const uploads = (await this.allUploadArgs()).map(({filePath, pathComponents}) => {
-      const key = this.key(this.historyUuid(), ...pathComponents)
+      const key = this.key(this.runId, ...pathComponents)
       return () => this.uploadFile({filePath, key})
     })
 
@@ -92,7 +92,7 @@ export class S3Uploader extends BaseUploader {
   protected async createLatestCopy() {
     logger.debug(`Creating latest report copy with concurrency: ${this.parallel}`)
     const copies = (await this.allUploadArgs()).map(({pathComponents}) => {
-      const sourceKey = this.key(this.historyUuid(), ...pathComponents)
+      const sourceKey = this.key(this.runId, ...pathComponents)
       const destinationKey = this.key('latest', ...pathComponents)
       return () => this.copyFile({sourceKey, destinationKey})
     })
