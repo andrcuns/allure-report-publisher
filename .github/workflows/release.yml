@@ -40,25 +40,23 @@ jobs:
           cache-to: type=gha,mode=max
           tags: ${{ steps.tags.outputs.tags }}
 
-  gem:
-    name: Ruby gem
+  npm:
+    name: NPM publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Set up Ruby 3.4
-        uses: ruby/setup-ruby@v1
+      - uses: actions/setup-node@v4
         with:
-          ruby-version: 3.4
-          bundler-cache: true
+          node-version: '25.x'
       - name: Build and push
-        run: bundle exec rake release
+        run: npm publish
         env:
-          GEM_HOST_API_KEY: ${{ secrets.GEM_HOST_API_KEY }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   gh-release:
     name: Github release
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
