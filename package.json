@@ -68,6 +68,7 @@
   "repository": "andrcuns/allure-report-publisher",
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
+    "cleanBuild": "shx rm -rf dist && shx rm -f tsconfig.tsbuildinfo && tsc -b",
     "lint": "eslint",
     "prepack": "oclif manifest && oclif readme",
     "postpack": "shx rm -f oclif.manifest.json",

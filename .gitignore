@@ -1,6 +1,7 @@
 *-debug.log
 *-error.log
 **/.DS_Store
+.envrc
 
 /.idea
 /dist

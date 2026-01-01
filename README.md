@@ -3,83 +3,96 @@
 [![Docker Image Version (latest semver)](https://img.shields.io/docker/v/andrcuns/allure-report-publisher?color=blue&label=docker&sort=semver)](https://hub.docker.com/r/andrcuns/allure-report-publisher)
 [![Docker Pulls](https://img.shields.io/docker/pulls/andrcuns/allure-report-publisher)](https://hub.docker.com/r/andrcuns/allure-report-publisher)
 ![Workflow status](https://github.com/andrcuns/allure-report-publisher/workflows/Test/badge.svg)
-[![codecov](https://codecov.io/gh/andrcuns/allure-report-publisher/graph/badge.svg?token=YT3U8GYHHP)](https://codecov.io/gh/andrcuns/allure-report-publisher)
 
 Upload your report to a file storage of your choice.
 
 ![Demo](demo.gif)
 
-# Installation
+# Usage
 
-## Rubygems
-
-```shell
-gem install allure-report-publisher
+<!-- usage -->
+```sh-session
+$ npm install -g allure-report-publisher
+$ allure-report-publisher COMMAND
+running command...
+$ allure-report-publisher (--version)
+allure-report-publisher/5.0.0-alpha.0 linux-x64 node-v25.2.1
+$ allure-report-publisher --help [COMMAND]
+USAGE
+  $ allure-report-publisher COMMAND
+...
 ```
+<!-- usagestop -->
+<!-- commands -->
+* [`allure-report-publisher upload TYPE`](#allure-report-publisher-upload-type)
+
+## `allure-report-publisher upload TYPE`
+
+Generate and upload allure report to cloud storage
+
+```
+USAGE
+  $ allure-report-publisher upload TYPE [--baseUrl <value>] [-r <value>] [-b <value>] [-p <value>] [-c
+    <value>] [--reportName <value>] [--ciReportTitle <value>] [--summary behaviors|suites|packages|total]
+    [--summaryTableType ascii|markdown] [--updatePr comment|description|actions] [--collapseSummary] [--color]
+    [--copyLatest] [--debug] [--flakyWarningStatus] [--ignoreMissingResults] [-o <value>] [--parallel <value>]
+
+ARGUMENTS
+  TYPE  (s3|gcs|gitlab-artifacts) Cloud storage provider type
+
+FLAGS
+  -b, --bucket=<value>             [env: ALLURE_BUCKET] Cloud storage bucket name (required for s3/gcs)
+  -c, --config=<value>             [env: ALLURE_CONFIG_PATH] The path to allure config file (only .json or .yaml are
+                                   supported)
+  -o, --output=<value>             [env: ALLURE_OUTPUT] Output directory for generated report (default: temp dir for
+                                   cloud, "allure-report" for gitlab-artifacts)
+  -p, --prefix=<value>             [env: ALLURE_PREFIX] Prefix for report path in cloud storage (ignored for
+                                   gitlab-artifacts)
+  -r, --resultsGlob=<value>        [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
+                                   results directories
+      --baseUrl=<value>            [env: ALLURE_BASE_URL] Custom base URL for report links
+      --ciReportTitle=<value>      [default: Allure Report, env: ALLURE_CI_REPORT_TITLE] Title for PR
+                                   comment/description section
+      --collapseSummary            [env: ALLURE_COLLAPSE_SUMMARY] Create collapsible summary section in PR
+      --[no-]color                 [env: ALLURE_COLOR] Force color output
+      --copyLatest                 [env: ALLURE_COPY_LATEST] Keep copy of latest run report at base prefix (ignored for
+                                   gitlab-artifacts)
+      --debug                      [env: ALLURE_DEBUG] Print debug log output
+      --flakyWarningStatus         [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
+      --ignoreMissingResults       [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results
+      --parallel=<value>           [default: 8, env: ALLURE_PARALLEL] Number of parallel threads for upload
+      --reportName=<value>         [env: ALLURE_REPORT_NAME] Custom report name in Allure report (ignored with
+                                   config-path)
+      --summary=<option>           [default: total, env: ALLURE_SUMMARY] Add test summary table to PR
+                                   <options: behaviors|suites|packages|total>
+      --summaryTableType=<option>  [default: ascii, env: ALLURE_SUMMARY_TABLE_TYPE] Summary table format
+                                   <options: ascii|markdown>
+      --updatePr=<option>          [env: ALLURE_UPDATE_PR] Update PR with report URL (comment/description/actions)
+                                   <options: comment|description|actions>
+
+DESCRIPTION
+  Generate and upload allure report to cloud storage
+
+EXAMPLES
+  $ allure-report-publisher upload s3 --results-glob="path/to/allure-results" --bucket=my-bucket
+
+  $ allure-report-publisher upload gcs --results-glob="paths/to/**/allure-results" --bucket=my-bucket --prefix=my-project/prs
+
+  $ allure-report-publisher upload gitlab-artifacts --results-glob="paths/to/**/allure-results"
+
+  $ allure-report-publisher upload s3 --results-glob="path/to/allure-results" --bucket=my-bucket --update-pr=comment --summary=behaviors
+```
+
+_See code: [src/commands/upload/index.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.0.0-alpha.0/src/commands/upload/index.ts)_
+<!-- commandsstop -->
 
 ## Docker
 
-```shell
+To use cli via docker, run following command:
+
+```sh-session
 docker pull andrcuns/allure-report-publisher:latest
 ```
-
-# Usage
-
-```shell
-$ (allure-report-publisher|docker run --rm andrcuns/allure-report-publisher:latest) upload --help
-Command:
-  allure-report-publisher upload
-
-Usage:
-  allure-report-publisher upload TYPE
-
-Description:
-  Generate and upload allure report
-
-Arguments:
-  TYPE                              # REQUIRED Cloud storage type: (gcs/s3/gitlab-artifacts)
-
-Options:
-  --results-glob=VALUE              # Glob pattern to return allure results directories. Required: true
-  --bucket=VALUE                    # Bucket name. Required: true (gcs|s3), false (gitlab-artifacts)
-  --output=VALUE                    # Output directory for the report. Required: false. Defaults to 'allure-report' for gitlab-artifacts and random temporary directory for cloud based storage
-  --prefix=VALUE                    # Optional prefix for report path. Required: false. Ignored for gitlab-artifacts
-  --update-pr=VALUE                 # Add report url to PR via comment or description update. Required: false: (comment/description/actions)
-  --report-title=VALUE              # Title for url section in PR comment/description. Required: false, default: "Allure Report"
-  --report-name=VALUE               # Custom report name in final Allure report. Required: false
-  --summary=VALUE                   # Additionally add summary table to PR comment or description. Required: false: (behaviors/suites/packages/total), default: "total"
-  --summary-table-type=VALUE        # Summary table type. Required: false: (ascii/markdown), default: "ascii"
-  --base-url=VALUE                  # Use custom base url instead of default cloud provider one. Required: false. For gitlab-artifacts, replaces default gitlab.io pages hostname
-  --parallel=VALUE                  # Number of parallel threads to use for report file upload to cloud storage. Required: false, default: 8
-  --[no-]flaky-warning-status       # Mark run with a '!' status in PR comment/description if report contains flaky tests, default: false
-  --[no-]collapse-summary           # Create summary as a collapsible section, default: false
-  --[no-]copy-latest                # Keep copy of latest report at base prefix path. Ignored for gitlab-artifacts, default: false
-  --[no-]color                      # Force color output
-  --[no-]ignore-missing-results     # Ignore missing allure results, default: false
-  --[no-]debug                      # Print additional debug output, default: false
-  --help, -h                        # Print this help
-
-Examples:
-  allure-report-publisher upload s3 --results-glob='path/to/allure-results' --bucket=my-bucket
-  allure-report-publisher upload gcs --results-glob='paths/to/**/allure-results' --bucket=my-bucket --prefix=my-project/prs
-  allure-report-publisher upload gitlab-artifacts --results-glob='paths/to/**/allure-results'
-```
-
-## Extra arguments
-
-You can pass any extra arguments to the `allure generate` command by using `--` before the arguments.
-
-Example:
-
-```shell
-allure-report-publisher upload s3 --results-glob='path/to/allure-results' --bucket=my-bucket -- --lang en
-```
-
-## Environment variables
-
-All named options can be configured via environment variables. Environment variables are prefixed with `ALLURE_` and uppercased.
-
-Example: `--results-glob` can be configured via `ALLURE_RESULTS_GLOB`
 
 # Storage providers
 
@@ -225,9 +238,7 @@ If reporter is executed with options `--update-pr=comment` and `--unresolved-dis
 
 # Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`.
+Local development tool are handled by [mise](https://mise.jdx.dev/). After checking out the repo, run `mise install` to install necessary dev tools. Run `pnpm install` to install all node dependencies. To run tests, use `pnpm run test`. `bin/dev.js` allows to execute the cli directly from the source code without building it first.
 
 # Contributing
 
