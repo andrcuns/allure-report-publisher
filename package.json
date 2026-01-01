@@ -4,7 +4,7 @@
   "version": "5.0.0-alpha.0",
   "author": "Andrejs Cunskis",
   "bin": {
-    "allure-report-publisher": "./bin/run.js"
+    "allure-report-publisher": "bin/run.js"
   },
   "bugs": "https://github.com/andrcuns/allure-report-publisher/issues",
   "dependencies": {
@@ -65,7 +65,10 @@
     "topicSeparator": " ",
     "topics": {}
   },
-  "repository": "andrcuns/allure-report-publisher",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrcuns/allure-report-publisher.git"
+  },
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
     "cleanBuild": "shx rm -rf dist && shx rm -f tsconfig.tsbuildinfo && tsc -b",
