@@ -32,6 +32,9 @@ export class GitlabArtifactsUploader extends BaseUploader {
   // gitlab api does not expose api to upload artifacts, all uploading is handled by gitlab ci itself
   // upload method only outputs the report urls
   public async upload() {
+    logger.info(
+      'Direct report uploads are not supported, ensure CI artifacts configuration includes report and history file paths',
+    )
     this.outputReportUrls()
   }
 
@@ -46,24 +49,21 @@ export class GitlabArtifactsUploader extends BaseUploader {
 
   // Built in variables of gitlab CI return incorrect pages hostname so it needs to be built manually
   protected reportUrlBase() {
-    const {projectPath, serverUrl} = this.ciInfo
+    const {projectPath, serverUrl, pagesDomain} = this.ciInfo
 
     if (!projectPath) {
       throw new Error('Missing required CI_PROJECT_PATH for generating GitLab Pages URL')
     }
 
     const topLevelGroup = projectPath.split('/')[0]
-    if (!serverUrl) {
-      return `https://${topLevelGroup}.${GitlabCiInfo.DEFAULT_PAGES_DOMAIN}`
-    }
 
     try {
-      const url = new URL(serverUrl)
-      const host = url.hostname
+      const url = new URL(serverUrl!)
       const scheme = url.protocol.replace(':', '') || 'https'
-      return `${scheme}://${topLevelGroup}.${host}`
+      return `${scheme}://${topLevelGroup}.${pagesDomain}`
     } catch {
-      return `https://${topLevelGroup}.${GitlabCiInfo.DEFAULT_PAGES_DOMAIN}`
+      logger.debug(`Failed to construct pages domain based on server url, using default https scheme`)
+      return `https://${topLevelGroup}.${pagesDomain || GitlabCiInfo.DEFAULT_PAGES_DOMAIN}`
     }
   }
 
@@ -71,12 +71,18 @@ export class GitlabArtifactsUploader extends BaseUploader {
     const base = this.reportUrlBase()
     const path = this.reportPath.replace('./', '')
     const {projectName, jobId} = this.ciInfo
-
-    return {
-      run: this.plugins.map(
-        (plugin) => `${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${path}/${plugin}/index.html`,
-      ),
+    const urls = {
+      run: [`${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${path}/index.html`],
     }
+    if (this.plugins.length > 1) {
+      urls.run.push(
+        ...this.plugins.map(
+          (plugin) => `${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${path}/${plugin}/index.html`,
+        ),
+      )
+    }
+
+    return urls
   }
 
   private async getPreviousJobId() {
