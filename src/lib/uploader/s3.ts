@@ -8,7 +8,6 @@ import {
 } from '@aws-sdk/client-s3'
 import {lookup} from 'mime-types'
 import {readFileSync, writeFileSync} from 'node:fs'
-import path from 'node:path'
 import pAll from 'p-all'
 
 import {config} from '../../utils/config.js'
@@ -17,7 +16,6 @@ import {BaseUploader} from './base.js'
 
 export class S3Uploader extends BaseUploader {
   private _reportUrlBase: string | undefined
-  private _fileUploadInfo: Array<{filePath: string; pathComponents: string[]}> | undefined
   private readonly s3Client: S3Client = new S3Client({
     endpoint: this.awsEndpoint,
     forcePathStyle: this.forcePathStyle,
@@ -105,20 +103,6 @@ export class S3Uploader extends BaseUploader {
     await pAll(copies, {concurrency: config.parallel})
   }
 
-  private async getFileUploadInfo() {
-    if (this._fileUploadInfo) return this._fileUploadInfo
-
-    const reportFiles = await this.getReportFiles()
-    this._fileUploadInfo = reportFiles.flatMap(({plugin, files}) =>
-      files.map((file) => ({
-        filePath: file,
-        pathComponents: [plugin, path.relative(this.reportPath, file)],
-      })),
-    )
-
-    return this._fileUploadInfo
-  }
-
   private async uploadFile(opts: {cacheControl?: string; filePath: string; key: string}) {
     const content = readFileSync(opts.filePath)
     const contentType = lookup(opts.filePath) || 'application/octet-stream'
@@ -138,7 +122,7 @@ export class S3Uploader extends BaseUploader {
   private async copyFile(opts: {sourceKey: string; destinationKey: string}) {
     const source = `${this.bucketName}/${opts.sourceKey}`
 
-    logger.debug(`- copying 's3://${source}' to 's3://${this.bucketName}/${opts.destinationKey}'`)
+    logger.debug(`- copying 's3://${this.bucketName}/${source}' to 's3://${this.bucketName}/${opts.destinationKey}'`)
     await this.s3Client.send(
       new CopyObjectCommand({
         CopySource: source,

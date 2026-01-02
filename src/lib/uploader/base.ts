@@ -19,6 +19,7 @@ export abstract class BaseUploader {
   protected readonly prefix: string | undefined
   protected readonly baseUrl: string | undefined
   private _runId: string | undefined
+  private _fileUploadInfo: Array<{filePath: string; pathComponents: string[]}> | undefined
 
   constructor(opts: {
     bucket: string
@@ -132,5 +133,21 @@ export abstract class BaseUploader {
     }
 
     return urls
+  }
+
+  protected async getFileUploadInfo() {
+    if (this._fileUploadInfo) return this._fileUploadInfo
+
+    const reportFiles = await this.getReportFiles()
+    this._fileUploadInfo = reportFiles.flatMap(({plugin, files}) =>
+      files.map((file) => ({
+        filePath: file,
+        pathComponents: [this.plugins.length > 1 ? plugin : undefined, path.relative(this.reportPath, file)].filter(
+          (component) => component !== undefined,
+        ),
+      })),
+    )
+
+    return this._fileUploadInfo
   }
 }
