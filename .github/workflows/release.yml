@@ -32,6 +32,8 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
         run: pnpm install
+      - name: Build package
+        run: pnpm run build
       - name: Build and push
         run: npm publish --tag latest
 
