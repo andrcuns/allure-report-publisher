@@ -46,24 +46,21 @@ export class GitlabArtifactsUploader extends BaseUploader {
 
   // Built in variables of gitlab CI return incorrect pages hostname so it needs to be built manually
   protected reportUrlBase() {
-    const {projectPath, serverUrl} = this.ciInfo
+    const {projectPath, serverUrl, pagesDomain} = this.ciInfo
 
     if (!projectPath) {
       throw new Error('Missing required CI_PROJECT_PATH for generating GitLab Pages URL')
     }
 
     const topLevelGroup = projectPath.split('/')[0]
-    if (!serverUrl) {
-      return `https://${topLevelGroup}.${GitlabCiInfo.DEFAULT_PAGES_DOMAIN}`
-    }
 
     try {
-      const url = new URL(serverUrl)
-      const host = url.hostname
+      const url = new URL(serverUrl!)
       const scheme = url.protocol.replace(':', '') || 'https'
-      return `${scheme}://${topLevelGroup}.${host}`
+      return `${scheme}://${topLevelGroup}.${pagesDomain}`
     } catch {
-      return `https://${topLevelGroup}.${GitlabCiInfo.DEFAULT_PAGES_DOMAIN}`
+      logger.debug(`Failed to construct pages domain based on server url, using default https scheme`)
+      return `https://${topLevelGroup}.${pagesDomain || GitlabCiInfo.DEFAULT_PAGES_DOMAIN}`
     }
   }
 

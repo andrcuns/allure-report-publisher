@@ -62,4 +62,8 @@ export class GitlabCiInfo extends BaseCiInfo {
   public get jobName() {
     return process.env.CI_JOB_NAME
   }
+
+  public get pagesDomain() {
+    return process.env.CI_PAGES_DOMAIN
+  }
 }
