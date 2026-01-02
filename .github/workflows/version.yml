@@ -25,12 +25,22 @@ jobs:
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - uses: actions/setup-node@v6
         with:
           node-version: '25.x'
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build package
+        run: pnpm run build
       - name: Update version
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           npm version ${{ github.event.inputs.semver }} --no-git-tag-version
+          git add package.json
+          git commit -m "Bump allure-report-publisher version to $(node -p "require('./package.json').version")"
           git push

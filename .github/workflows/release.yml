@@ -2,72 +2,85 @@ name: Release
 
 on:
   push:
-    tags:
-      - v[0-9]+.[0-9]+.[0-9]+
+    branches:
+      - main
+    paths:
+      - 'package.json'
+      - 'README.md'
+    # tags:
+    #   - v[0-9]+.[0-9]+.[0-9]+
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  docker:
-    name: Docker image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.12.0
-      - name: Login to DockerHub
-        uses: docker/login-action@v3.6.0
-        with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Docker tags
-        id: tags
-        uses: docker/metadata-action@v5
-        with:
-          images: andrcuns/allure-report-publisher
-          flavor: latest=false
-          tags: |
-            type=raw,value=latest
-            type=semver,pattern={{version}}
-      - name: Build and push
-        uses: docker/build-push-action@v6.18.0
-        with:
-          context: .
-          push: true
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          tags: ${{ steps.tags.outputs.tags }}
-
   npm:
+    if: contains(github.event.head_commit.message, 'Bump allure-report-publisher version to')
     name: NPM publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - uses: actions/setup-node@v6
         with:
           node-version: '25.x'
-          registry-url: 'https://registry.npmjs.org'
+          cache: pnpm
+          registry-url: "https://registry.npmjs.org"
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build package
+        run: pnpm run build
       - name: Build and push
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --tag latest
 
-  gh-release:
-    name: Github release
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - uses: softprops/action-gh-release@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          generate_release_notes: true
+  # TODO: enable once v5 is out of alpha
+  # docker:
+  #   name: Docker image
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v6
+  #     - name: Set up QEMU
+  #       uses: docker/setup-qemu-action@v3
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v3.12.0
+  #     - name: Login to DockerHub
+  #       uses: docker/login-action@v3.6.0
+  #       with:
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     - name: Docker tags
+  #       id: tags
+  #       uses: docker/metadata-action@v5
+  #       with:
+  #         images: andrcuns/allure-report-publisher
+  #         flavor: latest=false
+  #         tags: |
+  #           type=raw,value=latest
+  #           type=semver,pattern={{version}}
+  #     - name: Build and push
+  #       uses: docker/build-push-action@v6.18.0
+  #       with:
+  #         context: .
+  #         push: true
+  #         platforms: linux/amd64,linux/arm64
+  #         cache-from: type=gha
+  #         cache-to: type=gha,mode=max
+  #         tags: ${{ steps.tags.outputs.tags }}
+
+  # gh-release:
+  #   name: Github release
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: write
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v6
+  #     - uses: softprops/action-gh-release@v2
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         generate_release_notes: true
