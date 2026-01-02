@@ -2,8 +2,13 @@ name: Release
 
 on:
   push:
-    tags:
-      - v[0-9]+.[0-9]+.[0-9]+
+    branches:
+      - main
+    paths:
+      - 'package.json'
+      - 'README.md'
+    # tags:
+    #   - v[0-9]+.[0-9]+.[0-9]+
 
 permissions:
   id-token: write
@@ -11,6 +16,7 @@ permissions:
 
 jobs:
   docker:
+    if: contains(github.event.head_commit.message, 'Bump allure-report-publisher version to')
     name: Docker image
     runs-on: ubuntu-latest
     steps:
@@ -45,6 +51,7 @@ jobs:
           tags: ${{ steps.tags.outputs.tags }}
 
   npm:
+    if: contains(github.event.head_commit.message, 'Bump allure-report-publisher version to')
     name: NPM publish
     runs-on: ubuntu-latest
     steps:
@@ -52,12 +59,13 @@ jobs:
         uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: '25.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "25.x"
+          registry-url: "https://registry.npmjs.org"
       - name: Build and push
         run: npm publish
 
   gh-release:
+    if: contains(github.event.head_commit.message, 'Bump allure-report-publisher version to')
     name: Github release
     runs-on: ubuntu-latest
     permissions:
