@@ -1,14 +1,14 @@
 import {BaseCiInfo} from './base.js'
 
 export class GitlabCiInfo extends BaseCiInfo {
+  public static readonly DEFAULT_PAGES_DOMAIN = 'gitlab.io'
+
   public get pr() {
     return Boolean((this.allureProject && this.allureMrIid) || this.mrIid)
   }
 
   public get runId() {
-    const allureRunId = process.env[BaseCiInfo.ALLURE_RUN_ID]
-    const ciPipelineId = process.env.CI_PIPELINE_ID
-    return allureRunId || ciPipelineId
+    return process.env[BaseCiInfo.ALLURE_RUN_ID] || process.env.CI_PIPELINE_ID
   }
 
   public get jobId() {
@@ -17,6 +17,10 @@ export class GitlabCiInfo extends BaseCiInfo {
 
   public get projectPath() {
     return process.env.CI_PROJECT_PATH
+  }
+
+  public get projectName() {
+    return process.env.CI_PROJECT_NAME
   }
 
   public get projectId() {

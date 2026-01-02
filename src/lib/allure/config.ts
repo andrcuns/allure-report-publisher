@@ -5,6 +5,7 @@ import {pathToFileURL} from 'node:url'
 import yaml from 'yaml'
 
 import {PluginName} from '../../types/index.js'
+import {isCi} from '../../utils/ci.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 
@@ -29,7 +30,8 @@ export interface AllureConfig {
   plugins(): Promise<PluginName[]>
 }
 
-const defaultReportBasePath = path.join(os.tmpdir(), 'allure-report-publisher')
+// In CI environments, use relative paths within build dir
+const defaultReportBasePath = path.join(isCi ? './' : os.tmpdir(), 'allure-report-publisher')
 const defaultConfig: ConfigObject = {
   output: path.join(defaultReportBasePath, 'allure-report'),
   historyPath: path.join(defaultReportBasePath, 'history.jsonl'),

@@ -107,7 +107,20 @@ export abstract class BaseUploader {
       .join('/')
   }
 
-  private getReportUrls() {
+  protected outputReportUrls() {
+    logger.section('Report URLs')
+    const urls = this.getReportUrls()
+
+    logger.success('Fetching current run urls:')
+    urls.run.forEach((url) => logger.info(`- ${url}`))
+
+    if (this.copyLatest && urls.latest) {
+      logger.success('Fetching latest report urls:')
+      urls.latest.forEach((url) => logger.info(`- ${url}`))
+    }
+  }
+
+  protected getReportUrls(): {run: string[]; latest?: string[]} {
     const urls = {
       run: this.plugins.map((plugin) => `${this.reportUrlBase()}/${this.runId}/${plugin}/index.html`),
       latest: this.plugins.map((plugin) => `${this.reportUrlBase()}/latest/${plugin}/index.html`),
@@ -119,18 +132,5 @@ export abstract class BaseUploader {
     }
 
     return urls
-  }
-
-  private outputReportUrls() {
-    logger.section('Report URLs')
-    const urls = this.getReportUrls()
-
-    logger.success('Fetching current run urls:')
-    urls.run.forEach((url) => logger.info(`- ${url}`))
-
-    if (this.copyLatest) {
-      logger.success('Fetching latest report urls:')
-      urls.latest.forEach((url) => logger.info(`- ${url}`))
-    }
   }
 }
