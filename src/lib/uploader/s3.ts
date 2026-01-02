@@ -123,7 +123,7 @@ export class S3Uploader extends BaseUploader {
   private async copyFile(opts: {sourceKey: string; destinationKey: string}) {
     const source = `${this.bucketName}/${opts.sourceKey}`
 
-    logger.debug(`- copying 's3://${this.bucketName}/${source}' to 's3://${this.bucketName}/${opts.destinationKey}'`)
+    logger.debug(`- copying 's3://${source}' to 's3://${this.bucketName}/${opts.destinationKey}'`)
     await this.s3Client.send(
       new CopyObjectCommand({
         CopySource: source,
