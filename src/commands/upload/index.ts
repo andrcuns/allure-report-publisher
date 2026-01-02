@@ -28,11 +28,6 @@ export default class Upload extends Command {
     '<%= config.bin %> <%= command.id %> s3 --results-glob="path/to/allure-results" --bucket=my-bucket --update-pr=comment --summary=behaviors',
   ]
   static override flags = {
-    baseUrl: Flags.string({
-      aliases: ['base-url'],
-      description: 'Custom base URL for report links',
-      env: 'ALLURE_BASE_URL',
-    }),
     resultsGlob: Flags.string({
       aliases: ['results-glob'],
       char: 'r',
@@ -47,17 +42,28 @@ export default class Upload extends Command {
     }),
     prefix: Flags.string({
       char: 'p',
-      description: 'Prefix for report path in cloud storage (ignored for gitlab-artifacts)',
+      description: 'Prefix for report path in cloud storage',
       env: 'ALLURE_PREFIX',
+    }),
+    baseUrl: Flags.string({
+      aliases: ['base-url'],
+      description: 'Custom base URL for report links',
+      env: 'ALLURE_BASE_URL',
+    }),
+    output: Flags.string({
+      char: 'o',
+      description:
+        'Output directory for generated report. Overridden by value in custom config (default: global tmp directory)',
+      env: 'ALLURE_OUTPUT',
     }),
     config: Flags.string({
       char: 'c',
-      description: 'The path to allure config file (only .json or .yaml are supported)',
+      description: 'The path to allure config file. Options provided here will override CLI flags',
       env: 'ALLURE_CONFIG_PATH',
     }),
     reportName: Flags.string({
       aliases: ['report-name'],
-      description: 'Custom report name in Allure report (ignored with config-path)',
+      description: 'Custom report name in Allure report',
       env: 'ALLURE_REPORT_NAME',
     }),
     ciReportTitle: Flags.string({
@@ -120,12 +126,6 @@ export default class Upload extends Command {
       default: false,
       description: 'Ignore missing allure results',
       env: 'ALLURE_IGNORE_MISSING_RESULTS',
-    }),
-    output: Flags.string({
-      char: 'o',
-      description:
-        'Output directory for generated report (default: temp dir for cloud, "allure-report" for gitlab-artifacts)',
-      env: 'ALLURE_OUTPUT',
     }),
     parallel: Flags.integer({
       default: 8,

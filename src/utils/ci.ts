@@ -12,3 +12,5 @@ export const ciInfo: GithubCiInfo | GitlabCiInfo | undefined = (() => {
   if (process.env.GITLAB_CI) return new GitlabCiInfo()
   if (process.env.GITHUB_WORKFLOW) return new GithubCiInfo()
 })()
+
+export const isCi = Boolean(ciInfo)

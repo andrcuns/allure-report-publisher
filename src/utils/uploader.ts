@@ -1,4 +1,5 @@
 import {BaseUploader} from '../lib/uploader/base.js'
+import {GitlabArtifactsUploader} from '../lib/uploader/gitlab-artifacts.js'
 import {S3Uploader} from '../lib/uploader/s3.js'
 
 export function getUploader(
@@ -15,8 +16,8 @@ export function getUploader(
   },
 ): BaseUploader {
   switch (type) {
-    case 's3': {
-      return new S3Uploader(opts)
+    case 'gitlab-artifacts': {
+      return new GitlabArtifactsUploader(opts)
     }
 
     // case 'gcs': {
@@ -24,10 +25,9 @@ export function getUploader(
     //   return new GCSUploader(opts)
     // }
 
-    // case 'gitlab-artifacts': {
-    //   const {GitLabArtifactsUploader} = require('./gitlab-artifacts.js')
-    //   return new GitLabArtifactsUploader(opts)
-    // }
+    case 's3': {
+      return new S3Uploader(opts)
+    }
 
     default: {
       throw new Error(`Unsupported uploader type: ${type}`)
