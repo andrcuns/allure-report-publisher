@@ -16,7 +16,7 @@ $ npm install -g allure-report-publisher
 $ allure-report-publisher COMMAND
 running command...
 $ allure-report-publisher (--version)
-allure-report-publisher/5.0.0-alpha.0 linux-x64 node-v25.2.1
+allure-report-publisher/5.0.0-alpha.1 linux-x64 node-v25.2.1
 $ allure-report-publisher --help [COMMAND]
 USAGE
   $ allure-report-publisher COMMAND
@@ -32,22 +32,21 @@ Generate and upload allure report to cloud storage
 
 ```
 USAGE
-  $ allure-report-publisher upload TYPE [--baseUrl <value>] [-r <value>] [-b <value>] [-p <value>] [-c
-    <value>] [--reportName <value>] [--ciReportTitle <value>] [--summary behaviors|suites|packages|total]
+  $ allure-report-publisher upload TYPE [-r <value>] [-b <value>] [-p <value>] [--baseUrl <value>] [-o
+    <value>] [-c <value>] [--reportName <value>] [--ciReportTitle <value>] [--summary behaviors|suites|packages|total]
     [--summaryTableType ascii|markdown] [--updatePr comment|description|actions] [--collapseSummary] [--color]
-    [--copyLatest] [--debug] [--flakyWarningStatus] [--ignoreMissingResults] [-o <value>] [--parallel <value>]
+    [--copyLatest] [--debug] [--flakyWarningStatus] [--ignoreMissingResults] [--parallel <value>]
 
 ARGUMENTS
   TYPE  (s3|gcs|gitlab-artifacts) Cloud storage provider type
 
 FLAGS
   -b, --bucket=<value>             [env: ALLURE_BUCKET] Cloud storage bucket name (required for s3/gcs)
-  -c, --config=<value>             [env: ALLURE_CONFIG_PATH] The path to allure config file (only .json or .yaml are
-                                   supported)
-  -o, --output=<value>             [env: ALLURE_OUTPUT] Output directory for generated report (default: temp dir for
-                                   cloud, "allure-report" for gitlab-artifacts)
-  -p, --prefix=<value>             [env: ALLURE_PREFIX] Prefix for report path in cloud storage (ignored for
-                                   gitlab-artifacts)
+  -c, --config=<value>             [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here will
+                                   override CLI flags
+  -o, --output=<value>             [env: ALLURE_OUTPUT] Output directory for generated report. Overridden by value in
+                                   custom config (default: global tmp directory)
+  -p, --prefix=<value>             [env: ALLURE_PREFIX] Prefix for report path in cloud storage
   -r, --resultsGlob=<value>        [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
                                    results directories
       --baseUrl=<value>            [env: ALLURE_BASE_URL] Custom base URL for report links
@@ -61,8 +60,7 @@ FLAGS
       --flakyWarningStatus         [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
       --ignoreMissingResults       [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results
       --parallel=<value>           [default: 8, env: ALLURE_PARALLEL] Number of parallel threads for upload
-      --reportName=<value>         [env: ALLURE_REPORT_NAME] Custom report name in Allure report (ignored with
-                                   config-path)
+      --reportName=<value>         [env: ALLURE_REPORT_NAME] Custom report name in Allure report
       --summary=<option>           [default: total, env: ALLURE_SUMMARY] Add test summary table to PR
                                    <options: behaviors|suites|packages|total>
       --summaryTableType=<option>  [default: ascii, env: ALLURE_SUMMARY_TABLE_TYPE] Summary table format
@@ -83,7 +81,7 @@ EXAMPLES
   $ allure-report-publisher upload s3 --results-glob="path/to/allure-results" --bucket=my-bucket --update-pr=comment --summary=behaviors
 ```
 
-_See code: [src/commands/upload/index.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.0.0-alpha.0/src/commands/upload/index.ts)_
+_See code: [src/commands/upload/index.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.0.0-alpha.1/src/commands/upload/index.ts)_
 <!-- commandsstop -->
 
 ## Docker
