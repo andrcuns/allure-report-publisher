@@ -122,13 +122,13 @@ export abstract class BaseUploader {
 
   protected getReportUrls(): {run: string[]; latest?: string[]} {
     const urls = {
-      run: this.plugins.map((plugin) => `${this.reportUrlBase()}/${this.runId}/${plugin}/index.html`),
-      latest: this.plugins.map((plugin) => `${this.reportUrlBase()}/latest/${plugin}/index.html`),
+      run: [`${this.reportUrlBase()}/${this.runId}/index.html`],
+      latest: [`${this.reportUrlBase()}/latest/index.html`],
     }
 
     if (this.plugins.length > 1) {
-      urls.run.unshift(`${this.reportUrlBase()}/${this.runId}/index.html`)
-      urls.latest.unshift(`${this.reportUrlBase()}/latest/index.html`)
+      urls.run.push(...this.plugins.map((plugin) => `${this.reportUrlBase()}/${this.runId}/${plugin}/index.html`))
+      urls.latest.push(...this.plugins.map((plugin) => `${this.reportUrlBase()}/latest/${plugin}/index.html`))
     }
 
     return urls

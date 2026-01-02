@@ -32,6 +32,9 @@ export class GitlabArtifactsUploader extends BaseUploader {
   // gitlab api does not expose api to upload artifacts, all uploading is handled by gitlab ci itself
   // upload method only outputs the report urls
   public async upload() {
+    logger.info(
+      'Direct report uploads are not supported, ensure CI artifacts configuration includes report and history file paths',
+    )
     this.outputReportUrls()
   }
 
@@ -68,12 +71,18 @@ export class GitlabArtifactsUploader extends BaseUploader {
     const base = this.reportUrlBase()
     const path = this.reportPath.replace('./', '')
     const {projectName, jobId} = this.ciInfo
-
-    return {
-      run: this.plugins.map(
-        (plugin) => `${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${path}/${plugin}/index.html`,
-      ),
+    const urls = {
+      run: [`${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${path}/index.html`],
     }
+    if (this.plugins.length > 1) {
+      urls.run.push(
+        ...this.plugins.map(
+          (plugin) => `${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${path}/${plugin}/index.html`,
+        ),
+      )
+    }
+
+    return urls
   }
 
   private async getPreviousJobId() {
