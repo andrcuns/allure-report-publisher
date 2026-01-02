@@ -7,6 +7,11 @@
         "enabled": true,
         "singleFile": true
       }
+    },
+    "classic": {
+      "options": {
+        "enabled": true
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 import {Storage} from '@google-cloud/storage'
+import path from 'node:path'
 import pAll from 'p-all'
 
 import {config} from '../../utils/config.js'
@@ -36,8 +37,8 @@ export class GcsUploader extends BaseUploader {
 
   protected async uploadReport() {
     logger.debug(`Uploading report files with concurrency: ${this.parallel}`)
-    const uploads = (await this.getFileUploadInfo()).map(({filePath, pathComponents}) => {
-      const key = this.key(this.runId, ...pathComponents)
+    const uploads = (await this.getReportFiles()).map((filePath) => {
+      const key = this.key(this.runId, path.relative(this.reportPath, filePath))
       return () => this.uploadFile({filePath, key})
     })
 
@@ -46,9 +47,9 @@ export class GcsUploader extends BaseUploader {
 
   protected async createLatestCopy() {
     logger.debug(`Creating latest report copy with concurrency: ${this.parallel}`)
-    const copies = (await this.getFileUploadInfo()).map(({pathComponents}) => {
-      const sourceKey = this.key(this.runId, ...pathComponents)
-      const destinationKey = this.key('latest', ...pathComponents)
+    const copies = (await this.getReportFiles()).map((filePath) => {
+      const sourceKey = this.key(this.runId, path.relative(this.reportPath, filePath))
+      const destinationKey = this.key('latest', path.relative(this.reportPath, filePath))
       return () => this.copyFile({sourceKey, destinationKey})
     })
 

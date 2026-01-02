@@ -19,7 +19,7 @@ export abstract class BaseUploader {
   protected readonly prefix: string | undefined
   protected readonly baseUrl: string | undefined
   private _runId: string | undefined
-  private _fileUploadInfo: Array<{filePath: string; pathComponents: string[]}> | undefined
+  private _reportFiles: string[] | undefined
 
   constructor(opts: {
     bucket: string
@@ -71,18 +71,13 @@ export abstract class BaseUploader {
   }
 
   protected async getReportFiles() {
-    const globPattern =
-      // when only 1 plugin is used, report files are directly under reportPath
-      this.plugins.length > 1
-        ? (plugin: string) => `${this.reportPath}/${plugin}/**/*`
-        : (_plugin: string) => `${this.reportPath}/**/*`
+    if (this._reportFiles) return this._reportFiles
 
-    return Promise.all(
-      this.plugins.map(async (plugin) => ({
-        plugin,
-        files: await globPaths(globPattern(plugin), {nodir: true}),
-      })),
-    )
+    this._reportFiles = (
+      await Promise.all(this.plugins.map(() => globPaths(`${this.reportPath}/**/*`, {nodir: true})))
+    ).flat()
+
+    return this._reportFiles
   }
 
   protected historyFileName() {
@@ -103,8 +98,8 @@ export abstract class BaseUploader {
 
   protected key(...components: (null | string | undefined)[]): string {
     return [this.prefix, ...components]
-      .filter((c): c is string => typeof c === 'string' && c.length > 0)
-      .map((c) => c.replace(/\/$/, ''))
+      .filter(Boolean)
+      .map((c) => c?.replace(/\/$/, ''))
       .join('/')
   }
 
@@ -133,21 +128,5 @@ export abstract class BaseUploader {
     }
 
     return urls
-  }
-
-  protected async getFileUploadInfo() {
-    if (this._fileUploadInfo) return this._fileUploadInfo
-
-    const reportFiles = await this.getReportFiles()
-    this._fileUploadInfo = reportFiles.flatMap(({plugin, files}) =>
-      files.map((file) => ({
-        filePath: file,
-        pathComponents: [this.plugins.length > 1 ? plugin : undefined, path.relative(this.reportPath, file)].filter(
-          (component) => component !== undefined,
-        ),
-      })),
-    )
-
-    return this._fileUploadInfo
   }
 }
