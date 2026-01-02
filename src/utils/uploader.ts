@@ -1,4 +1,5 @@
 import {BaseUploader} from '../lib/uploader/base.js'
+import {GcsUploader} from '../lib/uploader/gcs.js'
 import {GitlabArtifactsUploader} from '../lib/uploader/gitlab-artifacts.js'
 import {S3Uploader} from '../lib/uploader/s3.js'
 
@@ -16,14 +17,13 @@ export function getUploader(
   },
 ): BaseUploader {
   switch (type) {
+    case 'gcs': {
+      return new GcsUploader(opts)
+    }
+
     case 'gitlab-artifacts': {
       return new GitlabArtifactsUploader(opts)
     }
-
-    // case 'gcs': {
-    //   const {GCSUploader} = require('./gcs.js')
-    //   return new GCSUploader(opts)
-    // }
 
     case 's3': {
       return new S3Uploader(opts)

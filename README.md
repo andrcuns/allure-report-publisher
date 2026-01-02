@@ -108,24 +108,7 @@ Additional configuration:
 
 ## Google Cloud Storage
 
-Requires on of the following environment variables.
-
-credentials.json file location:
-
-- `STORAGE_CREDENTIALS`
-- `STORAGE_KEYFILE`
-- `GOOGLE_CLOUD_CREDENTIALS`
-- `GOOGLE_CLOUD_KEYFILE`
-- `GCLOUD_KEYFILE`
-
-credentials.json contents:
-
-- `GOOGLE_CLOUD_CREDENTIALS_JSON`
-- `STORAGE_CREDENTIALS_JSON`
-- `STORAGE_KEYFILE_JSON`
-- `GOOGLE_CLOUD_CREDENTIALS_JSON`
-- `GOOGLE_CLOUD_KEYFILE_JSON`
-- `GCLOUD_KEYFILE_JSON`
+GCS node.js client uses [ADC](https://docs.cloud.google.com/docs/authentication/application-default-credentials) to detect credentials. Easiest way is to set `GOOGLE_APPLICATION_CREDENTIALS` environment variable pointing to service account credentials.json file.
 
 ## Gitlab Artifacts
 

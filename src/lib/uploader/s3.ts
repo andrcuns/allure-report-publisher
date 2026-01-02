@@ -17,7 +17,6 @@ import {BaseUploader} from './base.js'
 
 export class S3Uploader extends BaseUploader {
   private _reportUrlBase: string | undefined
-  private _fileUploadInfo: Array<{filePath: string; pathComponents: string[]}> | undefined
   private readonly s3Client: S3Client = new S3Client({
     endpoint: this.awsEndpoint,
     forcePathStyle: this.forcePathStyle,
@@ -86,8 +85,8 @@ export class S3Uploader extends BaseUploader {
 
   protected async uploadReport() {
     logger.debug(`Uploading report files with concurrency: ${this.parallel}`)
-    const uploads = (await this.getFileUploadInfo()).map(({filePath, pathComponents}) => {
-      const key = this.key(this.runId, ...pathComponents)
+    const uploads = (await this.getReportFiles()).map((filePath) => {
+      const key = this.key(this.runId, path.relative(this.reportPath, filePath))
       return () => this.uploadFile({filePath, key})
     })
 
@@ -96,27 +95,13 @@ export class S3Uploader extends BaseUploader {
 
   protected async createLatestCopy() {
     logger.debug(`Creating latest report copy with concurrency: ${this.parallel}`)
-    const copies = (await this.getFileUploadInfo()).map(({pathComponents}) => {
-      const sourceKey = this.key(this.runId, ...pathComponents)
-      const destinationKey = this.key('latest', ...pathComponents)
+    const copies = (await this.getReportFiles()).map((filePath) => {
+      const sourceKey = this.key(this.runId, path.relative(this.reportPath, filePath))
+      const destinationKey = this.key('latest', path.relative(this.reportPath, filePath))
       return () => this.copyFile({sourceKey, destinationKey})
     })
 
     await pAll(copies, {concurrency: config.parallel})
-  }
-
-  private async getFileUploadInfo() {
-    if (this._fileUploadInfo) return this._fileUploadInfo
-
-    const reportFiles = await this.getReportFiles()
-    this._fileUploadInfo = reportFiles.flatMap(({plugin, files}) =>
-      files.map((file) => ({
-        filePath: file,
-        pathComponents: [plugin, path.relative(this.reportPath, file)],
-      })),
-    )
-
-    return this._fileUploadInfo
   }
 
   private async uploadFile(opts: {cacheControl?: string; filePath: string; key: string}) {
