@@ -86,10 +86,7 @@ export class S3Uploader extends BaseUploader {
 
   protected async uploadReport() {
     logger.debug(`Uploading report files with concurrency: ${this.parallel}`)
-    const fileInfo = await this.getFileUploadInfo()
-    logger.debug('Following files will be uploaded')
-    for (const {filePath} of fileInfo) logger.debug(`- ${filePath}`)
-    const uploads = fileInfo.map(({filePath, pathComponents}) => {
+    const uploads = (await this.getFileUploadInfo()).map(({filePath, pathComponents}) => {
       const key = this.key(this.runId, ...pathComponents)
       return () => this.uploadFile({filePath, key})
     })
@@ -126,7 +123,7 @@ export class S3Uploader extends BaseUploader {
     const content = readFileSync(opts.filePath)
     const contentType = lookup(opts.filePath) || 'application/octet-stream'
 
-    logger.debug(`- uploading file: s3://${this.bucketName}/${opts.key} (type: ${contentType})`)
+    logger.debug(`- uploading '${opts.filePath}' to 's3://${this.bucketName}/${opts.key}' (type: ${contentType})`)
     return this.s3Client.send(
       new PutObjectCommand({
         Body: content,
@@ -141,7 +138,7 @@ export class S3Uploader extends BaseUploader {
   private async copyFile(opts: {sourceKey: string; destinationKey: string}) {
     const source = `${this.bucketName}/${opts.sourceKey}`
 
-    logger.debug(`- copying file: s3://${source} to s3://${this.bucketName}/${opts.destinationKey}`)
+    logger.debug(`- copying 's3://${source}' to 's3://${this.bucketName}/${opts.destinationKey}'`)
     await this.s3Client.send(
       new CopyObjectCommand({
         CopySource: source,
