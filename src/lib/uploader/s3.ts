@@ -8,6 +8,7 @@ import {
 } from '@aws-sdk/client-s3'
 import {lookup} from 'mime-types'
 import {readFileSync, writeFileSync} from 'node:fs'
+import path from 'node:path'
 import pAll from 'p-all'
 
 import {config} from '../../utils/config.js'
@@ -16,7 +17,7 @@ import {BaseUploader} from './base.js'
 
 export class S3Uploader extends BaseUploader {
   private _reportUrlBase: string | undefined
-  private _reportFileUploadArgs: Array<{filePath: string; pathComponents: string[]}> | undefined
+  private _fileUploadInfo: Array<{filePath: string; pathComponents: string[]}> | undefined
   private readonly s3Client: S3Client = new S3Client({
     endpoint: this.awsEndpoint,
     forcePathStyle: this.forcePathStyle,
@@ -85,7 +86,10 @@ export class S3Uploader extends BaseUploader {
 
   protected async uploadReport() {
     logger.debug(`Uploading report files with concurrency: ${this.parallel}`)
-    const uploads = (await this.allUploadArgs()).map(({filePath, pathComponents}) => {
+    const fileInfo = await this.getFileUploadInfo()
+    logger.debug('Following files will be uploaded')
+    for (const {filePath} of fileInfo) logger.debug(`- ${filePath}`)
+    const uploads = fileInfo.map(({filePath, pathComponents}) => {
       const key = this.key(this.runId, ...pathComponents)
       return () => this.uploadFile({filePath, key})
     })
@@ -95,7 +99,7 @@ export class S3Uploader extends BaseUploader {
 
   protected async createLatestCopy() {
     logger.debug(`Creating latest report copy with concurrency: ${this.parallel}`)
-    const copies = (await this.allUploadArgs()).map(({pathComponents}) => {
+    const copies = (await this.getFileUploadInfo()).map(({pathComponents}) => {
       const sourceKey = this.key(this.runId, ...pathComponents)
       const destinationKey = this.key('latest', ...pathComponents)
       return () => this.copyFile({sourceKey, destinationKey})
@@ -104,18 +108,18 @@ export class S3Uploader extends BaseUploader {
     await pAll(copies, {concurrency: config.parallel})
   }
 
-  private async allUploadArgs() {
-    if (this._reportFileUploadArgs) return this._reportFileUploadArgs
+  private async getFileUploadInfo() {
+    if (this._fileUploadInfo) return this._fileUploadInfo
 
     const reportFiles = await this.getReportFiles()
-    this._reportFileUploadArgs = reportFiles.flatMap(({plugin, files}) =>
+    this._fileUploadInfo = reportFiles.flatMap(({plugin, files}) =>
       files.map((file) => ({
         filePath: file,
-        pathComponents: [plugin, file.replace(`${this.reportPath}/`, '')],
+        pathComponents: [plugin, path.relative(this.reportPath, file)],
       })),
     )
 
-    return this._reportFileUploadArgs
+    return this._fileUploadInfo
   }
 
   private async uploadFile(opts: {cacheControl?: string; filePath: string; key: string}) {
