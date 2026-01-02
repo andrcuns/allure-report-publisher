@@ -24,8 +24,8 @@ export async function spin<T>(
   } catch (error) {
     if (options.ignoreError) {
       spinner.warn(`${message} ... ${chalk.yellow('failed')}`)
-      logger.warn((error as Error).message)
       flushDebug()
+      logger.warn((error as Error).message)
       return undefined
     }
 
