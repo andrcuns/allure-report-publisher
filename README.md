@@ -16,7 +16,7 @@ $ npm install -g allure-report-publisher
 $ allure-report-publisher COMMAND
 running command...
 $ allure-report-publisher (--version)
-allure-report-publisher/5.0.0-alpha.1 linux-x64 node-v25.2.1
+allure-report-publisher/5.0.0-alpha.2 linux-x64 node-v25.2.1
 $ allure-report-publisher --help [COMMAND]
 USAGE
   $ allure-report-publisher COMMAND
@@ -81,7 +81,7 @@ EXAMPLES
   $ allure-report-publisher upload s3 --results-glob="path/to/allure-results" --bucket=my-bucket --update-pr=comment --summary=behaviors
 ```
 
-_See code: [src/commands/upload/index.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.0.0-alpha.1/src/commands/upload/index.ts)_
+_See code: [src/commands/upload/index.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.0.0-alpha.2/src/commands/upload/index.ts)_
 <!-- commandsstop -->
 
 ## Docker
