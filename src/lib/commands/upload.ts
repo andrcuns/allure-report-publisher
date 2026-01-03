@@ -1,8 +1,9 @@
 import {Command, Flags} from '@oclif/core'
 import {InferredFlags} from '@oclif/core/interfaces'
-import {existsSync} from 'node:fs'
+import {existsSync, writeFileSync} from 'node:fs'
 import path from 'node:path'
 
+import {ciInfo, isCi} from '../../utils/ci.js'
 import {config} from '../../utils/config.js'
 import {getAllureResultsPaths} from '../../utils/glob.js'
 import {logger} from '../../utils/logger.js'
@@ -12,6 +13,7 @@ import {ReportGenerator} from '../allure/report-generator.js'
 import {BaseCloudUploader} from '../uploader/cloud/base.js'
 
 export abstract class BaseUploadCommand extends Command {
+  private _resultPaths: string[] | undefined
   static baseFlags = {
     // Allure report flags
     'results-glob': Flags.string({
@@ -82,6 +84,10 @@ export abstract class BaseUploadCommand extends Command {
     }),
   }
 
+  protected get allureResultsPaths() {
+    return this._resultPaths
+  }
+
   protected isColorEnabled(color: boolean) {
     return color ?? process.stdout.isTTY
   }
@@ -116,13 +122,23 @@ export abstract class BaseUploadCommand extends Command {
   }
 
   protected async getAllureResults(resultsGlob: string, ignoreMissingResults: boolean): Promise<string[] | undefined> {
-    const resultPaths = await spin(
+    this._resultPaths = await spin(
       getAllureResultsPaths(resultsGlob, ignoreMissingResults),
       `scanning allure results directories`,
       {ignoreError: ignoreMissingResults},
     )
 
-    return resultPaths
+    return this._resultPaths
+  }
+
+  protected async createExecutorJson(reportUrl: string) {
+    for (const resultPath of this._resultPaths || []) {
+      const executorJson = path.join(resultPath, 'executor.json')
+      if (!existsSync(executorJson)) continue
+
+      logger.debug(`Creating executor.json at path: ${executorJson}`)
+      writeFileSync(executorJson, JSON.stringify(ciInfo?.executorJson(reportUrl), null, 2))
+    }
   }
 }
 
@@ -223,7 +239,14 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
         historyPath: await allureConfig.historyPath(),
         plugins: await allureConfig.plugins(),
       })
+
       await spin(uploader.downloadHistory(), 'downloading previous run history', {ignoreError: true})
+
+      // legacy executor.json for allure2 plugin
+      if (isCi && (await allureConfig.plugins()).includes('allure2')) {
+        await spin(this.createExecutorJson(uploader.reportUrl()), 'creating executor.json files')
+      }
+
       await new ReportGenerator(allureConfig).execute()
 
       logger.section(`Uploading report to ${this.storageType}`)

@@ -3,6 +3,19 @@ import {BaseCiInfo} from './base.js'
 export class GitlabCiInfo extends BaseCiInfo {
   public static readonly DEFAULT_PAGES_DOMAIN = 'gitlab.io'
 
+  public executorJson(reportUrl: string): Record<string, string | undefined> {
+    return {
+      name: 'GitLab',
+      type: 'gitlab',
+      reportName: 'AllureReport',
+      reportUrl,
+      url: this.serverUrl,
+      buildUrl: this.buildUrl,
+      buildOrder: this.runId,
+      buildName: this.buildName,
+    }
+  }
+
   public get pr() {
     return Boolean((this.allureProject && this.allureMrIid) || this.mrIid)
   }
