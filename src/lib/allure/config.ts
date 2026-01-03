@@ -1,4 +1,3 @@
-import ci from 'ci-info'
 import {mkdirSync, readFileSync, writeFileSync} from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
@@ -6,6 +5,7 @@ import {pathToFileURL} from 'node:url'
 import yaml from 'yaml'
 
 import {PluginName} from '../../types/index.js'
+import {isCi} from '../../utils/ci.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 
@@ -33,7 +33,7 @@ export interface AllureConfig {
 
 // In CI environments, use relative paths within build dir
 const defaultGlobPattern = './**/allure-results'
-const defaultReportBasePath = path.join(ci.isCI ? './' : os.tmpdir(), 'allure-report-publisher')
+const defaultReportBasePath = path.join(isCi ? './' : os.tmpdir(), 'allure-report-publisher')
 const defaultConfig: ConfigObject = {
   output: path.join(defaultReportBasePath, 'allure-report'),
   historyPath: path.join(defaultReportBasePath, 'history.jsonl'),
@@ -171,7 +171,7 @@ class DefaultConfig implements AllureConfig {
   }
 }
 
-export function getAllureConfig(opts: {configPath?: string, reportName?: string, resultsGlob?: string}): AllureConfig {
+export function getAllureConfig(opts: {configPath?: string; reportName?: string; resultsGlob?: string}): AllureConfig {
   if (opts.configPath) return new CustomConfig(opts.configPath, opts.resultsGlob || defaultGlobPattern)
 
   return new DefaultConfig(opts.resultsGlob || defaultGlobPattern, opts.reportName)
