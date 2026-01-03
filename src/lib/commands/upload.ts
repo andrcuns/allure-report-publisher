@@ -14,8 +14,7 @@ import {BaseCloudUploader} from '../uploader/cloud/base.js'
 export abstract class BaseUploadCommand extends Command {
   static baseFlags = {
     // Allure report flags
-    resultsGlob: Flags.string({
-      aliases: ['results-glob'],
+    'results-glob': Flags.string({
       char: 'r',
       default: './**/allure-results',
       description: 'Glob pattern for allure results directories',
@@ -26,15 +25,13 @@ export abstract class BaseUploadCommand extends Command {
       description: 'The path to allure config file. Options provided here will override CLI flags',
       env: 'ALLURE_CONFIG_PATH',
     }),
-    reportName: Flags.string({
-      aliases: ['report-name'],
+    'report-name': Flags.string({
       description: 'Custom report name in Allure report',
       env: 'ALLURE_REPORT_NAME',
     }),
 
     // CI integration flags
-    ciReportTitle: Flags.string({
-      aliases: ['ci-report-title'],
+    'ci-report-title': Flags.string({
       default: 'Allure Report',
       description: 'Title for PR comment/description section',
       env: 'ALLURE_CI_REPORT_TITLE',
@@ -45,27 +42,23 @@ export abstract class BaseUploadCommand extends Command {
       env: 'ALLURE_SUMMARY',
       options: ['behaviors', 'suites', 'packages', 'total'],
     }),
-    summaryTableType: Flags.string({
-      aliases: ['summary-table-type'],
+    'summary-table-type': Flags.string({
       default: 'ascii',
       description: 'Summary table format',
       env: 'ALLURE_SUMMARY_TABLE_TYPE',
       options: ['ascii', 'markdown'],
     }),
-    updatePr: Flags.string({
-      aliases: ['update-pr'],
-      description: 'Update PR with report URL (comment/description/actions)',
+    'update-pr': Flags.string({
+      description: 'Update PR with a section containing the report URL',
       env: 'ALLURE_UPDATE_PR',
       options: ['comment', 'description', 'actions'],
     }),
-    collapseSummary: Flags.boolean({
-      aliases: ['collapse-summary'],
+    'collapse-summary': Flags.boolean({
       default: false,
       description: 'Create collapsible summary section in PR',
       env: 'ALLURE_COLLAPSE_SUMMARY',
     }),
-    flakyWarningStatus: Flags.boolean({
-      aliases: ['flaky-warning-status'],
+    'flaky-warning-status': Flags.boolean({
       default: false,
       description: 'Mark run with ! status if flaky tests found',
       env: 'ALLURE_FLAKY_WARNING_STATUS',
@@ -82,8 +75,7 @@ export abstract class BaseUploadCommand extends Command {
       description: 'Print debug log output',
       env: 'ALLURE_DEBUG',
     }),
-    ignoreMissingResults: Flags.boolean({
-      aliases: ['ignore-missing-results'],
+    'ignore-missing-results': Flags.boolean({
       default: false,
       description: 'Ignore missing allure results and exit without error if no result paths found',
       env: 'ALLURE_IGNORE_MISSING_RESULTS',
@@ -116,9 +108,9 @@ export abstract class BaseUploadCommand extends Command {
 
     logger.section('Checking for allure results directories')
     const resultPaths = await spin(
-      getAllureResultsPaths(flags.resultsGlob, flags.ignoreMissingResults),
+      getAllureResultsPaths(flags['results-glob'], flags['ignore-missing-results']),
       `scanning allure results directories`,
-      {ignoreError: flags.ignoreMissingResults},
+      {ignoreError: flags['ignore-missing-results']},
     )
     if (resultPaths === undefined) this.exit(0)
   }
@@ -143,23 +135,22 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
     ...BaseUploadCommand.baseFlags,
     bucket: Flags.string({
       char: 'b',
-      description: 'Cloud storage bucket name (required for s3/gcs)',
+      description: 'Cloud storage bucket name',
       env: 'ALLURE_BUCKET',
+      required: true,
     }),
     prefix: Flags.string({
       char: 'p',
       description: 'Prefix for report path in cloud storage',
       env: 'ALLURE_PREFIX',
     }),
-    baseUrl: Flags.string({
-      aliases: ['base-url'],
+    'base-url': Flags.string({
       description: 'Custom base URL for report links',
       env: 'ALLURE_BASE_URL',
     }),
-    copyLatest: Flags.boolean({
-      aliases: ['copy-latest'],
+    'copy-latest': Flags.boolean({
       default: false,
-      description: 'Keep copy of latest run report at base prefix (ignored for gitlab-artifacts)',
+      description: 'Keep copy of latest run report at base prefix',
       env: 'ALLURE_COPY_LATEST',
     }),
     parallel: Flags.integer({
@@ -192,13 +183,13 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
   }
 
   protected async validateInputs(flags: InferredFlags<typeof BaseCloudUploadCommand.baseFlags>) {
-    if (flags.baseUrl) {
+    if (flags['base-url']) {
       try {
         // eslint-disable-next-line no-new
-        new URL(flags.baseUrl)
+        new URL(flags['base-url'])
       } catch {
         throw new Error(
-          `Invalid base URL: ${flags.baseUrl}\nBase URL must be a valid URL starting with http:// or https://`,
+          `Invalid base URL: ${flags['base-url']}\nBase URL must be a valid URL starting with http:// or https://`,
         )
       }
     }
@@ -219,13 +210,13 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
       logger.section('Generating allure report')
       const allureConfig = getAllureConfig({
         configPath: flags.config,
-        reportName: flags.reportName,
-        resultsGlob: flags.resultsGlob,
+        reportName: flags['report-name'],
+        resultsGlob: flags['results-glob'],
       })
       const uploader = this.getUploader({
         bucket: flags.bucket!,
-        baseUrl: flags.baseUrl,
-        copyLatest: flags.copyLatest,
+        baseUrl: flags['base-url'],
+        copyLatest: flags['copy-latest'],
         prefix: flags.prefix,
         parallel: flags.parallel,
         output: await allureConfig.outputPath(),
@@ -239,7 +230,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
       await uploader.upload()
 
       // TODO: Update PR if requested
-      if (flags.updatePr) {
+      if (flags['update-pr']) {
         logger.section('Updating PR/MR')
         logger.info('PR update not yet implemented')
       }
