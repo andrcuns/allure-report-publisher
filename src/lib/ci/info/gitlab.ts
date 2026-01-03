@@ -66,4 +66,8 @@ export class GitlabCiInfo extends BaseCiInfo {
   public get pagesDomain() {
     return process.env.CI_PAGES_DOMAIN
   }
+
+  public get pipelineSource() {
+    return process.env.CI_PIPELINE_SOURCE
+  }
 }

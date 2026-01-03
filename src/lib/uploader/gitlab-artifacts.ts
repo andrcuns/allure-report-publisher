@@ -86,7 +86,7 @@ export class GitlabArtifactsUploader extends BaseUploader {
   }
 
   private async getPreviousJobId() {
-    const {projectId, branch, buildName, runId} = this.ciInfo
+    const {projectId, branch, buildName, runId, pipelineSource} = this.ciInfo
 
     if (!projectId || !branch || !buildName || !runId) {
       throw new Error('Missing required CI info for fetching previous job ID')
@@ -95,6 +95,7 @@ export class GitlabArtifactsUploader extends BaseUploader {
     logger.debug(`Fetching previous pipelines for ref: ${branch}`)
     const pipelines = await this.client.Pipelines.all(projectId, {
       ref: branch,
+      source: pipelineSource,
       perPage: 100,
       maxPages: 1,
     })
