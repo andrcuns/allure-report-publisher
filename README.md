@@ -165,10 +165,14 @@ _See code: [src/commands/upload/s3.ts](https://github.com/andrcuns/allure-report
 
 ## Docker
 
-To use cli via docker, run following command:
+Dockerized version of cli can be used by passing same arguments to `andrcuns/allure-report-publisher` image:
 
 ```sh-session
-docker pull andrcuns/allure-report-publisher:latest
+docker run --rm \
+  -v ${PWD}:/app/data \
+  -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+  -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+  andrcuns/allure-report-publisher:latest upload s3 --results-glob="/app/data/**/allure-results" --bucket=my-bucket
 ```
 
 # Storage providers
