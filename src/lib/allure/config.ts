@@ -28,9 +28,11 @@ export interface AllureConfig {
   historyPath(): Promise<string>
   outputPath(): Promise<string>
   plugins(): Promise<PluginName[]>
+  resultsGlob: string
 }
 
 // In CI environments, use relative paths within build dir
+const defaultGlobPattern = './**/allure-results'
 const defaultReportBasePath = path.join(isCi ? './' : os.tmpdir(), 'allure-report-publisher')
 const defaultConfig: ConfigObject = {
   output: path.join(defaultReportBasePath, 'allure-report'),
@@ -50,9 +52,11 @@ const defaultConfig: ConfigObject = {
 class CustomConfig implements AllureConfig {
   private _configPath: string
   private _parsedConfig: ConfigObject | Promise<ConfigObject> = defaultConfig
+  public resultsGlob: string
 
-  constructor(configPath: string) {
+  constructor(configPath: string, resultsGlob: string) {
     this._configPath = configPath
+    this.resultsGlob = resultsGlob
   }
 
   public configPath() {
@@ -133,11 +137,13 @@ class DefaultConfig implements AllureConfig {
   private _configCreated: boolean
   private _configPath: string
   private reportName: string | undefined
+  public resultsGlob: string
 
-  constructor(reportName?: string) {
+  constructor(resultsGlob: string, reportName?: string) {
     this._configCreated = false
     this._configPath = path.join(defaultReportBasePath, 'allurerc.json')
     this.reportName = reportName
+    this.resultsGlob = resultsGlob
   }
 
   public configPath() {
@@ -165,8 +171,8 @@ class DefaultConfig implements AllureConfig {
   }
 }
 
-export function getAllureConfig(configPath?: string, reportName?: string): AllureConfig {
-  if (configPath) return new CustomConfig(configPath)
+export function getAllureConfig(opts: {configPath?: string, reportName?: string, resultsGlob?: string}): AllureConfig {
+  if (opts.configPath) return new CustomConfig(opts.configPath, opts.resultsGlob || defaultGlobPattern)
 
-  return new DefaultConfig(reportName)
+  return new DefaultConfig(opts.resultsGlob || defaultGlobPattern, opts.reportName)
 }

@@ -11,11 +11,11 @@ import {readFileSync, writeFileSync} from 'node:fs'
 import path from 'node:path'
 import pAll from 'p-all'
 
-import {config} from '../../utils/config.js'
-import {logger} from '../../utils/logger.js'
-import {BaseUploader} from './base.js'
+import {config} from '../../../utils/config.js'
+import {logger} from '../../../utils/logger.js'
+import {BaseCloudUploader} from './base.js'
 
-export class S3Uploader extends BaseUploader {
+export class S3Uploader extends BaseCloudUploader {
   private _reportUrlBase: string | undefined
   private readonly s3Client: S3Client = new S3Client({
     endpoint: this.awsEndpoint,
