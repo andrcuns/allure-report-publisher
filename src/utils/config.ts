@@ -5,7 +5,7 @@ class Config {
   private initialized: boolean
 
   constructor() {
-    this._color = true
+    this._color = process.stdout.isTTY
     this._debug = false
     this._parallel = 8
     this.initialized = false
