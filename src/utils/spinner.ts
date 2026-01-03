@@ -1,8 +1,9 @@
 import ora, {Ora} from 'ora'
 
+import {isCi} from './ci.js'
 import {config} from './config.js'
 import {chalk, logger} from './logger.js'
-  
+
 function flushDebug(): void {
   if (config.debug) logger.flushDebug()
 }
@@ -48,7 +49,7 @@ export async function spin<T>(
   message: string,
   options: {ignoreError?: boolean} = {},
 ): Promise<T | undefined> {
-  const silent = process.stdout.isTTY === false || process.env.CI === 'true'
+  const silent = isCi || process.stdout.isTTY === false
   const spinner = ora({text: message, isSilent: silent, color: config.color}).start()
 
   try {
