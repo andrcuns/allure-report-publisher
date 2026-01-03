@@ -24,7 +24,7 @@ function fail(spinner: Spinner, error: Error) {
   if (spinner.isSpinning) {
     spinner.error(msg)
   } else {
-    console.log(`✖ ${msg}`)
+    console.log(`${chalk().red('✖')} ${msg}`)
   }
 
   flushDebug()
@@ -36,7 +36,7 @@ function warn(spinner: Spinner, error: Error): undefined {
   if (spinner.isSpinning) {
     spinner.warning(msg)
   } else {
-    console.log(`⚠ ${msg}`)
+    console.log(`${chalk().yellow('⚠')} ${msg}`)
   }
 
   flushDebug()
