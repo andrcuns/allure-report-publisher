@@ -3,16 +3,21 @@ import {Chalk, ChalkInstance} from 'chalk'
 
 import {config} from './config.js'
 
+let _chalk: ChalkInstance | undefined
+
+export const chalk = () => {
+  if (!_chalk) {
+    _chalk = new Chalk({level: config.color ? 3 : 0})
+  }
+
+  return _chalk
+}
+
 export class Logger {
-  private _chalk?: ChalkInstance
   private debugBuffer: string[] = []
 
-  private get chalk(): ChalkInstance {
-    if (!this._chalk) {
-      this._chalk = new Chalk({level: config.color ? 3 : 0})
-    }
-
-    return this._chalk
+  private get chalk() {
+    return chalk()
   }
 
   flushDebug(): void {
