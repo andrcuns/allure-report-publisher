@@ -17,8 +17,8 @@ export default class GitlabArtifacts extends BaseUploadCommand {
       logger.section('Generating allure report')
       const allureConfig = getAllureConfig({
         configPath: flags.config,
-        reportName: flags.reportName,
-        resultsGlob: flags.resultsGlob,
+        reportName: flags['report-name'],
+        resultsGlob: flags['results-glob'],
       })
       const uploader = new GitlabArtifactsUploader({
         reportPath: await allureConfig.outputPath(),
@@ -32,7 +32,7 @@ export default class GitlabArtifacts extends BaseUploadCommand {
       await uploader.outputReportUrls()
 
       // TODO: Update PR if requested
-      if (flags.updatePr) {
+      if (flags['update-pr']) {
         logger.section('Updating PR/MR')
         logger.info('PR update not yet implemented')
       }

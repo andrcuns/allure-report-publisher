@@ -34,37 +34,36 @@ Generate and upload allure report to gcs bucket
 
 ```
 USAGE
-  $ allure-report-publisher upload gcs [-r <value>] [-c <value>] [--reportName <value>] [--ciReportTitle
-    <value>] [--summary behaviors|suites|packages|total] [--summaryTableType ascii|markdown] [--updatePr
-    comment|description|actions] [--collapseSummary] [--flakyWarningStatus] [--color] [--debug] [--ignoreMissingResults]
-    [-b <value>] [-p <value>] [--baseUrl <value>] [--copyLatest] [--parallel <value>]
+  $ allure-report-publisher upload gcs -b <value> [-r <value>] [-c <value>] [--report-name <value>]
+    [--ci-report-title <value>] [--summary behaviors|suites|packages|total] [--summary-table-type ascii|markdown]
+    [--update-pr comment|description|actions] [--collapse-summary] [--flaky-warning-status] [--color] [--debug]
+    [--ignore-missing-results] [-p <value>] [--base-url <value>] [--copy-latest] [--parallel <value>]
 
 FLAGS
-  -b, --bucket=<value>             [env: ALLURE_BUCKET] Cloud storage bucket name (required for s3/gcs)
-  -c, --config=<value>             [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here will
-                                   override CLI flags
-  -p, --prefix=<value>             [env: ALLURE_PREFIX] Prefix for report path in cloud storage
-  -r, --resultsGlob=<value>        [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
-                                   results directories
-      --baseUrl=<value>            [env: ALLURE_BASE_URL] Custom base URL for report links
-      --ciReportTitle=<value>      [default: Allure Report, env: ALLURE_CI_REPORT_TITLE] Title for PR
-                                   comment/description section
-      --collapseSummary            [env: ALLURE_COLLAPSE_SUMMARY] Create collapsible summary section in PR
-      --[no-]color                 [env: ALLURE_COLOR] Force color output
-      --copyLatest                 [env: ALLURE_COPY_LATEST] Keep copy of latest run report at base prefix (ignored for
-                                   gitlab-artifacts)
-      --debug                      [env: ALLURE_DEBUG] Print debug log output
-      --flakyWarningStatus         [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
-      --ignoreMissingResults       [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results and exit without
-                                   error if no result paths found
-      --parallel=<value>           [default: 8, env: ALLURE_PARALLEL] Number of parallel threads for upload
-      --reportName=<value>         [env: ALLURE_REPORT_NAME] Custom report name in Allure report
-      --summary=<option>           [default: total, env: ALLURE_SUMMARY] Add test summary table to PR
-                                   <options: behaviors|suites|packages|total>
-      --summaryTableType=<option>  [default: ascii, env: ALLURE_SUMMARY_TABLE_TYPE] Summary table format
-                                   <options: ascii|markdown>
-      --updatePr=<option>          [env: ALLURE_UPDATE_PR] Update PR with report URL (comment/description/actions)
-                                   <options: comment|description|actions>
+  -b, --bucket=<value>               (required) [env: ALLURE_BUCKET] Cloud storage bucket name
+  -c, --config=<value>               [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here
+                                     will override CLI flags
+  -p, --prefix=<value>               [env: ALLURE_PREFIX] Prefix for report path in cloud storage
+  -r, --results-glob=<value>         [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
+                                     results directories
+      --base-url=<value>             [env: ALLURE_BASE_URL] Custom base URL for report links
+      --ci-report-title=<value>      [default: Allure Report, env: ALLURE_CI_REPORT_TITLE] Title for PR
+                                     comment/description section
+      --collapse-summary             [env: ALLURE_COLLAPSE_SUMMARY] Create collapsible summary section in PR
+      --[no-]color                   [env: ALLURE_COLOR] Force color output
+      --copy-latest                  [env: ALLURE_COPY_LATEST] Keep copy of latest run report at base prefix
+      --debug                        [env: ALLURE_DEBUG] Print debug log output
+      --flaky-warning-status         [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
+      --ignore-missing-results       [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results and exit without
+                                     error if no result paths found
+      --parallel=<value>             [default: 8, env: ALLURE_PARALLEL] Number of parallel threads for upload
+      --report-name=<value>          [env: ALLURE_REPORT_NAME] Custom report name in Allure report
+      --summary=<option>             [default: total, env: ALLURE_SUMMARY] Add test summary table to PR
+                                     <options: behaviors|suites|packages|total>
+      --summary-table-type=<option>  [default: ascii, env: ALLURE_SUMMARY_TABLE_TYPE] Summary table format
+                                     <options: ascii|markdown>
+      --update-pr=<option>           [env: ALLURE_UPDATE_PR] Update PR with a section containing the report URL
+                                     <options: comment|description|actions>
 
 DESCRIPTION
   Generate and upload allure report to gcs bucket
@@ -83,30 +82,31 @@ Generate report and output GitLab CI artifacts links
 
 ```
 USAGE
-  $ allure-report-publisher upload gitlab-artifacts [-r <value>] [-c <value>] [--reportName <value>] [--ciReportTitle
-    <value>] [--summary behaviors|suites|packages|total] [--summaryTableType ascii|markdown] [--updatePr
-    comment|description|actions] [--collapseSummary] [--flakyWarningStatus] [--color] [--debug] [--ignoreMissingResults]
+  $ allure-report-publisher upload gitlab-artifacts [-r <value>] [-c <value>] [--report-name <value>] [--ci-report-title
+    <value>] [--summary behaviors|suites|packages|total] [--summary-table-type ascii|markdown] [--update-pr
+    comment|description|actions] [--collapse-summary] [--flaky-warning-status] [--color] [--debug]
+    [--ignore-missing-results]
 
 FLAGS
-  -c, --config=<value>             [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here will
-                                   override CLI flags
-  -r, --resultsGlob=<value>        [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
-                                   results directories
-      --ciReportTitle=<value>      [default: Allure Report, env: ALLURE_CI_REPORT_TITLE] Title for PR
-                                   comment/description section
-      --collapseSummary            [env: ALLURE_COLLAPSE_SUMMARY] Create collapsible summary section in PR
-      --[no-]color                 [env: ALLURE_COLOR] Force color output
-      --debug                      [env: ALLURE_DEBUG] Print debug log output
-      --flakyWarningStatus         [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
-      --ignoreMissingResults       [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results and exit without
-                                   error if no result paths found
-      --reportName=<value>         [env: ALLURE_REPORT_NAME] Custom report name in Allure report
-      --summary=<option>           [default: total, env: ALLURE_SUMMARY] Add test summary table to PR
-                                   <options: behaviors|suites|packages|total>
-      --summaryTableType=<option>  [default: ascii, env: ALLURE_SUMMARY_TABLE_TYPE] Summary table format
-                                   <options: ascii|markdown>
-      --updatePr=<option>          [env: ALLURE_UPDATE_PR] Update PR with report URL (comment/description/actions)
-                                   <options: comment|description|actions>
+  -c, --config=<value>               [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here
+                                     will override CLI flags
+  -r, --results-glob=<value>         [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
+                                     results directories
+      --ci-report-title=<value>      [default: Allure Report, env: ALLURE_CI_REPORT_TITLE] Title for PR
+                                     comment/description section
+      --collapse-summary             [env: ALLURE_COLLAPSE_SUMMARY] Create collapsible summary section in PR
+      --[no-]color                   [env: ALLURE_COLOR] Force color output
+      --debug                        [env: ALLURE_DEBUG] Print debug log output
+      --flaky-warning-status         [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
+      --ignore-missing-results       [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results and exit without
+                                     error if no result paths found
+      --report-name=<value>          [env: ALLURE_REPORT_NAME] Custom report name in Allure report
+      --summary=<option>             [default: total, env: ALLURE_SUMMARY] Add test summary table to PR
+                                     <options: behaviors|suites|packages|total>
+      --summary-table-type=<option>  [default: ascii, env: ALLURE_SUMMARY_TABLE_TYPE] Summary table format
+                                     <options: ascii|markdown>
+      --update-pr=<option>           [env: ALLURE_UPDATE_PR] Update PR with a section containing the report URL
+                                     <options: comment|description|actions>
 
 DESCRIPTION
   Generate report and output GitLab CI artifacts links
@@ -120,37 +120,36 @@ Generate and upload allure report to s3 bucket
 
 ```
 USAGE
-  $ allure-report-publisher upload s3 [-r <value>] [-c <value>] [--reportName <value>] [--ciReportTitle
-    <value>] [--summary behaviors|suites|packages|total] [--summaryTableType ascii|markdown] [--updatePr
-    comment|description|actions] [--collapseSummary] [--flakyWarningStatus] [--color] [--debug] [--ignoreMissingResults]
-    [-b <value>] [-p <value>] [--baseUrl <value>] [--copyLatest] [--parallel <value>]
+  $ allure-report-publisher upload s3 -b <value> [-r <value>] [-c <value>] [--report-name <value>]
+    [--ci-report-title <value>] [--summary behaviors|suites|packages|total] [--summary-table-type ascii|markdown]
+    [--update-pr comment|description|actions] [--collapse-summary] [--flaky-warning-status] [--color] [--debug]
+    [--ignore-missing-results] [-p <value>] [--base-url <value>] [--copy-latest] [--parallel <value>]
 
 FLAGS
-  -b, --bucket=<value>             [env: ALLURE_BUCKET] Cloud storage bucket name (required for s3/gcs)
-  -c, --config=<value>             [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here will
-                                   override CLI flags
-  -p, --prefix=<value>             [env: ALLURE_PREFIX] Prefix for report path in cloud storage
-  -r, --resultsGlob=<value>        [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
-                                   results directories
-      --baseUrl=<value>            [env: ALLURE_BASE_URL] Custom base URL for report links
-      --ciReportTitle=<value>      [default: Allure Report, env: ALLURE_CI_REPORT_TITLE] Title for PR
-                                   comment/description section
-      --collapseSummary            [env: ALLURE_COLLAPSE_SUMMARY] Create collapsible summary section in PR
-      --[no-]color                 [env: ALLURE_COLOR] Force color output
-      --copyLatest                 [env: ALLURE_COPY_LATEST] Keep copy of latest run report at base prefix (ignored for
-                                   gitlab-artifacts)
-      --debug                      [env: ALLURE_DEBUG] Print debug log output
-      --flakyWarningStatus         [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
-      --ignoreMissingResults       [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results and exit without
-                                   error if no result paths found
-      --parallel=<value>           [default: 8, env: ALLURE_PARALLEL] Number of parallel threads for upload
-      --reportName=<value>         [env: ALLURE_REPORT_NAME] Custom report name in Allure report
-      --summary=<option>           [default: total, env: ALLURE_SUMMARY] Add test summary table to PR
-                                   <options: behaviors|suites|packages|total>
-      --summaryTableType=<option>  [default: ascii, env: ALLURE_SUMMARY_TABLE_TYPE] Summary table format
-                                   <options: ascii|markdown>
-      --updatePr=<option>          [env: ALLURE_UPDATE_PR] Update PR with report URL (comment/description/actions)
-                                   <options: comment|description|actions>
+  -b, --bucket=<value>               (required) [env: ALLURE_BUCKET] Cloud storage bucket name
+  -c, --config=<value>               [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here
+                                     will override CLI flags
+  -p, --prefix=<value>               [env: ALLURE_PREFIX] Prefix for report path in cloud storage
+  -r, --results-glob=<value>         [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
+                                     results directories
+      --base-url=<value>             [env: ALLURE_BASE_URL] Custom base URL for report links
+      --ci-report-title=<value>      [default: Allure Report, env: ALLURE_CI_REPORT_TITLE] Title for PR
+                                     comment/description section
+      --collapse-summary             [env: ALLURE_COLLAPSE_SUMMARY] Create collapsible summary section in PR
+      --[no-]color                   [env: ALLURE_COLOR] Force color output
+      --copy-latest                  [env: ALLURE_COPY_LATEST] Keep copy of latest run report at base prefix
+      --debug                        [env: ALLURE_DEBUG] Print debug log output
+      --flaky-warning-status         [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
+      --ignore-missing-results       [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results and exit without
+                                     error if no result paths found
+      --parallel=<value>             [default: 8, env: ALLURE_PARALLEL] Number of parallel threads for upload
+      --report-name=<value>          [env: ALLURE_REPORT_NAME] Custom report name in Allure report
+      --summary=<option>             [default: total, env: ALLURE_SUMMARY] Add test summary table to PR
+                                     <options: behaviors|suites|packages|total>
+      --summary-table-type=<option>  [default: ascii, env: ALLURE_SUMMARY_TABLE_TYPE] Summary table format
+                                     <options: ascii|markdown>
+      --update-pr=<option>           [env: ALLURE_UPDATE_PR] Update PR with a section containing the report URL
+                                     <options: comment|description|actions>
 
 DESCRIPTION
   Generate and upload allure report to s3 bucket
