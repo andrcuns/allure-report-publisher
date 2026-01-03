@@ -6,7 +6,7 @@ import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 
 export default class GitlabArtifacts extends BaseUploadCommand {
-  static override description = 'Generate and upload allure report to gcs bucket'
+  static override description = 'Generate report and output GitLab CI artifacts links'
 
   async run() {
     const flags = await this.initConfig()
