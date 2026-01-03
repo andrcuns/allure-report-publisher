@@ -30,13 +30,18 @@ RUN pnpm run build
 #
 FROM node AS production
 
+# Create non-root user
+RUN addgroup -g 1001 -S publisher && \
+    adduser -u 1001 -S publisher -G publisher; \
+    mkdir /app && chown publisher:publisher /app
+
 WORKDIR /app
+USER publisher
 
-COPY ./bin/run.js ./bin/
-COPY ./package.json ./
-
-COPY --from=build /build/dist ./dist
-COPY --from=prod-deps /build/node_modules ./node_modules
+COPY --chown=publisher:publisher ./bin/run.js ./bin/
+COPY --chown=publisher:publisher ./package.json ./
+COPY --from=build --chown=publisher:publisher /build/dist ./dist
+COPY --from=prod-deps --chown=publisher:publisher /build/node_modules ./node_modules
 
 # Verify installation
 RUN /app/bin/run.js --version
