@@ -79,10 +79,7 @@ export abstract class BaseCloudUploader {
   protected async getReportFiles() {
     if (this._reportFiles) return this._reportFiles
 
-    this._reportFiles = (
-      await Promise.all(this.plugins.map(() => globPaths(`${this.reportPath}/**/*`, {nodir: true})))
-    ).flat()
-
+    this._reportFiles = await globPaths(`${this.reportPath}/**/*`, {nodir: true})
     return this._reportFiles
   }
 
