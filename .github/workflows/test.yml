@@ -29,6 +29,7 @@ jobs:
 
   test:
     runs-on: 'ubuntu-latest'
+    name: unit
     strategy:
       fail-fast: false
       matrix:
@@ -54,11 +55,11 @@ jobs:
           path: reports/allure-results/
           retention-days: 1
 
-  publish-report:
+  s3:
     runs-on: ubuntu-latest
     needs: test
     if: always()
-    name: publish allure report
+    name: e2e (s3)
     steps:
       - name: Checkout
         uses: actions/checkout@v6
