@@ -1,22 +1,34 @@
 // eslint-disable-next-line unicorn/import-style
-import {Chalk} from 'chalk'
+import {Chalk, ChalkInstance} from 'chalk'
 
 import {config} from './config.js'
 
-export const chalk = new Chalk({level: config.color ? 3 : 0})
+let _chalk: ChalkInstance | undefined
+
+export const chalk = () => {
+  if (!_chalk) {
+    _chalk = new Chalk({level: config.color ? 3 : 0})
+  }
+
+  return _chalk
+}
 
 export class Logger {
   private debugBuffer: string[] = []
 
+  private get chalk() {
+    return chalk()
+  }
+
   flushDebug(): void {
     if (this.debugBuffer.length === 0) return
 
-    console.log(chalk.gray('====== DEBUG LOG OUTPUT ======'))
+    console.log(this.chalk.gray('====== DEBUG LOG OUTPUT ======'))
     for (const message of this.debugBuffer) {
-      console.log(chalk.gray(message))
+      console.log(this.chalk.gray(message))
     }
 
-    console.log(chalk.gray('====== DEBUG LOG OUTPUT ======'))
+    console.log(this.chalk.gray('====== DEBUG LOG OUTPUT ======'))
     this.debugBuffer = []
   }
 
@@ -26,11 +38,11 @@ export class Logger {
   }
 
   error(message: string): void {
-    console.error(chalk.red(message))
+    console.error(this.chalk.red(message))
   }
 
   info(message: string): void {
-    console.log(chalk.blue('ℹ'), message)
+    console.log(this.chalk.blue('ℹ'), message)
   }
 
   log(message: string): void {
@@ -38,16 +50,16 @@ export class Logger {
   }
 
   success(message: string): void {
-    console.log(chalk.green('✓'), message)
+    console.log(this.chalk.green('✓'), message)
   }
 
   warn(message: string): void {
-    console.warn(chalk.yellow(message))
+    console.warn(this.chalk.yellow(message))
   }
 
   section(message: string): void {
     if (config.color) {
-      console.log(chalk.bold.magenta(`\n${message}`))
+      console.log(this.chalk.bold.magenta(`\n${message}`))
     } else {
       console.log(`\n=== ${message} ===`)
     }

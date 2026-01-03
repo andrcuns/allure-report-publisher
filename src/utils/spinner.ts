@@ -9,7 +9,7 @@ function flushDebug(): void {
 }
 
 function succeed(spinner: Ora) {
-  const msg = `${spinner.text} ... ${chalk.green('done')}`
+  const msg = `${spinner.text} ... ${chalk().green('done')}`
   if (spinner.isSpinning) {
     spinner.succeed(msg)
   } else {
@@ -20,7 +20,7 @@ function succeed(spinner: Ora) {
 }
 
 function fail(spinner: Ora, error: Error) {
-  const msg = `${spinner.text} ... ${chalk.red('failed')}`
+  const msg = `${spinner.text} ... ${chalk().red('failed')}`
   if (spinner.isSpinning) {
     spinner.fail(msg)
   } else {
@@ -32,7 +32,7 @@ function fail(spinner: Ora, error: Error) {
 }
 
 function warn(spinner: Ora, error: Error): undefined {
-  const msg = `${spinner.text} ... ${chalk.yellow('warning')}`
+  const msg = `${spinner.text} ... ${chalk().yellow('warning')}`
   if (spinner.isSpinning) {
     spinner.warn(msg)
   } else {
@@ -50,7 +50,7 @@ export async function spin<T>(
   options: {ignoreError?: boolean} = {},
 ): Promise<T | undefined> {
   const silent = isCi || process.stdout.isTTY === false
-  const spinner = ora({text: message, isSilent: silent, color: config.color}).start()
+  const spinner = ora({text: message, isSilent: silent, color: config.color ? 'cyan' : false}).start()
 
   try {
     const result = await action
