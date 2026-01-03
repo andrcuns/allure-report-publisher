@@ -171,7 +171,7 @@ class DefaultConfig implements AllureConfig {
   }
 }
 
-export function getAllureConfig(opts: {configPath?: string, reportName?: string, resultsGlob?: string}): AllureConfig {
+export function getAllureConfig(opts: {configPath?: string; reportName?: string; resultsGlob?: string}): AllureConfig {
   if (opts.configPath) return new CustomConfig(opts.configPath, opts.resultsGlob || defaultGlobPattern)
 
   return new DefaultConfig(opts.resultsGlob || defaultGlobPattern, opts.reportName)

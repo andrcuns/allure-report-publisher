@@ -10,7 +10,7 @@ on:
 
 jobs:
   lint:
-    runs-on: 'ubuntu-latest'
+    runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
@@ -18,7 +18,7 @@ jobs:
           version: 10
       - uses: actions/setup-node@v6
         with:
-          node-version: '25.x'
+          node-version: "25.x"
           cache: pnpm
       - name: Install dependencies
         run: pnpm install
@@ -28,12 +28,12 @@ jobs:
         run: pnpm run lint
 
   test:
-    runs-on: 'ubuntu-latest'
+    runs-on: "ubuntu-latest"
     name: unit
     strategy:
       fail-fast: false
       matrix:
-        node: ['22.x', '24.x', '25.x']
+        node: ["22.x", "24.x", "25.x"]
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
@@ -78,23 +78,16 @@ jobs:
         uses: actions/download-artifact@v7
         with:
           path: reports/allure-results
-      - name: Cache minio store
-        id: cache-primes-restore
-        uses: actions/cache@v5
-        with:
-          path: minio
-          key: minio/${{ github.ref_name }}/${{ github.run_id }}
-          restore-keys: minio/${{ github.ref_name }}
       - name: Set up Minio
         run: |
           mkdir -p minio/allure-reports
           docker network create allure
           docker run -d \
-          --name minio \
-          --network allure \
-          --volume "$(pwd)/minio":/data \
-          quay.io/minio/minio:latest \
-          server /data
+            --name minio \
+            --network allure \
+            --volume "$(pwd)/minio":/data \
+            quay.io/minio/minio:latest \
+            server /data
       - name: Publish allure report
         env:
           GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

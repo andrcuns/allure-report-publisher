@@ -4,7 +4,7 @@ import path from 'node:path'
 
 import {ciInfo} from '../../../utils/ci.js'
 import {globPaths} from '../../../utils/glob.js'
-import {logger} from '../../../utils/logger.js'
+import {chalk, logger} from '../../../utils/logger.js'
 import {spin} from '../../../utils/spinner.js'
 import {GithubCiInfo} from '../../ci/info/github.js'
 import {GitlabCiInfo} from '../../ci/info/gitlab.js'
@@ -107,12 +107,12 @@ export abstract class BaseCloudUploader {
     logger.section('Report URLs')
     const urls = this.getReportUrls()
 
-    logger.success('current run urls:')
-    urls.run.forEach((url) => logger.info(`- ${url}`))
+    logger.info('current run urls:')
+    urls.run.forEach((url) => console.log(`- ${chalk().blue(url)}`))
 
     if (this.copyLatest && urls.latest) {
-      logger.success('latest report urls:')
-      urls.latest.forEach((url) => logger.info(`- ${url}`))
+      logger.info('latest report urls:')
+      urls.latest.forEach((url) => console.log(`- ${chalk().blue(url)}`))
     }
   }
 
