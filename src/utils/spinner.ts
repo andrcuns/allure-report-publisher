@@ -1,6 +1,6 @@
-import ora, {Ora} from 'ora'
+import ci from 'ci-info'
+import yoctoSpinner, { Spinner } from 'yocto-spinner'
 
-import {isCi} from './ci.js'
 import {config} from './config.js'
 import {chalk, logger} from './logger.js'
 
@@ -8,10 +8,10 @@ function flushDebug(): void {
   if (config.debug) logger.flushDebug()
 }
 
-function succeed(spinner: Ora) {
+function succeed(spinner: Spinner) {
   const msg = `${spinner.text} ... ${chalk().green('done')}`
   if (spinner.isSpinning) {
-    spinner.succeed(msg)
+    spinner.success(msg)
   } else {
     logger.success(msg)
   }
@@ -19,24 +19,24 @@ function succeed(spinner: Ora) {
   flushDebug()
 }
 
-function fail(spinner: Ora, error: Error) {
+function fail(spinner: Spinner, error: Error) {
   const msg = `${spinner.text} ... ${chalk().red('failed')}`
   if (spinner.isSpinning) {
-    spinner.fail(msg)
+    spinner.error(msg)
   } else {
-    console.log(msg)
+    console.log(`✖ ${msg}`)
   }
 
   flushDebug()
   throw error
 }
 
-function warn(spinner: Ora, error: Error): undefined {
+function warn(spinner: Spinner, error: Error): undefined {
   const msg = `${spinner.text} ... ${chalk().yellow('warning')}`
   if (spinner.isSpinning) {
-    spinner.warn(msg)
+    spinner.warning(msg)
   } else {
-    console.log(msg)
+    console.log(`⚠ ${msg}`)
   }
 
   flushDebug()
@@ -49,8 +49,9 @@ export async function spin<T>(
   message: string,
   options: {ignoreError?: boolean} = {},
 ): Promise<T | undefined> {
-  const silent = isCi || process.stdout.isTTY === false
-  const spinner = ora({text: message, isSilent: silent, color: config.color ? 'cyan' : false}).start()
+  const silent = ci.isCI || process.stdout.isTTY === false
+  const spinner = yoctoSpinner({text: message})
+  if (!silent) spinner.start()
 
   try {
     const result = await action

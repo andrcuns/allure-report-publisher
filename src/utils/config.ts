@@ -1,3 +1,5 @@
+import supportsColor, { ColorSupport } from 'supports-color';
+
 class Config {
   private _color: boolean
   private _debug: boolean
@@ -5,20 +7,19 @@ class Config {
   private initialized: boolean
 
   constructor() {
-    this._color = process.stdout.isTTY
+    this._color = (supportsColor.stdout as ColorSupport).hasBasic
     this._debug = false
     this._parallel = 8
     this.initialized = false
   }
 
-  public get color(): boolean {
-    if (!this.initialized) console.warn("Config has not been initialized yet, returning default value")
-    return this._color
-  }
-
   public get debug(): boolean {
     if (!this.initialized) console.warn("Config has not been initialized yet, returning default value")
     return this._debug
+  }
+
+  public get color(): boolean {
+    return this._color
   }
 
   public get parallel(): number {
