@@ -6,19 +6,18 @@ import {spin} from '../../utils/spinner.js'
 import {AllureConfig} from './config.js'
 
 export class ReportGenerator {
-  private readonly resultGlob
   private readonly allureConfig
-  private readonly downloadHistory
   private _outputPath: string | undefined
 
-  constructor(resultGlob: string, allureConfig: AllureConfig, downloadHistory: () => Promise<void>) {
-    this.resultGlob = resultGlob
+  constructor(allureConfig: AllureConfig) {
     this.allureConfig = allureConfig
-    this.downloadHistory = downloadHistory
+  }
+
+  public get resultsGlob() {
+    return this.allureConfig.resultsGlob
   }
 
   public async execute() {
-    await spin(this.downloadHistory(), 'downloading previous run history', {ignoreError: true})
     await spin(this.generateReport(), 'generating report')
   }
 
@@ -31,7 +30,7 @@ export class ReportGenerator {
   }
 
   private async generateReport() {
-    const args = ['generate', this.resultGlob, '-c', this.allureConfig.configPath(), '-o', await this.outputPath()]
+    const args = ['generate', this.resultsGlob, '-c', this.allureConfig.configPath(), '-o', await this.outputPath()]
     try {
       logger.debug(`Running allure with args: ${args.join(' ')}`)
       const result = await spawn('allure', args, {preferLocal: true})

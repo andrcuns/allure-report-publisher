@@ -22,8 +22,11 @@ class Config {
   }
 
   public get parallel(): number {
-    if (!this.initialized) console.warn("Config has not been initialized yet, returning default value")
     return this._parallel
+  }
+
+  public set parallel(value: number) {
+    this._parallel = value;
   }
 
   public initialize(options: {color?: boolean; debug?: boolean; parallel?: number}): void {

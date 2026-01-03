@@ -64,20 +64,26 @@
     "commands": "./dist/commands",
     "plugins": [],
     "topicSeparator": " ",
-    "topics": {}
+    "topics": {
+      "upload": {
+        "description": "Upload reports to cloud storage or CI artifacts"
+      }
+    }
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/andrcuns/allure-report-publisher.git"
   },
   "scripts": {
-    "build": "shx rm -rf dist && tsc -b",
-    "cleanBuild": "shx rm -rf dist && shx rm -f tsconfig.tsbuildinfo && tsc -b",
+    "build": "tsc -b",
+    "cleanBuild": "shx rm -rf dist tsconfig.tsbuildinfo && tsc -b",
     "lint": "eslint",
     "prepack": "oclif manifest && oclif readme",
     "postpack": "shx rm -f oclif.manifest.json",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
-    "version": "oclif readme && git add README.md"
+    "version": "oclif readme && git add README.md",
+    "prereadme": "shx rm -rf dist tsconfig.tsbuildinfo && tsc -b",
+    "readme": "oclif readme"
   },
   "types": "dist/index.d.ts"
 }

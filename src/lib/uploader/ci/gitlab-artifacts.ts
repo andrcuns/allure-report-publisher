@@ -1,27 +1,30 @@
 import {Gitlab} from '@gitbeaker/rest'
-import {writeFileSync} from 'node:fs'
+import {mkdirSync, writeFileSync} from 'node:fs'
+import path from 'node:path'
 
-import {gitlabClient} from '../../utils/ci.js'
-import {logger} from '../../utils/logger.js'
-import {GitlabCiInfo} from '../ci/info/gitlab.js'
-import {BaseUploader} from './base.js'
+import {gitlabClient} from '../../../utils/ci.js'
+import {logger} from '../../../utils/logger.js'
+import {GitlabCiInfo} from '../../ci/info/gitlab.js'
 
-export class GitlabArtifactsUploader extends BaseUploader {
-  private readonly client: Gitlab = gitlabClient
+export class GitlabArtifactsUploader {
+  private readonly client: Gitlab
+  private readonly ciInfo: GitlabCiInfo
+  private readonly historyPath: string
+  private readonly reportPath: string
+  private readonly plugins: string[]
 
-  constructor(...opts: ConstructorParameters<typeof BaseUploader>) {
-    super(...opts)
-
-    // gitlab artifacts uploader does not support creating latest copy
-    this.copyLatest = opts[0].copyLatest
-  }
-
-  protected get ciInfo(): GitlabCiInfo {
-    return new GitlabCiInfo()
+  constructor(opts: {historyPath: string; reportPath: string; plugins: string[]}) {
+    this.historyPath = opts.historyPath
+    this.reportPath = opts.reportPath
+    this.plugins = opts.plugins
+    this.client = gitlabClient
+    this.ciInfo = new GitlabCiInfo()
   }
 
   public async downloadHistory() {
-    super.downloadHistory()
+    const historyDir = path.dirname(this.historyPath)
+    logger.debug(`Creating destination directory for history file at ${historyDir}`)
+    mkdirSync(historyDir, {recursive: true})
 
     const previousJobId = await this.getPreviousJobId()
     if (!previousJobId) throw new Error('Could not determine previous job ID for downloading history artifacts')
@@ -29,23 +32,10 @@ export class GitlabArtifactsUploader extends BaseUploader {
     await this.getHistoryFromArtifacts(previousJobId)
   }
 
-  // gitlab api does not expose api to upload artifacts, all uploading is handled by gitlab ci itself
-  // upload method only outputs the report urls
-  public async upload() {
-    logger.info(
-      'Direct report uploads are not supported, ensure CI artifacts configuration includes report and history file paths',
-    )
-    this.outputReportUrls()
+  public async outputReportUrls() {
+    const urls = this.getReportUrls()
+    for (const url of urls) logger.info(`- ${url}`)
   }
-
-  // no-op: report upload should be handled by GitLab CI job
-  protected async uploadHistory() {}
-
-  // no-op: report upload should be handled by GitLab CI job
-  protected async uploadReport() {}
-
-  // no-op: Gitlab CI does not support creating latest copy
-  protected async createLatestCopy() {}
 
   // Built in variables of gitlab CI return incorrect pages hostname so it needs to be built manually
   protected reportUrlBase() {
@@ -71,11 +61,9 @@ export class GitlabArtifactsUploader extends BaseUploader {
     const base = this.reportUrlBase()
     const path = this.reportPath.replace('./', '')
     const {projectName, jobId} = this.ciInfo
-    const urls = {
-      run: [`${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${path}/index.html`],
-    }
+    const urls = [`${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${path}/index.html`]
     if (this.plugins.length > 1) {
-      urls.run.push(
+      urls.push(
         ...this.plugins.map(
           (plugin) => `${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${path}/${plugin}/index.html`,
         ),

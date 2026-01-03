@@ -2,11 +2,11 @@ import {Storage} from '@google-cloud/storage'
 import path from 'node:path'
 import pAll from 'p-all'
 
-import {config} from '../../utils/config.js'
-import {logger} from '../../utils/logger.js'
-import {BaseUploader} from './base.js'
+import {config} from '../../../utils/config.js'
+import {logger} from '../../../utils/logger.js'
+import {BaseCloudUploader} from './base.js'
 
-export class GcsUploader extends BaseUploader {
+export class GcsUploader extends BaseCloudUploader {
   private _reportUrlBase: string | undefined
   private readonly storageClient: Storage = new Storage()
 
