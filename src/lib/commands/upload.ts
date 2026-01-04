@@ -50,19 +50,16 @@ export abstract class BaseUploadCommand extends Command {
       default: false,
       description: 'Add test summary table to section in PR',
       env: 'ALLURE_SUMMARY',
-      combinable: ['update-pr'],
     }),
     'collapse-summary': Flags.boolean({
       default: false,
       description: 'Create collapsible summary section in PR',
       env: 'ALLURE_COLLAPSE_SUMMARY',
-      combinable: ['add-summary'],
     }),
     'flaky-warning-status': Flags.boolean({
       default: false,
       description: 'Mark run with ! status if flaky tests found',
       env: 'ALLURE_FLAKY_WARNING_STATUS',
-      combinable: ['update-pr'],
     }),
 
     // General flags
