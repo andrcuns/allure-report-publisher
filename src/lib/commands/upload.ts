@@ -45,7 +45,7 @@ export abstract class BaseUploadCommand extends Command {
       env: 'ALLURE_UPDATE_PR',
       options: ['comment', 'description', 'actions'],
     }),
-    summary: Flags.boolean({
+    'add-test-summary': Flags.boolean({
       default: false,
       description: 'Add test summary table to section in PR',
       env: 'ALLURE_SUMMARY',
@@ -257,7 +257,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
           buildName: ciInfo.buildName,
           shaUrl: ciInfo.buildUrl,
           summary: new ReportSummary(reportGenerator.summary(), flags['flaky-warning-status']),
-          shouldAddSummaryTable: flags.summary,
+          shouldAddSummaryTable: flags['add-test-summary'],
           shouldCollapseSummary: flags['collapse-summary'],
         })
 

@@ -119,10 +119,9 @@ jobs:
               --bucket="allure-reports" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="comment" \
-              --summary="behaviors" \
-              --summary-table-type="ascii" \
               --ci-report-title="Test Report" \
               --report-name="Test Report" \
+              --add-test-summary \
               --copy-latest \
               --color \
               --debug
