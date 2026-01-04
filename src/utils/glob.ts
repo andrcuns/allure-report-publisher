@@ -13,7 +13,7 @@ export async function globPaths(pattern: string, opts: {nodir?: boolean} = {}) {
 
 export async function getAllureResultsPaths(pattern: string, ignoreMissing?: boolean): Promise<string[]> {
   const paths = await globPaths(pattern)
-  const ignoreMention = 'Use --ignore-missing-results to exit without error if no result paths are found'
+  const ignoreMention = 'Use --ignore-missing-results to exit without error when valid results are not found'
   const raiseError = (msg: string[]) => {
     if (!ignoreMissing) msg.push(ignoreMention)
     throw new Error(msg.join('\n'))
