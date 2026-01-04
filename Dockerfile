@@ -26,15 +26,17 @@ RUN addgroup -g 1001 -S publisher && \
     adduser -u 1001 -S publisher -G publisher; \
     mkdir /app && chown publisher:publisher /app
 
+ENV PATH="$PATH:/app/bin"
+
 WORKDIR /app
 USER publisher
 
-COPY --chown=publisher:publisher ./bin/run.js ./bin/
+COPY --chown=publisher:publisher ./bin/run.js ./bin/allure-report-publisher
 COPY --chown=publisher:publisher ./package.json ./
 COPY --from=build --chown=publisher:publisher /build/dist ./dist
 COPY --from=build --chown=publisher:publisher /build/node_modules ./node_modules
 
 # Verify installation
-RUN /app/bin/run.js --version
+RUN allure-report-publisher --version
 
-ENTRYPOINT [ "/app/bin/run.js" ]
+ENTRYPOINT [ "allure-report-publisher" ]
