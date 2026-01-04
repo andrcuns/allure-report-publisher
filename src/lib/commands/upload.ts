@@ -55,7 +55,7 @@ export abstract class BaseUploadCommand extends Command {
       default: false,
       description: 'Create collapsible summary section in PR',
       env: 'ALLURE_COLLAPSE_SUMMARY',
-      dependsOn: ['update-pr', 'summary'],
+      dependsOn: ['update-pr', 'add-summary'],
     }),
     'flaky-warning-status': Flags.boolean({
       default: false,
