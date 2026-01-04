@@ -109,15 +109,13 @@ export abstract class BaseUploadCommand extends Command {
     }
 
     logger.section('Checking for allure results directories')
-    const resultPaths = await spin(
-      getAllureResultsPaths(flags['results-glob'], flags['ignore-missing-results']),
-      `scanning allure results directories`,
-      {ignoreError: flags['ignore-missing-results']},
-    )
+    const resultPaths = await getAllureResultsPaths(flags['results-glob'], flags['ignore-missing-results'])
     if (resultPaths === undefined) this.exit(0)
   }
 
   protected async getAllureResults(resultsGlob: string, ignoreMissingResults: boolean): Promise<string[] | undefined> {
+    if (this._resultPaths !== undefined) return this._resultPaths
+
     this._resultPaths = await spin(
       getAllureResultsPaths(resultsGlob, ignoreMissingResults),
       `scanning allure results directories`,
