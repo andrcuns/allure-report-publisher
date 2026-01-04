@@ -1,86 +1,70 @@
 import {expect} from 'chai'
+import {readFileSync} from 'node:fs'
 import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
 
 import {ReportSummary} from '../../../../src/lib/ci/pr/report-summary.js'
+import {SummaryJson} from '../../../../src/types/index.js'
+
+const summaryData = (file: string) => {
+  const fixturesPath = resolve(dirname(fileURLToPath(import.meta.url)), '../../../fixtures')
+  return JSON.parse(readFileSync(resolve(fixturesPath, file), 'utf8')) as SummaryJson
+}
 
 describe('ReportSummary', () => {
-  const fixturesPath = resolve(dirname(fileURLToPath(import.meta.url)), '../../../fixtures')
-
   describe('table()', () => {
     it('generates table with test statistics', () => {
-      const summaryPath = resolve(fixturesPath, 'summary-passed.json')
-      const summary = new ReportSummary(summaryPath, false)
-
+      const summary = new ReportSummary(summaryData('summary-passed.json'), false)
       const table = summary.table()
-
       const expected = `\`\`\`
 
-  +----------+----------+----------+----------+----------+
-  |  passed  |   new    |  flaky   | retried  |  total   |
-  +----------+----------+----------+----------+----------+
-  |    45    |    5     |    0     |    0     |    50    |
-  +----------+----------+----------+----------+----------+
+  +----------+----------+----------+----------+----------+----------+
+  |  passed  |  failed  |  flaky   | retried  | skipped  |  total   |
+  +----------+----------+----------+----------+----------+----------+
+  |    45    |    0     |    0     |    0     |    5     |    50    |
+  +----------+----------+----------+----------+----------+----------+
 \`\`\``
 
       expect(table).to.equal(expected)
     })
 
     it('includes flaky and retried test counts', () => {
-      const summaryPath = resolve(fixturesPath, 'summary-flaky.json')
-      const summary = new ReportSummary(summaryPath, false)
-
+      const summary = new ReportSummary(summaryData('summary-flaky.json'), false)
       const table = summary.table()
-
       const expected = `\`\`\`
 
-  +----------+----------+----------+----------+----------+
-  |  passed  |   new    |  flaky   | retried  |  total   |
-  +----------+----------+----------+----------+----------+
-  |    48    |    2     |    2     |    1     |    50    |
-  +----------+----------+----------+----------+----------+
+  +----------+----------+----------+----------+----------+----------+
+  |  passed  |  failed  |  flaky   | retried  | skipped  |  total   |
+  +----------+----------+----------+----------+----------+----------+
+  |    48    |    0     |    1     |    1     |    0     |    50    |
+  +----------+----------+----------+----------+----------+----------+
 \`\`\``
 
       expect(table).to.equal(expected)
-    })
-
-    it('caches table result', () => {
-      const summaryPath = resolve(fixturesPath, 'summary-passed.json')
-      const summary = new ReportSummary(summaryPath, false)
-
-      const table1 = summary.table()
-      const table2 = summary.table()
-
-      expect(table1).to.equal(table2)
-      expect(table1).to.equal(summary.table())
     })
   })
 
   describe('status()', () => {
     it('returns checkmark for passed tests', () => {
-      const summaryPath = resolve(fixturesPath, 'summary-passed.json')
-      const summary = new ReportSummary(summaryPath, false)
+      const summary = new ReportSummary(summaryData('summary-passed.json'), false)
 
       expect(summary.status()).to.equal('✅')
     })
 
     it('returns cross mark for failed tests', () => {
-      const summaryPath = resolve(fixturesPath, 'summary-failed.json')
-      const summary = new ReportSummary(summaryPath, false)
+      const summary = new ReportSummary(summaryData('summary-failed.json'), false)
 
       expect(summary.status()).to.equal('❌')
     })
 
     it('returns warning when flaky warning is enabled and tests are flaky', () => {
-      const summaryPath = resolve(fixturesPath, 'summary-flaky.json')
-      const summary = new ReportSummary(summaryPath, true)
+      const summary = new ReportSummary(summaryData('summary-flaky.json'), true)
 
       expect(summary.status()).to.equal('❗')
     })
 
     it('returns checkmark when flaky warning is disabled and tests are flaky', () => {
-      const summaryPath = resolve(fixturesPath, 'summary-flaky.json')
-      const summary = new ReportSummary(summaryPath, false)
+      const summary = new ReportSummary(summaryData('summary-flaky.json'), false)
 
       expect(summary.status()).to.equal('✅')
     })

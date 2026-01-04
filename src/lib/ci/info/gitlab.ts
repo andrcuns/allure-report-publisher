@@ -69,7 +69,13 @@ export class GitlabCiInfo extends BaseCiInfo {
   }
 
   public get buildName() {
-    return process.env[BaseCiInfo.ALLURE_JOB_NAME] || this.jobName
+    return (
+      process.env[BaseCiInfo.ALLURE_JOB_NAME] ||
+      this.jobName ||
+      (() => {
+        throw new Error('Build name not found in environment variables')
+      })()
+    )
   }
 
   public get jobName() {

@@ -1,47 +1,35 @@
-import {readFileSync} from 'node:fs'
 import table, {Header} from 'tty-table'
 
-interface SummaryJson {
-  flakyTests: unknown[]
-  retryTests: unknown[]
-  stats: {
-    passed: number
-    total: number
-  }
-  status: string
+import {SummaryJson} from '../../../types/index.js'
+
+type SummaryStats = {
+  passed: number
+  failed: number
+  flaky: number
+  retried: number
+  skipped: number
+  total: number
 }
 
 export class ReportSummary {
-  private readonly summaryJsonPath: string
   private readonly flakyWarningStatus: boolean
-  private _summaryData?: SummaryJson
+  private readonly summaryData: SummaryJson
+  private _testStats?: SummaryStats
   private _status?: string
   private _table?: string
 
-  constructor(summaryJsonPath: string, flakyWarningStatus: boolean) {
-    this.summaryJsonPath = summaryJsonPath
+  constructor(summaryData: SummaryJson, flakyWarningStatus: boolean) {
+    this.summaryData = summaryData
     this.flakyWarningStatus = flakyWarningStatus
   }
 
   table() {
     if (this._table) return this._table
 
-    const data = this.summaryData()
-    const newTests = data.stats.total - data.stats.passed
-    const flaky = data.flakyTests.length
-    const retried = data.retryTests.length
+    const stats = this.testStats()
+    const header: Header[] = Object.keys(stats).map((key) => ({value: key, width: 10, headerColor: ''}))
 
-    const header: Header[] = [
-      {value: 'passed', width: 10},
-      {value: 'new', width: 10},
-      {value: 'flaky', width: 10},
-      {value: 'retried', width: 10},
-      {value: 'total', width: 10},
-    ].map((h) => ({...h, headerColor: ''}))
-
-    const rows = [[data.stats.passed, newTests, flaky, retried, data.stats.total]]
-
-    const ttyTable = table(header, rows, {
+    const ttyTable = table(header, [Object.values(stats)], {
       borderStyle: 'dashed',
       compact: true,
     })
@@ -53,9 +41,10 @@ export class ReportSummary {
   status() {
     if (this._status) return this._status
 
-    const data = this.summaryData()
-    const hasFlaky = data.flakyTests.length > 0
-    const hasRetried = data.retryTests.length > 0
+    const data = this.summaryData
+    const stats = this.testStats()
+    const hasFlaky = stats.flaky > 0
+    const hasRetried = stats.retried > 0
 
     if (data.status === 'passed') {
       this._status = this.flakyWarningStatus && (hasFlaky || hasRetried) ? '❗' : '✅'
@@ -66,12 +55,18 @@ export class ReportSummary {
     return this._status
   }
 
-  private summaryData() {
-    if (this._summaryData) return this._summaryData
+  private testStats(): SummaryStats {
+    if (this._testStats) return this._testStats
 
-    const content = readFileSync(this.summaryJsonPath, 'utf8')
-    this._summaryData = JSON.parse(content) as SummaryJson
-
-    return this._summaryData
+    const data = this.summaryData
+    this._testStats = {
+      passed: data.stats.passed ?? 0,
+      failed: (data.stats.failed ?? 0) + (data.stats.broken ?? 0),
+      flaky: data.stats.flaky ?? 0,
+      retried: data.stats.retries ?? 0,
+      skipped: data.stats.skipped ?? 0,
+      total: data.stats.total ?? 0,
+    }
+    return this._testStats
   }
 }

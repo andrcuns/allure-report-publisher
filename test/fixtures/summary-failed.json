@@ -1,6 +1,4 @@
 {
-  "flakyTests": [],
-  "retryTests": [],
   "stats": {
     "passed": 30,
     "total": 50

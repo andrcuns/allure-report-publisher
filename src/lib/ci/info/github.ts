@@ -27,7 +27,13 @@ export class GithubCiInfo extends BaseCiInfo {
   }
 
   public get buildName() {
-    return process.env[BaseCiInfo.ALLURE_JOB_NAME] || process.env.GITHUB_JOB
+    return (
+      process.env[BaseCiInfo.ALLURE_JOB_NAME] ||
+      process.env.GITHUB_JOB ||
+      (() => {
+        throw new Error('Build name not found in environment variables')
+      })()
+    )
   }
 
   public get repository() {

@@ -1,33 +1,36 @@
 import {ReportSummary} from './report-summary.js'
 
-interface UrlSectionBuilderArgs {
+type UrlSectionBuilderArgs = {
   buildName: string
-  collapseSummary?: boolean
-  reportTitle?: string
   reportUrl: string
-  shaUrl: string
   summary: ReportSummary
+  shouldAddSummaryTable: boolean
+  shouldCollapseSummary?: boolean
+  reportTitle?: string
+  shaUrl?: string
 }
 
 export class UrlSectionBuilder {
   private static readonly DESCRIPTION_PATTERN = /<!-- allure -->[\s\S]+<!-- allurestop -->/
   private static readonly JOBS_PATTERN = /<!-- jobs -->(?<jobs>[\s\S]+)<!-- jobs -->/
   private readonly buildName: string
-  private readonly collapseSummary: boolean
+  private readonly shouldAddSummaryTable: boolean
+  private readonly shouldCollapseSummary: boolean
   private readonly reportTitle: string
   private readonly reportUrl: string
-  private readonly shaUrl: string
   private readonly summary: ReportSummary
+  private readonly shaUrl?: string
   private _heading?: string
   private _jobEntry?: string
   private _jobEntryPattern?: RegExp
 
   constructor(args: UrlSectionBuilderArgs) {
     this.reportUrl = args.reportUrl
-    this.summary = args.summary
     this.buildName = args.buildName
+    this.summary = args.summary
     this.shaUrl = args.shaUrl
-    this.collapseSummary = args.collapseSummary || false
+    this.shouldAddSummaryTable = args.shouldAddSummaryTable
+    this.shouldCollapseSummary = args.shouldCollapseSummary || false
     this.reportTitle = args.reportTitle || '📝 Test Report'
   }
 
@@ -83,24 +86,19 @@ export class UrlSectionBuilder {
 
     entry.push(
       `<!-- ${this.buildName} -->`,
-      `**${this.buildName}**: ${status} [test report](${this.reportUrl}) for ${this.shaUrl}`,
+      `**${this.buildName}**: ${status} [test report](${this.reportUrl})${this.shaUrl ? ` for ${this.shaUrl}` : ''}`,
     )
-
-    if (this.collapseSummary) {
-      entry.push('<details>', '<summary>expand test summary</summary>\n')
-    }
-
-    const table = this.summary.table()
-    entry.push(table)
-
-    if (this.collapseSummary) {
-      entry.push('</details>')
-    }
-
+    if (this.shouldAddSummaryTable) this.addSummaryTable(entry)
     entry.push(`<!-- ${this.buildName} -->`)
 
     this._jobEntry = entry.join('\n')
     return this._jobEntry
+  }
+
+  private addSummaryTable(entry: string[]) {
+    if (this.shouldCollapseSummary) entry.push('<details>', '<summary>expand test summary</summary>\n')
+    if (this.shouldAddSummaryTable) entry.push(this.summary.table())
+    if (this.shouldCollapseSummary) entry.push('</details>')
   }
 
   private jobEntryPattern(): RegExp {
@@ -119,15 +117,15 @@ export class UrlSectionBuilder {
 
     const parts = [
       '<!-- allure -->',
-      separator ? '\n---\n' : '\n',
+      separator ? '---' : undefined,
       this.heading(),
-      '\n\n<!-- jobs -->',
+      '<!-- jobs -->',
       jobEntries,
       '<!-- jobs -->',
       '<!-- allurestop -->',
     ]
 
-    return parts.join('\n').trim()
+    return parts.filter(Boolean).join('\n').trim()
   }
 
   private jobsSection(body: string) {

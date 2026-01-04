@@ -9,6 +9,8 @@ import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 import {getAllureConfig} from '../allure/config.js'
 import {ReportGenerator} from '../allure/report-generator.js'
+import {ReportSummary} from '../ci/pr/report-summary.js'
+import {UrlSectionBuilder} from '../ci/pr/url-section-builder.js'
 import {ciInfo, isCI, isPR} from '../ci/utils.js'
 import {BaseCloudUploader} from '../uploader/cloud/base.js'
 
@@ -38,32 +40,28 @@ export abstract class BaseUploadCommand extends Command {
       description: 'Title for PR comment/description section',
       env: 'ALLURE_CI_REPORT_TITLE',
     }),
-    summary: Flags.string({
-      default: 'total',
-      description: 'Add test summary table to PR',
-      env: 'ALLURE_SUMMARY',
-      options: ['behaviors', 'suites', 'packages', 'total'],
-    }),
-    'summary-table-type': Flags.string({
-      default: 'ascii',
-      description: 'Summary table format',
-      env: 'ALLURE_SUMMARY_TABLE_TYPE',
-      options: ['ascii', 'markdown'],
-    }),
     'update-pr': Flags.string({
       description: 'Update PR with a section containing the report URL',
       env: 'ALLURE_UPDATE_PR',
       options: ['comment', 'description', 'actions'],
     }),
+    summary: Flags.boolean({
+      default: false,
+      description: 'Add test summary table to section in PR',
+      env: 'ALLURE_SUMMARY',
+      dependsOn: ['update-pr'],
+    }),
     'collapse-summary': Flags.boolean({
       default: false,
       description: 'Create collapsible summary section in PR',
       env: 'ALLURE_COLLAPSE_SUMMARY',
+      dependsOn: ['update-pr', 'summary'],
     }),
     'flaky-warning-status': Flags.boolean({
       default: false,
       description: 'Mark run with ! status if flaky tests found',
       env: 'ALLURE_FLAKY_WARNING_STATUS',
+      dependsOn: ['update-pr'],
     }),
 
     // General flags
@@ -247,15 +245,23 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
         await spin(this.createExecutorJson(uploader.reportUrl()), 'creating executor.json files')
       }
 
-      await new ReportGenerator(allureConfig).execute()
+      const reportGenerator = new ReportGenerator(allureConfig)
+      await reportGenerator.execute()
 
       logger.section(`Uploading report to ${this.storageType}`)
       await uploader.upload()
 
-      // TODO: Update PR if requested
-      if (isPR && flags['update-pr']) {
-        logger.section('Updating PR/MR')
-        logger.info('PR update not yet implemented')
+      if (ciInfo && isPR && flags['update-pr']) {
+        const urlSectionBuilder = new UrlSectionBuilder({
+          reportUrl: uploader.reportUrl(),
+          buildName: ciInfo.buildName,
+          shaUrl: ciInfo.buildUrl,
+          summary: new ReportSummary(reportGenerator.summary(), flags['flaky-warning-status']),
+          shouldAddSummaryTable: flags.summary,
+          shouldCollapseSummary: flags['collapse-summary'],
+        })
+
+        console.log(urlSectionBuilder.commentBody())
       }
     } catch (error) {
       this.error(error as Error, {exit: 1})
