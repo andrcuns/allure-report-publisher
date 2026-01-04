@@ -9,6 +9,7 @@ import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 import {getAllureConfig} from '../allure/config.js'
 import {ReportGenerator} from '../allure/report-generator.js'
+import {GitlabCiInfo} from '../ci/info/gitlab.js'
 import {ReportSummary} from '../ci/pr/report-summary.js'
 import {UrlSectionBuilder} from '../ci/pr/url-section-builder.js'
 import {ciInfo, isCI, isPR} from '../ci/utils.js'
@@ -49,19 +50,19 @@ export abstract class BaseUploadCommand extends Command {
       default: false,
       description: 'Add test summary table to section in PR',
       env: 'ALLURE_SUMMARY',
-      dependsOn: ['update-pr'],
+      combinable: ['update-pr'],
     }),
     'collapse-summary': Flags.boolean({
       default: false,
       description: 'Create collapsible summary section in PR',
       env: 'ALLURE_COLLAPSE_SUMMARY',
-      dependsOn: ['update-pr', 'add-summary'],
+      combinable: ['add-summary'],
     }),
     'flaky-warning-status': Flags.boolean({
       default: false,
       description: 'Mark run with ! status if flaky tests found',
       env: 'ALLURE_FLAKY_WARNING_STATUS',
-      dependsOn: ['update-pr'],
+      combinable: ['update-pr'],
     }),
 
     // General flags
@@ -252,6 +253,8 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
       await uploader.upload()
 
       if (ciInfo && isPR && flags['update-pr']) {
+        const term = ciInfo instanceof GitlabCiInfo ? 'MR' : 'PR'
+        logger.section(`Updating ${term}`)
         const urlSectionBuilder = new UrlSectionBuilder({
           reportUrl: uploader.reportUrl(),
           buildName: ciInfo.buildName,
@@ -260,6 +263,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
           shouldAddSummaryTable: flags['add-summary'],
           shouldCollapseSummary: flags['collapse-summary'],
         })
+        logger.flushDebug()
 
         console.log(urlSectionBuilder.commentBody())
       }

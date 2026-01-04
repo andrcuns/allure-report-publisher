@@ -23,9 +23,11 @@ export class ReportGenerator {
   public summary() {
     if (!this._generatedFiles) throw new Error('Report has not been generated yet')
 
+    logger.debug('Reading summary.json from generated report files')
     const summaryFile = this._generatedFiles.find((file) => file.endsWith('summary.json'))
     if (!summaryFile) throw new Error('summary.json file not found in generated report files')
 
+    logger.debug(`Found summary.json at path: ${summaryFile}`)
     return JSON.parse(readFileSync(summaryFile, 'utf8')) as SummaryJson
   }
 
