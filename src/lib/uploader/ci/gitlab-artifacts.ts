@@ -12,6 +12,7 @@ export class GitlabArtifactsUploader {
   private readonly historyPath: string
   private readonly reportPath: string
   private readonly plugins: string[]
+  private _reportUrls: string[] | undefined
 
   constructor(opts: {historyPath: string; reportPath: string; plugins: string[]}) {
     this.historyPath = opts.historyPath
@@ -37,6 +38,11 @@ export class GitlabArtifactsUploader {
     for (const url of urls) logger.info(`- ${url}`)
   }
 
+  public reportUrl() {
+    const urls = this.getReportUrls()
+    return urls[0]
+  }
+
   // Built in variables of gitlab CI return incorrect pages hostname so it needs to be built manually
   protected reportUrlBase() {
     const {projectPath, serverUrl, pagesDomain} = this.ciInfo
@@ -58,6 +64,8 @@ export class GitlabArtifactsUploader {
   }
 
   protected getReportUrls() {
+    if (this._reportUrls !== undefined) return this._reportUrls
+
     const base = this.reportUrlBase()
     const path = this.reportPath.replace('./', '')
     const {projectName, jobId} = this.ciInfo
@@ -70,6 +78,7 @@ export class GitlabArtifactsUploader {
       )
     }
 
+    this._reportUrls = urls
     return urls
   }
 

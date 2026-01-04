@@ -20,6 +20,7 @@ export abstract class BaseCloudUploader {
   protected readonly baseUrl: string | undefined
   private _runId: string | undefined
   private _reportFiles: string[] | undefined
+  private _reportUrls: undefined | {run: string[]; latest?: string[]}
 
   constructor(opts: {
     bucket: string
@@ -70,13 +71,15 @@ export abstract class BaseCloudUploader {
     this.outputReportUrls()
   }
 
+  public reportUrl() {
+    const urls = this.getReportUrls()
+    return urls.run[0]
+  }
+
   protected async getReportFiles() {
     if (this._reportFiles) return this._reportFiles
 
-    this._reportFiles = (
-      await Promise.all(this.plugins.map(() => globPaths(`${this.reportPath}/**/*`, {nodir: true})))
-    ).flat()
-
+    this._reportFiles = await globPaths(`${this.reportPath}/**/*`, {nodir: true})
     return this._reportFiles
   }
 
@@ -117,6 +120,8 @@ export abstract class BaseCloudUploader {
   }
 
   protected getReportUrls(): {run: string[]; latest?: string[]} {
+    if (this._reportUrls) return this._reportUrls
+
     const urls = {
       run: [`${this.reportUrlBase()}/${this.runId}/index.html`],
       latest: [`${this.reportUrlBase()}/latest/index.html`],
@@ -127,6 +132,7 @@ export abstract class BaseCloudUploader {
       urls.latest.push(...this.plugins.map((plugin) => `${this.reportUrlBase()}/latest/${plugin}/index.html`))
     }
 
+    this._reportUrls = urls
     return urls
   }
 }

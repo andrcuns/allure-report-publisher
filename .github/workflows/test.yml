@@ -115,6 +115,7 @@ jobs:
             publisher:latest \
             upload s3 \
               --results-glob="/workspace/reports/allure-results" \
+              --config="/workspace/allurerc.json" \
               --bucket="allure-reports" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="comment" \

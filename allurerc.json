@@ -10,7 +10,14 @@
     },
     "classic": {
       "options": {
-        "enabled": true
+        "enabled": true,
+        "singleFile": true
+      }
+    },
+    "allure2": {
+      "options": {
+        "enabled": true,
+        "singleFile": true
       }
     }
   }

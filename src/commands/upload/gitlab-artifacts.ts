@@ -2,6 +2,7 @@ import {getAllureConfig} from '../../lib/allure/config.js'
 import {ReportGenerator} from '../../lib/allure/report-generator.js'
 import {BaseUploadCommand} from '../../lib/commands/upload.js'
 import {GitlabArtifactsUploader} from '../../lib/uploader/ci/gitlab-artifacts.js'
+import {isCi} from '../../utils/ci.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 
@@ -25,7 +26,14 @@ export default class GitlabArtifacts extends BaseUploadCommand {
         historyPath: await allureConfig.historyPath(),
         plugins: await allureConfig.plugins(),
       })
+
       await spin(uploader.downloadHistory(), 'downloading previous run history', {ignoreError: true})
+
+      // legacy executor.json for allure2 plugin
+      if (isCi && (await allureConfig.plugins()).includes('allure2')) {
+        await spin(this.createExecutorJson(uploader.reportUrl()), 'creating executor.json files')
+      }
+
       await new ReportGenerator(allureConfig).execute()
 
       logger.section(`Report URLs`)

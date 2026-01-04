@@ -1,6 +1,19 @@
 import {BaseCiInfo} from './base.js'
 
 export class GithubCiInfo extends BaseCiInfo {
+  public executorJson(reportUrl: string): Record<string, string | undefined> {
+    return {
+      name: 'GitHub',
+      type: 'github',
+      reportName: 'AllureReport',
+      reportUrl,
+      url: this.serverUrl,
+      buildUrl: this.buildUrl,
+      buildOrder: this.runId,
+      buildName: this.buildName,
+    }
+  }
+
   public get pr() {
     return process.env.GITHUB_EVENT_NAME === 'pull_request'
   }
