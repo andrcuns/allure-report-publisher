@@ -121,7 +121,7 @@ jobs:
               --update-pr="comment" \
               --ci-report-title="Test Report" \
               --report-name="Test Report" \
-              --add-test-summary \
+              --add-summary \
               --copy-latest \
               --color \
               --debug
