@@ -1,0 +1,20 @@
+{
+  "flakyTests": [
+    {
+      "id": "test1"
+    },
+    {
+      "id": "test2"
+    }
+  ],
+  "retryTests": [
+    {
+      "id": "test3"
+    }
+  ],
+  "stats": {
+    "passed": 48,
+    "total": 50
+  },
+  "status": "passed"
+}

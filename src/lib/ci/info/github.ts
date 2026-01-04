@@ -14,7 +14,7 @@ export class GithubCiInfo extends BaseCiInfo {
     }
   }
 
-  public get pr() {
+  public get isPR() {
     return process.env.GITHUB_EVENT_NAME === 'pull_request'
   }
 

@@ -1,7 +1,7 @@
 import yoctoSpinner, {Spinner} from 'yocto-spinner'
 
-import {isCi} from './ci.js'
-import {config} from './config.js'
+import {isCI} from '../lib/ci/utils.js'
+import {config} from './global-config.js'
 import {chalk, logger} from './logger.js'
 
 function flushDebug(): void {
@@ -50,7 +50,7 @@ export async function spin<T>(
   options: {ignoreError?: boolean} = {},
 ): Promise<T | undefined> {
   // Disable spinner by default on CI environments
-  const silent = isCi || process.stdout.isTTY === false
+  const silent = isCI || process.stdout.isTTY === false
   const spinner = yoctoSpinner({text: message})
   if (!silent) spinner.start()
 

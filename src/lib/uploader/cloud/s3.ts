@@ -11,7 +11,7 @@ import {readFileSync, writeFileSync} from 'node:fs'
 import path from 'node:path'
 import pAll from 'p-all'
 
-import {config} from '../../../utils/config.js'
+import {config} from '../../../utils/global-config.js'
 import {logger} from '../../../utils/logger.js'
 import {BaseCloudUploader} from './base.js'
 

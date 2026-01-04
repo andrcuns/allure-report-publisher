@@ -16,7 +16,7 @@ export class GitlabCiInfo extends BaseCiInfo {
     }
   }
 
-  public get pr() {
+  public get isPR() {
     return Boolean((this.allureProject && this.allureMrIid) || this.mrIid)
   }
 

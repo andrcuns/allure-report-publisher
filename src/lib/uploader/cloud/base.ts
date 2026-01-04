@@ -2,12 +2,12 @@
 import {mkdirSync, readFileSync} from 'node:fs'
 import path from 'node:path'
 
-import {ciInfo} from '../../../utils/ci.js'
 import {globPaths} from '../../../utils/glob.js'
 import {chalk, logger} from '../../../utils/logger.js'
 import {spin} from '../../../utils/spinner.js'
 import {GithubCiInfo} from '../../ci/info/github.js'
 import {GitlabCiInfo} from '../../ci/info/gitlab.js'
+import {ciInfo} from '../../ci/utils.js'
 
 export abstract class BaseCloudUploader {
   protected copyLatest: boolean

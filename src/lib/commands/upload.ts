@@ -3,13 +3,13 @@ import {InferredFlags} from '@oclif/core/interfaces'
 import {existsSync, writeFileSync} from 'node:fs'
 import path from 'node:path'
 
-import {ciInfo, isCi} from '../../utils/ci.js'
-import {config} from '../../utils/config.js'
 import {getAllureResultsPaths} from '../../utils/glob.js'
+import {config} from '../../utils/global-config.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 import {getAllureConfig} from '../allure/config.js'
 import {ReportGenerator} from '../allure/report-generator.js'
+import {ciInfo, isCI, isPR} from '../ci/utils.js'
 import {BaseCloudUploader} from '../uploader/cloud/base.js'
 
 export abstract class BaseUploadCommand extends Command {
@@ -243,7 +243,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
       await spin(uploader.downloadHistory(), 'downloading previous run history', {ignoreError: true})
 
       // legacy executor.json for allure2 plugin
-      if (isCi && (await allureConfig.plugins()).includes('allure2')) {
+      if (isCI && (await allureConfig.plugins()).includes('allure2')) {
         await spin(this.createExecutorJson(uploader.reportUrl()), 'creating executor.json files')
       }
 
@@ -253,7 +253,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
       await uploader.upload()
 
       // TODO: Update PR if requested
-      if (flags['update-pr']) {
+      if (isPR && flags['update-pr']) {
         logger.section('Updating PR/MR')
         logger.info('PR update not yet implemented')
       }
