@@ -110,7 +110,7 @@ jobs:
             -e AWS_FORCE_PATH_STYLE="true" \
             -e AWS_ACCESS_KEY_ID="minioadmin" \
             -e AWS_SECRET_ACCESS_KEY="minioadmin" \
-            -e ALLURE_JOB_NAME="rspec" \
+            -e ALLURE_JOB_NAME="e2e-upload-tests" \
             --network allure \
             publisher:latest \
             upload s3 \
