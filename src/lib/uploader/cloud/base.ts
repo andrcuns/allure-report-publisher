@@ -68,7 +68,18 @@ export abstract class BaseCloudUploader {
     await spin(this.uploadHistory(), 'uploading history file')
     await spin(this.uploadReport(), 'uploading report files')
     if (this.copyLatest) await spin(this.createLatestCopy(), 'creating latest report copy')
-    this.outputReportUrls()
+  }
+
+  public outputReportUrls() {
+    const urls = this.getReportUrls()
+
+    logger.info('current run urls:')
+    urls.run.forEach((url) => console.log(`- ${chalk().blue(url)}`))
+
+    if (this.copyLatest && urls.latest) {
+      logger.info('latest report urls:')
+      urls.latest.forEach((url) => console.log(`- ${chalk().blue(url)}`))
+    }
   }
 
   public reportUrl() {
@@ -104,19 +115,6 @@ export abstract class BaseCloudUploader {
       .filter(Boolean)
       .map((c) => c?.replace(/\/$/, ''))
       .join('/')
-  }
-
-  protected outputReportUrls() {
-    logger.section('Report URLs')
-    const urls = this.getReportUrls()
-
-    logger.info('current run urls:')
-    urls.run.forEach((url) => console.log(`- ${chalk().blue(url)}`))
-
-    if (this.copyLatest && urls.latest) {
-      logger.info('latest report urls:')
-      urls.latest.forEach((url) => console.log(`- ${chalk().blue(url)}`))
-    }
   }
 
   protected getReportUrls(): {run: string[]; latest?: string[]} {

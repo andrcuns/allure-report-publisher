@@ -264,6 +264,9 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
 
         console.log(urlSectionBuilder.commentBody())
       }
+
+      logger.section('Report URLs')
+      uploader.outputReportUrls()
     } catch (error) {
       this.error(error as Error, {exit: 1})
     }
