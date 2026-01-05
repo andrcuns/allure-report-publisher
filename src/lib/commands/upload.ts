@@ -259,6 +259,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
           summary: new ReportSummary(reportGenerator.summary(), flags['flaky-warning-status']),
           shouldAddSummaryTable: flags['add-summary'],
           shouldCollapseSummary: flags['collapse-summary'],
+          reportTitle: flags['ci-report-title'],
         })
         await ciProvider(urlSectionBuilder, updateMode)?.addReportSection()
       }
