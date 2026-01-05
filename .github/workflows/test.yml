@@ -119,7 +119,7 @@ jobs:
               --bucket="allure-reports" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="comment" \
-              --ci-report-title="Unit Test Results" \
+              --ci-report-title="Unit Test Report" \
               --report-name="Unit Test Report" \
               --add-summary \
               --collapse-summary \
