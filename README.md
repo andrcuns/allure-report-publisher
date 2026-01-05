@@ -175,9 +175,9 @@ Requires environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` or c
 
 Additional configuration:
 
-- `AWS_REGION`: configure s3 region, default: `us-east-1`
-- `AWS_FORCE_PATH_STYLE`: when set to true, the bucket name is always left in the request URI and never moved to the host as a sub-domain, default: `false`
-- `AWS_ENDPOINT`: custom s3 endpoint when used with other s3 compatible storage
+* `AWS_REGION`: configure s3 region, default: `us-east-1`
+* `AWS_FORCE_PATH_STYLE`: when set to true, the bucket name is always left in the request URI and never moved to the host as a sub-domain, default: `false`
+* `AWS_ENDPOINT`: custom s3 endpoint when used with other s3 compatible storage
 
 ## Google Cloud Storage
 
@@ -206,14 +206,14 @@ This provider is meant to be used with [GitLab CI](#gitlab-ci).
 
 Following CI providers are supported:
 
-- Github Actions
-- Gitlab CI
+* Github Actions
+* Gitlab CI
 
 ## Pull requests
 
 It is possible to update pull requests with urls to published reports and execution summary.
 
-- `--update-pr=(comment|description|actions)`: post report urls in pr description, as a comment or step summary for github actions
+* `--update-pr=(comment|description|actions)`: post report urls in pr description, as a comment or step summary for github actions
 
 Example:
 
@@ -241,12 +241,12 @@ Additional configuration is done via environment variables
 
 Authentication for PR updates:
 
-- `GITHUB_AUTH_TOKEN`: github auth token with api access
+* `GITHUB_AUTH_TOKEN`: github auth token with api access
 
 Following environment variables can override default CI values:
 
-- `ALLURE_JOB_NAME`: overrides default `GITHUB_JOB` value which is used as name for report url section
-- `ALLURE_RUN_ID`: overrides default `GITHUB_RUN_ID` value which is used as name for the run number
+* `ALLURE_JOB_NAME`: overrides default `GITHUB_JOB` value which is used as name for report url section
+* `ALLURE_RUN_ID`: overrides default `GITHUB_RUN_ID` value which is used as name for the run number
 
 ### allure-publish-action
 
@@ -260,26 +260,20 @@ Additional configuration is done via environment variables
 
 Authentication for MR updates:
 
-- `GITLAB_AUTH_TOKEN`: gitlab access token with api access
+* `GITLAB_AUTH_TOKEN`: gitlab access token with api access
 
 ### CI values
 
 Following environment variables can override default CI values:
 
-- `ALLURE_JOB_NAME`: overrides default `CI_JOB_NAME` value which is used as name for report url section
-- `ALLURE_RUN_ID`: overrides default `CI_PIPELINE_ID` value which is used as name for the run number
+* `ALLURE_JOB_NAME`: overrides default `CI_JOB_NAME` value which is used as name for report url section
+* `ALLURE_RUN_ID`: overrides default `CI_PIPELINE_ID` value which is used as name for the run number
 
 In case merge request triggers a downstream pipeline yet you want to update original merge request, overriding following environment variables might be useful:
 
-- `ALLURE_PROJECT_PATH`: overrides default `CI_PROJECT_PATH` value
-- `ALLURE_MERGE_REQUEST_IID`: overrides default `CI_MERGE_REQUEST_IID` value
-- `ALLURE_COMMIT_SHA`: overrides default `CI_MERGE_REQUEST_SOURCE_BRANCH_SHA` or `CI_COMMIT_SHA` values
-
-### Summary comment behavior
-
-If reporter is executed with options `--update-pr=comment` and `--unresolved-discussion-on-failure`, it's possible to additionally configure the unresolved discussion note:
-
-- `ALLURE_FAILURE_ALERT_COMMENT`: comment added to create unresolved discussion note, default: `There are some test failures that need attention`
+* `ALLURE_PROJECT_PATH`: overrides default `CI_PROJECT_PATH` value
+* `ALLURE_MERGE_REQUEST_IID`: overrides default `CI_MERGE_REQUEST_IID` value
+* `ALLURE_COMMIT_SHA`: overrides default `CI_MERGE_REQUEST_SOURCE_BRANCH_SHA` or `CI_COMMIT_SHA` values
 
 ### CI/CD catalog resource
 
