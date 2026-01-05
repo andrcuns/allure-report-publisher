@@ -35,8 +35,8 @@ Generate and upload allure report to gcs bucket
 ```
 USAGE
   $ allure-report-publisher upload gcs -b <value> [-r <value>] [-c <value>] [--report-name <value>]
-    [--ci-report-title <value>] [--add-summary --update-pr comment|description|actions] [--collapse-summary  ]
-    [--flaky-warning-status ] [--color] [--debug] [--ignore-missing-results] [-p <value>] [--base-url <value>]
+    [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary] [--collapse-summary]
+    [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results] [-p <value>] [--base-url <value>]
     [--copy-latest] [--parallel <value>]
 
 FLAGS
@@ -80,7 +80,7 @@ Generate report and output GitLab CI artifacts links
 ```
 USAGE
   $ allure-report-publisher upload gitlab-artifacts [-r <value>] [-c <value>] [--report-name <value>] [--ci-report-title
-    <value>] [--add-summary --update-pr comment|description|actions] [--collapse-summary  ] [--flaky-warning-status ]
+    <value>] [--update-pr comment|description|actions] [--add-summary] [--collapse-summary] [--flaky-warning-status]
     [--color] [--debug] [--ignore-missing-results]
 
 FLAGS
@@ -114,8 +114,8 @@ Generate and upload allure report to s3 bucket
 ```
 USAGE
   $ allure-report-publisher upload s3 -b <value> [-r <value>] [-c <value>] [--report-name <value>]
-    [--ci-report-title <value>] [--add-summary --update-pr comment|description|actions] [--collapse-summary  ]
-    [--flaky-warning-status ] [--color] [--debug] [--ignore-missing-results] [-p <value>] [--base-url <value>]
+    [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary] [--collapse-summary]
+    [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results] [-p <value>] [--base-url <value>]
     [--copy-latest] [--parallel <value>]
 
 FLAGS
@@ -214,9 +214,6 @@ Following CI providers are supported:
 It is possible to update pull requests with urls to published reports and execution summary.
 
 - `--update-pr=(comment|description|actions)`: post report urls in pr description, as a comment or step summary for github actions
-- `--summary=(behaviors|suites|packages|total)`: add execution summary table
-- `--summary-table-type=(ascii|markdown)`: use markdown or ascii table formatting
-- `--[no-]collapse-summary`: add summary in collapsable section
 
 Example:
 
@@ -226,16 +223,14 @@ Example:
 
 `allure-report-publisher` generated test report!
 
-**rspec**: ✅ [test report](https://storage.googleapis.com/allure-test-reports/allure-report-publisher/refs/heads/main/index.html) for [1b756f48](https://github.com/andrcuns/allure-report-publisher/commit/HEAD)
+**test**: ✅ [test report](https://storage.googleapis.com/allure-test-reports/allure-report-publisher/refs/heads/main/index.html) for [1b756f48](https://github.com/andrcuns/allure-report-publisher/commit/HEAD)
 
-```markdown
-+--------------------------------------------------------+
-|                   total summary                        |
-+-----------+--------+--------+---------+-------+--------+
-|           | passed | failed | skipped | flaky | result |
-+-----------+--------+--------+---------+-------+--------+
-| Total     | 100    | 0      | 2       | 0     | ✅     |
-+-----------+--------+--------+---------+-------+--------+
+```console
+  +----------+----------+----------+----------+----------+----------+
+  |  passed  |  failed  |  flaky   | retried  | skipped  |  total   |
+  +----------+----------+----------+----------+----------+----------+
+  |    69    |    0     |    0     |    0     |    0     |    69    |
+  +----------+----------+----------+----------+----------+----------+
 ```
 
 ---
