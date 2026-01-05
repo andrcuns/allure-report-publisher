@@ -34,7 +34,7 @@ export class ReportSummary {
       compact: true,
     })
 
-    this._table = `\`\`\`\n${ttyTable.render()}\n\`\`\``
+    this._table = `\`\`\`console${ttyTable.render()}\n\`\`\``
     return this._table
   }
 

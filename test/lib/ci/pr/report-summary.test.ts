@@ -1,4 +1,5 @@
 import {expect} from 'chai'
+import dedent from 'dedent'
 import {readFileSync} from 'node:fs'
 import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
@@ -16,14 +17,14 @@ describe('ReportSummary', () => {
     it('generates table with test statistics', () => {
       const summary = new ReportSummary(summaryData('summary-passed.json'), false)
       const table = summary.table()
-      const expected = `\`\`\`
-
-  +----------+----------+----------+----------+----------+----------+
-  |  passed  |  failed  |  flaky   | retried  | skipped  |  total   |
-  +----------+----------+----------+----------+----------+----------+
-  |    45    |    0     |    0     |    0     |    5     |    50    |
-  +----------+----------+----------+----------+----------+----------+
-\`\`\``
+      const expected = dedent`
+      \`\`\`console
+        +----------+----------+----------+----------+----------+----------+
+        |  passed  |  failed  |  flaky   | retried  | skipped  |  total   |
+        +----------+----------+----------+----------+----------+----------+
+        |    45    |    0     |    0     |    0     |    5     |    50    |
+        +----------+----------+----------+----------+----------+----------+
+      \`\`\``
 
       expect(table).to.equal(expected)
     })
@@ -31,14 +32,14 @@ describe('ReportSummary', () => {
     it('includes flaky and retried test counts', () => {
       const summary = new ReportSummary(summaryData('summary-flaky.json'), false)
       const table = summary.table()
-      const expected = `\`\`\`
-
-  +----------+----------+----------+----------+----------+----------+
-  |  passed  |  failed  |  flaky   | retried  | skipped  |  total   |
-  +----------+----------+----------+----------+----------+----------+
-  |    48    |    0     |    1     |    1     |    0     |    50    |
-  +----------+----------+----------+----------+----------+----------+
-\`\`\``
+      const expected = dedent`
+      \`\`\`console
+        +----------+----------+----------+----------+----------+----------+
+        |  passed  |  failed  |  flaky   | retried  | skipped  |  total   |
+        +----------+----------+----------+----------+----------+----------+
+        |    48    |    0     |    1     |    1     |    0     |    50    |
+        +----------+----------+----------+----------+----------+----------+
+      \`\`\``
 
       expect(table).to.equal(expected)
     })
