@@ -122,6 +122,7 @@ jobs:
               --ci-report-title="Test Report" \
               --report-name="Test Report" \
               --add-summary \
+              --collapse-summary \
               --copy-latest \
               --color \
               --debug
