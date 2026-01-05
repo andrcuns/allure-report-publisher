@@ -33,7 +33,7 @@ export class GitlabArtifactsUploader {
     await this.getHistoryFromArtifacts(previousJobId)
   }
 
-  public async outputReportUrls() {
+  public outputReportUrls() {
     const urls = this.getReportUrls()
     for (const url of urls) logger.info(`- ${url}`)
   }

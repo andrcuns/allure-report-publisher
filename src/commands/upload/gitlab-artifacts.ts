@@ -42,9 +42,6 @@ export default class GitlabArtifacts extends BaseUploadCommand {
       const reportGenerator = new ReportGenerator(allureConfig)
       await reportGenerator.execute()
 
-      logger.section(`Report URLs`)
-      await uploader.outputReportUrls()
-
       if (ciInfo && isPR && updateMode) {
         await createReportSection({
           reportUrl: uploader.reportUrl(),
@@ -57,6 +54,9 @@ export default class GitlabArtifacts extends BaseUploadCommand {
           updateMode,
         })
       }
+
+      logger.section(`Report URLs`)
+      uploader.outputReportUrls()
     } catch (error) {
       this.error(error as Error, {exit: 1})
     }
