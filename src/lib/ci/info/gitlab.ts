@@ -66,7 +66,10 @@ export class GitlabCiInfo extends BaseCiInfo {
   }
 
   public get mrIid() {
-    return Number(this.allureMrIid || process.env.CI_MERGE_REQUEST_IID)
+    const rawIid = this.allureMrIid || process.env.CI_MERGE_REQUEST_IID
+    const iid = Number(rawIid)
+
+    return Number.isNaN(iid) ? undefined : iid
   }
 
   public get allureMrIid() {
