@@ -52,7 +52,7 @@ jobs:
         if: always()
         with:
           name: allure-reports-${{ matrix.node }}
-          path: reports/allure-results/
+          path: tmp/allure-results/
           retention-days: 1
 
   s3:
@@ -77,7 +77,7 @@ jobs:
       - name: Download allure reports
         uses: actions/download-artifact@v7
         with:
-          path: reports/allure-results
+          path: tmp/allure-results
       - name: Set up Minio
         run: |
           mkdir -p minio/allure-reports
@@ -114,7 +114,7 @@ jobs:
             --network allure \
             publisher:latest \
             upload s3 \
-              --results-glob="/workspace/reports/allure-results/*" \
+              --results-glob="/workspace/tmp/allure-results/*" \
               --config="/workspace/allurerc.mjs" \
               --bucket="allure-reports" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
