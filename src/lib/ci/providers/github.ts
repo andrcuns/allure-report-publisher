@@ -15,7 +15,7 @@ export class GithubCiProvider extends BaseCiProvider {
   private readonly ciInfo = new GithubCiInfo()
   private readonly client = githubClient
 
-  protected async performUpdate() {
+  public async addReportSection() {
     if (this.isActionsType) return writeFileSync(this.stepSummaryFile(), this.urlSectionBuilder.commentBody())
     return this.updateMode === 'description' ? this.updatePrDescription() : this.updateComment()
   }
@@ -34,7 +34,7 @@ export class GithubCiProvider extends BaseCiProvider {
 
   private async updatePrDescription() {
     const prDescription = await this.getPrDescription()
-    const updatedDescription = this.urlSectionBuilder.updatedPrDescription(prDescription)
+    const updatedDescription = this.urlSectionBuilder.updatedDescription(prDescription)
 
     logger.debug(`Updating PR description for pr '${this.ciInfo.prId}'`)
     await this.client.rest.pulls.update({

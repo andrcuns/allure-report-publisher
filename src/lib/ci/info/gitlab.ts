@@ -1,3 +1,4 @@
+import {GitlabCiProvider} from '../providers/gitlab.js'
 import {BaseCiInfo} from './base.js'
 
 export class GitlabCiInfo extends BaseCiInfo {
@@ -14,6 +15,10 @@ export class GitlabCiInfo extends BaseCiInfo {
       buildOrder: this.runId,
       buildName: this.buildName,
     }
+  }
+
+  public get CiProviderClass() {
+    return GitlabCiProvider
   }
 
   public get isPR() {
@@ -61,7 +66,10 @@ export class GitlabCiInfo extends BaseCiInfo {
   }
 
   public get mrIid() {
-    return this.allureMrIid || process.env.CI_MERGE_REQUEST_IID
+    const rawIid = this.allureMrIid || process.env.CI_MERGE_REQUEST_IID
+    const iid = Number(rawIid)
+
+    return Number.isNaN(iid) ? undefined : iid
   }
 
   public get allureMrIid() {

@@ -40,7 +40,7 @@ export class UrlSectionBuilder {
     return this.DESCRIPTION_PATTERN.test(urlsBlock)
   }
 
-  updatedPrDescription(prDescription?: string) {
+  updatedDescription(prDescription?: string) {
     const strippedDescription = (prDescription || '').trim()
 
     if (strippedDescription === '') {

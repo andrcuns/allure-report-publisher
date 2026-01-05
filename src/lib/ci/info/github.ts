@@ -1,5 +1,6 @@
 import {readFileSync} from 'node:fs'
 
+import {GithubCiProvider} from '../providers/github.js'
 import {BaseCiInfo} from './base.js'
 
 type GitHubEvent = {
@@ -25,6 +26,10 @@ export class GithubCiInfo extends BaseCiInfo {
       buildOrder: this.runId,
       buildName: this.buildName,
     }
+  }
+
+  public get CiProviderClass() {
+    return GithubCiProvider
   }
 
   public get isPR() {

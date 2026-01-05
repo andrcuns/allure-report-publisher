@@ -10,10 +10,8 @@ import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 import {getAllureConfig} from '../allure/config.js'
 import {ReportGenerator} from '../allure/report-generator.js'
-import {GitlabCiInfo} from '../ci/info/gitlab.js'
-import {ReportSummary} from '../ci/pr/report-summary.js'
-import {UrlSectionBuilder} from '../ci/pr/url-section-builder.js'
-import {ciInfo, ciProvider, isCI, isPR} from '../ci/utils.js'
+import {createReportSection} from '../ci/update-workflow.js'
+import {ciInfo, isCI, isPR} from '../ci/utils.js'
 import {BaseCloudUploader} from '../uploader/cloud/base.js'
 
 export abstract class BaseUploadCommand extends Command {
@@ -250,18 +248,16 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
       await uploader.upload()
 
       if (ciInfo && isPR && updateMode) {
-        const term = ciInfo instanceof GitlabCiInfo ? 'MR' : 'PR'
-        logger.section(`Updating ${term}`)
-        const urlSectionBuilder = new UrlSectionBuilder({
+        await createReportSection({
           reportUrl: uploader.reportUrl(),
-          buildName: ciInfo.buildName,
-          shaUrl: ciInfo.getPrShaUrl(),
-          summary: new ReportSummary(reportGenerator.summary(), flags['flaky-warning-status']),
-          shouldAddSummaryTable: flags['add-summary'],
-          shouldCollapseSummary: flags['collapse-summary'],
-          reportTitle: flags['ci-report-title'],
+          summary: reportGenerator.summary(),
+          ciReportTitle: flags['ci-report-title'],
+          addSummary: flags['add-summary'],
+          collapseSummary: flags['collapse-summary'],
+          flakyWarningStatus: flags['flaky-warning-status'],
+          ignoreError: true,
+          updateMode,
         })
-        await ciProvider(urlSectionBuilder, updateMode)?.addReportSection()
       }
 
       logger.section('Report URLs')
