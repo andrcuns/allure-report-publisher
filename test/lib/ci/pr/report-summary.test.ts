@@ -18,7 +18,7 @@ describe('ReportSummary', () => {
       const summary = new ReportSummary(summaryData('summary-passed.json'), false)
       const table = summary.table()
       const expected = dedent`
-      \`\`\`console
+      \`\`\`markdown
         +----------+----------+----------+----------+----------+----------+
         |  passed  |  failed  |  flaky   | retried  | skipped  |  total   |
         +----------+----------+----------+----------+----------+----------+
@@ -33,7 +33,7 @@ describe('ReportSummary', () => {
       const summary = new ReportSummary(summaryData('summary-flaky.json'), false)
       const table = summary.table()
       const expected = dedent`
-      \`\`\`console
+      \`\`\`markdown
         +----------+----------+----------+----------+----------+----------+
         |  passed  |  failed  |  flaky   | retried  | skipped  |  total   |
         +----------+----------+----------+----------+----------+----------+
