@@ -1,6 +1,7 @@
 {
   "require": [
-    "tsx"
+    "tsx",
+    "test/hooks.ts"
   ],
   "watch-extensions": [
     "ts"
@@ -8,7 +9,7 @@
   "recursive": true,
   "reporter": "allure-mocha",
   "reporterOptions": [
-    "resultsDir=reports/allure-results",
+    "resultsDir=tmp/allure-results",
     "extraReporters=spec"
   ],
   "timeout": 60000,

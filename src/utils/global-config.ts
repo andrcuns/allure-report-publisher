@@ -1,6 +1,6 @@
-import supportsColor, { ColorSupport } from 'supports-color';
+import supportsColor, {ColorSupport} from 'supports-color'
 
-class Config {
+class GlobalConfig {
   private _color: boolean
   private _debug: boolean
   private _parallel: number
@@ -14,7 +14,7 @@ class Config {
   }
 
   public get debug(): boolean {
-    if (!this.initialized) console.warn("Config has not been initialized yet, returning default value")
+    if (!this.initialized) console.warn('Config has not been initialized yet, returning default value')
     return this._debug
   }
 
@@ -27,7 +27,7 @@ class Config {
   }
 
   public set parallel(value: number) {
-    this._parallel = value;
+    this._parallel = value
   }
 
   public initialize(options: {color?: boolean; debug?: boolean; parallel?: number}): void {
@@ -51,4 +51,4 @@ class Config {
   }
 }
 
-export const config = new Config()
+export const config = new GlobalConfig()

@@ -16,7 +16,7 @@ export class GitlabCiInfo extends BaseCiInfo {
     }
   }
 
-  public get pr() {
+  public get isPR() {
     return Boolean((this.allureProject && this.allureMrIid) || this.mrIid)
   }
 
@@ -69,7 +69,13 @@ export class GitlabCiInfo extends BaseCiInfo {
   }
 
   public get buildName() {
-    return process.env[BaseCiInfo.ALLURE_JOB_NAME] || this.jobName
+    return (
+      process.env[BaseCiInfo.ALLURE_JOB_NAME] ||
+      this.jobName ||
+      (() => {
+        throw new Error('Build name not found in environment variables')
+      })()
+    )
   }
 
   public get jobName() {
@@ -82,5 +88,13 @@ export class GitlabCiInfo extends BaseCiInfo {
 
   public get pipelineSource() {
     return process.env.CI_PIPELINE_SOURCE
+  }
+
+  public getPrShaUrl() {
+    const sha = process.env.CI_MERGE_REQUEST_SOURCE_SHA || process.env.CI_COMMIT_SHA
+    if (!sha || !this.mrIid || !this.projectPath) return
+
+    const shortSha = sha.slice(0, 8)
+    return `[${shortSha}](${this.serverUrl}/${this.projectPath}/-/merge_requests/${this.mrIid}/diffs?commit_id=${sha})`
   }
 }

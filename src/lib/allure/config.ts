@@ -5,9 +5,9 @@ import {pathToFileURL} from 'node:url'
 import yaml from 'yaml'
 
 import {PluginName} from '../../types/index.js'
-import {isCi} from '../../utils/ci.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
+import {isCI} from '../ci/utils.js'
 
 type ConfigObject = {
   appendHistory?: boolean
@@ -33,7 +33,7 @@ export interface AllureConfig {
 
 // In CI environments, use relative paths within build dir
 const defaultGlobPattern = './**/allure-results'
-const defaultReportBasePath = path.join(isCi ? './' : os.tmpdir(), 'allure-report-publisher')
+const defaultReportBasePath = path.join(isCI ? './' : os.tmpdir(), 'allure-report-publisher')
 const defaultConfig: ConfigObject = {
   output: path.join(defaultReportBasePath, 'allure-report'),
   historyPath: path.join(defaultReportBasePath, 'history.jsonl'),
@@ -110,7 +110,8 @@ class CustomConfig implements AllureConfig {
           throw new Error(`No default export found in the config file: ${this._configPath}`)
         }
 
-        logger.debug(`Loaded JS config: ${JSON.stringify(defaultConfig, null, 2)}`)
+        // Log plain file as dynamic js import may contain functions etc.
+        logger.debug(`Loaded JS config:\n${readFileSync(this._configPath, 'utf8')}`)
 
         return defaultConfig
       }

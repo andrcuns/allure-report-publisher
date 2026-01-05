@@ -52,7 +52,7 @@ jobs:
         if: always()
         with:
           name: allure-reports-${{ matrix.node }}
-          path: reports/allure-results/
+          path: tmp/allure-results/
           retention-days: 1
 
   s3:
@@ -77,7 +77,7 @@ jobs:
       - name: Download allure reports
         uses: actions/download-artifact@v7
         with:
-          path: reports/allure-results
+          path: tmp/allure-results
       - name: Set up Minio
         run: |
           mkdir -p minio/allure-reports
@@ -110,19 +110,19 @@ jobs:
             -e AWS_FORCE_PATH_STYLE="true" \
             -e AWS_ACCESS_KEY_ID="minioadmin" \
             -e AWS_SECRET_ACCESS_KEY="minioadmin" \
-            -e ALLURE_JOB_NAME="rspec" \
+            -e ALLURE_JOB_NAME="test" \
             --network allure \
             publisher:latest \
             upload s3 \
-              --results-glob="/workspace/reports/allure-results" \
-              --config="/workspace/allurerc.json" \
+              --results-glob="/workspace/tmp/allure-results/*" \
+              --config="/workspace/allurerc.mjs" \
               --bucket="allure-reports" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="comment" \
-              --summary="behaviors" \
-              --summary-table-type="ascii" \
-              --ci-report-title="Test Report" \
-              --report-name="Test Report" \
+              --ci-report-title="Unit Test Report" \
+              --report-name="Unit Test Report" \
+              --add-summary \
+              --collapse-summary \
               --copy-latest \
               --color \
               --debug

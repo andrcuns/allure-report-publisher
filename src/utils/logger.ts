@@ -1,14 +1,14 @@
 // eslint-disable-next-line unicorn/import-style
 import {Chalk, ChalkInstance} from 'chalk'
-import supportsColor, { ColorSupport } from 'supports-color'
+import supportsColor, {ColorSupport} from 'supports-color'
 
-import {config} from './config.js'
+import {config} from './global-config.js'
 
 let _chalk: ChalkInstance | undefined
 
 export const chalk = () => {
   if (!_chalk) {
-    const {level} = (supportsColor.stdout as ColorSupport)
+    const {level} = supportsColor.stdout as ColorSupport
     _chalk = new Chalk({level: config.color ? level : 0})
   }
 

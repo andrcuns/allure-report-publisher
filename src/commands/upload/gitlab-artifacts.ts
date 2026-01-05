@@ -1,13 +1,15 @@
 import {getAllureConfig} from '../../lib/allure/config.js'
 import {ReportGenerator} from '../../lib/allure/report-generator.js'
+import {isCI} from '../../lib/ci/utils.js'
 import {BaseUploadCommand} from '../../lib/commands/upload.js'
 import {GitlabArtifactsUploader} from '../../lib/uploader/ci/gitlab-artifacts.js'
-import {isCi} from '../../utils/ci.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 
 export default class GitlabArtifacts extends BaseUploadCommand {
   static override description = 'Generate report and output GitLab CI artifacts links'
+  // Disable strict mode so github actions and gitlab ci templates can use the same command
+  static strict = false
 
   async run() {
     const flags = await this.initConfig()
@@ -30,7 +32,7 @@ export default class GitlabArtifacts extends BaseUploadCommand {
       await spin(uploader.downloadHistory(), 'downloading previous run history', {ignoreError: true})
 
       // legacy executor.json for allure2 plugin
-      if (isCi && (await allureConfig.plugins()).includes('allure2')) {
+      if (isCI && (await allureConfig.plugins()).includes('allure2')) {
         await spin(this.createExecutorJson(uploader.reportUrl()), 'creating executor.json files')
       }
 

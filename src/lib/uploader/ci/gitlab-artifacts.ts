@@ -2,9 +2,9 @@ import {Gitlab} from '@gitbeaker/rest'
 import {mkdirSync, writeFileSync} from 'node:fs'
 import path from 'node:path'
 
-import {gitlabClient} from '../../../utils/ci.js'
 import {logger} from '../../../utils/logger.js'
 import {GitlabCiInfo} from '../../ci/info/gitlab.js'
+import {gitlabClient} from '../../ci/utils.js'
 
 export class GitlabArtifactsUploader {
   private readonly client: Gitlab
