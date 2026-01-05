@@ -1,8 +1,10 @@
 import {getAllureConfig} from '../../lib/allure/config.js'
 import {ReportGenerator} from '../../lib/allure/report-generator.js'
-import {isCI} from '../../lib/ci/utils.js'
+import {createReportSection} from '../../lib/ci/update-workflow.js'
+import {ciInfo, isCI, isPR} from '../../lib/ci/utils.js'
 import {BaseUploadCommand} from '../../lib/commands/upload.js'
 import {GitlabArtifactsUploader} from '../../lib/uploader/ci/gitlab-artifacts.js'
+import {UpdatePRMode} from '../../types/index.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 
@@ -13,6 +15,7 @@ export default class GitlabArtifacts extends BaseUploadCommand {
 
   async run() {
     const flags = await this.initConfig()
+    const updateMode = flags['update-pr'] as UpdatePRMode
 
     try {
       await this.validateInputs(flags)
@@ -36,15 +39,23 @@ export default class GitlabArtifacts extends BaseUploadCommand {
         await spin(this.createExecutorJson(uploader.reportUrl()), 'creating executor.json files')
       }
 
-      await new ReportGenerator(allureConfig).execute()
+      const reportGenerator = new ReportGenerator(allureConfig)
+      await reportGenerator.execute()
 
       logger.section(`Report URLs`)
       await uploader.outputReportUrls()
 
-      // TODO: Update PR if requested
-      if (flags['update-pr']) {
-        logger.section('Updating PR/MR')
-        logger.info('PR update not yet implemented')
+      if (ciInfo && isPR && updateMode) {
+        await createReportSection({
+          reportUrl: uploader.reportUrl(),
+          summary: reportGenerator.summary(),
+          ciReportTitle: flags['ci-report-title'],
+          addSummary: flags['add-summary'],
+          collapseSummary: flags['collapse-summary'],
+          flakyWarningStatus: flags['flaky-warning-status'],
+          ignoreError: true,
+          updateMode,
+        })
       }
     } catch (error) {
       this.error(error as Error, {exit: 1})

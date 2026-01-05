@@ -1,3 +1,4 @@
+import {GitlabCiProvider} from '../providers/gitlab.js'
 import {BaseCiInfo} from './base.js'
 
 export class GitlabCiInfo extends BaseCiInfo {
@@ -14,6 +15,10 @@ export class GitlabCiInfo extends BaseCiInfo {
       buildOrder: this.runId,
       buildName: this.buildName,
     }
+  }
+
+  public get CiProviderClass() {
+    return GitlabCiProvider
   }
 
   public get isPR() {
@@ -61,7 +66,7 @@ export class GitlabCiInfo extends BaseCiInfo {
   }
 
   public get mrIid() {
-    return Number(this.allureMrIid ||process.env.CI_MERGE_REQUEST_IID)
+    return Number(this.allureMrIid || process.env.CI_MERGE_REQUEST_IID)
   }
 
   public get allureMrIid() {

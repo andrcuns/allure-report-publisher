@@ -32,11 +32,11 @@ describe('UrlSectionBuilder', () => {
     })
   })
 
-  describe('updatedPrDescription()', () => {
+  describe('updatedDescription()', () => {
     it('creates new section when description is empty', () => {
       const builder = new UrlSectionBuilder(defaultArgs)
 
-      expect(builder.updatedPrDescription('')).to.equal(dedent`<!-- allure -->
+      expect(builder.updatedDescription('')).to.equal(dedent`<!-- allure -->
         # 📝 Test Report
         [\`allure-report-publisher\`](https://github.com/andrcuns/allure-report-publisher) generated test report!
         <!-- jobs -->
@@ -52,7 +52,7 @@ describe('UrlSectionBuilder', () => {
       const builder = new UrlSectionBuilder(defaultArgs)
       const existingDescription = 'This is my PR description'
 
-      expect(builder.updatedPrDescription(existingDescription)).to.equal(dedent`This is my PR description
+      expect(builder.updatedDescription(existingDescription)).to.equal(dedent`This is my PR description
 
         <!-- allure -->
         ---
@@ -81,7 +81,7 @@ describe('UrlSectionBuilder', () => {
         <!-- jobs -->
         <!-- allurestop -->`
 
-      expect(builder.updatedPrDescription(existingDescription)).to.equal(dedent`My PR
+      expect(builder.updatedDescription(existingDescription)).to.equal(dedent`My PR
         ---
         <!-- allure -->
         ---
@@ -113,7 +113,7 @@ describe('UrlSectionBuilder', () => {
         <!-- jobs -->
         <!-- allurestop -->`
 
-      expect(builder.updatedPrDescription(existingDescription)).to.equal(dedent`<!-- allure -->
+      expect(builder.updatedDescription(existingDescription)).to.equal(dedent`<!-- allure -->
         # 📝 Test Report
         [\`allure-report-publisher\`](https://github.com/andrcuns/allure-report-publisher) generated test report!
         <!-- jobs -->
@@ -141,7 +141,7 @@ describe('UrlSectionBuilder', () => {
         <!-- jobs -->
         <!-- allurestop -->`
 
-      expect(builder.updatedPrDescription(existingDescription)).to.equal(dedent`<!-- allure -->
+      expect(builder.updatedDescription(existingDescription)).to.equal(dedent`<!-- allure -->
         # 📝 Test Report
         [\`allure-report-publisher\`](https://github.com/andrcuns/allure-report-publisher) generated test report!
         <!-- jobs -->
@@ -157,7 +157,7 @@ describe('UrlSectionBuilder', () => {
       const args = {...defaultArgs, reportTitle: '🧪 My Custom Report'}
       const builder = new UrlSectionBuilder(args)
 
-      expect(builder.updatedPrDescription('')).to.equal(dedent`<!-- allure -->
+      expect(builder.updatedDescription('')).to.equal(dedent`<!-- allure -->
         # 🧪 My Custom Report
         [\`allure-report-publisher\`](https://github.com/andrcuns/allure-report-publisher) generated test report!
         <!-- jobs -->
@@ -173,7 +173,7 @@ describe('UrlSectionBuilder', () => {
       const builder = new UrlSectionBuilder(defaultArgs)
       const description = 'Some content'
 
-      const result = builder.updatedPrDescription(description)
+      const result = builder.updatedDescription(description)
 
       expect(result).to.include('---')
       expect(result.startsWith('Some content\n\n<!-- allure -->\n---\n')).to.be.true

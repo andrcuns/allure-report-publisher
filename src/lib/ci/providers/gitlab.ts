@@ -8,19 +8,19 @@ export class GitlabCiProvider extends BaseCiProvider {
   private readonly ciInfo = new GitlabCiInfo()
   private readonly client = gitlabClient
 
-  protected async performUpdate() {
-    return this.updateMode === 'description' ? this.updatePrDescription() : this.updateComment()
+  public async addReportSection() {
+    return this.updateMode === 'description' ? this.updateMrDescription() : this.updateComment()
   }
 
-  private async updatePrDescription() {
-    const prDescription = await this.getPrDescription()
-    const updatedDescription = this.urlSectionBuilder.updatedPrDescription(prDescription)
+  private async updateMrDescription() {
+    const mrDescription = await this.getMrDescription()
+    const updatedDescription = this.urlSectionBuilder.updatedDescription(mrDescription)
 
-    logger.debug(`Updating PR description for pr '${this.ciInfo.mrIid}'`)
+    logger.debug(`Updating MR description for mr '${this.ciInfo.mrIid}'`)
     await this.client.MergeRequests.edit(this.ciInfo.projectId!, this.ciInfo.mrIid, {
       description: updatedDescription,
     })
-    logger.debug('PR description updated')
+    logger.debug('MR description updated')
   }
 
   private async updateComment() {
@@ -31,18 +31,18 @@ export class GitlabCiProvider extends BaseCiProvider {
           body: updatedComment,
         })
       : await this.client.MergeRequestNotes.create(this.ciInfo.projectId!, this.ciInfo.mrIid, updatedComment)
-    logger.debug(`PR comment with id '${response.id}' ${comment ? 'updated' : 'created'} successfully`)
+    logger.debug(`MR comment with id '${response.id}' ${comment ? 'updated' : 'created'} successfully`)
   }
 
-  private async getPrDescription() {
-    logger.debug(`Fetching PR description for pr '${this.ciInfo.mrIid}'`)
+  private async getMrDescription() {
+    logger.debug(`Fetching MR description for mr '${this.ciInfo.mrIid}'`)
     const mr = await this.client.MergeRequests.show(this.ciInfo.projectId!, this.ciInfo.mrIid)
-    logger.debug('Fetched PR description')
+    logger.debug('Fetched MR description')
     return mr.description || ''
   }
 
   private async getComment() {
-    logger.debug(`Fetching PR comment for pr '${this.ciInfo.mrIid}'`)
+    logger.debug(`Fetching MR comment for mr '${this.ciInfo.mrIid}'`)
     const comments = await this.client.MergeRequestNotes.all(this.ciInfo.projectId!, this.ciInfo.mrIid, {
       sort: 'asc',
       orderBy: 'created_at',
