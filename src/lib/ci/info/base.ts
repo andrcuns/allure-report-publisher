@@ -5,4 +5,5 @@ export abstract class BaseCiInfo {
   public abstract isPR: boolean
   public abstract buildName: string
   public abstract runId: string | undefined
+  public abstract getPrShaUrl(): string | undefined
 }

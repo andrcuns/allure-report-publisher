@@ -253,7 +253,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
         const urlSectionBuilder = new UrlSectionBuilder({
           reportUrl: uploader.reportUrl(),
           buildName: ciInfo.buildName,
-          shaUrl: ciInfo.buildUrl,
+          shaUrl: ciInfo.getPrShaUrl(),
           summary: new ReportSummary(reportGenerator.summary(), flags['flaky-warning-status']),
           shouldAddSummaryTable: flags['add-summary'],
           shouldCollapseSummary: flags['collapse-summary'],

@@ -1,6 +1,19 @@
+import {readFileSync} from 'node:fs'
+
 import {BaseCiInfo} from './base.js'
 
+type GitHubEvent = {
+  number: number
+  pull_request: {
+    head: {
+      sha: string
+    }
+  }
+}
+
 export class GithubCiInfo extends BaseCiInfo {
+  private _githubEvent?: GitHubEvent
+
   public executorJson(reportUrl: string): Record<string, string | undefined> {
     return {
       name: 'GitHub',
@@ -42,5 +55,29 @@ export class GithubCiInfo extends BaseCiInfo {
 
   public get buildUrl() {
     return `${this.serverUrl}/${this.repository}/actions/runs/${this.runId}`
+  }
+
+  public get prId() {
+    return this.githubEvent.number
+  }
+
+  private get githubEvent(): GitHubEvent {
+    if (this._githubEvent) return this._githubEvent
+
+    const eventPath = process.env.GITHUB_EVENT_PATH
+    if (!eventPath) {
+      throw new Error('Failed to get GitHub event data: GITHUB_EVENT_PATH is not set')
+    }
+
+    this._githubEvent = JSON.parse(readFileSync(eventPath, 'utf8')) as GitHubEvent
+    return this._githubEvent
+  }
+
+  public getPrShaUrl() {
+    const sha = this.githubEvent.pull_request?.head?.sha
+    if (!sha || !this.prId) return
+
+    const shortSha = sha.slice(0, 8)
+    return `[${shortSha}](${this.serverUrl}/${this.repository}/pull/${this.prId}/commits/${sha})`
   }
 }
