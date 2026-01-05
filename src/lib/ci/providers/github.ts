@@ -7,7 +7,7 @@ import {githubClient} from '../utils.js'
 import {BaseCiProvider} from './base.js'
 
 interface Comment {
-  body_text?: string
+  body?: string
   id: number
 }
 
@@ -49,7 +49,7 @@ export class GithubCiProvider extends BaseCiProvider {
 
   private async updateComment() {
     const comment = await this.getComment()
-    const updatedComment = this.urlSectionBuilder.commentBody(comment?.body_text)
+    const updatedComment = this.urlSectionBuilder.commentBody(comment?.body)
     const response = comment
       ? await this.client.rest.issues.updateComment({
           owner: this.owner,
@@ -88,7 +88,7 @@ export class GithubCiProvider extends BaseCiProvider {
       // eslint-disable-next-line camelcase
       issue_number: this.ciInfo.prId!,
     })
-    const comment = (comments.data.find((comment) => UrlSectionBuilder.match(comment.body_text)) as Comment)
+    const comment = (comments.data.find((comment) => UrlSectionBuilder.match(comment.body)) as Comment)
     if (comment) {
       logger.debug('Found existing comment with report section')
     } else {
