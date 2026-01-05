@@ -110,7 +110,7 @@ jobs:
             -e AWS_FORCE_PATH_STYLE="true" \
             -e AWS_ACCESS_KEY_ID="minioadmin" \
             -e AWS_SECRET_ACCESS_KEY="minioadmin" \
-            -e ALLURE_JOB_NAME="e2e-upload-tests" \
+            -e ALLURE_JOB_NAME="test" \
             --network allure \
             publisher:latest \
             upload s3 \
@@ -119,8 +119,8 @@ jobs:
               --bucket="allure-reports" \
               --prefix="allure-report-publisher/$GITHUB_REF" \
               --update-pr="comment" \
-              --ci-report-title="Test Report" \
-              --report-name="Test Report" \
+              --ci-report-title="Unit Test Results" \
+              --report-name="Unit Test Report" \
               --add-summary \
               --collapse-summary \
               --copy-latest \
