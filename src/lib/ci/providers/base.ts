@@ -18,5 +18,5 @@ export abstract class BaseCiProvider {
     return this._updateMode
   }
 
-  public abstract updatePr(): Promise<void>
+  public abstract addReportSection(): Promise<void>
 }

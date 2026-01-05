@@ -3,6 +3,7 @@ import {InferredFlags} from '@oclif/core/interfaces'
 import {existsSync, writeFileSync} from 'node:fs'
 import path from 'node:path'
 
+import {UpdatePRMode} from '../../types/index.js'
 import {getAllureResultsPaths} from '../../utils/glob.js'
 import {config} from '../../utils/global-config.js'
 import {logger} from '../../utils/logger.js'
@@ -12,7 +13,7 @@ import {ReportGenerator} from '../allure/report-generator.js'
 import {GitlabCiInfo} from '../ci/info/gitlab.js'
 import {ReportSummary} from '../ci/pr/report-summary.js'
 import {UrlSectionBuilder} from '../ci/pr/url-section-builder.js'
-import {ciInfo, isCI, isPR} from '../ci/utils.js'
+import {ciInfo, ciProvider, isCI, isPR} from '../ci/utils.js'
 import {BaseCloudUploader} from '../uploader/cloud/base.js'
 
 export abstract class BaseUploadCommand extends Command {
@@ -213,6 +214,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
 
   async run(): Promise<void> {
     const flags = await this.initConfig()
+    const updateMode = flags['update-pr'] as UpdatePRMode
 
     try {
       await this.validateInputs(flags)
@@ -247,7 +249,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
       logger.section(`Uploading report to ${this.storageType}`)
       await uploader.upload()
 
-      if (ciInfo && isPR && flags['update-pr']) {
+      if (ciInfo && isPR && updateMode) {
         const term = ciInfo instanceof GitlabCiInfo ? 'MR' : 'PR'
         logger.section(`Updating ${term}`)
         const urlSectionBuilder = new UrlSectionBuilder({
@@ -258,9 +260,8 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
           shouldAddSummaryTable: flags['add-summary'],
           shouldCollapseSummary: flags['collapse-summary'],
         })
-        logger.flushDebug()
-
-        console.log(urlSectionBuilder.commentBody())
+        const provider = ciProvider(urlSectionBuilder, updateMode)!
+        await provider.addReportSection()
       }
 
       logger.section('Report URLs')

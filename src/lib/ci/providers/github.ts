@@ -9,7 +9,7 @@ export class GithubCiProvider extends BaseCiProvider {
   private _prDescription?: string
   private _comment?: string | undefined
 
-  public async updatePr() {}
+  public async addReportSection() {}
 
   private isActionsType() {
     return this.updateMode === 'actions'
