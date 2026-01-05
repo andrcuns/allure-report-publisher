@@ -262,6 +262,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
         })
         const provider = ciProvider(urlSectionBuilder, updateMode)!
         await provider.addReportSection()
+        logger.flushDebug()
       }
 
       logger.section('Report URLs')
