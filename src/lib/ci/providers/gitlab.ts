@@ -8,5 +8,5 @@ export class GitlabCiProvider extends BaseCiProvider {
   private _mrDescription?: string
   private _comment?: string | undefined
 
-  public async addReportSection() {}
+  protected async performUpdate() {}
 }

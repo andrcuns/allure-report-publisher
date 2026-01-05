@@ -1,4 +1,5 @@
 import {UpdatePRMode} from '../../../types/index.js'
+import {spin} from '../../../utils/spinner.js'
 import {UrlSectionBuilder} from '../pr/url-section-builder.js'
 
 export abstract class BaseCiProvider {
@@ -18,5 +19,9 @@ export abstract class BaseCiProvider {
     return this._updateMode
   }
 
-  public abstract addReportSection(): Promise<void>
+  protected abstract performUpdate(): Promise<void>
+
+  public async addReportSection() {
+    await spin(this.performUpdate(), `Adding report section to the ${this.updateMode}`, {ignoreError: true})
+  }
 }

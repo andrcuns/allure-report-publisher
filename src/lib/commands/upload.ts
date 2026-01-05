@@ -260,9 +260,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
           shouldAddSummaryTable: flags['add-summary'],
           shouldCollapseSummary: flags['collapse-summary'],
         })
-        const provider = ciProvider(urlSectionBuilder, updateMode)!
-        await provider.addReportSection()
-        logger.flushDebug()
+        await ciProvider(urlSectionBuilder, updateMode)?.addReportSection()
       }
 
       logger.section('Report URLs')
