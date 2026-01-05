@@ -21,6 +21,7 @@
     "glob": "^13.0.0",
     "mime-types": "^3.0.0",
     "nano-spawn": "^2.0.0",
+    "octokit": "^5.0.5",
     "p-all": "^5.0.1",
     "sinon": "^21.0.1",
     "supports-color": "^10.2.2",

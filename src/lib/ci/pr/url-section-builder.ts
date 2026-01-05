@@ -34,7 +34,9 @@ export class UrlSectionBuilder {
     this.reportTitle = args.reportTitle || '📝 Test Report'
   }
 
-  static match(urlsBlock: string): boolean {
+  static match(urlsBlock: string | undefined): boolean {
+    if (!urlsBlock) return false
+
     return this.DESCRIPTION_PATTERN.test(urlsBlock)
   }
 
