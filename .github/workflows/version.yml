@@ -8,13 +8,21 @@ on:
         required: true
         type: choice
         options:
-          - prerelease
           - major
           - minor
           - patch
           - premajor
           - preminor
           - prepatch
+          - prerelease
+      preid:
+        description: Pre-release identifier (required for pre* bumps)
+        required: false
+        type: choice
+        options:
+          - alpha
+          - beta
+          - rc
 
 jobs:
   release:
@@ -40,7 +48,5 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          npm version ${{ github.event.inputs.semver }} --no-git-tag-version
-          git add package.json
-          git commit -m "Bump allure-report-publisher version to $(node -p "require('./package.json').version")"
+          npm version ${{ github.event.inputs.semver }}${{ contains(fromJSON('["premajor", "preminor", "prepatch", "prerelease"]'), github.event.inputs.semver) && format(' --preid={0}', github.event.inputs.preid) || '' }}
           git push
