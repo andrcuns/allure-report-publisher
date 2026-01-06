@@ -29,7 +29,7 @@ jobs:
       - name: Build package
         run: pnpm run build
       - name: Build and push
-        run: npm publish --tag ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') && 'next' || 'latest' }}
+        run: npm publish --tag ${{ (contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc')) && 'next' || 'latest' }}
 
   docker:
     name: Docker image
@@ -53,7 +53,7 @@ jobs:
           images: andrcuns/allure-report-publisher
           flavor: latest=false
           tags: |
-            type=raw,value=${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') && 'next' || 'latest' }}
+            type=raw,value=${{ (contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc')) && 'next' || 'latest' }}
             type=semver,pattern={{version}}
       - name: Build and push
         uses: docker/build-push-action@v6.18.0
