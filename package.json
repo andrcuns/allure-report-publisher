@@ -38,6 +38,7 @@
     "@types/mocha": "^10.0.10",
     "@types/node": "^25.0.3",
     "allure-mocha": "^3.4.3",
+    "c8": "^10.1.3",
     "chai": "^6.2.2",
     "eslint": "^9.39.2",
     "eslint-config-oclif": "^6.0.128",
@@ -87,7 +88,7 @@
     "lint": "eslint",
     "prepack": "oclif manifest && oclif readme",
     "postpack": "shx rm -f oclif.manifest.json",
-    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "test": "c8 mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif readme && git add README.md",
     "prereadme": "shx rm -rf dist tsconfig.tsbuildinfo && tsc -b",
     "readme": "oclif readme"
