@@ -2,6 +2,7 @@
 
 [![Docker Image Version (latest semver)](https://img.shields.io/docker/v/andrcuns/allure-report-publisher?color=blue&label=docker&sort=semver)](https://hub.docker.com/r/andrcuns/allure-report-publisher)
 [![Docker Pulls](https://img.shields.io/docker/pulls/andrcuns/allure-report-publisher)](https://hub.docker.com/r/andrcuns/allure-report-publisher)
+[![codecov](https://codecov.io/gh/andrcuns/allure-report-publisher/graph/badge.svg?token=YT3U8GYHHP)](https://codecov.io/gh/andrcuns/allure-report-publisher)
 ![Workflow status](https://github.com/andrcuns/allure-report-publisher/workflows/Test/badge.svg)
 
 Upload your report to a file storage of your choice.

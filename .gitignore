@@ -8,6 +8,7 @@
 /tmp
 /node_modules
 /reports
+/coverage
 
 oclif.manifest.json
 *.tsbuildinfo

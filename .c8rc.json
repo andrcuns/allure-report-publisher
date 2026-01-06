@@ -1,0 +1,17 @@
+{
+  "all": true,
+  "src": [
+    "src"
+  ],
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.d.ts",
+    "test/**",
+    "dist/**"
+  ],
+  "reporter": [
+    "lcov"
+  ],
+  "reports-dir": "coverage",
+  "temp-directory": "coverage/.nyc_output"
+}

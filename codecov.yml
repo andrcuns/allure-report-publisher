@@ -1,0 +1,11 @@
+component_management:
+  individual_components:
+    - component_id: commands
+      paths:
+        - src/commands/**
+    - component_id: lib
+      paths:
+        - src/lib/**
+    - component_id: utils
+      paths:
+        - src/utils/**
