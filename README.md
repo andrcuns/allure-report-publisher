@@ -16,7 +16,7 @@ $ npm install -g allure-report-publisher
 $ allure-report-publisher COMMAND
 running command...
 $ allure-report-publisher (--version)
-allure-report-publisher/5.0.0-alpha.5 linux-x64 node-v25.2.1
+allure-report-publisher/5.0.0-beta.0 linux-x64 node-v25.2.1
 $ allure-report-publisher --help [COMMAND]
 USAGE
   $ allure-report-publisher COMMAND
@@ -71,7 +71,7 @@ EXAMPLES
   $ allure-report-publisher upload gcs --results-glob="path/to/allure-results" --bucket=my-bucket --update-pr=comment --summary=behaviors
 ```
 
-_See code: [src/commands/upload/gcs.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.0.0-alpha.5/src/commands/upload/gcs.ts)_
+_See code: [src/commands/upload/gcs.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.0.0-beta.0/src/commands/upload/gcs.ts)_
 
 ## `allure-report-publisher upload gitlab-artifacts`
 
@@ -105,7 +105,7 @@ DESCRIPTION
   Generate report and output GitLab CI artifacts links
 ```
 
-_See code: [src/commands/upload/gitlab-artifacts.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.0.0-alpha.5/src/commands/upload/gitlab-artifacts.ts)_
+_See code: [src/commands/upload/gitlab-artifacts.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.0.0-beta.0/src/commands/upload/gitlab-artifacts.ts)_
 
 ## `allure-report-publisher upload s3`
 
@@ -150,7 +150,7 @@ EXAMPLES
   $ allure-report-publisher upload s3 --results-glob="path/to/allure-results" --bucket=my-bucket --update-pr=comment --summary=behaviors
 ```
 
-_See code: [src/commands/upload/s3.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.0.0-alpha.5/src/commands/upload/s3.ts)_
+_See code: [src/commands/upload/s3.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.0.0-beta.0/src/commands/upload/s3.ts)_
 <!-- commandsstop -->
 
 ## Docker
