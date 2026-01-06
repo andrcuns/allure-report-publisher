@@ -28,7 +28,7 @@ export abstract class BaseUploadCommand extends Command {
     config: Flags.string({
       char: 'c',
       description: 'The path to allure config file. Options provided here will override CLI flags',
-      env: 'ALLURE_CONFIG_PATH',
+      env: 'ALLURE_CONFIG',
     }),
     'report-name': Flags.string({
       description: 'Custom report name in Allure report',
