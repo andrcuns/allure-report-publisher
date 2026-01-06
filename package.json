@@ -1,7 +1,7 @@
 {
   "name": "allure-report-publisher",
   "description": "Publish allure 3 reports to cloud storage providers",
-  "version": "5.0.0-beta.0",
+  "version": "5.0.0-beta.1",
   "author": "Andrejs Cunskis",
   "bin": {
     "allure-report-publisher": "bin/run.js"
