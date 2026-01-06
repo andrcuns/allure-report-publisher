@@ -1,13 +1,12 @@
 import {mkdirSync, readFileSync, writeFileSync} from 'node:fs'
-import os from 'node:os'
 import path from 'node:path'
 import {pathToFileURL} from 'node:url'
 import yaml from 'yaml'
 
 import {PluginName} from '../../types/index.js'
+import {globalConfig} from '../../utils/global-config.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
-import {isCI} from '../ci/utils.js'
 
 type ConfigObject = {
   appendHistory?: boolean
@@ -33,10 +32,9 @@ export interface AllureConfig {
 
 // In CI environments, use relative paths within build dir
 const defaultGlobPattern = './**/allure-results'
-const defaultReportBasePath = path.join(isCI ? './' : os.tmpdir(), 'allure-report-publisher')
 const defaultConfig: ConfigObject = {
-  output: path.join(defaultReportBasePath, 'allure-report'),
-  historyPath: path.join(defaultReportBasePath, 'history.jsonl'),
+  output: globalConfig.output,
+  historyPath: path.join(globalConfig.baseDir, 'history.jsonl'),
   appendHistory: true,
   plugins: {
     awesome: {
@@ -142,7 +140,7 @@ class DefaultConfig implements AllureConfig {
 
   constructor(resultsGlob: string, reportName?: string) {
     this._configCreated = false
-    this._configPath = path.join(defaultReportBasePath, 'allurerc.json')
+    this._configPath = path.join(globalConfig.baseDir, 'allurerc.json')
     this.reportName = reportName
     this.resultsGlob = resultsGlob
   }
@@ -150,7 +148,7 @@ class DefaultConfig implements AllureConfig {
   public configPath() {
     if (this._configCreated) return this._configPath
 
-    mkdirSync(defaultReportBasePath, {recursive: true})
+    mkdirSync(globalConfig.baseDir, {recursive: true})
     const config = {...defaultConfig}
     if (this.reportName) config.plugins!.awesome!.options!.reportName = this.reportName
     writeFileSync(this._configPath, JSON.stringify(config, null, 2))

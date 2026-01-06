@@ -2,7 +2,7 @@ import {Storage} from '@google-cloud/storage'
 import path from 'node:path'
 import pAll from 'p-all'
 
-import {config} from '../../../utils/global-config.js'
+import {globalConfig} from '../../../utils/global-config.js'
 import {logger} from '../../../utils/logger.js'
 import {BaseCloudUploader} from './base.js'
 
@@ -42,7 +42,7 @@ export class GcsUploader extends BaseCloudUploader {
       return () => this.uploadFile({filePath, key})
     })
 
-    await pAll(uploads, {concurrency: config.parallel})
+    await pAll(uploads, {concurrency: globalConfig.parallel})
   }
 
   protected async createLatestCopy() {
@@ -53,7 +53,7 @@ export class GcsUploader extends BaseCloudUploader {
       return () => this.copyFile({sourceKey, destinationKey})
     })
 
-    await pAll(copies, {concurrency: config.parallel})
+    await pAll(copies, {concurrency: globalConfig.parallel})
   }
 
   private async uploadFile(opts: {filePath: string; key: string}) {

@@ -35,7 +35,7 @@ Generate and upload allure report to gcs bucket
 
 ```
 USAGE
-  $ allure-report-publisher upload gcs -b <value> [-r <value>] [-c <value>] [--report-name <value>]
+  $ allure-report-publisher upload gcs -b <value> [-r <value>] [-c <value>] [--report-name <value>] [-o <value>]
     [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary] [--collapse-summary]
     [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results] [-p <value>] [--base-url <value>]
     [--copy-latest] [--parallel <value>]
@@ -44,6 +44,7 @@ FLAGS
   -b, --bucket=<value>           (required) [env: ALLURE_BUCKET] Cloud storage bucket name
   -c, --config=<value>           [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here will
                                  override CLI flags
+  -o, --output=<value>           [env: ALLURE_OUTPUT] Directory to generate the Allure report into
   -p, --prefix=<value>           [env: ALLURE_PREFIX] Prefix for report path in cloud storage
   -r, --results-glob=<value>     [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
                                  results directories
@@ -80,13 +81,14 @@ Generate report and output GitLab CI artifacts links
 
 ```
 USAGE
-  $ allure-report-publisher upload gitlab-artifacts [-r <value>] [-c <value>] [--report-name <value>] [--ci-report-title
-    <value>] [--update-pr comment|description|actions] [--add-summary] [--collapse-summary] [--flaky-warning-status]
-    [--color] [--debug] [--ignore-missing-results]
+  $ allure-report-publisher upload gitlab-artifacts [-r <value>] [-c <value>] [--report-name <value>] [-o <value>]
+    [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary] [--collapse-summary]
+    [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results]
 
 FLAGS
   -c, --config=<value>           [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here will
                                  override CLI flags
+  -o, --output=<value>           [env: ALLURE_OUTPUT] Directory to generate the Allure report into
   -r, --results-glob=<value>     [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
                                  results directories
       --add-summary              [env: ALLURE_SUMMARY] Add test summary table to section in PR
@@ -114,7 +116,7 @@ Generate and upload allure report to s3 bucket
 
 ```
 USAGE
-  $ allure-report-publisher upload s3 -b <value> [-r <value>] [-c <value>] [--report-name <value>]
+  $ allure-report-publisher upload s3 -b <value> [-r <value>] [-c <value>] [--report-name <value>] [-o <value>]
     [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary] [--collapse-summary]
     [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results] [-p <value>] [--base-url <value>]
     [--copy-latest] [--parallel <value>]
@@ -123,6 +125,7 @@ FLAGS
   -b, --bucket=<value>           (required) [env: ALLURE_BUCKET] Cloud storage bucket name
   -c, --config=<value>           [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here will
                                  override CLI flags
+  -o, --output=<value>           [env: ALLURE_OUTPUT] Directory to generate the Allure report into
   -p, --prefix=<value>           [env: ALLURE_PREFIX] Prefix for report path in cloud storage
   -r, --results-glob=<value>     [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
                                  results directories
@@ -165,6 +168,10 @@ docker run --rm -it \
   -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
   andrcuns/allure-report-publisher:latest upload s3 --results-glob="/app/data/**/allure-results" --bucket=my-bucket
 ```
+
+## Allure configuration file
+
+It is possible to provide [Allure configuration file](https://allurereport.org/docs/v3/configure/) via `--config` flag. Any options within this file will override CLI flags. Dynamic javascript files are supported, but plain javascript object without the use of `defineConfig` is suggested due to `defineConfig` helper loading `allure` cli parser which will create error output.
 
 # Storage providers
 

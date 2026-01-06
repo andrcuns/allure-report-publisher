@@ -1,15 +1,21 @@
+import os from 'node:os'
+import path from 'node:path'
 import supportsColor, {ColorSupport} from 'supports-color'
 
 class GlobalConfig {
   private _color: boolean
   private _debug: boolean
   private _parallel: number
+  private _baseDir: string
+  private _output: string
   private initialized: boolean
 
   constructor() {
     this._color = (supportsColor.stdout as ColorSupport).hasBasic
     this._debug = false
     this._parallel = 8
+    this._baseDir = path.join(os.tmpdir(), 'allure-report-publisher')
+    this._output = path.join(this._baseDir, 'allure-report')
     this.initialized = false
   }
 
@@ -30,7 +36,21 @@ class GlobalConfig {
     this._parallel = value
   }
 
-  public initialize(options: {color?: boolean; debug?: boolean; parallel?: number}): void {
+  public get baseDir(): string {
+    return this._baseDir
+  }
+
+  public get output(): string {
+    return this._output
+  }
+
+  public initialize(options: {
+    color?: boolean
+    debug?: boolean
+    parallel?: number
+    baseDir?: string
+    output?: string
+  }): void {
     if (this.initialized) {
       throw new Error('Config has already been initialized')
     }
@@ -47,8 +67,16 @@ class GlobalConfig {
       this._parallel = options.parallel
     }
 
+    if (options.baseDir !== undefined) {
+      this._baseDir = options.baseDir
+    }
+
+    if (options.output !== undefined) {
+      this._output = options.output
+    }
+
     this.initialized = true
   }
 }
 
-export const config = new GlobalConfig()
+export const globalConfig = new GlobalConfig()

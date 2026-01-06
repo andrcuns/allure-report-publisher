@@ -1,11 +1,11 @@
 import yoctoSpinner, {Spinner} from 'yocto-spinner'
 
 import {isCI} from '../lib/ci/utils.js'
-import {config} from './global-config.js'
+import {globalConfig} from './global-config.js'
 import {chalk, logger} from './logger.js'
 
 function flushDebug(): void {
-  if (config.debug) logger.flushDebug()
+  if (globalConfig.debug) logger.flushDebug()
 }
 
 function succeed(spinner: Spinner) {
