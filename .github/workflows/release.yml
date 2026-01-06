@@ -11,7 +11,6 @@ permissions:
 
 jobs:
   npm:
-    if: contains(github.event.head_commit.message, 'Bump allure-report-publisher version to')
     name: NPM publish
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +21,7 @@ jobs:
           version: 10
       - uses: actions/setup-node@v6
         with:
-          node-version: '25.x'
+          node-version: "25.x"
           cache: pnpm
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
@@ -30,7 +29,7 @@ jobs:
       - name: Build package
         run: pnpm run build
       - name: Build and push
-        run: npm publish --tag latest
+        run: npm publish --tag ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') && 'next' || 'latest' }}
 
   docker:
     name: Docker image
@@ -54,7 +53,7 @@ jobs:
           images: andrcuns/allure-report-publisher
           flavor: latest=false
           tags: |
-            type=raw,value=latest
+            type=raw,value=${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') && 'next' || 'latest' }}
             type=semver,pattern={{version}}
       - name: Build and push
         uses: docker/build-push-action@v6.18.0
