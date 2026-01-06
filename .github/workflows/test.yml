@@ -56,7 +56,7 @@ jobs:
           retention-days: 1
       - name: Save coverage
         uses: actions/upload-artifact@v6
-        if: always()
+        if: always() && matrix.node == '25.x'
         with:
           name: coverage
           path: coverage/
