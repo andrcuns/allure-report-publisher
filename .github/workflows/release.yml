@@ -6,6 +6,11 @@ on:
       - v*
     branches:
       - main
+    paths:
+      - src/**/*
+      - package.json
+      - pnpm-lock.yaml
+      - Dockerfile
 
 permissions:
   id-token: write
