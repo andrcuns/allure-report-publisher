@@ -49,4 +49,4 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           npm version ${{ github.event.inputs.semver }}${{ contains(fromJSON('["premajor", "preminor", "prepatch", "prerelease"]'), github.event.inputs.semver) && format(' --preid={0}', github.event.inputs.preid) || '' }}
-          git push
+          git push && git push --tags
