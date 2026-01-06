@@ -8,13 +8,13 @@ on:
         required: true
         type: choice
         options:
-          - prerelease
           - major
           - minor
           - patch
           - premajor
           - preminor
           - prepatch
+          - prerelease
 
 jobs:
   release:
@@ -40,7 +40,6 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          npm version ${{ github.event.inputs.semver }} --no-git-tag-version
+          npm version ${{ github.event.inputs.semver }}
           git add package.json
-          git commit -m "Bump allure-report-publisher version to $(node -p "require('./package.json').version")"
           git push
