@@ -72,6 +72,9 @@
     "commands": "./dist/commands",
     "plugins": [],
     "topicSeparator": " ",
+    "helpOptions": {
+      "flagSortOrder": "none"
+    },
     "topics": {
       "upload": {
         "description": "Upload reports to cloud storage or CI artifacts"

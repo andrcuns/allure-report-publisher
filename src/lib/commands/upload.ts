@@ -1,11 +1,12 @@
 import {Command, Flags} from '@oclif/core'
 import {InferredFlags} from '@oclif/core/interfaces'
 import {existsSync, writeFileSync} from 'node:fs'
+import os from 'node:os'
 import path from 'node:path'
 
 import {UpdatePRMode} from '../../types/index.js'
 import {getAllureResultsPaths} from '../../utils/glob.js'
-import {config} from '../../utils/global-config.js'
+import {globalConfig} from '../../utils/global-config.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 import {getAllureConfig} from '../allure/config.js'
@@ -32,6 +33,11 @@ export abstract class BaseUploadCommand extends Command {
     'report-name': Flags.string({
       description: 'Custom report name in Allure report',
       env: 'ALLURE_REPORT_NAME',
+    }),
+    output: Flags.string({
+      char: 'o',
+      description: 'Directory to generate the Allure report into',
+      env: 'ALLURE_OUTPUT',
     }),
 
     // CI integration flags
@@ -89,7 +95,13 @@ export abstract class BaseUploadCommand extends Command {
 
   protected async initConfig(): Promise<InferredFlags<typeof BaseUploadCommand.baseFlags>> {
     const {flags} = await this.parse(this.constructor as typeof BaseUploadCommand)
-    config.initialize({color: this.isColorEnabled(flags.color), debug: flags.debug})
+    const baseDir = path.join(isCI ? './' : os.tmpdir(), 'allure-report-publisher')
+    globalConfig.initialize({
+      color: this.isColorEnabled(flags.color),
+      debug: flags.debug,
+      output: flags.output ?? path.join(baseDir, 'allure-report'),
+      baseDir,
+    })
 
     return flags
   }
@@ -97,7 +109,7 @@ export abstract class BaseUploadCommand extends Command {
   protected async validateInputs(flags: InferredFlags<typeof BaseUploadCommand.baseFlags>) {
     if (flags.config) {
       const ext = path.extname(flags.config).toLowerCase()
-      const supportedExts = ['.json', '.yaml', '.mjs', '.cjs', '.js']
+      const supportedExts = ['.json', '.yaml', '.yml', '.mjs', '.cjs', '.js']
       if (!supportedExts.includes(ext)) {
         throw new Error(`Unsupported config file format: ${ext}\nSupported formats are: ${supportedExts.join(', ')}`)
       }
@@ -186,7 +198,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
 
   protected async initConfig() {
     const flags = (await super.initConfig()) as InferredFlags<typeof BaseCloudUploadCommand.baseFlags>
-    config.parallel = flags.parallel
+    globalConfig.parallel = flags.parallel
 
     return flags
   }

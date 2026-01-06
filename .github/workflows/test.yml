@@ -102,6 +102,7 @@ jobs:
       - name: Download allure reports
         uses: actions/download-artifact@v7
         with:
+          pattern: allure-reports-*
           path: tmp/allure-results
       - name: Set up Minio
         run: |

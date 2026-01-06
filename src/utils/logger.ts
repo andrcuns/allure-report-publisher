@@ -2,14 +2,14 @@
 import {Chalk, ChalkInstance} from 'chalk'
 import supportsColor, {ColorSupport} from 'supports-color'
 
-import {config} from './global-config.js'
+import {globalConfig} from './global-config.js'
 
 let _chalk: ChalkInstance | undefined
 
 export const chalk = () => {
   if (!_chalk) {
     const {level} = supportsColor.stdout as ColorSupport
-    _chalk = new Chalk({level: config.color ? level : 0})
+    _chalk = new Chalk({level: globalConfig.color ? level : 0})
   }
 
   return _chalk
@@ -60,7 +60,7 @@ export class Logger {
   }
 
   section(message: string): void {
-    if (config.color) {
+    if (globalConfig.color) {
       console.log(this.chalk.bold.magenta(`\n${message}`))
     } else {
       console.log(`\n=== ${message} ===`)
