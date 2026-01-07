@@ -1,7 +1,6 @@
 import {Command, Flags} from '@oclif/core'
 import {InferredFlags} from '@oclif/core/interfaces'
 import {existsSync, writeFileSync} from 'node:fs'
-import os from 'node:os'
 import path from 'node:path'
 
 import {UpdatePRMode} from '../../types/index.js'
