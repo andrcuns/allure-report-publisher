@@ -120,7 +120,7 @@ export abstract class BaseUploadCommand extends Command {
     }
 
     logger.section('Checking for allure results directories')
-    const resultPaths = await getAllureResultsPaths(flags['results-glob'], flags['ignore-missing-results'])
+    const resultPaths = await this.getAllureResults(flags['results-glob'], flags['ignore-missing-results'])
     if (resultPaths === undefined) this.exit(0)
   }
 
