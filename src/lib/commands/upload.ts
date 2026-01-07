@@ -100,13 +100,7 @@ export abstract class BaseUploadCommand extends Command {
 
   protected async initConfig(): Promise<InferredFlags<typeof BaseUploadCommand.baseFlags>> {
     const {flags} = await this.parse(this.constructor as typeof BaseUploadCommand)
-    const baseDir = path.join(isCI ? './' : os.tmpdir(), 'allure-report-publisher')
-    const globalConfigOptions = {
-      color: this.isColorEnabled(flags.color),
-      debug: flags.debug,
-      output: flags.output ?? path.join(baseDir, 'allure-report'),
-      baseDir,
-    }
+    const globalConfigOptions = {color: this.isColorEnabled(flags.color), debug: flags.debug}
     logger.debug(`Initializing global config with options: ${JSON.stringify(globalConfigOptions)}`)
     globalConfig.initialize(globalConfigOptions)
 
