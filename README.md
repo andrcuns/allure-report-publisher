@@ -36,13 +36,13 @@ Generate and upload allure report to gcs bucket
 ```
 USAGE
   $ allure-report-publisher upload gcs -b <value> [-r <value>] [-c <value>] [--report-name <value>] [-o <value>]
-    [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary] [--collapse-summary]
-    [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results] [-p <value>] [--base-url <value>]
-    [--copy-latest] [--parallel <value>]
+    [--global-allure-exec] [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary]
+    [--collapse-summary] [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results] [-p <value>]
+    [--base-url <value>] [--copy-latest] [--parallel <value>]
 
 FLAGS
   -b, --bucket=<value>           (required) [env: ALLURE_BUCKET] Cloud storage bucket name
-  -c, --config=<value>           [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here will
+  -c, --config=<value>           [env: ALLURE_CONFIG] The path to allure config file. Options provided here will
                                  override CLI flags
   -o, --output=<value>           [env: ALLURE_OUTPUT] Directory to generate the Allure report into
   -p, --prefix=<value>           [env: ALLURE_PREFIX] Prefix for report path in cloud storage
@@ -57,6 +57,8 @@ FLAGS
       --copy-latest              [env: ALLURE_COPY_LATEST] Keep copy of latest run report at base prefix
       --debug                    [env: ALLURE_DEBUG] Print debug log output
       --flaky-warning-status     [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
+      --global-allure-exec       [env: ALLURE_GLOBAL_ALLURE_EXEC] Use globally installed allure executable instead of
+                                 the packaged one
       --ignore-missing-results   [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results and exit without
                                  error if no result paths found
       --parallel=<value>         [default: 8, env: ALLURE_PARALLEL] Number of parallel threads for upload
@@ -82,11 +84,11 @@ Generate report and output GitLab CI artifacts links
 ```
 USAGE
   $ allure-report-publisher upload gitlab-artifacts [-r <value>] [-c <value>] [--report-name <value>] [-o <value>]
-    [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary] [--collapse-summary]
-    [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results]
+    [--global-allure-exec] [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary]
+    [--collapse-summary] [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results]
 
 FLAGS
-  -c, --config=<value>           [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here will
+  -c, --config=<value>           [env: ALLURE_CONFIG] The path to allure config file. Options provided here will
                                  override CLI flags
   -o, --output=<value>           [env: ALLURE_OUTPUT] Directory to generate the Allure report into
   -r, --results-glob=<value>     [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
@@ -98,6 +100,8 @@ FLAGS
       --[no-]color               [env: ALLURE_COLOR] Force color output
       --debug                    [env: ALLURE_DEBUG] Print debug log output
       --flaky-warning-status     [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
+      --global-allure-exec       [env: ALLURE_GLOBAL_ALLURE_EXEC] Use globally installed allure executable instead of
+                                 the packaged one
       --ignore-missing-results   [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results and exit without
                                  error if no result paths found
       --report-name=<value>      [env: ALLURE_REPORT_NAME] Custom report name in Allure report
@@ -117,13 +121,13 @@ Generate and upload allure report to s3 bucket
 ```
 USAGE
   $ allure-report-publisher upload s3 -b <value> [-r <value>] [-c <value>] [--report-name <value>] [-o <value>]
-    [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary] [--collapse-summary]
-    [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results] [-p <value>] [--base-url <value>]
-    [--copy-latest] [--parallel <value>]
+    [--global-allure-exec] [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary]
+    [--collapse-summary] [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results] [-p <value>]
+    [--base-url <value>] [--copy-latest] [--parallel <value>]
 
 FLAGS
   -b, --bucket=<value>           (required) [env: ALLURE_BUCKET] Cloud storage bucket name
-  -c, --config=<value>           [env: ALLURE_CONFIG_PATH] The path to allure config file. Options provided here will
+  -c, --config=<value>           [env: ALLURE_CONFIG] The path to allure config file. Options provided here will
                                  override CLI flags
   -o, --output=<value>           [env: ALLURE_OUTPUT] Directory to generate the Allure report into
   -p, --prefix=<value>           [env: ALLURE_PREFIX] Prefix for report path in cloud storage
@@ -138,6 +142,8 @@ FLAGS
       --copy-latest              [env: ALLURE_COPY_LATEST] Keep copy of latest run report at base prefix
       --debug                    [env: ALLURE_DEBUG] Print debug log output
       --flaky-warning-status     [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
+      --global-allure-exec       [env: ALLURE_GLOBAL_ALLURE_EXEC] Use globally installed allure executable instead of
+                                 the packaged one
       --ignore-missing-results   [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results and exit without
                                  error if no result paths found
       --parallel=<value>         [default: 8, env: ALLURE_PARALLEL] Number of parallel threads for upload

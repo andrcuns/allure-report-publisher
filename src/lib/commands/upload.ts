@@ -39,6 +39,11 @@ export abstract class BaseUploadCommand extends Command {
       description: 'Directory to generate the Allure report into',
       env: 'ALLURE_OUTPUT',
     }),
+    'global-allure-exec': Flags.boolean({
+      description: 'Use globally installed allure executable instead of the packaged one',
+      env: 'ALLURE_GLOBAL_ALLURE_EXEC',
+      default: false,
+    }),
 
     // CI integration flags
     'ci-report-title': Flags.string({

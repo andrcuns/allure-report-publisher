@@ -26,7 +26,7 @@ RUN addgroup -g 1001 -S publisher && \
     adduser -u 1001 -S publisher -G publisher; \
     mkdir /app && chown publisher:publisher /app
 
-ENV PATH="$PATH:/app/bin"
+ENV PATH="$PATH:/app/bin:/app/node_modules/.bin"
 
 WORKDIR /app
 USER publisher
