@@ -130,7 +130,7 @@ class DefaultConfig implements AllureConfig {
 
   constructor(resultsGlob?: string, reportName?: string, output?: string, baseDir?: string) {
     this._configCreated = false
-    this._baseDir = baseDir ?? os.tmpdir()
+    this._baseDir = baseDir ?? path.join(os.tmpdir(), 'allure-report-publisher')
     this._output = output ?? path.join(this._baseDir, 'allure-report')
     this._configPath = path.join(this._baseDir, 'allurerc.json')
     this.reportName = reportName
