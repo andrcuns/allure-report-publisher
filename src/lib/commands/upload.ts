@@ -100,8 +100,8 @@ export abstract class BaseUploadCommand extends Command {
   protected async initConfig(): Promise<InferredFlags<typeof BaseUploadCommand.baseFlags>> {
     const {flags} = await this.parse(this.constructor as typeof BaseUploadCommand)
     const globalConfigOptions = {color: this.isColorEnabled(flags.color), debug: flags.debug}
-    logger.debug(`Initializing global config with options: ${JSON.stringify(globalConfigOptions)}`)
     globalConfig.initialize(globalConfigOptions)
+    logger.debug(`Parsed cli flags: ${JSON.stringify(flags, null, 2)}`)
 
     return flags
   }
