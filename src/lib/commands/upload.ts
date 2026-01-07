@@ -101,12 +101,14 @@ export abstract class BaseUploadCommand extends Command {
   protected async initConfig(): Promise<InferredFlags<typeof BaseUploadCommand.baseFlags>> {
     const {flags} = await this.parse(this.constructor as typeof BaseUploadCommand)
     const baseDir = path.join(isCI ? './' : os.tmpdir(), 'allure-report-publisher')
-    globalConfig.initialize({
+    const globalConfigOptions = {
       color: this.isColorEnabled(flags.color),
       debug: flags.debug,
       output: flags.output ?? path.join(baseDir, 'allure-report'),
       baseDir,
-    })
+    }
+    logger.debug(`Initializing global config with options: ${JSON.stringify(globalConfigOptions)}`)
+    globalConfig.initialize(globalConfigOptions)
 
     return flags
   }
@@ -258,7 +260,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
         await spin(this.createExecutorJson(uploader.reportUrl()), 'creating executor.json files')
       }
 
-      const reportGenerator = new ReportGenerator(allureConfig)
+      const reportGenerator = new ReportGenerator(allureConfig, flags['global-allure-exec'])
       await reportGenerator.execute()
 
       logger.section(`Uploading report to ${this.storageType}`)

@@ -39,7 +39,7 @@ export default class GitlabArtifacts extends BaseUploadCommand {
         await spin(this.createExecutorJson(uploader.reportUrl()), 'creating executor.json files')
       }
 
-      const reportGenerator = new ReportGenerator(allureConfig)
+      const reportGenerator = new ReportGenerator(allureConfig, flags['global-allure-exec'])
       await reportGenerator.execute()
 
       if (ciInfo && isPR && updateMode) {
