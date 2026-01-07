@@ -10,8 +10,6 @@ import {spin} from '../../utils/spinner.js'
 
 export default class GitlabArtifacts extends BaseUploadCommand {
   static override description = 'Generate report and output GitLab CI artifacts links'
-  // Disable strict mode so github actions and gitlab ci templates can use the same command
-  static strict = false
 
   async run() {
     const flags = await this.initConfig()
