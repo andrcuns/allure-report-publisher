@@ -204,10 +204,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
   }): BaseCloudUploader
 
   protected async initConfig() {
-    const flags = (await super.initConfig()) as InferredFlags<typeof BaseCloudUploadCommand.baseFlags>
-    globalConfig.parallel = flags.parallel
-
-    return flags
+    return (await super.initConfig()) as InferredFlags<typeof BaseCloudUploadCommand.baseFlags>
   }
 
   protected async validateInputs(flags: InferredFlags<typeof BaseCloudUploadCommand.baseFlags>) {
@@ -241,6 +238,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
         configPath: flags.config,
         reportName: flags['report-name'],
         resultsGlob: flags['results-glob'],
+        output: flags.output,
       })
       const uploader = this.getUploader({
         bucket: flags.bucket!,

@@ -1,10 +1,10 @@
 import {mkdirSync, readFileSync, writeFileSync} from 'node:fs'
+import os from 'node:os'
 import path from 'node:path'
 import {pathToFileURL} from 'node:url'
 import yaml from 'yaml'
 
 import {PluginName} from '../../types/index.js'
-import {globalConfig} from '../../utils/global-config.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 
@@ -32,29 +32,17 @@ export interface AllureConfig {
 
 // In CI environments, use relative paths within build dir
 const defaultGlobPattern = './**/allure-results'
-const defaultConfig: ConfigObject = {
-  output: globalConfig.output,
-  historyPath: path.join(globalConfig.baseDir, 'history.jsonl'),
-  appendHistory: true,
-  plugins: {
-    awesome: {
-      options: {
-        enabled: true,
-        singleFile: true,
-        reportName: 'Test Report',
-      },
-    },
-  },
-}
 
 class CustomConfig implements AllureConfig {
   private _configPath: string
-  private _parsedConfig: ConfigObject | Promise<ConfigObject> = defaultConfig
+  private _defaultConfig: ConfigObject
+  private _parsedConfig: ConfigObject | undefined
   public resultsGlob: string
 
   constructor(configPath: string, resultsGlob: string) {
     this._configPath = configPath
     this.resultsGlob = resultsGlob
+    this._defaultConfig = new DefaultConfig(resultsGlob).config
   }
 
   public configPath() {
@@ -71,28 +59,28 @@ class CustomConfig implements AllureConfig {
 
   public async outputPath() {
     const config = await this.customConfig()
-    return config.output || defaultConfig.output!
+    return config.output || this._defaultConfig.output!
   }
 
   public async plugins() {
     const config = await this.customConfig()
     const plugins: Set<PluginName> = new Set(['allure2', 'awesome', 'classic', 'csv', 'dashboard'])
-    const configPlugins = config?.plugins || defaultConfig.plugins!
+    const configPlugins = config.plugins || this._defaultConfig.plugins!
 
     return Object.entries(configPlugins)
       .filter(([pluginName, config]) => plugins.has(pluginName as PluginName) && (config.enabled ?? true))
       .map(([pluginName]) => pluginName as PluginName)
   }
 
-  private async customConfig() {
-    if (this._parsedConfig === defaultConfig) {
+  private async customConfig(): Promise<ConfigObject> {
+    if (this._parsedConfig === undefined) {
       this._parsedConfig = await spin(this.loadConfig(), 'loading custom allure config')
     }
 
-    return this._parsedConfig
+    return this._parsedConfig!
   }
 
-  private async loadConfig() {
+  private async loadConfig(): Promise<ConfigObject> {
     const ext = path.extname(this._configPath).toLowerCase()
     switch (ext) {
       case '.cjs':
@@ -133,28 +121,47 @@ class CustomConfig implements AllureConfig {
   }
 }
 class DefaultConfig implements AllureConfig {
-  private _configCreated: boolean
   private _configPath: string
+  private _configCreated: boolean
+  private _baseDir: string
+  private _output: string
   private reportName: string | undefined
   public resultsGlob: string
 
-  constructor(resultsGlob: string, reportName?: string) {
+  constructor(resultsGlob?: string, reportName?: string, output?: string, baseDir?: string) {
     this._configCreated = false
-    this._configPath = path.join(globalConfig.baseDir, 'allurerc.json')
+    this._baseDir = baseDir ?? os.tmpdir()
+    this._output = output ?? path.join(this._baseDir, 'allure-report')
+    this._configPath = path.join(this._baseDir, 'allurerc.json')
     this.reportName = reportName
-    this.resultsGlob = resultsGlob
+    this.resultsGlob = resultsGlob || defaultGlobPattern
   }
 
   public configPath() {
     if (this._configCreated) return this._configPath
 
-    mkdirSync(globalConfig.baseDir, {recursive: true})
-    const config = {...defaultConfig}
-    if (this.reportName) config.plugins!.awesome!.options!.reportName = this.reportName
-    writeFileSync(this._configPath, JSON.stringify(config, null, 2))
+    mkdirSync(this._baseDir, {recursive: true})
+    writeFileSync(this._configPath, JSON.stringify(this.config, null, 2))
     this._configCreated = true
 
     return this._configPath
+  }
+
+  public get config() {
+    return {
+      output: this._output,
+      historyPath: path.join(this._baseDir, 'history.jsonl'),
+      appendHistory: true,
+      plugins: {
+        awesome: {
+          options: {
+            enabled: true,
+            singleFile: true,
+            reportName: this.reportName ?? 'Test Report',
+          },
+        },
+      },
+    }
   }
 
   public async plugins() {
@@ -162,16 +169,22 @@ class DefaultConfig implements AllureConfig {
   }
 
   public async historyPath() {
-    return defaultConfig.historyPath!
+    return this.config.historyPath
   }
 
   public async outputPath() {
-    return defaultConfig.output!
+    return this._output
   }
 }
 
-export function getAllureConfig(opts: {configPath?: string; reportName?: string; resultsGlob?: string}): AllureConfig {
+export function getAllureConfig(opts: {
+  configPath?: string
+  reportName?: string
+  resultsGlob?: string
+  output?: string
+  baseDir?: string
+}): AllureConfig {
   if (opts.configPath) return new CustomConfig(opts.configPath, opts.resultsGlob || defaultGlobPattern)
 
-  return new DefaultConfig(opts.resultsGlob || defaultGlobPattern, opts.reportName)
+  return new DefaultConfig(opts.resultsGlob || defaultGlobPattern, opts.reportName, opts.output, opts.baseDir)
 }

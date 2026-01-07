@@ -23,6 +23,9 @@ export default class GitlabArtifacts extends BaseUploadCommand {
         configPath: flags.config,
         reportName: flags['report-name'],
         resultsGlob: flags['results-glob'],
+        output: flags.output,
+        // Use CI project dir as base dir to work with GitLab artifacts paths correctly
+        baseDir: process.env.CI_PROJECT_DIR,
       })
       const uploader = new GitlabArtifactsUploader({
         reportPath: await allureConfig.outputPath(),
