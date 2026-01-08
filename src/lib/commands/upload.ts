@@ -2,6 +2,7 @@ import {Command, Flags} from '@oclif/core'
 import {InferredFlags} from '@oclif/core/interfaces'
 import {existsSync, writeFileSync} from 'node:fs'
 import path from 'node:path'
+import supportsColor, {ColorSupport, ColorSupportLevel} from 'supports-color'
 
 import {UpdatePRMode} from '../../types/index.js'
 import {getAllureResultsPaths} from '../../utils/glob.js'
@@ -93,13 +94,9 @@ export abstract class BaseUploadCommand extends Command {
     return this._resultPaths
   }
 
-  protected isColorEnabled(color: boolean) {
-    return color ?? process.stdout.isTTY
-  }
-
   protected async initConfig(): Promise<InferredFlags<typeof BaseUploadCommand.baseFlags>> {
     const {flags} = await this.parse(this.constructor as typeof BaseUploadCommand)
-    const globalConfigOptions = {color: this.isColorEnabled(flags.color), debug: flags.debug}
+    const globalConfigOptions = {colorLevel: this.colorLevel(flags.color), debug: flags.debug}
     globalConfig.initialize(globalConfigOptions)
     logger.debug(`Parsed cli flags: ${JSON.stringify(flags, null, 2)}`)
 
@@ -124,7 +121,17 @@ export abstract class BaseUploadCommand extends Command {
     if (resultPaths === undefined) this.exit(0)
   }
 
-  protected async getAllureResults(resultsGlob: string, ignoreMissingResults: boolean): Promise<string[] | undefined> {
+  protected async createExecutorJson(reportUrl: string) {
+    for (const resultPath of this._resultPaths || []) {
+      const executorJson = path.join(resultPath, 'executor.json')
+      if (!existsSync(executorJson)) continue
+
+      logger.debug(`Creating executor.json at path: ${executorJson}`)
+      writeFileSync(executorJson, JSON.stringify(ciInfo?.executorJson(reportUrl), null, 2))
+    }
+  }
+
+  private async getAllureResults(resultsGlob: string, ignoreMissingResults: boolean): Promise<string[] | undefined> {
     if (this._resultPaths !== undefined) return this._resultPaths
 
     this._resultPaths = await spin(
@@ -136,14 +143,11 @@ export abstract class BaseUploadCommand extends Command {
     return this._resultPaths
   }
 
-  protected async createExecutorJson(reportUrl: string) {
-    for (const resultPath of this._resultPaths || []) {
-      const executorJson = path.join(resultPath, 'executor.json')
-      if (!existsSync(executorJson)) continue
+  private colorLevel(color: boolean | undefined): ColorSupportLevel {
+    const supportedLevel = (supportsColor.stdout as ColorSupport).level
+    if (color === undefined) return supportedLevel
 
-      logger.debug(`Creating executor.json at path: ${executorJson}`)
-      writeFileSync(executorJson, JSON.stringify(ciInfo?.executorJson(reportUrl), null, 2))
-    }
+    return color ? 3 : 0
   }
 }
 

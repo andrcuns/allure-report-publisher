@@ -1,12 +1,12 @@
-import supportsColor, {ColorSupport} from 'supports-color'
+import supportsColor, {ColorSupport, ColorSupportLevel} from 'supports-color'
 
 class GlobalConfig {
-  private _color: boolean
+  private _colorLevel: ColorSupportLevel
   private _debug: boolean
   private initialized: boolean
 
   constructor() {
-    this._color = (supportsColor.stdout as ColorSupport).hasBasic
+    this._colorLevel = (supportsColor.stdout as ColorSupport).level
     this._debug = false
     this.initialized = false
   }
@@ -16,20 +16,20 @@ class GlobalConfig {
     return this._debug
   }
 
-  public get color(): boolean {
-    return this._color
+  public get colorLevel(): ColorSupportLevel {
+    return this._colorLevel
   }
 
   public initialize(options: {
-    color?: boolean
+    colorLevel?: ColorSupportLevel
     debug?: boolean
   }): void {
     if (this.initialized) {
       throw new Error('Config has already been initialized')
     }
 
-    if (options.color !== undefined) {
-      this._color = options.color
+    if (options.colorLevel !== undefined) {
+      this._colorLevel = options.colorLevel
     }
 
     if (options.debug !== undefined) {
