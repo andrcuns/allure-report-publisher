@@ -141,7 +141,9 @@ class DefaultConfig implements AllureConfig {
     if (this._configCreated) return this._configPath
 
     mkdirSync(this._baseDir, {recursive: true})
-    writeFileSync(this._configPath, JSON.stringify(this.config, null, 2))
+    const configJson = JSON.stringify(this.config, null, 2)
+    writeFileSync(this._configPath, configJson)
+    logger.debug(`Created default allure config at path: ${this._configPath}\n${configJson}`)
     this._configCreated = true
 
     return this._configPath
