@@ -9,11 +9,13 @@ import {AllureConfig} from './config.js'
 
 export class ReportGenerator {
   private readonly allureConfig
+  private readonly globalExec: boolean
   private _outputPath: string | undefined
   private _generatedFiles: string[] | undefined
 
-  constructor(allureConfig: AllureConfig) {
+  constructor(allureConfig: AllureConfig, globalExec?: boolean) {
     this.allureConfig = allureConfig
+    this.globalExec = globalExec ?? false
   }
 
   public async execute() {
@@ -47,7 +49,7 @@ export class ReportGenerator {
     const args = ['generate', this.resultsGlob, '-c', this.allureConfig.configPath(), '-o', await this.outputPath()]
     try {
       logger.debug(`Running allure with args: ${args.join(' ')}`)
-      const result = await spawn('allure', args, {preferLocal: true})
+      const result = await spawn('allure', args, {preferLocal: !this.globalExec})
 
       logger.debug('Allure report generation completed successfully')
       if (result.output.trim().length > 0) logger.debug(`Allure output:\n${result.output}`)

@@ -10,8 +10,6 @@ import {spin} from '../../utils/spinner.js'
 
 export default class GitlabArtifacts extends BaseUploadCommand {
   static override description = 'Generate report and output GitLab CI artifacts links'
-  // Disable strict mode so github actions and gitlab ci templates can use the same command
-  static strict = false
 
   async run() {
     const flags = await this.initConfig()
@@ -25,6 +23,9 @@ export default class GitlabArtifacts extends BaseUploadCommand {
         configPath: flags.config,
         reportName: flags['report-name'],
         resultsGlob: flags['results-glob'],
+        output: flags.output,
+        // Use CI project dir as base dir to work with GitLab artifacts paths correctly
+        baseDir: process.env.CI_PROJECT_DIR,
       })
       const uploader = new GitlabArtifactsUploader({
         reportPath: await allureConfig.outputPath(),
@@ -39,7 +40,7 @@ export default class GitlabArtifacts extends BaseUploadCommand {
         await spin(this.createExecutorJson(uploader.reportUrl()), 'creating executor.json files')
       }
 
-      const reportGenerator = new ReportGenerator(allureConfig)
+      const reportGenerator = new ReportGenerator(allureConfig, flags['global-allure-exec'])
       await reportGenerator.execute()
 
       if (ciInfo && isPR && updateMode) {

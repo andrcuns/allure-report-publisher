@@ -67,13 +67,13 @@ export class GitlabArtifactsUploader {
     if (this._reportUrls !== undefined) return this._reportUrls
 
     const base = this.reportUrlBase()
-    const path = this.reportPath.replace('./', '')
+    const relativePath = path.relative(this.ciInfo.buildDir || '', this.reportPath)
     const {projectName, jobId} = this.ciInfo
-    const urls = [`${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${path}/index.html`]
+    const urls = [`${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${relativePath}/index.html`]
     if (this.plugins.length > 1) {
       urls.push(
         ...this.plugins.map(
-          (plugin) => `${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${path}/${plugin}/index.html`,
+          (plugin) => `${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${relativePath}/${plugin}/index.html`,
         ),
       )
     }
@@ -138,11 +138,12 @@ export class GitlabArtifactsUploader {
   }
 
   private async getHistoryFromArtifacts(jobId: number | string) {
-    logger.debug(`Downloading history file from artifacts of job ID: '${jobId}' at path: '${this.historyPath}'`)
+    const artifactPath = path.relative(this.ciInfo.buildDir || '', this.historyPath)
+    logger.debug(`Downloading history file from artifacts of job ID: '${jobId}' at path: '${artifactPath}'`)
     try {
       const artifact = await this.client.JobArtifacts.downloadArchive(this.ciInfo.projectId!, {
         jobId: Number(jobId),
-        artifactPath: this.historyPath,
+        artifactPath,
       })
       writeFileSync(this.historyPath, await artifact.text())
       logger.debug(`Successfully downloaded history artifact from job ID: '${jobId}'`)

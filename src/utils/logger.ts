@@ -1,6 +1,5 @@
 // eslint-disable-next-line unicorn/import-style
 import {Chalk, ChalkInstance} from 'chalk'
-import supportsColor, {ColorSupport} from 'supports-color'
 
 import {globalConfig} from './global-config.js'
 
@@ -8,8 +7,7 @@ let _chalk: ChalkInstance | undefined
 
 export const chalk = () => {
   if (!_chalk) {
-    const {level} = supportsColor.stdout as ColorSupport
-    _chalk = new Chalk({level: globalConfig.color ? level : 0})
+    _chalk = new Chalk({level: globalConfig.colorLevel})
   }
 
   return _chalk
@@ -60,7 +58,7 @@ export class Logger {
   }
 
   section(message: string): void {
-    if (globalConfig.color) {
+    if (this.chalk.level > 0) {
       console.log(this.chalk.bold.magenta(`\n${message}`))
     } else {
       console.log(`\n=== ${message} ===`)

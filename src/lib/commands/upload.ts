@@ -1,8 +1,8 @@
 import {Command, Flags} from '@oclif/core'
 import {InferredFlags} from '@oclif/core/interfaces'
 import {existsSync, writeFileSync} from 'node:fs'
-import os from 'node:os'
 import path from 'node:path'
+import supportsColor, {ColorSupport, ColorSupportLevel} from 'supports-color'
 
 import {UpdatePRMode} from '../../types/index.js'
 import {getAllureResultsPaths} from '../../utils/glob.js'
@@ -38,6 +38,11 @@ export abstract class BaseUploadCommand extends Command {
       char: 'o',
       description: 'Directory to generate the Allure report into',
       env: 'ALLURE_OUTPUT',
+    }),
+    'global-allure-exec': Flags.boolean({
+      description: 'Use globally installed allure executable instead of the packaged one',
+      env: 'ALLURE_GLOBAL_ALLURE_EXEC',
+      default: false,
     }),
 
     // CI integration flags
@@ -89,19 +94,11 @@ export abstract class BaseUploadCommand extends Command {
     return this._resultPaths
   }
 
-  protected isColorEnabled(color: boolean) {
-    return color ?? process.stdout.isTTY
-  }
-
   protected async initConfig(): Promise<InferredFlags<typeof BaseUploadCommand.baseFlags>> {
     const {flags} = await this.parse(this.constructor as typeof BaseUploadCommand)
-    const baseDir = path.join(isCI ? './' : os.tmpdir(), 'allure-report-publisher')
-    globalConfig.initialize({
-      color: this.isColorEnabled(flags.color),
-      debug: flags.debug,
-      output: flags.output ?? path.join(baseDir, 'allure-report'),
-      baseDir,
-    })
+    const globalConfigOptions = {colorLevel: this.colorLevel(flags.color), debug: flags.debug}
+    globalConfig.initialize(globalConfigOptions)
+    logger.debug(`Parsed cli flags: ${JSON.stringify(flags, null, 2)}`)
 
     return flags
   }
@@ -124,7 +121,17 @@ export abstract class BaseUploadCommand extends Command {
     if (resultPaths === undefined) this.exit(0)
   }
 
-  protected async getAllureResults(resultsGlob: string, ignoreMissingResults: boolean): Promise<string[] | undefined> {
+  protected async createExecutorJson(reportUrl: string) {
+    for (const resultPath of this._resultPaths || []) {
+      const executorJson = path.join(resultPath, 'executor.json')
+      if (!existsSync(executorJson)) continue
+
+      logger.debug(`Creating executor.json at path: ${executorJson}`)
+      writeFileSync(executorJson, JSON.stringify(ciInfo?.executorJson(reportUrl), null, 2))
+    }
+  }
+
+  private async getAllureResults(resultsGlob: string, ignoreMissingResults: boolean): Promise<string[] | undefined> {
     if (this._resultPaths !== undefined) return this._resultPaths
 
     this._resultPaths = await spin(
@@ -136,14 +143,11 @@ export abstract class BaseUploadCommand extends Command {
     return this._resultPaths
   }
 
-  protected async createExecutorJson(reportUrl: string) {
-    for (const resultPath of this._resultPaths || []) {
-      const executorJson = path.join(resultPath, 'executor.json')
-      if (!existsSync(executorJson)) continue
+  private colorLevel(color: boolean | undefined): ColorSupportLevel {
+    const supportedLevel = (supportsColor.stdout as ColorSupport).level
+    if (color === undefined) return supportedLevel
 
-      logger.debug(`Creating executor.json at path: ${executorJson}`)
-      writeFileSync(executorJson, JSON.stringify(ciInfo?.executorJson(reportUrl), null, 2))
-    }
+    return color ? 3 : 0
   }
 }
 
@@ -197,10 +201,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
   }): BaseCloudUploader
 
   protected async initConfig() {
-    const flags = (await super.initConfig()) as InferredFlags<typeof BaseCloudUploadCommand.baseFlags>
-    globalConfig.parallel = flags.parallel
-
-    return flags
+    return (await super.initConfig()) as InferredFlags<typeof BaseCloudUploadCommand.baseFlags>
   }
 
   protected async validateInputs(flags: InferredFlags<typeof BaseCloudUploadCommand.baseFlags>) {
@@ -234,6 +235,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
         configPath: flags.config,
         reportName: flags['report-name'],
         resultsGlob: flags['results-glob'],
+        output: flags.output,
       })
       const uploader = this.getUploader({
         bucket: flags.bucket!,
@@ -253,7 +255,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
         await spin(this.createExecutorJson(uploader.reportUrl()), 'creating executor.json files')
       }
 
-      const reportGenerator = new ReportGenerator(allureConfig)
+      const reportGenerator = new ReportGenerator(allureConfig, flags['global-allure-exec'])
       await reportGenerator.execute()
 
       logger.section(`Uploading report to ${this.storageType}`)

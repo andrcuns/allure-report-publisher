@@ -11,7 +11,6 @@ import {readFileSync, writeFileSync} from 'node:fs'
 import path from 'node:path'
 import pAll from 'p-all'
 
-import {globalConfig} from '../../../utils/global-config.js'
 import {logger} from '../../../utils/logger.js'
 import {BaseCloudUploader} from './base.js'
 
@@ -90,7 +89,7 @@ export class S3Uploader extends BaseCloudUploader {
       return () => this.uploadFile({filePath, key})
     })
 
-    await pAll(uploads, {concurrency: globalConfig.parallel})
+    await pAll(uploads, {concurrency: this.parallel})
   }
 
   protected async createLatestCopy() {
@@ -101,7 +100,7 @@ export class S3Uploader extends BaseCloudUploader {
       return () => this.copyFile({sourceKey, destinationKey})
     })
 
-    await pAll(copies, {concurrency: globalConfig.parallel})
+    await pAll(copies, {concurrency: this.parallel})
   }
 
   private async uploadFile(opts: {cacheControl?: string; filePath: string; key: string}) {
