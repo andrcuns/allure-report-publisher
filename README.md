@@ -177,7 +177,7 @@ docker run --rm -it \
 
 ## Allure configuration file
 
-It is possible to provide [Allure configuration file](https://allurereport.org/docs/v3/configure/) via `--config` flag. Any options within this file will override CLI flags. Dynamic javascript files are supported, but plain javascript object without the use of `defineConfig` is suggested due to `defineConfig` helper loading `allure` cli parser which will create error output.
+It is possible to provide [Allure configuration file](https://allurereport.org/docs/v3/configure/) via `--config` flag. Dynamic javascript files are supported, but plain javascript object without the use of `defineConfig` is suggested due to `defineConfig` helper loading `allure` cli parser which will create error output.
 
 # Storage providers
 
