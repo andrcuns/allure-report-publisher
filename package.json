@@ -92,7 +92,7 @@
     "lint": "eslint",
     "prepack": "oclif manifest && oclif readme",
     "postpack": "shx rm -f oclif.manifest.json",
-    "test": "c8 mocha --forbid-only \"test/**/*.test.ts\"",
+    "test": "c8 mocha",
     "version": "oclif readme && git add README.md",
     "prereadme": "shx rm -rf dist tsconfig.tsbuildinfo && tsc -b",
     "readme": "oclif readme"

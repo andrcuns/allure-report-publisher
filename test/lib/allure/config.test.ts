@@ -1,9 +1,13 @@
 import {expect} from 'chai'
+import dedent from 'dedent'
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
-import {join} from 'node:path'
 import {tmpdir} from 'node:os'
+import {join} from 'node:path'
 
 import {getAllureConfig} from '../../../src/lib/allure/config.js'
+import {globalConfig} from '../../../src/utils/global-config.js'
+
+globalConfig.initialize({disableOutput: true})
 
 describe('getAllureConfig', () => {
   let tempDir: string
@@ -88,10 +92,10 @@ describe('getAllureConfig', () => {
 
     it('loads config from YAML file', async () => {
       const configPath = join(tempDir, 'allure.config.yaml')
-      const yamlContent = `
-output: ${join(tempDir, 'report')}
-historyPath: ${join(tempDir, 'history.jsonl')}
-`
+      const yamlContent = dedent`
+        output: ${join(tempDir, 'report')}
+        historyPath: ${join(tempDir, 'history.jsonl')}
+      `
       writeFileSync(configPath, yamlContent)
 
       const config = getAllureConfig({configPath, resultsGlob: 'results'})
@@ -102,12 +106,11 @@ historyPath: ${join(tempDir, 'history.jsonl')}
 
     it('loads config from JS file with default export', async () => {
       const configPath = join(tempDir, 'allure.config.js')
-      const jsContent = `
-export default {
-  output: '${join(tempDir, 'report')}',
-  historyPath: '${join(tempDir, 'history.jsonl')}'
-};
-`
+      const jsContent = dedent`
+        export default {
+        output: '${join(tempDir, 'report')}',
+        historyPath: '${join(tempDir, 'history.jsonl')}'
+      };`
       writeFileSync(configPath, jsContent)
 
       const config = getAllureConfig({configPath, resultsGlob: 'results'})

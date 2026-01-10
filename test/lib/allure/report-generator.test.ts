@@ -1,15 +1,20 @@
 import {expect} from 'chai'
-import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
-import {join} from 'node:path'
-import {tmpdir} from 'node:os'
-import * as sinon from 'sinon'
 import esmock from 'esmock'
+import {SubprocessError} from 'nano-spawn'
+import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
+import {tmpdir} from 'node:os'
+import {join} from 'node:path'
+import * as sinon from 'sinon'
+
+import type {ReportGenerator} from '../../../src/lib/allure/report-generator.js'
+
+import {AllureConfig} from '../../../src/lib/allure/config.js'
 
 describe('ReportGenerator', () => {
   let tempDir: string
-  let allureConfig: any
+  let allureConfig: AllureConfig
   let spawnStub: sinon.SinonStub
-  let ReportGenerator: any
+  let Generator: typeof ReportGenerator
 
   beforeEach(async () => {
     tempDir = join(tmpdir(), `report-gen-test-${Date.now()}`)
@@ -31,7 +36,7 @@ describe('ReportGenerator', () => {
       },
     })
 
-    ReportGenerator = module.ReportGenerator
+    Generator = module.ReportGenerator
   })
 
   afterEach(() => {
@@ -49,7 +54,7 @@ describe('ReportGenerator', () => {
         output: 'Report successfully generated',
       })
 
-      const generator = new ReportGenerator(allureConfig)
+      const generator = new Generator(allureConfig)
       await generator.execute()
 
       expect(spawnStub.calledOnce).to.be.true
@@ -72,7 +77,7 @@ describe('ReportGenerator', () => {
         output: '',
       })
 
-      const generator = new ReportGenerator(allureConfig, false)
+      const generator = new Generator(allureConfig, false)
       await generator.execute()
 
       expect(spawnStub.firstCall.args[2]).to.deep.equal({preferLocal: true})
@@ -86,14 +91,14 @@ describe('ReportGenerator', () => {
         output: '',
       })
 
-      const generator = new ReportGenerator(allureConfig, true)
+      const generator = new Generator(allureConfig, true)
       await generator.execute()
 
       expect(spawnStub.firstCall.args[2]).to.deep.equal({preferLocal: false})
     })
 
     it('throws error when allure command fails', async () => {
-      const error = new Error('Allure failed') as any
+      const error = new Error('Allure failed') as SubprocessError
       error.command = 'allure generate'
       error.exitCode = 1
       error.durationMs = 1000
@@ -101,22 +106,22 @@ describe('ReportGenerator', () => {
 
       spawnStub.rejects(error)
 
-      const generator = new ReportGenerator(allureConfig)
+      const generator = new Generator(allureConfig)
 
       try {
         await generator.execute()
         expect.fail('Expected error to be thrown')
-      } catch (err) {
-        expect((err as Error).message).to.include('Allure report generation failed')
-        expect((err as Error).message).to.include('Allure failed')
-        expect((err as Error).message).to.include('Error: Could not generate report')
+      } catch (error_) {
+        expect((error_ as Error).message).to.include('Allure report generation failed')
+        expect((error_ as Error).message).to.include('Allure failed')
+        expect((error_ as Error).message).to.include('Error: Could not generate report')
       }
     })
   })
 
   describe('summary()', () => {
     it('throws error when called before execute', () => {
-      const generator = new ReportGenerator(allureConfig)
+      const generator = new Generator(allureConfig)
 
       try {
         generator.summary()
@@ -144,7 +149,7 @@ describe('ReportGenerator', () => {
         output: '',
       })
 
-      const generator = new ReportGenerator(allureConfig)
+      const generator = new Generator(allureConfig)
       await generator.execute()
 
       const summary = generator.summary()
@@ -160,7 +165,7 @@ describe('ReportGenerator', () => {
         output: '',
       })
 
-      const generator = new ReportGenerator(allureConfig)
+      const generator = new Generator(allureConfig)
       await generator.execute()
 
       try {
