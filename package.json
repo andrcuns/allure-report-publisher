@@ -43,6 +43,7 @@
     "eslint": "^9.39.2",
     "eslint-config-oclif": "^6.0.128",
     "eslint-config-prettier": "^10.1.8",
+    "esmock": "^2.7.3",
     "mocha": "^11.7.5",
     "oclif": "^4.22.61",
     "shx": "^0.4.0",

@@ -108,6 +108,9 @@ importers:
       eslint-config-prettier:
         specifier: ^10.1.8
         version: 10.1.8(eslint@9.39.2(supports-color@10.2.2))
+      esmock:
+        specifier: ^2.7.3
+        version: 2.7.3
       mocha:
         specifier: ^11.7.5
         version: 11.7.5
@@ -2691,6 +2694,10 @@ packages:
     peerDependenciesMeta:
       jiti:
         optional: true
+
+  esmock@2.7.3:
+    resolution: {integrity: sha512-/M/YZOjgyLaVoY6K83pwCsGE1AJQnj4S4GyXLYgi/Y79KL8EeW6WU7Rmjc89UO7jv6ec8+j34rKeWOfiLeEu0A==}
+    engines: {node: '>=14.16.0'}
 
   espree@10.4.0:
     resolution: {integrity: sha512-j6PAQ2uUr79PZhBjP5C5fhl8e39FmRnOjsD5lGnWrFU8i2G776tBK7+nP8KuQUTTyAZUwfQqXAgrVH5MbH9CYQ==}
@@ -8411,6 +8418,8 @@ snapshots:
       optionator: 0.9.4
     transitivePeerDependencies:
       - supports-color
+
+  esmock@2.7.3: {}
 
   espree@10.4.0:
     dependencies:
