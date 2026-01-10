@@ -4,10 +4,12 @@ class GlobalConfig {
   private _colorLevel: ColorSupportLevel
   private _debug: boolean
   private initialized: boolean
+  public disableOutput: boolean
 
   constructor() {
     this._colorLevel = (supportsColor.stdout as ColorSupport).level
     this._debug = false
+    this.disableOutput = false
     this.initialized = false
   }
 
@@ -23,6 +25,7 @@ class GlobalConfig {
   public initialize(options: {
     colorLevel?: ColorSupportLevel
     debug?: boolean
+    disableOutput?: boolean
   }): void {
     if (this.initialized) {
       throw new Error('Config has already been initialized')
@@ -36,7 +39,18 @@ class GlobalConfig {
       this._debug = options.debug
     }
 
+    if (options.disableOutput !== undefined) {
+      this.disableOutput = options.disableOutput
+    }
+
     this.initialized = true
+  }
+
+  public reset(): void {
+    this._colorLevel = (supportsColor.stdout as ColorSupport).level
+    this._debug = false
+    this.disableOutput = false
+    this.initialized = false
   }
 }
 

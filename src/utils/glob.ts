@@ -44,7 +44,7 @@ export async function getAllureResultsPaths(pattern: string, ignoreMissing?: boo
   const containsResults = paths.some((path) => globSync(`${path}/*.json`, {nodir: true}).length > 0)
   if (!containsResults) {
     const msg = [
-      `No allure results found in the matched directories for pattern '${pattern}'`,
+      `No allure results found in the matched directories '${paths}' for pattern '${pattern}'`,
       'Make sure the directories contain valid allure result files (*.json)',
     ]
     raiseError(msg)
