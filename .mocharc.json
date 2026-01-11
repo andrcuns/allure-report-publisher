@@ -1,7 +1,7 @@
 {
   "require": [
     "tsx",
-    "test/hooks.ts"
+    "test/support/hooks.ts"
   ],
   "watch-extensions": [
     "ts"
@@ -16,5 +16,11 @@
   "node-option": [
     "import=tsx",
     "experimental-specifier-resolution=node"
+  ],
+  "spec": [
+    "test/**/*.test.ts"
+  ],
+  "extension": [
+    "ts"
   ]
 }

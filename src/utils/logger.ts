@@ -13,6 +13,10 @@ export const chalk = () => {
   return _chalk
 }
 
+export const resetChalk = () => {
+  _chalk = undefined
+}
+
 export class Logger {
   private debugBuffer: string[] = []
 
@@ -21,6 +25,7 @@ export class Logger {
   }
 
   flushDebug(): void {
+    if (globalConfig.disableOutput) return
     if (this.debugBuffer.length === 0) return
 
     console.log(this.chalk.gray('====== DEBUG LOG OUTPUT ======'))
@@ -33,31 +38,45 @@ export class Logger {
   }
 
   debug(message: string): void {
+    if (globalConfig.disableOutput) return
+
     const timestamp = new Date().toISOString()
     this.debugBuffer.push(`[${timestamp}] ${message}`)
   }
 
   error(message: string): void {
+    if (globalConfig.disableOutput) return
+
     console.error(this.chalk.red(message))
   }
 
   info(message: string): void {
+    if (globalConfig.disableOutput) return
+
     console.log(this.chalk.blue('ℹ'), message)
   }
 
   log(message: string): void {
+    if (globalConfig.disableOutput) return
+
     console.log(message)
   }
 
   success(message: string): void {
+    if (globalConfig.disableOutput) return
+
     console.log(this.chalk.green('✓'), message)
   }
 
   warn(message: string): void {
+    if (globalConfig.disableOutput) return
+
     console.warn(this.chalk.yellow(message))
   }
 
   section(message: string): void {
+    if (globalConfig.disableOutput) return
+
     if (this.chalk.level > 0) {
       console.log(this.chalk.bold.magenta(`\n${message}`))
     } else {

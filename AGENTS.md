@@ -203,7 +203,7 @@ logger.debug('Debug details')               // Debug info (buffered)
 
 ```typescript
 import {runCommand} from '@oclif/test'
-import {expect} from 'chai'
+import {expect} from '../../../support/setup.js'
 
 describe('ComponentName', () => {
   describe('methodName()', () => {
