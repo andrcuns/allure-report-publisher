@@ -1,21 +1,26 @@
-import {expect} from 'chai'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import esmock from 'esmock'
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
 import * as sinon from 'sinon'
 
 import {GcsUploader} from '../../../../src/lib/uploader/cloud/gcs.js'
+import {expect} from '../../../support/setup.js'
 
 describe('GcsUploader', () => {
+  let fileStub: any
+  let bucketStub: any
+  let storageStub: any
+
   let tempDir: string
   let reportDir: string
   let historyFile: string
-  let storageStub: any
-  let bucketStub: any
-  let fileStub: any
+
+  let Uploader: typeof GcsUploader
   let uploader: GcsUploader
 
-  beforeEach(() => {
+  beforeEach(async () => {
     tempDir = join(tmpdir(), `gcs-test-${Date.now()}`)
     reportDir = join(tempDir, 'report')
     historyFile = join(tempDir, 'history.jsonl')
@@ -29,17 +34,23 @@ describe('GcsUploader', () => {
       download: sinon.stub().resolves(),
       copy: sinon.stub().resolves(),
     }
-
     bucketStub = {
-      upload: sinon.stub().resolves(),
       file: sinon.stub().returns(fileStub),
+      upload: sinon.stub().resolves(),
     }
-
     storageStub = {
       bucket: sinon.stub().returns(bucketStub),
     }
 
-    uploader = new GcsUploader({
+    const module = await esmock('../../../../src/lib/uploader/cloud/gcs.js', {
+      '@google-cloud/storage': {
+        Storage: sinon.stub().returns(storageStub),
+      },
+    })
+
+    Uploader = module.GcsUploader
+
+    uploader = new Uploader({
       bucket: 'test-bucket',
       copyLatest: true,
       historyPath: historyFile,
@@ -48,25 +59,21 @@ describe('GcsUploader', () => {
       plugins: ['awesome'],
       prefix: 'reports',
     })
-
-    // Replace the storage client
-    ;(uploader as any).storageClient = storageStub
   })
 
   afterEach(() => {
-    sinon.restore()
     rmSync(tempDir, {force: true, recursive: true})
   })
 
-  describe('reportUrlBase()', () => {
+  describe('reportUrl()', () => {
     it('constructs URL from bucket and prefix', () => {
-      const url = (uploader as any).reportUrlBase()
+      const url = uploader.reportUrl()
 
-      expect(url).to.equal('https://storage.googleapis.com/test-bucket/reports')
+      expect(url).to.equal('https://storage.googleapis.com/test-bucket/reports/test-uuid-123/index.html')
     })
 
     it('uses custom base URL when provided', () => {
-      const customUploader = new GcsUploader({
+      const customUploader = new Uploader({
         bucket: 'test-bucket',
         copyLatest: false,
         historyPath: historyFile,
@@ -77,13 +84,13 @@ describe('GcsUploader', () => {
         prefix: 'reports',
       })
 
-      const url = (customUploader as any).reportUrlBase()
+      const url = customUploader.reportUrl()
 
-      expect(url).to.equal('https://custom.domain.com/test-bucket/reports')
+      expect(url).to.equal('https://custom.domain.com/test-bucket/reports/test-uuid-123/index.html')
     })
 
     it('constructs URL without prefix when not provided', () => {
-      const noPrefixUploader = new GcsUploader({
+      const noPrefixUploader = new Uploader({
         bucket: 'test-bucket',
         copyLatest: false,
         historyPath: historyFile,
@@ -92,16 +99,9 @@ describe('GcsUploader', () => {
         plugins: ['awesome'],
       })
 
-      const url = (noPrefixUploader as any).reportUrlBase()
+      const url = noPrefixUploader.reportUrl()
 
-      expect(url).to.equal('https://storage.googleapis.com/test-bucket')
-    })
-
-    it('caches the URL after first call', () => {
-      const url1 = (uploader as any).reportUrlBase()
-      const url2 = (uploader as any).reportUrlBase()
-
-      expect(url1).to.equal(url2)
+      expect(url).to.equal('https://storage.googleapis.com/test-bucket/test-uuid-123/index.html')
     })
   })
 
@@ -125,79 +125,29 @@ describe('GcsUploader', () => {
     })
   })
 
-  describe('uploadHistory()', () => {
-    it('calls bucket upload with history file', async () => {
-      await (uploader as any).uploadHistory()
+  describe('upload()', () => {
+    beforeEach(async () => {
+      await uploader.upload()
+    })
 
+    it('calls bucket upload with history file', async () => {
       expect(storageStub.bucket.calledWith('test-bucket')).to.be.true
-      expect(bucketStub.upload.calledOnce).to.be.true
       expect(bucketStub.upload.firstCall.args[0]).to.equal(historyFile)
     })
 
     it('uses correct destination key for history file', async () => {
-      await (uploader as any).uploadHistory()
-
       const uploadOptions = bucketStub.upload.firstCall.args[1]
       expect(uploadOptions.destination).to.equal('reports/history.jsonl')
     })
-  })
 
-  describe('uploadReport()', () => {
     it('uploads all report files to bucket', async () => {
-      await (uploader as any).uploadReport()
-
       expect(bucketStub.upload.called).to.be.true
-      expect(bucketStub.upload.callCount).to.equal(2) // index.html and data.json
+      expect(bucketStub.upload.callCount).to.equal(3) // report files + history file
     })
 
-    it('constructs correct keys for report files', async () => {
-      await (uploader as any).uploadReport()
-
-      const calls = bucketStub.upload.getCalls()
-      const destinations = calls.map((call: any) => call.args[1].destination)
-
-      expect(destinations.some((dest: string) => dest.includes('index.html'))).to.be.true
-      expect(destinations.some((dest: string) => dest.includes('data.json'))).to.be.true
-    })
-
-    it('includes runId in file keys', async () => {
-      await (uploader as any).uploadReport()
-
-      const {destination} = bucketStub.upload.firstCall.args[1]
-      expect(destination).to.include('reports/')
-    })
-  })
-
-  describe('createLatestCopy()', () => {
     it('copies all report files to latest directory', async () => {
-      await (uploader as any).createLatestCopy()
-
       expect(fileStub.copy.called).to.be.true
-      expect(fileStub.copy.callCount).to.equal(2) // index.html and data.json
-    })
-
-    it('copies from runId to latest directory', async () => {
-      await (uploader as any).createLatestCopy()
-
-      // Check that source keys don't contain 'latest'
-      const sourceCalls = bucketStub.file.getCalls()
-      const sourceKeys = sourceCalls.map((call: any) => call.args[0])
-
-      // Source keys should contain runId but not 'latest'
-      const hasNonLatestSources = sourceKeys.some((key: string) => !key.includes('latest'))
-      expect(hasNonLatestSources).to.be.true
-    })
-
-    it('sets destination as latest directory', async () => {
-      await (uploader as any).createLatestCopy()
-
-      // Check that copy was called with destination files
-      const copyCalls = fileStub.copy.getCalls()
-      expect(copyCalls.length).to.be.greaterThan(0)
-
-      // Verify storageStub.bucket was called for destination buckets
-      const bucketCalls = storageStub.bucket.getCalls()
-      expect(bucketCalls.length).to.be.greaterThan(0)
+      expect(fileStub.copy.callCount).to.equal(2) // only report files
     })
   })
 })

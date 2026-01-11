@@ -1,10 +1,11 @@
-import {expect} from 'chai'
+/* eslint-disable camelcase */
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
-import {join} from 'node:path'
 import {tmpdir} from 'node:os'
+import {join} from 'node:path'
 
 import {GithubCiInfo} from '../../../../src/lib/ci/info/github.js'
 import {GithubCiProvider} from '../../../../src/lib/ci/providers/github.js'
+import {expect} from '../../../support/setup.js'
 
 describe('GithubCiInfo', () => {
   let tempDir: string
@@ -102,12 +103,7 @@ describe('GithubCiInfo', () => {
 
       const info = new GithubCiInfo()
 
-      try {
-        const _ = info.buildName
-        expect.fail('Expected error to be thrown')
-      } catch (error) {
-        expect((error as Error).message).to.equal('Build name not found in environment variables')
-      }
+      expect(() => info.buildName).to.throw(Error, 'Build name not found in environment variables')
     })
   })
 
@@ -147,12 +143,7 @@ describe('GithubCiInfo', () => {
 
       const info = new GithubCiInfo()
 
-      try {
-        const _ = info.prId
-        expect.fail('Expected error to be thrown')
-      } catch (error) {
-        expect((error as Error).message).to.include('GITHUB_EVENT_PATH is not set')
-      }
+      expect(() => info.prId).to.throw(Error, 'GITHUB_EVENT_PATH is not set')
     })
   })
 
@@ -211,8 +202,7 @@ describe('GithubCiInfo', () => {
         type: 'github',
         reportName: 'AllureReport',
         reportUrl: 'https://example.com/report',
-        url: 'https://github.com'
-,
+        url: 'https://github.com',
         buildUrl: 'https://github.com/owner/repo/actions/runs/12345',
         buildOrder: '12345',
         buildName: 'test-job',

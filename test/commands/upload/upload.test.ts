@@ -1,5 +1,6 @@
 import {runCommand} from '@oclif/test'
-import {expect} from 'chai'
+
+import {expect} from '../../support/setup.js'
 
 describe('upload', () => {
   it('runs upload to s3 bucket', async () => {

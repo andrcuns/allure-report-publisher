@@ -1,9 +1,9 @@
-import {expect} from 'chai'
 import dedent from 'dedent'
 import {createStubInstance} from 'sinon'
 
 import {ReportSummary} from '../../../../src/lib/ci/pr/report-summary.js'
 import {UrlSectionBuilder} from '../../../../src/lib/ci/pr/url-section-builder.js'
+import {expect} from '../../../support/setup.js'
 
 describe('UrlSectionBuilder', () => {
   const defaultArgs = {

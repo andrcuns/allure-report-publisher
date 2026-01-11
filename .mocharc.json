@@ -1,7 +1,7 @@
 {
   "require": [
     "tsx",
-    "test/hooks.ts"
+    "test/support/hooks.ts"
   ],
   "watch-extensions": [
     "ts"

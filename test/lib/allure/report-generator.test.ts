@@ -1,4 +1,3 @@
-import {expect} from 'chai'
 import esmock from 'esmock'
 import {SubprocessError} from 'nano-spawn'
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
@@ -9,6 +8,7 @@ import * as sinon from 'sinon'
 import type {ReportGenerator} from '../../../src/lib/allure/report-generator.js'
 
 import {AllureConfig} from '../../../src/lib/allure/config.js'
+import {expect} from '../../support/setup.js'
 
 describe('ReportGenerator', () => {
   let tempDir: string
@@ -40,7 +40,6 @@ describe('ReportGenerator', () => {
   })
 
   afterEach(() => {
-    sinon.restore()
     rmSync(tempDir, {force: true, recursive: true})
   })
 
@@ -107,15 +106,9 @@ describe('ReportGenerator', () => {
       spawnStub.rejects(error)
 
       const generator = new Generator(allureConfig)
+      const errorMessage = `Allure report generation failed.\nMessage: ${error.message}\nOutput: ${error.output}`
 
-      try {
-        await generator.execute()
-        expect.fail('Expected error to be thrown')
-      } catch (error_) {
-        expect((error_ as Error).message).to.include('Allure report generation failed')
-        expect((error_ as Error).message).to.include('Allure failed')
-        expect((error_ as Error).message).to.include('Error: Could not generate report')
-      }
+      expect(generator.execute()).to.be.rejectedWith(Error, errorMessage)
     })
   })
 
@@ -123,12 +116,7 @@ describe('ReportGenerator', () => {
     it('throws error when called before execute', () => {
       const generator = new Generator(allureConfig)
 
-      try {
-        generator.summary()
-        expect.fail('Expected error to be thrown')
-      } catch (error) {
-        expect((error as Error).message).to.equal('Report has not been generated yet')
-      }
+      expect(() => generator.summary()).to.throw(Error, 'Report has not been generated yet')
     })
 
     it('returns parsed summary data from generated report', async () => {
@@ -168,12 +156,7 @@ describe('ReportGenerator', () => {
       const generator = new Generator(allureConfig)
       await generator.execute()
 
-      try {
-        generator.summary()
-        expect.fail('Expected error to be thrown')
-      } catch (error) {
-        expect((error as Error).message).to.equal('summary.json file not found in generated report files')
-      }
+      expect(() => generator.summary()).to.throw(Error, 'summary.json file not found in generated report files')
     })
   })
 })

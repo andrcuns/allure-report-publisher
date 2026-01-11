@@ -1,15 +1,18 @@
-import {expect} from 'chai'
-import * as sinon from 'sinon'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import dedent from 'dedent'
 import esmock from 'esmock'
+import * as sinon from 'sinon'
 
-import {UrlSectionBuilder} from '../../../../src/lib/ci/pr/url-section-builder.js'
 import {ReportSummary} from '../../../../src/lib/ci/pr/report-summary.js'
+import {UrlSectionBuilder} from '../../../../src/lib/ci/pr/url-section-builder.js'
+import {GitlabCiProvider} from '../../../../src/lib/ci/providers/gitlab.js'
+import {expect} from '../../../support/setup.js'
 
 describe('GitlabCiProvider', () => {
   let originalEnv: NodeJS.ProcessEnv
-  let gitlabClientStub: any
   let urlSectionBuilder: UrlSectionBuilder
-  let GitlabCiProvider: any
+  let CiProvider: typeof GitlabCiProvider
+  let gitlabClientStub: any
 
   beforeEach(async () => {
     originalEnv = {...process.env}
@@ -51,12 +54,11 @@ describe('GitlabCiProvider', () => {
       },
     })
 
-    GitlabCiProvider = module.GitlabCiProvider
+    CiProvider = module.GitlabCiProvider
   })
 
   afterEach(() => {
     process.env = originalEnv
-    sinon.restore()
   })
 
   describe('addReportSection()', () => {
@@ -67,7 +69,7 @@ describe('GitlabCiProvider', () => {
       })
       gitlabClientStub.MergeRequests.edit.resolves()
 
-      const provider = new GitlabCiProvider(urlSectionBuilder, 'description')
+      const provider = new CiProvider(urlSectionBuilder, 'description')
 
       await provider.addReportSection()
 
@@ -82,7 +84,7 @@ describe('GitlabCiProvider', () => {
       gitlabClientStub.MergeRequestNotes.all.resolves([])
       gitlabClientStub.MergeRequestNotes.create.resolves({id: 999})
 
-      const provider = new GitlabCiProvider(urlSectionBuilder, 'comment')
+      const provider = new CiProvider(urlSectionBuilder, 'comment')
 
       await provider.addReportSection()
 
@@ -95,20 +97,20 @@ describe('GitlabCiProvider', () => {
     it('updates existing comment when mode is comment and comment exists', async () => {
       const existingComment = {
         id: 777,
-        body: `<!-- allure -->
-# 📝 Test Report
-<!-- jobs -->
-<!-- test-job -->
-**test-job**: ✅ [test report](https://example.com/old-report)
-<!-- test-job -->
-<!-- jobs -->
-<!-- allurestop -->`,
+        body: dedent`<!-- allure -->
+          # 📝 Test Report
+          <!-- jobs -->
+          <!-- test-job -->
+          **test-job**: ✅ [test report](https://example.com/old-report)
+          <!-- test-job -->
+          <!-- jobs -->
+          <!-- allurestop -->`,
       }
 
       gitlabClientStub.MergeRequestNotes.all.resolves([existingComment])
       gitlabClientStub.MergeRequestNotes.edit.resolves({id: 777})
 
-      const provider = new GitlabCiProvider(urlSectionBuilder, 'comment')
+      const provider = new CiProvider(urlSectionBuilder, 'comment')
 
       await provider.addReportSection()
 
@@ -122,27 +124,17 @@ describe('GitlabCiProvider', () => {
     it('throws error when MR IID not available for description mode', async () => {
       delete process.env.CI_MERGE_REQUEST_IID
 
-      const provider = new GitlabCiProvider(urlSectionBuilder, 'description')
+      const provider = new CiProvider(urlSectionBuilder, 'description')
 
-      try {
-        await provider.addReportSection()
-        expect.fail('Expected error to be thrown')
-      } catch (error) {
-        expect((error as Error).message).to.include('Could not detect merge request iid')
-      }
+      expect(provider.addReportSection()).to.be.rejectedWith(Error, 'Could not detect merge request iid')
     })
 
     it('throws error when MR IID not available for comment mode', async () => {
       delete process.env.CI_MERGE_REQUEST_IID
 
-      const provider = new GitlabCiProvider(urlSectionBuilder, 'comment')
+      const provider = new CiProvider(urlSectionBuilder, 'comment')
 
-      try {
-        await provider.addReportSection()
-        expect.fail('Expected error to be thrown')
-      } catch (error) {
-        expect((error as Error).message).to.include('Could not detect merge request iid')
-      }
+      expect(provider.addReportSection()).to.be.rejectedWith(Error, 'Could not detect merge request iid')
     })
 
     it('handles empty MR description', async () => {
@@ -152,7 +144,7 @@ describe('GitlabCiProvider', () => {
       })
       gitlabClientStub.MergeRequests.edit.resolves()
 
-      const provider = new GitlabCiProvider(urlSectionBuilder, 'description')
+      const provider = new CiProvider(urlSectionBuilder, 'description')
 
       await provider.addReportSection()
 
@@ -163,7 +155,7 @@ describe('GitlabCiProvider', () => {
       gitlabClientStub.MergeRequestNotes.all.resolves([])
       gitlabClientStub.MergeRequestNotes.create.resolves({id: 999})
 
-      const provider = new GitlabCiProvider(urlSectionBuilder, 'comment')
+      const provider = new CiProvider(urlSectionBuilder, 'comment')
 
       await provider.addReportSection()
 

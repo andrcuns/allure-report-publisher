@@ -1,7 +1,6 @@
-import {expect} from 'chai'
-
 import {GitlabCiInfo} from '../../../../src/lib/ci/info/gitlab.js'
 import {GitlabCiProvider} from '../../../../src/lib/ci/providers/gitlab.js'
+import {expect} from '../../../support/setup.js'
 
 describe('GitlabCiInfo', () => {
   let originalEnv: NodeJS.ProcessEnv
@@ -184,12 +183,7 @@ describe('GitlabCiInfo', () => {
 
       const info = new GitlabCiInfo()
 
-      try {
-        const _ = info.buildName
-        expect.fail('Expected error to be thrown')
-      } catch (error) {
-        expect((error as Error).message).to.equal('Build name not found in environment variables')
-      }
+      expect(() => info.buildName).to.throw(Error, 'Build name not found in environment variables')
     })
   })
 

@@ -1,13 +1,10 @@
-import {expect} from 'chai'
 import dedent from 'dedent'
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
 
 import {getAllureConfig} from '../../../src/lib/allure/config.js'
-import {globalConfig} from '../../../src/utils/global-config.js'
-
-globalConfig.initialize({disableOutput: true})
+import {expect} from '../../support/setup.js'
 
 describe('getAllureConfig', () => {
   let tempDir: string
@@ -125,12 +122,7 @@ describe('getAllureConfig', () => {
 
       const config = getAllureConfig({configPath, resultsGlob: 'results'})
 
-      try {
-        await config.outputPath()
-        expect.fail('Expected error to be thrown')
-      } catch (error) {
-        expect((error as Error).message).to.include('No default export found')
-      }
+      await expect(config.outputPath()).to.be.rejectedWith(Error, 'No default export found')
     })
 
     it('throws error when history path is not defined', async () => {
@@ -139,12 +131,7 @@ describe('getAllureConfig', () => {
 
       const config = getAllureConfig({configPath, resultsGlob: 'results'})
 
-      try {
-        await config.historyPath()
-        expect.fail('Expected error to be thrown')
-      } catch (error) {
-        expect((error as Error).message).to.equal('History path is not defined in the allure config')
-      }
+      await expect(config.historyPath()).to.be.rejectedWith(Error, 'History path is not defined in the allure config')
     })
 
     it('returns enabled plugins from custom config', async () => {

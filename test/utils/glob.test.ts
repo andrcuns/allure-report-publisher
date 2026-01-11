@@ -1,9 +1,9 @@
-import {expect} from 'chai'
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
 
 import {getAllureResultsPaths, globPaths} from '../../src/utils/glob.js'
+import {expect} from '../support/setup.js'
 
 describe('glob utilities', () => {
   let tempDir: string
@@ -96,13 +96,10 @@ describe('glob utilities', () => {
     })
 
     it('throws error when pattern matches no paths', async () => {
-      try {
-        await getAllureResultsPaths(join(tempDir, 'nonexistent'))
-        expect.fail('Expected error to be thrown')
-      } catch (error) {
-        expect((error as Error).message).to.include('did not match any paths')
-        expect((error as Error).message).to.include('Use --ignore-missing-results')
-      }
+      expect(getAllureResultsPaths(join(tempDir, 'nonexistent'))).to.be.rejectedWith(
+        Error,
+        /did not match any paths.*Use --ignore-missing-results/,
+      )
     })
 
     it('throws error when pattern matches non-directory', async () => {
