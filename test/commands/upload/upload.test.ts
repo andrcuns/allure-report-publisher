@@ -26,6 +26,16 @@ describe('upload', () => {
   })
 
   describe('s3', () => {
+    let commandError: Error | undefined
+    let output: string
+
+    afterEach(function () {
+      if (this.currentTest?.state === 'failed') {
+        console.log('Command failed:', commandError?.message)
+        console.log(`Test output:\n${output}`)
+      }
+    })
+
     it('runs s3 upload command', async function () {
       if (process.env.E2E_TEST !== 'true') return this.skip()
 
@@ -45,7 +55,11 @@ describe('upload', () => {
         '--copy-latest',
         '--debug',
       ]
-      const {stdout} = await runCommand(`upload s3 ${args.join(' ')}`)
+      const {stdout, error} = await runCommand(`upload s3 ${args.join(' ')}`)
+      commandError = error
+      output = stdout
+
+      expect(error).to.be.undefined
       expect(stdout).to.match(new RegExp(`${AWS_ENDPOINT}/allure-reports/${prefix}/[\\w/]+/index.html`))
     })
   })
