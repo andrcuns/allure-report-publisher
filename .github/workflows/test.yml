@@ -58,33 +58,67 @@ jobs:
         uses: actions/upload-artifact@v6
         if: always() && matrix.node == '25.x'
         with:
-          name: coverage
+          name: coverage-unit
           path: coverage/
           retention-days: 1
 
-  publish-coverage:
+  npm:
     runs-on: ubuntu-latest
     needs: test
     if: always()
-    name: publish coverage report
+    name: e2e (npm)
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Download coverage report
+      - name: Set up PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '25.x'
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Download allure reports
         uses: actions/download-artifact@v7
         with:
-          name: coverage
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
+          pattern: allure-reports-*
+          path: tmp/allure-results
+      - name: Set up Minio
+        run: |
+          mkdir -p minio/allure-reports
+          docker run -d \
+            --name minio \
+            --volume "$(pwd)/minio":/data \
+            --publish 9000:9000 \
+            quay.io/minio/minio:latest \
+            server /data
+      - name: Run e2e upload test
+        env:
+          E2E_TEST: 'true'
+          ALLURE_JOB_NAME: e2e-npm
+          ALLURE_RESULTS_GLOB: 'tmp/allure-results/*'
+          AWS_ENDPOINT: http://localhost:9000
+          AWS_FORCE_PATH_STYLE: 'true'
+          AWS_ACCESS_KEY_ID: minioadmin
+          AWS_SECRET_ACCESS_KEY: minioadmin
+          GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm run test --grep 'runs s3 upload command'
+      - name: Save coverage
+        uses: actions/upload-artifact@v6
         if: always()
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          name: coverage-e2e
+          path: coverage/
+          retention-days: 1
 
-  s3:
+  docker:
     runs-on: ubuntu-latest
     needs: test
     if: always()
-    name: e2e (s3)
+    name: e2e (docker)
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -136,7 +170,7 @@ jobs:
             -e AWS_FORCE_PATH_STYLE="true" \
             -e AWS_ACCESS_KEY_ID="minioadmin" \
             -e AWS_SECRET_ACCESS_KEY="minioadmin" \
-            -e ALLURE_JOB_NAME="test" \
+            -e ALLURE_JOB_NAME="e2e-docker" \
             --network allure \
             publisher:latest \
             upload s3 \
@@ -152,3 +186,23 @@ jobs:
               --copy-latest \
               --color \
               --debug
+
+  publish-coverage:
+    runs-on: ubuntu-latest
+    needs:
+      - test
+      - npm
+    if: always()
+    name: publish coverage report
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Download coverage report
+        uses: actions/download-artifact@v7
+        with:
+          pattern: coverage-*
+          path: coverage/
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

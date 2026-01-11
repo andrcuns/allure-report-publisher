@@ -23,7 +23,7 @@ function fail(spinner: Spinner, error: Error) {
   const msg = `${spinner.text} ... ${chalk().red('failed')}`
   if (spinner.isSpinning) {
     spinner.error(msg)
-  } else {
+  } else if (!globalConfig.disableOutput) {
     console.log(`${chalk().red('✖')} ${msg}`)
   }
 
@@ -35,7 +35,7 @@ function warn(spinner: Spinner, error: Error): undefined {
   const msg = `${spinner.text} ... ${chalk().yellow('warning')}`
   if (spinner.isSpinning) {
     spinner.warning(msg)
-  } else {
+  } else if (!globalConfig.disableOutput) {
     console.log(`${chalk().yellow('⚠')} ${msg}`)
   }
 
@@ -49,8 +49,8 @@ export async function spin<T>(
   message: string,
   options: {ignoreError?: boolean} = {},
 ): Promise<T | undefined> {
-  // Disable spinner by default on CI environments
-  const silent = isCI || process.stdout.isTTY === false
+  // Disable spinner by default on CI environments or if output is explicitly disabled
+  const silent = globalConfig.disableOutput || isCI || process.stdout.isTTY === false
   const spinner = yoctoSpinner({text: message})
   if (!silent) spinner.start()
 
