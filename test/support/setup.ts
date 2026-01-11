@@ -3,7 +3,7 @@ import chaiAsPromised from 'chai-as-promised'
 
 import {globalConfig} from '../../src/utils/global-config'
 
-globalConfig.initialize({disableOutput: true, debug: true})
+if (process.env.E2E_TEST !== 'true') globalConfig.initialize({disableOutput: true, debug: true})
 
 chai.use(chaiAsPromised)
 

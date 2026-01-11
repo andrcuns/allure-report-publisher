@@ -1,13 +1,8 @@
 import {runCommand} from '@oclif/test'
 
-import {globalConfig} from '../../../src/utils/global-config.js'
 import {expect} from '../../support/setup.js'
 
 describe('upload', () => {
-  beforeEach(() => {
-    globalConfig.disableOutput = false
-  })
-
   describe('help', () => {
     it('prints s3 upload command help', async () => {
       const {stdout} = await runCommand('upload s3 --help')
@@ -43,7 +38,7 @@ describe('upload', () => {
       if (!AWS_ENDPOINT || !AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY) throw new Error('Missing aws env variables')
 
       const prefix = `allure-report-publisher/${process.env.GITHUB_REF ?? 'local'}`
-      const args = [
+      const flags = [
         '--config=allurerc.mjs',
         '--bucket=allure-reports',
         `--prefix=${prefix}`,
@@ -55,7 +50,7 @@ describe('upload', () => {
         '--copy-latest',
         '--debug',
       ]
-      const {stdout, error} = await runCommand(`upload s3 ${args.join(' ')}`)
+      const {stdout, error} = await runCommand(`upload s3 ${flags.join(' ')}`)
       commandError = error
       output = stdout
 
