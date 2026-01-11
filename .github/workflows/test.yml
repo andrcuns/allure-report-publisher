@@ -98,11 +98,12 @@ jobs:
       - name: Run e2e upload test
         env:
           AWS_ENDPOINT: http://localhost:9000
-          AWS_FORCE_PATH_STYLE: true
+          AWS_FORCE_PATH_STYLE: 'true'
           AWS_ACCESS_KEY_ID: minioadmin
           AWS_SECRET_ACCESS_KEY: minioadmin
           GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ALLURE_JOB_NAME: e2e-npm
+          E2E_TEST: 'true'
         run: pnpm run test --grep 'runs s3 upload command'
       - name: Save coverage
         uses: actions/upload-artifact@v6
