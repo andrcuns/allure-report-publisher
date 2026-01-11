@@ -1,4 +1,4 @@
-import {readFileSync, writeFileSync} from 'node:fs'
+import {existsSync, writeFileSync} from 'node:fs'
 
 import {logger} from '../../../utils/logger.js'
 import {GithubCiInfo} from '../info/github.js'
@@ -104,8 +104,8 @@ export class GithubCiProvider extends BaseCiProvider {
       throw new Error('GITHUB_STEP_SUMMARY is not set in the environment')
     }
 
-    if (!readFileSync(path, 'utf8')) {
-      throw new Error('GITHUB_STEP_SUMMARY file is empty')
+    if (!existsSync(path)) {
+      throw new Error(`GITHUB_STEP_SUMMARY file does not exist at path: ${path}`)
     }
 
     return path
