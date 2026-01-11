@@ -9,18 +9,23 @@ import {GcsUploader} from '../../../../src/lib/uploader/cloud/gcs.js'
 import {expect} from '../../../support/setup.js'
 
 describe('GcsUploader', () => {
-  let fileStub: any
-  let bucketStub: any
-  let storageStub: any
-
   let tempDir: string
   let reportDir: string
   let historyFile: string
 
+  let fileStub: any
+  let bucketStub: any
+  let storageStub: any
+
   let Uploader: typeof GcsUploader
   let uploader: GcsUploader
 
+  let originalEnv: NodeJS.ProcessEnv
+
   beforeEach(async () => {
+    originalEnv = {...process.env}
+    delete process.env.GITHUB_RUN_ID
+
     tempDir = join(tmpdir(), `gcs-test-${Date.now()}`)
     reportDir = join(tempDir, 'report')
     historyFile = join(tempDir, 'history.jsonl')
@@ -62,6 +67,7 @@ describe('GcsUploader', () => {
   })
 
   afterEach(() => {
+    process.env = originalEnv
     rmSync(tempDir, {force: true, recursive: true})
   })
 
