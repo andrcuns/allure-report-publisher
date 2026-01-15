@@ -1,4 +1,4 @@
 [tools]
 pnpm = "10.26"
-node = "25.2"
+node = "25.3"
 pre-commit = { version = "4.5.1", postinstall = "mise x pre-commit -- pre-commit install --install-hooks" }
