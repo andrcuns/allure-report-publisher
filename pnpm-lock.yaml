@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@aws-sdk/client-s3':
         specifier: ^3.0.0
-        version: 3.970.0
+        version: 3.974.0
       '@gitbeaker/rest':
         specifier: ^43.8.0
         version: 43.8.0
@@ -28,10 +28,10 @@ importers:
         version: 21.0.0
       allure:
         specifier: ^3.0.0
-        version: 3.0.0(typescript@5.9.3)
+        version: 3.0.1(typescript@5.9.3)
       allure-js-commons:
         specifier: ^3.4.3
-        version: 3.4.4
+        version: 3.4.5
       chai-as-promised:
         specifier: ^8.0.2
         version: 8.0.2(chai@6.2.2)
@@ -135,92 +135,92 @@ importers:
 
 packages:
 
-  '@allurereport/charts-api@3.0.0':
-    resolution: {integrity: sha512-S2KJQh433EOk9S6Sczg4pUw6leZbsv2DsUmFijkVgoKo0PrvrhuXM9waoKA0GKI16qK6KomIIDbmjuGqkFjsxg==}
+  '@allurereport/charts-api@3.0.1':
+    resolution: {integrity: sha512-ucqFi7FFf6/D3YnAfmUrkcvS+4YylgnINWxZ5Ap3OzpA1MZzDvbSRGTWEeBxyUraDeL8cYcD2S2fsJg5/a4BIA==}
 
-  '@allurereport/ci@3.0.0':
-    resolution: {integrity: sha512-5Uz9YszXFtHx6kZnNUXwGcaOBYzuOX31eWAJULtqz3tb3itabW/lO4kPKyOUdIhNNJcrJvoP+YR1VsQ7g/PmYg==}
+  '@allurereport/ci@3.0.1':
+    resolution: {integrity: sha512-A3jTfaySSFvKZG7YAjsTlsEvdcAW29voYIYRK5YZ8tvdBDhBggdAAtgrELA3pXX0dZA19FVJo+NoUB4QGSxsLA==}
 
-  '@allurereport/core-api@3.0.0':
-    resolution: {integrity: sha512-U9CNmXt+DRCCSv+QckOuq5kd9DBtzcWI8b+/xDJVNrbkpmfRn59NIBD3N+EvzJKD/5KU8f73W2d7Bul3W8NYGQ==}
+  '@allurereport/core-api@3.0.1':
+    resolution: {integrity: sha512-CLdHjipiDtRXzFd74xwk32oNhoUjuFR/K8xtleFPfF5z9irag4lga3jFWw0Yof5YixQjig3z/q5jbFQEaeTJVw==}
 
-  '@allurereport/core@3.0.0':
-    resolution: {integrity: sha512-OktdtjujhoWY7JL1NLhtRquNIqdIiJqbMvzunn6MXl/zk9xpYN5TYB8BT27KQ0gOqWIxogTpAJNIXqijMia5Bw==}
+  '@allurereport/core@3.0.1':
+    resolution: {integrity: sha512-6o9ISLKIZzKudygfx2D9Wze6OwnLQrACcyHjzVCufJFO6LQRlx28/GV11YmE2BbCNuicoN6vav4pZb6km/c2oQ==}
 
-  '@allurereport/directory-watcher@3.0.0':
-    resolution: {integrity: sha512-ACBYPUoKU/NAVllRnNAJiLZgFZ0CJmskDqjUCe0ksIBXN+WiivVY+1mGxMylXnRGdwzsU4NpYgkRQKpsfW0vPQ==}
+  '@allurereport/directory-watcher@3.0.1':
+    resolution: {integrity: sha512-WCZc2DlGN4RjoEfXv3wHWF/1gzMqoR4faEFpgYLntBjXsq+pczTLT73AzTw59K1YwTkeHbznBCulYrj7kicwwg==}
 
-  '@allurereport/plugin-allure2@3.0.0':
-    resolution: {integrity: sha512-cB90/mRg/fopH0pLUNIlyU3qSCWkt4brcfbYqhT+0y4JtCjIjwWNOKTAnJE7RlcmRjd1LhIaa5ykMtz+ozyBEw==}
+  '@allurereport/plugin-allure2@3.0.1':
+    resolution: {integrity: sha512-zgPW5iuaKISI8fk0ByXCm88jYL7FQZg6y3MgPC4JeCNTO1GUNk/SXtjz4N3sMqNNgoExv7AqQndyHfbZ5sQsUg==}
 
-  '@allurereport/plugin-api@3.0.0':
-    resolution: {integrity: sha512-jevzWRV/ZTaLvwqlbtaJG/1mNRTs4YDQnSgr7buyP8caKwe76Lqi1ScpH6O9SPdjr2Ti8UyhS3KPYj5leHmxxQ==}
+  '@allurereport/plugin-api@3.0.1':
+    resolution: {integrity: sha512-c29npZNNjs8XrOJr3dr07cOgD1ogsEuwB9g6PYc1DkqpYyr+0QPBsySuGKVlj4wcE01NxdPeqL3BLJ+RxwuOJQ==}
 
-  '@allurereport/plugin-awesome@3.0.0':
-    resolution: {integrity: sha512-dEOswQVNU/445mmTocIx7DCB80MIqnJVB5IKFDUFfazpZwUfEf+VNTfnX6Xuw0JUkswIAd91OMB6Tmsxflqy/Q==}
+  '@allurereport/plugin-awesome@3.0.1':
+    resolution: {integrity: sha512-zbqDZHuPNDy+yQrPiUbPbQJm3RSUBgKPgBURpOXrwhIZtWPTMfzlCLz+k3wuZY/SWKaw3KDJGG5XVYSMu9HmWw==}
 
-  '@allurereport/plugin-classic@3.0.0':
-    resolution: {integrity: sha512-zKu1BExZ1fHeGKIimGcF6eDPe0J3cpVfRld9hw3f1GigpJDyvr0w0luTv0jUsehAIlgwvfeMJvycBYUoUcMG2g==}
+  '@allurereport/plugin-classic@3.0.1':
+    resolution: {integrity: sha512-/LsFI7R9yB7xO3/GxCvisWD+LFKBFRyYvYAI4M1xYmtno8J39DeheIHMsRo9h8LWuwtwoeFqvG8qf63DZqmbqA==}
 
-  '@allurereport/plugin-csv@3.0.0':
-    resolution: {integrity: sha512-aVfGOkKz2Iuw9A4s/Aj5ttRufqCXPuTzU9qTsJahusjqpYT9Rt/sFd6lF3QNB7wLxPLT9rn+883VmDr0pBElvA==}
+  '@allurereport/plugin-csv@3.0.1':
+    resolution: {integrity: sha512-1B4QGfvGY97CJwGr3PaE3NtNp7obL8MF3HXWRrbkmRhRi1mfbXhuze8FBHd11Wb53RvuFVBOmRN18rd65X+m1Q==}
 
-  '@allurereport/plugin-dashboard@3.0.0':
-    resolution: {integrity: sha512-WQOPfPb88LmXu7GFAZAYpbk8j9ipkAsFIXtGSjeLLvSMdXN2ggV51Nft/1Pj/L/ln9qSO3JX5eU4SdoaaQW8ww==}
+  '@allurereport/plugin-dashboard@3.0.1':
+    resolution: {integrity: sha512-mRAP+Nui9RjFkzO+q2+YJNs/mI1R1b8LQBIy0R3OxjJCFJ8AwydzAM/oaqsbe3qqgbrXFnc2aun/TypR+UwCwA==}
 
-  '@allurereport/plugin-jira@3.0.0':
-    resolution: {integrity: sha512-e73T7VDUXaU93+X6fF1UWYlsNi2OyJYRSaEAhJpMtFYvZy54LsWtxYiCs7S2821U17z87o0TRmWNciLoXM2X1A==}
+  '@allurereport/plugin-jira@3.0.1':
+    resolution: {integrity: sha512-nrzWvMvCi6frfh6u6F2ABGVvRSMPh2vNUnKaMOh6ZdDXAzE/4Z+xli45LSiqd5YXOGow390Ar8CA6NQIkKK6Qg==}
 
-  '@allurereport/plugin-log@3.0.0':
-    resolution: {integrity: sha512-9WfpWkO8dLn2J8CRd5ywibOI+h0oEA4nynPWytfCXkzlLj6rVP5cB473zUIjxEeJO15J55Fcwv/XXU8nABycsQ==}
+  '@allurereport/plugin-log@3.0.1':
+    resolution: {integrity: sha512-EtcS05HNuf21wyUHQlHsW7GXAKweqXVvx4g8fcRgJwPVOZL+3lb1AevnU8bdzwUjTLqN2QtTA8gbWCGwEbFjbA==}
 
-  '@allurereport/plugin-progress@3.0.0':
-    resolution: {integrity: sha512-tnmiNTHQon+DfeZMSnWMwgLDMmTwf2ScuEjGMQaRjbM9QbEmRtjpQozwhD5Ueh7NPuzWGgHOMgFGXzPtHKgTYw==}
+  '@allurereport/plugin-progress@3.0.1':
+    resolution: {integrity: sha512-stNGY2tn+SuO8HmtEr/U0pm0aFjHL1hGD4s/bp377wZGzRdJrEscoaYsNKokQT0ILLqZusWU8y9u1Tx+6Fr9Jg==}
 
-  '@allurereport/plugin-server-reload@3.0.0':
-    resolution: {integrity: sha512-RFnoHzi3VjGuJ0kqDu71IBk8afLWDRVyt9t4+HlxNHAhdHxSIPrc1mO8Xs9y/6Ieji6q5rhNsd6oiuaCnJtmbg==}
+  '@allurereport/plugin-server-reload@3.0.1':
+    resolution: {integrity: sha512-vWG5cgf5fo6MJsMFUtL6k8BWqjJqAN/9Wk1dI/kHSmKRoNjaCKwjHXtaUe+gTk+m9RQAtDYwX5AFc0VNKYMsYQ==}
 
-  '@allurereport/plugin-slack@3.0.0':
-    resolution: {integrity: sha512-RUPg0G78uJPKxq9PXTsN3OatA7Klp7nm05FDgryVOAjuf2+WLS4ffzyOsUGIMEvvVvmew7xtL9tqoKq9RLZVug==}
+  '@allurereport/plugin-slack@3.0.1':
+    resolution: {integrity: sha512-q4Ty59vfNikEmv/H8whY3KS0DAjZCd27DS+mtAzBwzBrOfWiozkwoaypptsj+mYrpgaDADwnEcW59E6mVsiEXw==}
 
-  '@allurereport/plugin-testplan@3.0.0':
-    resolution: {integrity: sha512-1m1DHlaTQ2wYeQPxu89SUNdRMkhRfIibhdeNHh3r4zdb6QDqpBylEC2CFS5ENuymcjipmD5ee0DOKZH3YrSXeQ==}
+  '@allurereport/plugin-testplan@3.0.1':
+    resolution: {integrity: sha512-GIqk2kb5E+Cg5zyCQXYp9LYQL0S/ozW677xUyafy6xjgjvAxoQtbeIcbZ5r8U/PvOQACB9dwrpYLMmA8LVeIKg==}
 
-  '@allurereport/reader-api@3.0.0':
-    resolution: {integrity: sha512-FPrUR5Mgw2JJKgh2aBB2rDh/tP+BwcElOvT+Yv9cZEsL3yUWo8OY7kpB4dTSSP4plXb8YemeBMO10HVbrNO/bA==}
+  '@allurereport/reader-api@3.0.1':
+    resolution: {integrity: sha512-eq1UN0mNYhOZEaiuuRt93MSsG6oU5qwW50ZisljYFk6SdE6DJvuvDlXvjlFMZjsvOeZf0ILr3zHi0NjR6V5Ozg==}
 
-  '@allurereport/reader@3.0.0':
-    resolution: {integrity: sha512-NmUeBEOTt82AaBIJBObi4BxdjDSkmUSgDNiiixswpj2QT+es0YDf3Xsqs/bTymI9xDgVQCBL+yF74VqH887ZAw==}
+  '@allurereport/reader@3.0.1':
+    resolution: {integrity: sha512-yEHXpejfZrH9JrvUlr5Y5LfJ87D3KW+TaEC3MzgHDIfGQK3nEbvN8IWN9X1GzGAgEug6b7QcrQ3mWvKpIIfZnQ==}
 
-  '@allurereport/service@3.0.0':
-    resolution: {integrity: sha512-uxz/WnwKERGqgFJEtutxcg5K3OnSjoyVRpeVUxSpTyvifvdG4kai/jpDDSXXd3An/ude9Vr503HzmkghY19y2A==}
+  '@allurereport/service@3.0.1':
+    resolution: {integrity: sha512-ZKwKIyqBzRikDR2Ji+Pp7hupvW72zpNFNZrO5y7p9RqEipCGRVKAmUEShiA/EeHYpmOUgx/CpveKM5HDWRwezg==}
 
-  '@allurereport/static-server@3.0.0':
-    resolution: {integrity: sha512-+FniczhXkdV1J811+xEvJa9h8g10hhcb02eA5C+Ln+tHDr8a0xohZXcxqmILghxzQjYsY3Yz4lYl+qXeiS42Jw==}
+  '@allurereport/static-server@3.0.1':
+    resolution: {integrity: sha512-HZC9oI8w6HSm/aBjgnWKYhvGpGaOWZk1sRl3di6hoOWYFUkHtB9CdVjrVF7Tnw/wbq0qBR+XmyCAWGBban9pHQ==}
 
-  '@allurereport/summary@3.0.0':
-    resolution: {integrity: sha512-Fh2GwHuH/J9CwVAvv4GjN8S42jBy1wIFsCZJAVmzH62awYSfxYu2ruMvOICXIxNrL7z4Decfp39/zGJlJ/IqOA==}
+  '@allurereport/summary@3.0.1':
+    resolution: {integrity: sha512-NFswKaPZ5B5WT159y1vzDdpixd2QhE7Dcqzn+oSdK53sHTuHdDodmLZWzRfOuKrz+8jdCJ9WWeOh7AYiT1qOGA==}
 
-  '@allurereport/web-allure2@3.0.0':
-    resolution: {integrity: sha512-YvkOA/VSxb9E7bRWpfz/1ZMJNsALzYa0gko1i6jIWMGXqHkbeb4K6I/r6sOaGZA839PyD04ix637Wg2930GNeQ==}
+  '@allurereport/web-allure2@3.0.1':
+    resolution: {integrity: sha512-Pg+5cHswp+XF7veXDiue4XyEeUcLp1ma1YufvKOuCk+BxranFlCKryqPrQeo1GKsGKk82QX8OR94cTS5dFniLg==}
 
-  '@allurereport/web-awesome@3.0.0':
-    resolution: {integrity: sha512-HzjG+h+aVGdxUqqsZJIRwOzUfWCx75MSjQxQPV7Kb/fetyfS6xDOiS5qSRkM+cn4WChYbuVne0CzgRVuFVoILQ==}
+  '@allurereport/web-awesome@3.0.1':
+    resolution: {integrity: sha512-ySejW26REBhqZDmYTSEBNkEqVWDx0weAQ6K+8BNUdqIg7XqrNFPlpnbtNk9RTqpaN+MYcTPDLagR6cId1cot4A==}
 
-  '@allurereport/web-classic@3.0.0':
-    resolution: {integrity: sha512-mrPZbtaKkcIWpuGIYPskIJ/ujyzbjWRCbgRWGnrlImR/8TcZ1N4FqAClc8VHDha13XknDeGx5dhhUpTNGB0iNg==}
+  '@allurereport/web-classic@3.0.1':
+    resolution: {integrity: sha512-nVzXDPqJmrXleLjEmQH1yz3mKTp5oMhE/W14dzUL0vkfV/mmd1zWhztbXVGVoscLbpUHQwv/SUnIbmZDOjf2Xg==}
 
-  '@allurereport/web-commons@3.0.0':
-    resolution: {integrity: sha512-r2Nu5EG+/HIf52wqrB26LMhFOByOdCM6PVfbv9bNCbtJ/S3CSPBIMLO5k/YHR0EzDJ6A14Lzj4KPS8cYieh35g==}
+  '@allurereport/web-commons@3.0.1':
+    resolution: {integrity: sha512-hM5ScgSozVB0RlQmXo6pXiYG61KoznEbWo+QP33JkcuIjHU2kFiqYaIXi1SaiR5+HYygDzXPrE9laBbgsiPmFg==}
 
-  '@allurereport/web-components@3.0.0':
-    resolution: {integrity: sha512-WXW1lT/P7niXxemrHAMAUgb1CcyGCejEPO16Ed+VEJNt3C7BNMOBxcwR7cSNxMNf40Ol2QcXWXGvlPzwVgx3fg==}
+  '@allurereport/web-components@3.0.1':
+    resolution: {integrity: sha512-ym7cF3movCrf25SXYOKh/WHvNxRLzDYr6plHSwshm108IX2oeEdXxnXZ9x4XEp/LjPxFFYqLa1NN1H3EjPGdFA==}
 
-  '@allurereport/web-dashboard@3.0.0':
-    resolution: {integrity: sha512-ma3Ndug76pEJITkWShAh5j4T7cYDdYf5jE5WKTIKpHI3aWJX5E2SsYmalW+WgI01loHiK6dj68JRUXDQXTDA0A==}
+  '@allurereport/web-dashboard@3.0.1':
+    resolution: {integrity: sha512-gwtrLutJWlxlVKmMfqiztTE5qeheBOZFDxmxHR3Ek+iCwnLWTnKfjoxxOEMW0Om6VzKZR4ztr8nWLDlbADnb/w==}
 
-  '@allurereport/web-summary@3.0.0':
-    resolution: {integrity: sha512-a7OfH1m3pSXqKdGxLguQI/Je8Lxg6rxob6XlPnO3IDY4yGUaFIHX2CVnysjylsj+Jpzyrek124o36tl8uG2ZCQ==}
+  '@allurereport/web-summary@3.0.1':
+    resolution: {integrity: sha512-rSNmf2KG82CTVLsuhm9IJGae8MnWQZtTrr/9RXFcVnykFqO9G16SrtE9lNj/f5ElTDiTZT4WJHVfhBpRWSj+yA==}
 
   '@aws-crypto/crc32@5.2.0':
     resolution: {integrity: sha512-nLbCWqQNgUiwwtFsen1AdzAtvuLRsQS8rYgMuxCrdKf9kOssamGLuPwyTY9wyYblNr9+1XM8v6zoDTPPSIeANg==}
@@ -249,128 +249,223 @@ packages:
     resolution: {integrity: sha512-8+EX29bGGjBvIx8z7qFh8B+y8RUAqAohbfnUTNC/zZxmk+hYIMyCWoT4YPJyfrWgMcN186PwjVRLuyNuDZ2B9g==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-s3@3.970.0':
-    resolution: {integrity: sha512-mDC792KkFzLZG9PS1Fv9b18lEzmSNBjAdweLJ83D2CZu6ved9+Pr/Dr+FRs0kSxqY+sUUUuIBmvDYHXY8E8EzA==}
+  '@aws-sdk/client-s3@3.974.0':
+    resolution: {integrity: sha512-X+vpXNJ8cU8Iw1FtDgDHxo9z6RxlXfcTtpdGnKws4rk+tCYKSAor/DG6BRMzbh4E5xAA7DiU1Ny3BTrRRSt/Yg==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/client-sso@3.970.0':
     resolution: {integrity: sha512-ArmgnOsSCXN5VyIvZb4kSP5hpqlRRHolrMtKQ/0N8Hw4MTb7/IeYHSZzVPNzzkuX6gn5Aj8txoUnDPM8O7pc9g==}
     engines: {node: '>=20.0.0'}
 
+  '@aws-sdk/client-sso@3.974.0':
+    resolution: {integrity: sha512-ci+GiM0c4ULo4D79UMcY06LcOLcfvUfiyt8PzNY0vbt5O8BfCPYf4QomwVgkNcLLCYmroO4ge2Yy1EsLUlcD6g==}
+    engines: {node: '>=20.0.0'}
+
   '@aws-sdk/core@3.970.0':
     resolution: {integrity: sha512-klpzObldOq8HXzDjDlY6K8rMhYZU6mXRz6P9F9N+tWnjoYFfeBMra8wYApydElTUYQKP1O7RLHwH1OKFfKcqIA==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/crc64-nvme@3.969.0':
-    resolution: {integrity: sha512-IGNkP54HD3uuLnrPCYsv3ZD478UYq+9WwKrIVJ9Pdi3hxPg8562CH3ZHf8hEgfePN31P9Kj+Zu9kq2Qcjjt61A==}
+  '@aws-sdk/core@3.972.0':
+    resolution: {integrity: sha512-nEeUW2M9F+xdIaD98F5MBcQ4ITtykj3yKbgFZ6J0JtL3bq+Z90szQ6Yy8H/BLPYXTs3V4n9ifnBo8cprRDiE6A==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/core@3.973.0':
+    resolution: {integrity: sha512-qy3Fmt8z4PRInM3ZqJmHihQ2tfCdj/MzbGaZpuHjYjgl1/Gcar4Pyp/zzHXh9hGEb61WNbWgsJcDUhnGIiX1TA==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/crc64-nvme@3.972.0':
+    resolution: {integrity: sha512-ThlLhTqX68jvoIVv+pryOdb5coP1cX1/MaTbB9xkGDCbWbsqQcLqzPxuSoW1DCnAAIacmXCWpzUNOB9pv+xXQw==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/credential-provider-env@3.970.0':
     resolution: {integrity: sha512-rtVzXzEtAfZBfh+lq3DAvRar4c3jyptweOAJR2DweyXx71QSMY+O879hjpMwES7jl07a3O1zlnFIDo4KP/96kQ==}
     engines: {node: '>=20.0.0'}
 
+  '@aws-sdk/credential-provider-env@3.972.1':
+    resolution: {integrity: sha512-/etNHqnx96phy/SjI0HRC588o4vKH5F0xfkZ13yAATV7aNrb+5gYGNE6ePWafP+FuZ3HkULSSlJFj0AxgrAqYw==}
+    engines: {node: '>=20.0.0'}
+
   '@aws-sdk/credential-provider-http@3.970.0':
     resolution: {integrity: sha512-CjDbWL7JxjLc9ZxQilMusWSw05yRvUJKRpz59IxDpWUnSMHC9JMMUUkOy5Izk8UAtzi6gupRWArp4NG4labt9Q==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/credential-provider-http@3.972.1':
+    resolution: {integrity: sha512-AeopObGW5lpWbDRZ+t4EAtS7wdfSrHPLeFts7jaBzgIaCCD7TL7jAyAB9Y5bCLOPF+17+GL54djCCsjePljUAw==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/credential-provider-ini@3.970.0':
     resolution: {integrity: sha512-L5R1hN1FY/xCmH65DOYMXl8zqCFiAq0bAq8tJZU32mGjIl1GzGeOkeDa9c461d81o7gsQeYzXyqFD3vXEbJ+kQ==}
     engines: {node: '>=20.0.0'}
 
+  '@aws-sdk/credential-provider-ini@3.972.1':
+    resolution: {integrity: sha512-OdbJA3v+XlNDsrYzNPRUwr8l7gw1r/nR8l4r96MDzSBDU8WEo8T6C06SvwaXR8SpzsjO3sq5KMP86wXWg7Rj4g==}
+    engines: {node: '>=20.0.0'}
+
   '@aws-sdk/credential-provider-login@3.970.0':
     resolution: {integrity: sha512-C+1dcLr+p2E+9hbHyvrQTZ46Kj4vC2RoP6N935GEukHQa637ZjXs8VlyHJ2xTvbvwwLZQNiu56Cx7o/OFOqw1A==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/credential-provider-login@3.972.1':
+    resolution: {integrity: sha512-CccqDGL6ZrF3/EFWZefvKW7QwwRdxlHUO8NVBKNVcNq6womrPDvqB6xc9icACtE0XB0a7PLoSTkAg8bQVkTO2w==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/credential-provider-node@3.970.0':
     resolution: {integrity: sha512-nMM0eeVuiLtw1taLRQ+H/H5Qp11rva8ILrzAQXSvlbDeVmbc7d8EeW5Q2xnCJu+3U+2JNZ1uxqIL22pB2sLEMA==}
     engines: {node: '>=20.0.0'}
 
+  '@aws-sdk/credential-provider-node@3.972.1':
+    resolution: {integrity: sha512-DwXPk9GfuU/xG9tmCyXFVkCr6X3W8ZCoL5Ptb0pbltEx1/LCcg7T+PBqDlPiiinNCD6ilIoMJDWsnJ8ikzZA7Q==}
+    engines: {node: '>=20.0.0'}
+
   '@aws-sdk/credential-provider-process@3.970.0':
     resolution: {integrity: sha512-0XeT8OaT9iMA62DFV9+m6mZfJhrD0WNKf4IvsIpj2Z7XbaYfz3CoDDvNoALf3rPY9NzyMHgDxOspmqdvXP00mw==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/credential-provider-process@3.972.1':
+    resolution: {integrity: sha512-bi47Zigu3692SJwdBvo8y1dEwE6B61stCwCFnuRWJVTfiM84B+VTSCV661CSWJmIZzmcy7J5J3kWyxL02iHj0w==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/credential-provider-sso@3.970.0':
     resolution: {integrity: sha512-ROb+Aijw8nzkB14Nh2XRH861++SeTZykUzk427y8YtgTLxjAOjgDTchDUFW2Fx6GFWkSjqJ3sY7SZyb33IqyFw==}
     engines: {node: '>=20.0.0'}
 
+  '@aws-sdk/credential-provider-sso@3.972.1':
+    resolution: {integrity: sha512-dLZVNhM7wSgVUFsgVYgI5hb5Z/9PUkT46pk/SHrSmUqfx6YDvoV4YcPtaiRqviPpEGGiRtdQMEadyOKIRqulUQ==}
+    engines: {node: '>=20.0.0'}
+
   '@aws-sdk/credential-provider-web-identity@3.970.0':
     resolution: {integrity: sha512-r7tnYJJg+B6QvnsRHSW5vDol+ks6n+5jBZdCFdGyK63hjcMRMqHx59zEH8O47UR1PFv5hS2Q3uGz6HXvVtP40Q==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/middleware-bucket-endpoint@3.969.0':
-    resolution: {integrity: sha512-MlbrlixtkTVhYhoasblKOkr7n2yydvUZjjxTnBhIuHmkyBS1619oGnTfq/uLeGYb4NYXdeQ5OYcqsRGvmWSuTw==}
+  '@aws-sdk/credential-provider-web-identity@3.972.1':
+    resolution: {integrity: sha512-YMDeYgi0u687Ay0dAq/pFPKuijrlKTgsaB/UATbxCs/FzZfMiG4If5ksywHmmW7MiYUF8VVv+uou3TczvLrN4w==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/middleware-expect-continue@3.969.0':
-    resolution: {integrity: sha512-qXygzSi8osok7tH9oeuS3HoKw6jRfbvg5Me/X5RlHOvSSqQz8c5O9f3MjUApaCUSwbAU92KrbZWasw2PKiaVHg==}
+  '@aws-sdk/middleware-bucket-endpoint@3.972.1':
+    resolution: {integrity: sha512-YVvoitBdE8WOpHqIXvv49efT73F4bJ99XH2bi3Dn3mx7WngI4RwHwn/zF5i0q1Wdi5frGSCNF3vuh+pY817//w==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/middleware-flexible-checksums@3.970.0':
-    resolution: {integrity: sha512-mlKLwX0jWa5EwIvMjJAvVFL/zLAxB/fNLOg4hQCNCUf1qi+XxD+brDopXNPWeA8bSCnpvWfZrQd5yNksG6Fzqg==}
+  '@aws-sdk/middleware-expect-continue@3.972.1':
+    resolution: {integrity: sha512-6lfl2/J/kutzw/RLu1kjbahsz4vrGPysrdxWaw8fkjLYG+6M6AswocIAZFS/LgAVi/IWRwPTx9YC0/NH2wDrSw==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/middleware-flexible-checksums@3.972.1':
+    resolution: {integrity: sha512-kjVVREpqeUkYQsXr78AcsJbEUlxGH7+H6yS7zkjrnu6HyEVxbdSndkKX6VpKneFOihjCAhIXlk4wf3butDHkNQ==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/middleware-host-header@3.969.0':
     resolution: {integrity: sha512-AWa4rVsAfBR4xqm7pybQ8sUNJYnjyP/bJjfAw34qPuh3M9XrfGbAHG0aiAfQGrBnmS28jlO6Kz69o+c6PRw1dw==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/middleware-location-constraint@3.969.0':
-    resolution: {integrity: sha512-zH7pDfMLG/C4GWMOpvJEoYcSpj7XsNP9+irlgqwi667sUQ6doHQJ3yyDut3yiTk0maq1VgmriPFELyI9lrvH/g==}
+  '@aws-sdk/middleware-host-header@3.972.1':
+    resolution: {integrity: sha512-/R82lXLPmZ9JaUGSUdKtBp2k/5xQxvBT3zZWyKiBOhyulFotlfvdlrO8TnqstBimsl4lYEYySDL+W6ldFh6ALg==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/middleware-location-constraint@3.972.1':
+    resolution: {integrity: sha512-YisPaCbvBk9gY5aUI8jDMDKXsLZ9Fet0WYj1MviK8tZYMgxBIYHM6l3O/OHaAIujojZvamd9F3haYYYWp5/V3w==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/middleware-logger@3.969.0':
     resolution: {integrity: sha512-xwrxfip7Y2iTtCMJ+iifN1E1XMOuhxIHY9DreMCvgdl4r7+48x2S1bCYPWH3eNY85/7CapBWdJ8cerpEl12sQQ==}
     engines: {node: '>=20.0.0'}
 
+  '@aws-sdk/middleware-logger@3.972.1':
+    resolution: {integrity: sha512-JGgFl6cHg9G2FHu4lyFIzmFN8KESBiRr84gLC3Aeni0Gt1nKm+KxWLBuha/RPcXxJygGXCcMM4AykkIwxor8RA==}
+    engines: {node: '>=20.0.0'}
+
   '@aws-sdk/middleware-recursion-detection@3.969.0':
     resolution: {integrity: sha512-2r3PuNquU3CcS1Am4vn/KHFwLi8QFjMdA/R+CRDXT4AFO/0qxevF/YStW3gAKntQIgWgQV8ZdEtKAoJvLI4UWg==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/middleware-sdk-s3@3.970.0':
-    resolution: {integrity: sha512-v/Y5F1lbFFY7vMeG5yYxuhnn0CAshz6KMxkz1pDyPxejNE9HtA0w8R6OTBh/bVdIm44QpjhbI7qeLdOE/PLzXQ==}
+  '@aws-sdk/middleware-recursion-detection@3.972.1':
+    resolution: {integrity: sha512-taGzNRe8vPHjnliqXIHp9kBgIemLE/xCaRTMH1NH0cncHeaPcjxtnCroAAM9aOlPuKvBe2CpZESyvM1+D8oI7Q==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/middleware-ssec@3.969.0':
-    resolution: {integrity: sha512-9wUYtd5ye4exygKHyl02lPVHUoAFlxxXoqvlw7u2sycfkK6uHLlwdsPru3MkMwj47ZSZs+lkyP/sVKXVMhuaAg==}
+  '@aws-sdk/middleware-sdk-s3@3.972.0':
+    resolution: {integrity: sha512-0bcKFXWx+NZ7tIlOo7KjQ+O2rydiHdIQahrq+fN6k9Osky29v17guy68urUKfhTobR6iY6KvxkroFWaFtTgS5w==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/middleware-sdk-s3@3.972.1':
+    resolution: {integrity: sha512-q/hK0ZNf/aafFRv2wIlDM3p+izi5cXwktVNvRvW646A0MvVZmT4/vwadv/jPA9AORFbnpyf/0luxiMz181f9yg==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/middleware-ssec@3.972.1':
+    resolution: {integrity: sha512-fLtRTPd/MxJT2drJKft2GVGKm35PiNEeQ1Dvz1vc/WhhgAteYrp4f1SfSgjgLaYWGMExESJL4bt8Dxqp6tVsog==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/middleware-user-agent@3.970.0':
     resolution: {integrity: sha512-dnSJGGUGSFGEX2NzvjwSefH+hmZQ347AwbLhAsi0cdnISSge+pcGfOFrJt2XfBIypwFe27chQhlfuf/gWdzpZg==}
     engines: {node: '>=20.0.0'}
 
+  '@aws-sdk/middleware-user-agent@3.972.1':
+    resolution: {integrity: sha512-6SVg4pY/9Oq9MLzO48xuM3lsOb8Rxg55qprEtFRpkUmuvKij31f5SQHEGxuiZ4RqIKrfjr2WMuIgXvqJ0eJsPA==}
+    engines: {node: '>=20.0.0'}
+
   '@aws-sdk/nested-clients@3.970.0':
     resolution: {integrity: sha512-RIl8s4DCa31MXtRFw23iU90OqEoWuwQxiZOZshzsPtjyrunhHFjyZJEqb+vuQcYd1o22SMaYa3lPJRp64OH35Q==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/nested-clients@3.974.0':
+    resolution: {integrity: sha512-k3dwdo/vOiHMJc9gMnkPl1BA5aQfTrZbz+8fiDkWrPagqAioZgmo5oiaOaeX0grObfJQKDtcpPFR4iWf8cgl8Q==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/region-config-resolver@3.969.0':
     resolution: {integrity: sha512-scj9OXqKpcjJ4jsFLtqYWz3IaNvNOQTFFvEY8XMJXTv+3qF5I7/x9SJtKzTRJEBF3spjzBUYPtGFbs9sj4fisQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/signature-v4-multi-region@3.970.0':
-    resolution: {integrity: sha512-z3syXfuK/x/IsKf/AeYmgc2NT7fcJ+3fHaGO+fkghkV9WEba3fPyOwtTBX4KpFMNb2t50zDGZwbzW1/5ighcUQ==}
+  '@aws-sdk/region-config-resolver@3.972.1':
+    resolution: {integrity: sha512-voIY8RORpxLAEgEkYaTFnkaIuRwVBEc+RjVZYcSSllPV+ZEKAacai6kNhJeE3D70Le+JCfvRb52tng/AVHY+jQ==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/signature-v4-multi-region@3.972.0':
+    resolution: {integrity: sha512-2udiRijmjpN81Pvajje4TsjbXDZNP6K9bYUanBYH8hXa/tZG5qfGCySD+TyX0sgDxCQmEDMg3LaQdfjNHBDEgQ==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/token-providers@3.970.0':
     resolution: {integrity: sha512-YO8KgJecxHIFMhfoP880q51VXFL9V1ELywK5yzVEqzyrwqoG93IUmnTygBUylQrfkbH+QqS0FxEdgwpP3fcwoQ==}
     engines: {node: '>=20.0.0'}
 
+  '@aws-sdk/token-providers@3.974.0':
+    resolution: {integrity: sha512-cBykL0LiccKIgNhGWvQRTPvsBLPZxnmJU3pYxG538jpFX8lQtrCy1L7mmIHNEdxIdIGEPgAEHF8/JQxgBToqUQ==}
+    engines: {node: '>=20.0.0'}
+
   '@aws-sdk/types@3.969.0':
     resolution: {integrity: sha512-7IIzM5TdiXn+VtgPdVLjmE6uUBUtnga0f4RiSEI1WW10RPuNvZ9U+pL3SwDiRDAdoGrOF9tSLJOFZmfuwYuVYQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/util-arn-parser@3.968.0':
-    resolution: {integrity: sha512-gqqvYcitIIM2K4lrDX9de9YvOfXBcVdxfT/iLnvHJd4YHvSXlt+gs+AsL4FfPCxG4IG9A+FyulP9Sb1MEA75vw==}
+  '@aws-sdk/types@3.972.0':
+    resolution: {integrity: sha512-U7xBIbLSetONxb2bNzHyDgND3oKGoIfmknrEVnoEU4GUSs+0augUOIn9DIWGUO2ETcRFdsRUnmx9KhPT9Ojbug==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/types@3.973.0':
+    resolution: {integrity: sha512-jYIdB7a7jhRTvyb378nsjyvJh1Si+zVduJ6urMNGpz8RjkmHZ+9vM2H07XaIB2Cfq0GhJRZYOfUCH8uqQhqBkQ==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/util-arn-parser@3.972.0':
+    resolution: {integrity: sha512-RM5Mmo/KJ593iMSrALlHEOcc9YOIyOsDmS5x2NLOMdEmzv1o00fcpAkCQ02IGu1eFneBFT7uX0Mpag0HI+Cz2g==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/util-arn-parser@3.972.1':
+    resolution: {integrity: sha512-XnNit6H9PPHhqUXW/usjX6JeJ6Pm8ZNqivTjmNjgWHeOfVpblUc/MTic02UmCNR0jJLPjQ3mBKiMen0tnkNQjQ==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/util-endpoints@3.970.0':
     resolution: {integrity: sha512-TZNZqFcMUtjvhZoZRtpEGQAdULYiy6rcGiXAbLU7e9LSpIYlRqpLa207oMNfgbzlL2PnHko+eVg8rajDiSOYCg==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/util-locate-window@3.965.2':
-    resolution: {integrity: sha512-qKgO7wAYsXzhwCHhdbaKFyxd83Fgs8/1Ka+jjSPrv2Ll7mB55Wbwlo0kkfMLh993/yEc8aoDIAc1Fz9h4Spi4Q==}
+  '@aws-sdk/util-endpoints@3.972.0':
+    resolution: {integrity: sha512-6JHsl1V/a1ZW8D8AFfd4R52fwZPnZ5H4U6DS8m/bWT8qad72NvbOFAC7U2cDtFs2TShqUO3TEiX/EJibtY3ijg==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/util-locate-window@3.965.3':
+    resolution: {integrity: sha512-FNUqAjlKAGA7GM05kywE99q8wiPHPZqrzhq3wXRga6PRD6A0kzT85Pb0AzYBVTBRpSrKyyr6M92Y6bnSBVp2BA==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/util-user-agent-browser@3.969.0':
     resolution: {integrity: sha512-bpJGjuKmFr0rA6UKUCmN8D19HQFMLXMx5hKBXqBlPFdalMhxJSjcxzX9DbQh0Fn6bJtxCguFmRGOBdQqNOt49g==}
+
+  '@aws-sdk/util-user-agent-browser@3.972.1':
+    resolution: {integrity: sha512-IgF55NFmJX8d9Wql9M0nEpk2eYbuD8G4781FN4/fFgwTXBn86DvlZJuRWDCMcMqZymnBVX7HW9r+3r9ylqfW0w==}
 
   '@aws-sdk/util-user-agent-node@3.970.0':
     resolution: {integrity: sha512-TNQpwIVD6SxMwkD+QKnaujKVyXy5ljN3O3jrI7nCHJ3GlJu5xJrd8yuBnanYCcrn3e2zwdfOh4d4zJAZvvIvVw==}
@@ -381,8 +476,25 @@ packages:
       aws-crt:
         optional: true
 
+  '@aws-sdk/util-user-agent-node@3.972.1':
+    resolution: {integrity: sha512-oIs4JFcADzoZ0c915R83XvK2HltWupxNsXUIuZse2rgk7b97zTpkxaqXiH0h9ylh31qtgo/t8hp4tIqcsMrEbQ==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      aws-crt: '>=1.0.0'
+    peerDependenciesMeta:
+      aws-crt:
+        optional: true
+
   '@aws-sdk/xml-builder@3.969.0':
     resolution: {integrity: sha512-BSe4Lx/qdRQQdX8cSSI7Et20vqBspzAjBy8ZmXVoyLkol3y4sXBXzn+BiLtR+oh60ExQn6o2DU4QjdOZbXaKIQ==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/xml-builder@3.972.0':
+    resolution: {integrity: sha512-POaGMcXnozzqBUyJM3HLUZ9GR6OKJWPGJEmhtTnxZXt8B6JcJ/6K3xRJ5H/j8oovVLz8Wg6vFxAHv8lvuASxMg==}
+    engines: {node: '>=20.0.0'}
+
+  '@aws-sdk/xml-builder@3.972.1':
+    resolution: {integrity: sha512-6zZGlPOqn7Xb+25MAXGb1JhgvaC5HjZj6GzszuVrnEgbhvzBRFGKYemuHBV4bho+dtqeYKPgaZUv7/e80hIGNg==}
     engines: {node: '>=20.0.0'}
 
   '@aws/lambda-invoke-store@0.2.3':
@@ -397,8 +509,8 @@ packages:
     resolution: {integrity: sha512-qSs4ifwzKJSV39ucNjsvc6WVHs6b7S03sOh2OcHF9UHfVPqWWALUsNUVzhSBiItjRZoLHx7nIarVjqKVusUZ1Q==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/runtime@7.28.4':
-    resolution: {integrity: sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==}
+  '@babel/runtime@7.28.6':
+    resolution: {integrity: sha512-05WQkdpL9COIMz4LjTxGpPNCdlpyimKppYNoJ5Di5EUObifl8t4tuLuUBBZEpoLYOmfvIWrsp9fCl0HoPRVTdA==}
     engines: {node: '>=6.9.0'}
 
   '@bcoe/v8-coverage@1.0.2':
@@ -1163,13 +1275,18 @@ packages:
     peerDependencies:
       preact: '*'
 
-  '@preact/signals-core@1.12.1':
-    resolution: {integrity: sha512-BwbTXpj+9QutoZLQvbttRg5x3l5468qaV2kufh+51yha1c53ep5dY4kTuZR35+3pAZxpfQerGJiQqg34ZNZ6uA==}
+  '@preact/signals-core@1.12.2':
+    resolution: {integrity: sha512-5Yf8h1Ke3SMHr15xl630KtwPTW4sYDFkkxS0vQ8UiQLWwZQnrF9IKaVG1mN5VcJz52EcWs2acsc/Npjha/7ysA==}
 
   '@preact/signals@1.3.2':
     resolution: {integrity: sha512-naxcJgUJ6BTOROJ7C3QML7KvwKwCXQJYTc5L/b0eEsdYgPB6SxwoQ1vDGcS0Q7GVjAenVq/tXrybVdFShHYZWg==}
     peerDependencies:
       preact: 10.x
+
+  '@preact/signals@2.6.1':
+    resolution: {integrity: sha512-Gp3DI1T/0YyirwJnImR8l9xyVJgKiVzJXmEhic1/7SPw3zStrsvuBpwKnD609CzsIdzxprWa6yTNXN+VLLZPGQ==}
+    peerDependencies:
+      preact: '>= 10.25.0 || >=11.0.0-0'
 
   '@react-spring/animated@10.0.3':
     resolution: {integrity: sha512-7MrxADV3vaUADn2V9iYhaIL6iOWRx9nCJjYrsk2AHD2kwPr6fg7Pt0v+deX5RnCDmCKNnD6W5fasiyM8D+wzJQ==}
@@ -1230,8 +1347,8 @@ packages:
     resolution: {integrity: sha512-qJpzYC64kaj3S0fueiu3kXm8xPrR3PcXDPEgnaNMRn0EjNSZFoFjvbUp0YUDsRhN1CB90EnHJtbxWKevnH99UQ==}
     engines: {node: '>=18.0.0'}
 
-  '@smithy/core@3.20.6':
-    resolution: {integrity: sha512-BpAffW1mIyRZongoKBbh3RgHG+JDHJek/8hjA/9LnPunM+ejorO6axkxCgwxCe4K//g/JdPeR9vROHDYr/hfnQ==}
+  '@smithy/core@3.21.1':
+    resolution: {integrity: sha512-NUH8R4O6FkN8HKMojzbGg/5pNjsfTjlMmeFclyPfPaXXUrbr5TzhWgbf7t92wfrpCHRgpjyz7ffASIS3wX28aA==}
     engines: {node: '>=18.0.0'}
 
   '@smithy/credential-provider-imds@4.2.8':
@@ -1294,12 +1411,12 @@ packages:
     resolution: {integrity: sha512-RO0jeoaYAB1qBRhfVyq0pMgBoUK34YEJxVxyjOWYZiOKOq2yMZ4MnVXMZCUDenpozHue207+9P5ilTV1zeda0A==}
     engines: {node: '>=18.0.0'}
 
-  '@smithy/middleware-endpoint@4.4.7':
-    resolution: {integrity: sha512-SCmhUG1UwtnEhF5Sxd8qk7bJwkj1BpFzFlHkXqKCEmDPLrRjJyTGM0EhqT7XBtDaDJjCfjRJQodgZcKDR843qg==}
+  '@smithy/middleware-endpoint@4.4.11':
+    resolution: {integrity: sha512-/WqsrycweGGfb9sSzME4CrsuayjJF6BueBmkKlcbeU5q18OhxRrvvKlmfw3tpDsK5ilx2XUJvoukwxHB0nHs/Q==}
     engines: {node: '>=18.0.0'}
 
-  '@smithy/middleware-retry@4.4.23':
-    resolution: {integrity: sha512-lLEmkQj7I7oKfvZ1wsnToGJouLOtfkMXDKRA1Hi6F+mMp5O1N8GcVWmVeNgTtgZtd0OTXDTI2vpVQmeutydGew==}
+  '@smithy/middleware-retry@4.4.27':
+    resolution: {integrity: sha512-xFUYCGRVsfgiN5EjsJJSzih9+yjStgMTCLANPlf0LVQkPDYCe0hz97qbdTZosFOiYlGBlHYityGRxrQ/hxhfVQ==}
     engines: {node: '>=18.0.0'}
 
   '@smithy/middleware-serde@4.2.9':
@@ -1346,8 +1463,8 @@ packages:
     resolution: {integrity: sha512-6A4vdGj7qKNRF16UIcO8HhHjKW27thsxYci+5r/uVRkdcBEkOEiY8OMPuydLX4QHSrJqGHPJzPRwwVTqbLZJhg==}
     engines: {node: '>=18.0.0'}
 
-  '@smithy/smithy-client@4.10.8':
-    resolution: {integrity: sha512-wcr3UEL26k7lLoyf9eVDZoD1nNY3Fa1gbNuOXvfxvVWLGkOVW+RYZgUUp/bXHryJfycIOQnBq9o1JAE00ax8HQ==}
+  '@smithy/smithy-client@4.10.12':
+    resolution: {integrity: sha512-VKO/HKoQ5OrSHW6AJUmEnUKeXI1/5LfCwO9cwyao7CmLvGnZeM1i36Lyful3LK1XU7HwTVieTqO1y2C/6t3qtA==}
     engines: {node: '>=18.0.0'}
 
   '@smithy/types@4.12.0':
@@ -1382,12 +1499,12 @@ packages:
     resolution: {integrity: sha512-YEjpl6XJ36FTKmD+kRJJWYvrHeUvm5ykaUS5xK+6oXffQPHeEM4/nXlZPe+Wu0lsgRUcNZiliYNh/y7q9c2y6Q==}
     engines: {node: '>=18.0.0'}
 
-  '@smithy/util-defaults-mode-browser@4.3.22':
-    resolution: {integrity: sha512-O2WXr6ZRqPnbyoepb7pKcLt1QL6uRfFzGYJ9sGb5hMJQi7v/4RjRmCQa9mNjA0YiXqsc5lBmLXqJPhjM1Vjv5A==}
+  '@smithy/util-defaults-mode-browser@4.3.26':
+    resolution: {integrity: sha512-vva0dzYUTgn7DdE0uaha10uEdAgmdLnNFowKFjpMm6p2R0XDk5FHPX3CBJLzWQkQXuEprsb0hGz9YwbicNWhjw==}
     engines: {node: '>=18.0.0'}
 
-  '@smithy/util-defaults-mode-node@4.2.25':
-    resolution: {integrity: sha512-7uMhppVNRbgNIpyUBVRfjGHxygP85wpXalRvn9DvUlCx4qgy1AB/uxOPSiDx/jFyrwD3/BypQhx1JK7f3yxrAw==}
+  '@smithy/util-defaults-mode-node@4.2.29':
+    resolution: {integrity: sha512-c6D7IUBsZt/aNnTBHMTf+OVh+h/JcxUUgfTcIJaWRe6zhOum1X+pNKSZtZ+7fbOn5I99XVFtmrnXKv8yHHErTQ==}
     engines: {node: '>=18.0.0'}
 
   '@smithy/util-endpoints@3.2.8':
@@ -1489,8 +1606,8 @@ packages:
   '@types/d3-scale@4.0.9':
     resolution: {integrity: sha512-dLmtwB8zkAeO/juAMfnV+sItKjlsw2lKdZVVy6LRr0cBmegxSABiLEpGVmSJJ8O08i4+sGR6qQtb6WtuwJdvVw==}
 
-  '@types/d3-shape@3.1.7':
-    resolution: {integrity: sha512-VLvUQ33C+3J+8p+Daf+nYSOsjB4GXp19/S/aGo60m9h1v6XaxjiT82lKVWJCfzhtuZ3yD7i/TPeC/fuKLLOSmg==}
+  '@types/d3-shape@3.1.8':
+    resolution: {integrity: sha512-lae0iWfcDeR7qt7rA88BNiqdvPS5pFVPpo5OfjElwNaT2yyekbM0C9vK+yqBqEmHr6lDkRnYNoTBYlAgJa7a4w==}
 
   '@types/d3-time-format@2.3.4':
     resolution: {integrity: sha512-xdDXbpVO74EvadI3UDxjxTdR6QIxm1FKzEA/+F8tL4GWWUg/hgvBqf6chql64U5A9ZUGWo7pEu4eNlyLwbKdhg==}
@@ -1749,13 +1866,21 @@ packages:
       allure-playwright:
         optional: true
 
+  allure-js-commons@3.4.5:
+    resolution: {integrity: sha512-mzAppLFva9PJqWvdI/aXn8jqr+5Am67JITdthMfEk8En6AhsrvRWZAjHZ1yUMDGEbxmivCni3lppvitJGStxFQ==}
+    peerDependencies:
+      allure-playwright: 3.4.5
+    peerDependenciesMeta:
+      allure-playwright:
+        optional: true
+
   allure-mocha@3.4.4:
     resolution: {integrity: sha512-EvFyTNQZZ+qel/LfFadAj9Ldu+TQDy3t4rXc7gkbsZ5gy4vGUhBh+gR51WGzLIirrY7WKOjtnLJFYvjKK2H4zQ==}
     peerDependencies:
       mocha: '>=6.2.0'
 
-  allure@3.0.0:
-    resolution: {integrity: sha512-ZJfjSLwsmc1oUViE0gb8tSq/t4x0FOm85kKIfKCXJJoZtlXKXCWc6nOcdT9Dk2DNjrHvkrpd/NLVH33cfpHxig==}
+  allure@3.0.1:
+    resolution: {integrity: sha512-wqeuUaPJJAq1lKoPRVozNEdws9xZr4pz4OQlBb6HufVzBpErYMShJKmNP82XlbYV+MvbMEyvO39cOkbLHvBvdQ==}
     hasBin: true
 
   ansi-escapes@4.3.2:
@@ -2178,8 +2303,8 @@ packages:
   d3-format@1.4.5:
     resolution: {integrity: sha512-J0piedu6Z8iB6TbIGfZgDzfXxUFN3qQRMofy2oPdXzQibYGqPB/9iMcxr/TGalU+2RsyDO+U4f33id8tbnSRMQ==}
 
-  d3-format@3.1.0:
-    resolution: {integrity: sha512-YyUI6AEuY/Wpt8KWLgZHsIU86atmikuoOmCfommt0LYHiQSPjvX2AcFc38PX0CBpr2RCyZhjex+NS/LPOv6YqA==}
+  d3-format@3.1.2:
+    resolution: {integrity: sha512-AJDdYOdnyRDV5b6ArilzCPPwc1ejkHcoyFarqlPqT7zRYjhavcT3uSrqcMvsgh2CgoPbK3RCwyHaVyxYcP2Arg==}
     engines: {node: '>=12'}
 
   d3-hierarchy@3.1.2:
@@ -3372,6 +3497,9 @@ packages:
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
+  lodash@4.17.23:
+    resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
+
   log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
     engines: {node: '>=10'}
@@ -3732,8 +3860,8 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
-  preact@10.28.1:
-    resolution: {integrity: sha512-u1/ixq/lVQI0CakKNvLDEcW5zfCjUQfZdK9qqWuIJtsezuyG6pk9TWj75GMuI/EzRSZB/VAE43sNWWZfiy8psw==}
+  preact@10.28.2:
+    resolution: {integrity: sha512-lbteaWGzGHdlIuiJ0l2Jq454m6kcpI1zNje6d8MlGAFlYvP2GO4ibnat7P74Esfz4sPTdM6UxtTwh/d3pwM9JA==}
 
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -3777,6 +3905,10 @@ packages:
 
   qs@6.14.0:
     resolution: {integrity: sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==}
+    engines: {node: '>=0.6'}
+
+  qs@6.14.1:
+    resolution: {integrity: sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==}
     engines: {node: '>=0.6'}
 
   queue-microtask@1.2.3:
@@ -4314,8 +4446,8 @@ packages:
     resolution: {integrity: sha512-oCwdVC7mTuWiPyjLUz/COz5TLk6wgp0RCsN+wHZ2Ekneac9w8uuV0njcbbie2ME+Vs+d6duwmYuR3HgQXs1fOg==}
     engines: {node: '>= 0.4'}
 
-  use-debounce@10.0.6:
-    resolution: {integrity: sha512-C5OtPyhAZgVoteO9heXMTdW7v/IbFI+8bSVKYCJrSmiWWCLsbUxiBSp4t9v0hNBTGY97bT72ydDIDyGSFWfwXg==}
+  use-debounce@10.1.0:
+    resolution: {integrity: sha512-lu87Za35V3n/MyMoEpD5zJv0k7hCn0p+V/fK2kWD+3k2u3kOCwO593UArbczg1fhfs2rqPEnHpULJ3KmGdDzvg==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
       react: '*'
@@ -4473,39 +4605,39 @@ packages:
 
 snapshots:
 
-  '@allurereport/charts-api@3.0.0':
+  '@allurereport/charts-api@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
       d3-shape: 3.2.0
 
-  '@allurereport/ci@3.0.0':
+  '@allurereport/ci@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
 
-  '@allurereport/core-api@3.0.0':
+  '@allurereport/core-api@3.0.1':
     dependencies:
       d3-shape: 3.2.0
 
-  '@allurereport/core@3.0.0(typescript@5.9.3)':
+  '@allurereport/core@3.0.1(typescript@5.9.3)':
     dependencies:
-      '@allurereport/ci': 3.0.0
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-allure2': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
-      '@allurereport/plugin-awesome': 3.0.0(typescript@5.9.3)
-      '@allurereport/plugin-classic': 3.0.0(typescript@5.9.3)
-      '@allurereport/plugin-csv': 3.0.0
-      '@allurereport/plugin-dashboard': 3.0.0(typescript@5.9.3)
-      '@allurereport/plugin-jira': 3.0.0
-      '@allurereport/plugin-log': 3.0.0
-      '@allurereport/plugin-progress': 3.0.0
-      '@allurereport/plugin-slack': 3.0.0
-      '@allurereport/plugin-testplan': 3.0.0
-      '@allurereport/reader': 3.0.0
-      '@allurereport/reader-api': 3.0.0
-      '@allurereport/service': 3.0.0
-      '@allurereport/summary': 3.0.0(typescript@5.9.3)
+      '@allurereport/ci': 3.0.1
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-allure2': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
+      '@allurereport/plugin-awesome': 3.0.1(typescript@5.9.3)
+      '@allurereport/plugin-classic': 3.0.1(typescript@5.9.3)
+      '@allurereport/plugin-csv': 3.0.1
+      '@allurereport/plugin-dashboard': 3.0.1(typescript@5.9.3)
+      '@allurereport/plugin-jira': 3.0.1
+      '@allurereport/plugin-log': 3.0.1
+      '@allurereport/plugin-progress': 3.0.1
+      '@allurereport/plugin-slack': 3.0.1
+      '@allurereport/plugin-testplan': 3.0.1
+      '@allurereport/reader': 3.0.1
+      '@allurereport/reader-api': 3.0.1
+      '@allurereport/service': 3.0.1
+      '@allurereport/summary': 3.0.1(typescript@5.9.3)
       handlebars: 4.7.8
       markdown-it: 14.1.0
       node-stream-zip: 1.15.0
@@ -4518,137 +4650,137 @@ snapshots:
       - debug
       - typescript
 
-  '@allurereport/directory-watcher@3.0.0':
+  '@allurereport/directory-watcher@3.0.1':
     dependencies:
       chokidar: 4.0.3
 
-  '@allurereport/plugin-allure2@3.0.0':
+  '@allurereport/plugin-allure2@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
-      '@allurereport/web-allure2': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
+      '@allurereport/web-allure2': 3.0.1
       handlebars: 4.7.8
 
-  '@allurereport/plugin-api@3.0.0':
+  '@allurereport/plugin-api@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
 
-  '@allurereport/plugin-awesome@3.0.0(typescript@5.9.3)':
+  '@allurereport/plugin-awesome@3.0.1(typescript@5.9.3)':
     dependencies:
-      '@allurereport/charts-api': 3.0.0
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
-      '@allurereport/web-awesome': 3.0.0(typescript@5.9.3)
-      '@allurereport/web-commons': 3.0.0
+      '@allurereport/charts-api': 3.0.1
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
+      '@allurereport/web-awesome': 3.0.1(typescript@5.9.3)
+      '@allurereport/web-commons': 3.0.1
       d3-shape: 3.2.0
       handlebars: 4.7.8
     transitivePeerDependencies:
       - typescript
 
-  '@allurereport/plugin-classic@3.0.0(typescript@5.9.3)':
+  '@allurereport/plugin-classic@3.0.1(typescript@5.9.3)':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
-      '@allurereport/web-awesome': 3.0.0(typescript@5.9.3)
-      '@allurereport/web-classic': 3.0.0(typescript@5.9.3)
-      '@allurereport/web-commons': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
+      '@allurereport/web-awesome': 3.0.1(typescript@5.9.3)
+      '@allurereport/web-classic': 3.0.1(typescript@5.9.3)
+      '@allurereport/web-commons': 3.0.1
       d3-shape: 3.2.0
       handlebars: 4.7.8
     transitivePeerDependencies:
       - typescript
 
-  '@allurereport/plugin-csv@3.0.0':
+  '@allurereport/plugin-csv@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
 
-  '@allurereport/plugin-dashboard@3.0.0(typescript@5.9.3)':
+  '@allurereport/plugin-dashboard@3.0.1(typescript@5.9.3)':
     dependencies:
-      '@allurereport/charts-api': 3.0.0
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
-      '@allurereport/web-commons': 3.0.0
-      '@allurereport/web-dashboard': 3.0.0(typescript@5.9.3)
+      '@allurereport/charts-api': 3.0.1
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
+      '@allurereport/web-commons': 3.0.1
+      '@allurereport/web-dashboard': 3.0.1(typescript@5.9.3)
       d3-shape: 3.2.0
       handlebars: 4.7.8
     transitivePeerDependencies:
       - typescript
 
-  '@allurereport/plugin-jira@3.0.0':
+  '@allurereport/plugin-jira@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
       axios: 1.13.2
     transitivePeerDependencies:
       - debug
 
-  '@allurereport/plugin-log@3.0.0':
+  '@allurereport/plugin-log@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
       yoctocolors: 2.1.2
 
-  '@allurereport/plugin-progress@3.0.0':
+  '@allurereport/plugin-progress@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
       yoctocolors: 2.1.2
 
-  '@allurereport/plugin-server-reload@3.0.0':
+  '@allurereport/plugin-server-reload@3.0.1':
     dependencies:
-      '@allurereport/plugin-api': 3.0.0
-      '@allurereport/static-server': 3.0.0
+      '@allurereport/plugin-api': 3.0.1
+      '@allurereport/static-server': 3.0.1
 
-  '@allurereport/plugin-slack@3.0.0':
+  '@allurereport/plugin-slack@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
 
-  '@allurereport/plugin-testplan@3.0.0':
+  '@allurereport/plugin-testplan@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
 
-  '@allurereport/reader-api@3.0.0':
+  '@allurereport/reader-api@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
       mime-types: 2.1.35
 
-  '@allurereport/reader@3.0.0':
+  '@allurereport/reader@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
-      '@allurereport/reader-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
+      '@allurereport/reader-api': 3.0.1
       fast-xml-parser: 4.5.3
 
-  '@allurereport/service@3.0.0':
+  '@allurereport/service@3.0.1':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
       axios: 1.13.2
       open: 10.2.0
     transitivePeerDependencies:
       - debug
 
-  '@allurereport/static-server@3.0.0':
+  '@allurereport/static-server@3.0.1':
     dependencies:
-      '@allurereport/directory-watcher': 3.0.0
+      '@allurereport/directory-watcher': 3.0.1
       open: 10.2.0
 
-  '@allurereport/summary@3.0.0(typescript@5.9.3)':
+  '@allurereport/summary@3.0.1(typescript@5.9.3)':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
-      '@allurereport/web-summary': 3.0.0(typescript@5.9.3)
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
+      '@allurereport/web-summary': 3.0.1(typescript@5.9.3)
       handlebars: 4.7.8
     transitivePeerDependencies:
       - typescript
 
-  '@allurereport/web-allure2@3.0.0':
+  '@allurereport/web-allure2@3.0.1':
     dependencies:
-      '@allurereport/web-commons': 3.0.0
-      '@babel/runtime': 7.28.4
+      '@allurereport/web-commons': 3.0.1
+      '@babel/runtime': 7.28.6
       b_: 1.3.4
       backbone: 1.6.1
       backbone.marionette: 3.5.1(backbone@1.6.1)(underscore@1.13.7)
@@ -4673,47 +4805,47 @@ snapshots:
       underscore: 1.13.7
       url: 0.11.4
 
-  '@allurereport/web-awesome@3.0.0(typescript@5.9.3)':
+  '@allurereport/web-awesome@3.0.1(typescript@5.9.3)':
     dependencies:
-      '@allurereport/charts-api': 3.0.0
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
-      '@allurereport/web-commons': 3.0.0
-      '@allurereport/web-components': 3.0.0
-      '@preact/signals': 1.3.2(preact@10.28.1)
+      '@allurereport/charts-api': 3.0.1
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
+      '@allurereport/web-commons': 3.0.1
+      '@allurereport/web-components': 3.0.1
+      '@preact/signals': 2.6.1(preact@10.28.2)
       clsx: 2.1.1
       d3-shape: 3.2.0
       i18next: 24.2.3(typescript@5.9.3)
       md5: 2.3.0
-      preact: 10.28.1
+      preact: 10.28.2
       prismjs: 1.30.0
       reset.css: 2.0.2
     transitivePeerDependencies:
       - typescript
 
-  '@allurereport/web-classic@3.0.0(typescript@5.9.3)':
+  '@allurereport/web-classic@3.0.1(typescript@5.9.3)':
     dependencies:
-      '@allurereport/charts-api': 3.0.0
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/web-commons': 3.0.0
-      '@allurereport/web-components': 3.0.0
-      '@preact/signals': 1.3.2(preact@10.28.1)
+      '@allurereport/charts-api': 3.0.1
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/web-commons': 3.0.1
+      '@allurereport/web-components': 3.0.1
+      '@preact/signals': 1.3.2(preact@10.28.2)
       clsx: 2.1.1
       d3-shape: 3.2.0
       i18next: 24.2.3(typescript@5.9.3)
       md5: 2.3.0
-      preact: 10.28.1
+      preact: 10.28.2
       prismjs: 1.30.0
       reset.css: 2.0.2
       split.js: 1.6.5
     transitivePeerDependencies:
       - typescript
 
-  '@allurereport/web-commons@3.0.0':
+  '@allurereport/web-commons@3.0.1':
     dependencies:
-      '@allurereport/charts-api': 3.0.0
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
+      '@allurereport/charts-api': 3.0.1
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
       ansi-to-html: 0.7.2
       d3-interpolate: 3.0.1
       d3-scale: 4.0.2
@@ -4721,29 +4853,29 @@ snapshots:
       dompurify: 3.3.1
       nanoid: 5.1.6
 
-  '@allurereport/web-components@3.0.0':
+  '@allurereport/web-components@3.0.1':
     dependencies:
-      '@allurereport/charts-api': 3.0.0
-      '@allurereport/web-commons': 3.0.0
+      '@allurereport/charts-api': 3.0.1
+      '@allurereport/web-commons': 3.0.1
       '@floating-ui/dom': 1.7.4
-      '@nivo/bar': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/funnel': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/heatmap': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/line': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/pie': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/treemap': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@preact/compat': 18.3.1(preact@10.28.1)
-      '@preact/signals': 1.3.2(preact@10.28.1)
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/bar': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/funnel': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/heatmap': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/line': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/pie': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/treemap': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@preact/compat': 18.3.1(preact@10.28.2)
+      '@preact/signals': 1.3.2(preact@10.28.2)
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       clsx: 2.1.1
       d3-array: 3.2.4
       d3-axis: 3.0.0
       d3-brush: 3.0.0
-      d3-format: 3.1.0
+      d3-format: 3.1.2
       d3-interpolate: 3.0.1
       d3-regression: 1.3.10
       d3-scale: 4.0.2
@@ -4751,38 +4883,38 @@ snapshots:
       d3-shape: 3.2.0
       d3-tip: 0.9.1
       d3-transition: 3.0.1(d3-selection@3.0.0)
-      lodash: 4.17.21
-      preact: 10.28.1
+      lodash: 4.17.23
+      preact: 10.28.2
       prismjs: 1.30.0
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
-      react-dom: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
+      react-dom: '@preact/compat@18.3.1(preact@10.28.2)'
       reset.css: 2.0.2
       sortablejs: 1.15.6
-      use-debounce: 10.0.6(@preact/compat@18.3.1(preact@10.28.1))
+      use-debounce: 10.1.0(@preact/compat@18.3.1(preact@10.28.2))
 
-  '@allurereport/web-dashboard@3.0.0(typescript@5.9.3)':
+  '@allurereport/web-dashboard@3.0.1(typescript@5.9.3)':
     dependencies:
-      '@allurereport/charts-api': 3.0.0
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/web-commons': 3.0.0
-      '@allurereport/web-components': 3.0.0
-      '@preact/signals': 1.3.2(preact@10.28.1)
+      '@allurereport/charts-api': 3.0.1
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/web-commons': 3.0.1
+      '@allurereport/web-components': 3.0.1
+      '@preact/signals': 1.3.2(preact@10.28.2)
       clsx: 2.1.1
       i18next: 24.2.3(typescript@5.9.3)
-      preact: 10.28.1
+      preact: 10.28.2
       reset.css: 2.0.2
     transitivePeerDependencies:
       - typescript
 
-  '@allurereport/web-summary@3.0.0(typescript@5.9.3)':
+  '@allurereport/web-summary@3.0.1(typescript@5.9.3)':
     dependencies:
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/web-commons': 3.0.0
-      '@allurereport/web-components': 3.0.0
-      '@preact/signals': 1.3.2(preact@10.28.1)
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/web-commons': 3.0.1
+      '@allurereport/web-components': 3.0.1
+      '@preact/signals': 1.3.2(preact@10.28.2)
       clsx: 2.1.1
       i18next: 24.2.3(typescript@5.9.3)
-      preact: 10.28.1
+      preact: 10.28.2
       reset.css: 2.0.2
     transitivePeerDependencies:
       - typescript
@@ -4790,21 +4922,21 @@ snapshots:
   '@aws-crypto/crc32@5.2.0':
     dependencies:
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/types': 3.969.0
+      '@aws-sdk/types': 3.973.0
       tslib: 2.8.1
 
   '@aws-crypto/crc32c@5.2.0':
     dependencies:
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/types': 3.969.0
+      '@aws-sdk/types': 3.973.0
       tslib: 2.8.1
 
   '@aws-crypto/sha1-browser@5.2.0':
     dependencies:
       '@aws-crypto/supports-web-crypto': 5.2.0
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/types': 3.969.0
-      '@aws-sdk/util-locate-window': 3.965.2
+      '@aws-sdk/types': 3.973.0
+      '@aws-sdk/util-locate-window': 3.965.3
       '@smithy/util-utf8': 2.3.0
       tslib: 2.8.1
 
@@ -4813,15 +4945,15 @@ snapshots:
       '@aws-crypto/sha256-js': 5.2.0
       '@aws-crypto/supports-web-crypto': 5.2.0
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/types': 3.969.0
-      '@aws-sdk/util-locate-window': 3.965.2
+      '@aws-sdk/types': 3.973.0
+      '@aws-sdk/util-locate-window': 3.965.3
       '@smithy/util-utf8': 2.3.0
       tslib: 2.8.1
 
   '@aws-crypto/sha256-js@5.2.0':
     dependencies:
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/types': 3.969.0
+      '@aws-sdk/types': 3.973.0
       tslib: 2.8.1
 
   '@aws-crypto/supports-web-crypto@5.2.0':
@@ -4830,7 +4962,7 @@ snapshots:
 
   '@aws-crypto/util@5.2.0':
     dependencies:
-      '@aws-sdk/types': 3.969.0
+      '@aws-sdk/types': 3.973.0
       '@smithy/util-utf8': 2.3.0
       tslib: 2.8.1
 
@@ -4850,26 +4982,26 @@ snapshots:
       '@aws-sdk/util-user-agent-browser': 3.969.0
       '@aws-sdk/util-user-agent-node': 3.970.0
       '@smithy/config-resolver': 4.4.6
-      '@smithy/core': 3.20.6
+      '@smithy/core': 3.21.1
       '@smithy/fetch-http-handler': 5.3.9
       '@smithy/hash-node': 4.2.8
       '@smithy/invalid-dependency': 4.2.8
       '@smithy/middleware-content-length': 4.2.8
-      '@smithy/middleware-endpoint': 4.4.7
-      '@smithy/middleware-retry': 4.4.23
+      '@smithy/middleware-endpoint': 4.4.11
+      '@smithy/middleware-retry': 4.4.27
       '@smithy/middleware-serde': 4.2.9
       '@smithy/middleware-stack': 4.2.8
       '@smithy/node-config-provider': 4.3.8
       '@smithy/node-http-handler': 4.4.8
       '@smithy/protocol-http': 5.3.8
-      '@smithy/smithy-client': 4.10.8
+      '@smithy/smithy-client': 4.10.12
       '@smithy/types': 4.12.0
       '@smithy/url-parser': 4.2.8
       '@smithy/util-base64': 4.3.0
       '@smithy/util-body-length-browser': 4.2.0
       '@smithy/util-body-length-node': 4.2.1
-      '@smithy/util-defaults-mode-browser': 4.3.22
-      '@smithy/util-defaults-mode-node': 4.2.25
+      '@smithy/util-defaults-mode-browser': 4.3.26
+      '@smithy/util-defaults-mode-node': 4.2.29
       '@smithy/util-endpoints': 3.2.8
       '@smithy/util-middleware': 4.2.8
       '@smithy/util-retry': 4.2.8
@@ -4880,31 +5012,31 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/client-s3@3.970.0':
+  '@aws-sdk/client-s3@3.974.0':
     dependencies:
       '@aws-crypto/sha1-browser': 5.2.0
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
-      '@aws-sdk/core': 3.970.0
-      '@aws-sdk/credential-provider-node': 3.970.0
-      '@aws-sdk/middleware-bucket-endpoint': 3.969.0
-      '@aws-sdk/middleware-expect-continue': 3.969.0
-      '@aws-sdk/middleware-flexible-checksums': 3.970.0
-      '@aws-sdk/middleware-host-header': 3.969.0
-      '@aws-sdk/middleware-location-constraint': 3.969.0
-      '@aws-sdk/middleware-logger': 3.969.0
-      '@aws-sdk/middleware-recursion-detection': 3.969.0
-      '@aws-sdk/middleware-sdk-s3': 3.970.0
-      '@aws-sdk/middleware-ssec': 3.969.0
-      '@aws-sdk/middleware-user-agent': 3.970.0
-      '@aws-sdk/region-config-resolver': 3.969.0
-      '@aws-sdk/signature-v4-multi-region': 3.970.0
-      '@aws-sdk/types': 3.969.0
-      '@aws-sdk/util-endpoints': 3.970.0
-      '@aws-sdk/util-user-agent-browser': 3.969.0
-      '@aws-sdk/util-user-agent-node': 3.970.0
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/credential-provider-node': 3.972.1
+      '@aws-sdk/middleware-bucket-endpoint': 3.972.1
+      '@aws-sdk/middleware-expect-continue': 3.972.1
+      '@aws-sdk/middleware-flexible-checksums': 3.972.1
+      '@aws-sdk/middleware-host-header': 3.972.1
+      '@aws-sdk/middleware-location-constraint': 3.972.1
+      '@aws-sdk/middleware-logger': 3.972.1
+      '@aws-sdk/middleware-recursion-detection': 3.972.1
+      '@aws-sdk/middleware-sdk-s3': 3.972.1
+      '@aws-sdk/middleware-ssec': 3.972.1
+      '@aws-sdk/middleware-user-agent': 3.972.1
+      '@aws-sdk/region-config-resolver': 3.972.1
+      '@aws-sdk/signature-v4-multi-region': 3.972.0
+      '@aws-sdk/types': 3.973.0
+      '@aws-sdk/util-endpoints': 3.972.0
+      '@aws-sdk/util-user-agent-browser': 3.972.1
+      '@aws-sdk/util-user-agent-node': 3.972.1
       '@smithy/config-resolver': 4.4.6
-      '@smithy/core': 3.20.6
+      '@smithy/core': 3.21.1
       '@smithy/eventstream-serde-browser': 4.2.8
       '@smithy/eventstream-serde-config-resolver': 4.3.8
       '@smithy/eventstream-serde-node': 4.2.8
@@ -4915,21 +5047,21 @@ snapshots:
       '@smithy/invalid-dependency': 4.2.8
       '@smithy/md5-js': 4.2.8
       '@smithy/middleware-content-length': 4.2.8
-      '@smithy/middleware-endpoint': 4.4.7
-      '@smithy/middleware-retry': 4.4.23
+      '@smithy/middleware-endpoint': 4.4.11
+      '@smithy/middleware-retry': 4.4.27
       '@smithy/middleware-serde': 4.2.9
       '@smithy/middleware-stack': 4.2.8
       '@smithy/node-config-provider': 4.3.8
       '@smithy/node-http-handler': 4.4.8
       '@smithy/protocol-http': 5.3.8
-      '@smithy/smithy-client': 4.10.8
+      '@smithy/smithy-client': 4.10.12
       '@smithy/types': 4.12.0
       '@smithy/url-parser': 4.2.8
       '@smithy/util-base64': 4.3.0
       '@smithy/util-body-length-browser': 4.2.0
       '@smithy/util-body-length-node': 4.2.1
-      '@smithy/util-defaults-mode-browser': 4.3.22
-      '@smithy/util-defaults-mode-node': 4.2.25
+      '@smithy/util-defaults-mode-browser': 4.3.26
+      '@smithy/util-defaults-mode-node': 4.2.29
       '@smithy/util-endpoints': 3.2.8
       '@smithy/util-middleware': 4.2.8
       '@smithy/util-retry': 4.2.8
@@ -4955,26 +5087,69 @@ snapshots:
       '@aws-sdk/util-user-agent-browser': 3.969.0
       '@aws-sdk/util-user-agent-node': 3.970.0
       '@smithy/config-resolver': 4.4.6
-      '@smithy/core': 3.20.6
+      '@smithy/core': 3.21.1
       '@smithy/fetch-http-handler': 5.3.9
       '@smithy/hash-node': 4.2.8
       '@smithy/invalid-dependency': 4.2.8
       '@smithy/middleware-content-length': 4.2.8
-      '@smithy/middleware-endpoint': 4.4.7
-      '@smithy/middleware-retry': 4.4.23
+      '@smithy/middleware-endpoint': 4.4.11
+      '@smithy/middleware-retry': 4.4.27
       '@smithy/middleware-serde': 4.2.9
       '@smithy/middleware-stack': 4.2.8
       '@smithy/node-config-provider': 4.3.8
       '@smithy/node-http-handler': 4.4.8
       '@smithy/protocol-http': 5.3.8
-      '@smithy/smithy-client': 4.10.8
+      '@smithy/smithy-client': 4.10.12
       '@smithy/types': 4.12.0
       '@smithy/url-parser': 4.2.8
       '@smithy/util-base64': 4.3.0
       '@smithy/util-body-length-browser': 4.2.0
       '@smithy/util-body-length-node': 4.2.1
-      '@smithy/util-defaults-mode-browser': 4.3.22
-      '@smithy/util-defaults-mode-node': 4.2.25
+      '@smithy/util-defaults-mode-browser': 4.3.26
+      '@smithy/util-defaults-mode-node': 4.2.29
+      '@smithy/util-endpoints': 3.2.8
+      '@smithy/util-middleware': 4.2.8
+      '@smithy/util-retry': 4.2.8
+      '@smithy/util-utf8': 4.2.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - aws-crt
+
+  '@aws-sdk/client-sso@3.974.0':
+    dependencies:
+      '@aws-crypto/sha256-browser': 5.2.0
+      '@aws-crypto/sha256-js': 5.2.0
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/middleware-host-header': 3.972.1
+      '@aws-sdk/middleware-logger': 3.972.1
+      '@aws-sdk/middleware-recursion-detection': 3.972.1
+      '@aws-sdk/middleware-user-agent': 3.972.1
+      '@aws-sdk/region-config-resolver': 3.972.1
+      '@aws-sdk/types': 3.973.0
+      '@aws-sdk/util-endpoints': 3.972.0
+      '@aws-sdk/util-user-agent-browser': 3.972.1
+      '@aws-sdk/util-user-agent-node': 3.972.1
+      '@smithy/config-resolver': 4.4.6
+      '@smithy/core': 3.21.1
+      '@smithy/fetch-http-handler': 5.3.9
+      '@smithy/hash-node': 4.2.8
+      '@smithy/invalid-dependency': 4.2.8
+      '@smithy/middleware-content-length': 4.2.8
+      '@smithy/middleware-endpoint': 4.4.11
+      '@smithy/middleware-retry': 4.4.27
+      '@smithy/middleware-serde': 4.2.9
+      '@smithy/middleware-stack': 4.2.8
+      '@smithy/node-config-provider': 4.3.8
+      '@smithy/node-http-handler': 4.4.8
+      '@smithy/protocol-http': 5.3.8
+      '@smithy/smithy-client': 4.10.12
+      '@smithy/types': 4.12.0
+      '@smithy/url-parser': 4.2.8
+      '@smithy/util-base64': 4.3.0
+      '@smithy/util-body-length-browser': 4.2.0
+      '@smithy/util-body-length-node': 4.2.1
+      '@smithy/util-defaults-mode-browser': 4.3.26
+      '@smithy/util-defaults-mode-node': 4.2.29
       '@smithy/util-endpoints': 3.2.8
       '@smithy/util-middleware': 4.2.8
       '@smithy/util-retry': 4.2.8
@@ -4987,19 +5162,51 @@ snapshots:
     dependencies:
       '@aws-sdk/types': 3.969.0
       '@aws-sdk/xml-builder': 3.969.0
-      '@smithy/core': 3.20.6
+      '@smithy/core': 3.21.1
       '@smithy/node-config-provider': 4.3.8
       '@smithy/property-provider': 4.2.8
       '@smithy/protocol-http': 5.3.8
       '@smithy/signature-v4': 5.3.8
-      '@smithy/smithy-client': 4.10.8
+      '@smithy/smithy-client': 4.10.12
       '@smithy/types': 4.12.0
       '@smithy/util-base64': 4.3.0
       '@smithy/util-middleware': 4.2.8
       '@smithy/util-utf8': 4.2.0
       tslib: 2.8.1
 
-  '@aws-sdk/crc64-nvme@3.969.0':
+  '@aws-sdk/core@3.972.0':
+    dependencies:
+      '@aws-sdk/types': 3.972.0
+      '@aws-sdk/xml-builder': 3.972.0
+      '@smithy/core': 3.21.1
+      '@smithy/node-config-provider': 4.3.8
+      '@smithy/property-provider': 4.2.8
+      '@smithy/protocol-http': 5.3.8
+      '@smithy/signature-v4': 5.3.8
+      '@smithy/smithy-client': 4.10.12
+      '@smithy/types': 4.12.0
+      '@smithy/util-base64': 4.3.0
+      '@smithy/util-middleware': 4.2.8
+      '@smithy/util-utf8': 4.2.0
+      tslib: 2.8.1
+
+  '@aws-sdk/core@3.973.0':
+    dependencies:
+      '@aws-sdk/types': 3.973.0
+      '@aws-sdk/xml-builder': 3.972.1
+      '@smithy/core': 3.21.1
+      '@smithy/node-config-provider': 4.3.8
+      '@smithy/property-provider': 4.2.8
+      '@smithy/protocol-http': 5.3.8
+      '@smithy/signature-v4': 5.3.8
+      '@smithy/smithy-client': 4.10.12
+      '@smithy/types': 4.12.0
+      '@smithy/util-base64': 4.3.0
+      '@smithy/util-middleware': 4.2.8
+      '@smithy/util-utf8': 4.2.0
+      tslib: 2.8.1
+
+  '@aws-sdk/crc64-nvme@3.972.0':
     dependencies:
       '@smithy/types': 4.12.0
       tslib: 2.8.1
@@ -5012,6 +5219,14 @@ snapshots:
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
+  '@aws-sdk/credential-provider-env@3.972.1':
+    dependencies:
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/types': 3.973.0
+      '@smithy/property-provider': 4.2.8
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+
   '@aws-sdk/credential-provider-http@3.970.0':
     dependencies:
       '@aws-sdk/core': 3.970.0
@@ -5020,7 +5235,20 @@ snapshots:
       '@smithy/node-http-handler': 4.4.8
       '@smithy/property-provider': 4.2.8
       '@smithy/protocol-http': 5.3.8
-      '@smithy/smithy-client': 4.10.8
+      '@smithy/smithy-client': 4.10.12
+      '@smithy/types': 4.12.0
+      '@smithy/util-stream': 4.5.10
+      tslib: 2.8.1
+
+  '@aws-sdk/credential-provider-http@3.972.1':
+    dependencies:
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/types': 3.973.0
+      '@smithy/fetch-http-handler': 5.3.9
+      '@smithy/node-http-handler': 4.4.8
+      '@smithy/property-provider': 4.2.8
+      '@smithy/protocol-http': 5.3.8
+      '@smithy/smithy-client': 4.10.12
       '@smithy/types': 4.12.0
       '@smithy/util-stream': 4.5.10
       tslib: 2.8.1
@@ -5044,11 +5272,43 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
+  '@aws-sdk/credential-provider-ini@3.972.1':
+    dependencies:
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/credential-provider-env': 3.972.1
+      '@aws-sdk/credential-provider-http': 3.972.1
+      '@aws-sdk/credential-provider-login': 3.972.1
+      '@aws-sdk/credential-provider-process': 3.972.1
+      '@aws-sdk/credential-provider-sso': 3.972.1
+      '@aws-sdk/credential-provider-web-identity': 3.972.1
+      '@aws-sdk/nested-clients': 3.974.0
+      '@aws-sdk/types': 3.973.0
+      '@smithy/credential-provider-imds': 4.2.8
+      '@smithy/property-provider': 4.2.8
+      '@smithy/shared-ini-file-loader': 4.4.3
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - aws-crt
+
   '@aws-sdk/credential-provider-login@3.970.0':
     dependencies:
       '@aws-sdk/core': 3.970.0
       '@aws-sdk/nested-clients': 3.970.0
       '@aws-sdk/types': 3.969.0
+      '@smithy/property-provider': 4.2.8
+      '@smithy/protocol-http': 5.3.8
+      '@smithy/shared-ini-file-loader': 4.4.3
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - aws-crt
+
+  '@aws-sdk/credential-provider-login@3.972.1':
+    dependencies:
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/nested-clients': 3.974.0
+      '@aws-sdk/types': 3.973.0
       '@smithy/property-provider': 4.2.8
       '@smithy/protocol-http': 5.3.8
       '@smithy/shared-ini-file-loader': 4.4.3
@@ -5074,10 +5334,36 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
+  '@aws-sdk/credential-provider-node@3.972.1':
+    dependencies:
+      '@aws-sdk/credential-provider-env': 3.972.1
+      '@aws-sdk/credential-provider-http': 3.972.1
+      '@aws-sdk/credential-provider-ini': 3.972.1
+      '@aws-sdk/credential-provider-process': 3.972.1
+      '@aws-sdk/credential-provider-sso': 3.972.1
+      '@aws-sdk/credential-provider-web-identity': 3.972.1
+      '@aws-sdk/types': 3.973.0
+      '@smithy/credential-provider-imds': 4.2.8
+      '@smithy/property-provider': 4.2.8
+      '@smithy/shared-ini-file-loader': 4.4.3
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - aws-crt
+
   '@aws-sdk/credential-provider-process@3.970.0':
     dependencies:
       '@aws-sdk/core': 3.970.0
       '@aws-sdk/types': 3.969.0
+      '@smithy/property-provider': 4.2.8
+      '@smithy/shared-ini-file-loader': 4.4.3
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+
+  '@aws-sdk/credential-provider-process@3.972.1':
+    dependencies:
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/types': 3.973.0
       '@smithy/property-provider': 4.2.8
       '@smithy/shared-ini-file-loader': 4.4.3
       '@smithy/types': 4.12.0
@@ -5089,6 +5375,19 @@ snapshots:
       '@aws-sdk/core': 3.970.0
       '@aws-sdk/token-providers': 3.970.0
       '@aws-sdk/types': 3.969.0
+      '@smithy/property-provider': 4.2.8
+      '@smithy/shared-ini-file-loader': 4.4.3
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - aws-crt
+
+  '@aws-sdk/credential-provider-sso@3.972.1':
+    dependencies:
+      '@aws-sdk/client-sso': 3.974.0
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/token-providers': 3.974.0
+      '@aws-sdk/types': 3.973.0
       '@smithy/property-provider': 4.2.8
       '@smithy/shared-ini-file-loader': 4.4.3
       '@smithy/types': 4.12.0
@@ -5108,31 +5407,43 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/middleware-bucket-endpoint@3.969.0':
+  '@aws-sdk/credential-provider-web-identity@3.972.1':
     dependencies:
-      '@aws-sdk/types': 3.969.0
-      '@aws-sdk/util-arn-parser': 3.968.0
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/nested-clients': 3.974.0
+      '@aws-sdk/types': 3.973.0
+      '@smithy/property-provider': 4.2.8
+      '@smithy/shared-ini-file-loader': 4.4.3
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - aws-crt
+
+  '@aws-sdk/middleware-bucket-endpoint@3.972.1':
+    dependencies:
+      '@aws-sdk/types': 3.973.0
+      '@aws-sdk/util-arn-parser': 3.972.1
       '@smithy/node-config-provider': 4.3.8
       '@smithy/protocol-http': 5.3.8
       '@smithy/types': 4.12.0
       '@smithy/util-config-provider': 4.2.0
       tslib: 2.8.1
 
-  '@aws-sdk/middleware-expect-continue@3.969.0':
+  '@aws-sdk/middleware-expect-continue@3.972.1':
     dependencies:
-      '@aws-sdk/types': 3.969.0
+      '@aws-sdk/types': 3.973.0
       '@smithy/protocol-http': 5.3.8
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
-  '@aws-sdk/middleware-flexible-checksums@3.970.0':
+  '@aws-sdk/middleware-flexible-checksums@3.972.1':
     dependencies:
       '@aws-crypto/crc32': 5.2.0
       '@aws-crypto/crc32c': 5.2.0
       '@aws-crypto/util': 5.2.0
-      '@aws-sdk/core': 3.970.0
-      '@aws-sdk/crc64-nvme': 3.969.0
-      '@aws-sdk/types': 3.969.0
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/crc64-nvme': 3.972.0
+      '@aws-sdk/types': 3.973.0
       '@smithy/is-array-buffer': 4.2.0
       '@smithy/node-config-provider': 4.3.8
       '@smithy/protocol-http': 5.3.8
@@ -5149,15 +5460,28 @@ snapshots:
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
-  '@aws-sdk/middleware-location-constraint@3.969.0':
+  '@aws-sdk/middleware-host-header@3.972.1':
     dependencies:
-      '@aws-sdk/types': 3.969.0
+      '@aws-sdk/types': 3.973.0
+      '@smithy/protocol-http': 5.3.8
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+
+  '@aws-sdk/middleware-location-constraint@3.972.1':
+    dependencies:
+      '@aws-sdk/types': 3.973.0
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
   '@aws-sdk/middleware-logger@3.969.0':
     dependencies:
       '@aws-sdk/types': 3.969.0
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+
+  '@aws-sdk/middleware-logger@3.972.1':
+    dependencies:
+      '@aws-sdk/types': 3.973.0
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
@@ -5169,16 +5493,24 @@ snapshots:
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
-  '@aws-sdk/middleware-sdk-s3@3.970.0':
+  '@aws-sdk/middleware-recursion-detection@3.972.1':
     dependencies:
-      '@aws-sdk/core': 3.970.0
-      '@aws-sdk/types': 3.969.0
-      '@aws-sdk/util-arn-parser': 3.968.0
-      '@smithy/core': 3.20.6
+      '@aws-sdk/types': 3.973.0
+      '@aws/lambda-invoke-store': 0.2.3
+      '@smithy/protocol-http': 5.3.8
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+
+  '@aws-sdk/middleware-sdk-s3@3.972.0':
+    dependencies:
+      '@aws-sdk/core': 3.972.0
+      '@aws-sdk/types': 3.972.0
+      '@aws-sdk/util-arn-parser': 3.972.0
+      '@smithy/core': 3.21.1
       '@smithy/node-config-provider': 4.3.8
       '@smithy/protocol-http': 5.3.8
       '@smithy/signature-v4': 5.3.8
-      '@smithy/smithy-client': 4.10.8
+      '@smithy/smithy-client': 4.10.12
       '@smithy/types': 4.12.0
       '@smithy/util-config-provider': 4.2.0
       '@smithy/util-middleware': 4.2.8
@@ -5186,9 +5518,26 @@ snapshots:
       '@smithy/util-utf8': 4.2.0
       tslib: 2.8.1
 
-  '@aws-sdk/middleware-ssec@3.969.0':
+  '@aws-sdk/middleware-sdk-s3@3.972.1':
     dependencies:
-      '@aws-sdk/types': 3.969.0
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/types': 3.973.0
+      '@aws-sdk/util-arn-parser': 3.972.1
+      '@smithy/core': 3.21.1
+      '@smithy/node-config-provider': 4.3.8
+      '@smithy/protocol-http': 5.3.8
+      '@smithy/signature-v4': 5.3.8
+      '@smithy/smithy-client': 4.10.12
+      '@smithy/types': 4.12.0
+      '@smithy/util-config-provider': 4.2.0
+      '@smithy/util-middleware': 4.2.8
+      '@smithy/util-stream': 4.5.10
+      '@smithy/util-utf8': 4.2.0
+      tslib: 2.8.1
+
+  '@aws-sdk/middleware-ssec@3.972.1':
+    dependencies:
+      '@aws-sdk/types': 3.973.0
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
@@ -5197,7 +5546,17 @@ snapshots:
       '@aws-sdk/core': 3.970.0
       '@aws-sdk/types': 3.969.0
       '@aws-sdk/util-endpoints': 3.970.0
-      '@smithy/core': 3.20.6
+      '@smithy/core': 3.21.1
+      '@smithy/protocol-http': 5.3.8
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+
+  '@aws-sdk/middleware-user-agent@3.972.1':
+    dependencies:
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/types': 3.973.0
+      '@aws-sdk/util-endpoints': 3.972.0
+      '@smithy/core': 3.21.1
       '@smithy/protocol-http': 5.3.8
       '@smithy/types': 4.12.0
       tslib: 2.8.1
@@ -5217,26 +5576,69 @@ snapshots:
       '@aws-sdk/util-user-agent-browser': 3.969.0
       '@aws-sdk/util-user-agent-node': 3.970.0
       '@smithy/config-resolver': 4.4.6
-      '@smithy/core': 3.20.6
+      '@smithy/core': 3.21.1
       '@smithy/fetch-http-handler': 5.3.9
       '@smithy/hash-node': 4.2.8
       '@smithy/invalid-dependency': 4.2.8
       '@smithy/middleware-content-length': 4.2.8
-      '@smithy/middleware-endpoint': 4.4.7
-      '@smithy/middleware-retry': 4.4.23
+      '@smithy/middleware-endpoint': 4.4.11
+      '@smithy/middleware-retry': 4.4.27
       '@smithy/middleware-serde': 4.2.9
       '@smithy/middleware-stack': 4.2.8
       '@smithy/node-config-provider': 4.3.8
       '@smithy/node-http-handler': 4.4.8
       '@smithy/protocol-http': 5.3.8
-      '@smithy/smithy-client': 4.10.8
+      '@smithy/smithy-client': 4.10.12
       '@smithy/types': 4.12.0
       '@smithy/url-parser': 4.2.8
       '@smithy/util-base64': 4.3.0
       '@smithy/util-body-length-browser': 4.2.0
       '@smithy/util-body-length-node': 4.2.1
-      '@smithy/util-defaults-mode-browser': 4.3.22
-      '@smithy/util-defaults-mode-node': 4.2.25
+      '@smithy/util-defaults-mode-browser': 4.3.26
+      '@smithy/util-defaults-mode-node': 4.2.29
+      '@smithy/util-endpoints': 3.2.8
+      '@smithy/util-middleware': 4.2.8
+      '@smithy/util-retry': 4.2.8
+      '@smithy/util-utf8': 4.2.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - aws-crt
+
+  '@aws-sdk/nested-clients@3.974.0':
+    dependencies:
+      '@aws-crypto/sha256-browser': 5.2.0
+      '@aws-crypto/sha256-js': 5.2.0
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/middleware-host-header': 3.972.1
+      '@aws-sdk/middleware-logger': 3.972.1
+      '@aws-sdk/middleware-recursion-detection': 3.972.1
+      '@aws-sdk/middleware-user-agent': 3.972.1
+      '@aws-sdk/region-config-resolver': 3.972.1
+      '@aws-sdk/types': 3.973.0
+      '@aws-sdk/util-endpoints': 3.972.0
+      '@aws-sdk/util-user-agent-browser': 3.972.1
+      '@aws-sdk/util-user-agent-node': 3.972.1
+      '@smithy/config-resolver': 4.4.6
+      '@smithy/core': 3.21.1
+      '@smithy/fetch-http-handler': 5.3.9
+      '@smithy/hash-node': 4.2.8
+      '@smithy/invalid-dependency': 4.2.8
+      '@smithy/middleware-content-length': 4.2.8
+      '@smithy/middleware-endpoint': 4.4.11
+      '@smithy/middleware-retry': 4.4.27
+      '@smithy/middleware-serde': 4.2.9
+      '@smithy/middleware-stack': 4.2.8
+      '@smithy/node-config-provider': 4.3.8
+      '@smithy/node-http-handler': 4.4.8
+      '@smithy/protocol-http': 5.3.8
+      '@smithy/smithy-client': 4.10.12
+      '@smithy/types': 4.12.0
+      '@smithy/url-parser': 4.2.8
+      '@smithy/util-base64': 4.3.0
+      '@smithy/util-body-length-browser': 4.2.0
+      '@smithy/util-body-length-node': 4.2.1
+      '@smithy/util-defaults-mode-browser': 4.3.26
+      '@smithy/util-defaults-mode-node': 4.2.29
       '@smithy/util-endpoints': 3.2.8
       '@smithy/util-middleware': 4.2.8
       '@smithy/util-retry': 4.2.8
@@ -5253,10 +5655,18 @@ snapshots:
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
-  '@aws-sdk/signature-v4-multi-region@3.970.0':
+  '@aws-sdk/region-config-resolver@3.972.1':
     dependencies:
-      '@aws-sdk/middleware-sdk-s3': 3.970.0
-      '@aws-sdk/types': 3.969.0
+      '@aws-sdk/types': 3.973.0
+      '@smithy/config-resolver': 4.4.6
+      '@smithy/node-config-provider': 4.3.8
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+
+  '@aws-sdk/signature-v4-multi-region@3.972.0':
+    dependencies:
+      '@aws-sdk/middleware-sdk-s3': 3.972.0
+      '@aws-sdk/types': 3.972.0
       '@smithy/protocol-http': 5.3.8
       '@smithy/signature-v4': 5.3.8
       '@smithy/types': 4.12.0
@@ -5274,12 +5684,38 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
+  '@aws-sdk/token-providers@3.974.0':
+    dependencies:
+      '@aws-sdk/core': 3.973.0
+      '@aws-sdk/nested-clients': 3.974.0
+      '@aws-sdk/types': 3.973.0
+      '@smithy/property-provider': 4.2.8
+      '@smithy/shared-ini-file-loader': 4.4.3
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - aws-crt
+
   '@aws-sdk/types@3.969.0':
     dependencies:
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
-  '@aws-sdk/util-arn-parser@3.968.0':
+  '@aws-sdk/types@3.972.0':
+    dependencies:
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+
+  '@aws-sdk/types@3.973.0':
+    dependencies:
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+
+  '@aws-sdk/util-arn-parser@3.972.0':
+    dependencies:
+      tslib: 2.8.1
+
+  '@aws-sdk/util-arn-parser@3.972.1':
     dependencies:
       tslib: 2.8.1
 
@@ -5291,13 +5727,28 @@ snapshots:
       '@smithy/util-endpoints': 3.2.8
       tslib: 2.8.1
 
-  '@aws-sdk/util-locate-window@3.965.2':
+  '@aws-sdk/util-endpoints@3.972.0':
+    dependencies:
+      '@aws-sdk/types': 3.972.0
+      '@smithy/types': 4.12.0
+      '@smithy/url-parser': 4.2.8
+      '@smithy/util-endpoints': 3.2.8
+      tslib: 2.8.1
+
+  '@aws-sdk/util-locate-window@3.965.3':
     dependencies:
       tslib: 2.8.1
 
   '@aws-sdk/util-user-agent-browser@3.969.0':
     dependencies:
       '@aws-sdk/types': 3.969.0
+      '@smithy/types': 4.12.0
+      bowser: 2.13.1
+      tslib: 2.8.1
+
+  '@aws-sdk/util-user-agent-browser@3.972.1':
+    dependencies:
+      '@aws-sdk/types': 3.973.0
       '@smithy/types': 4.12.0
       bowser: 2.13.1
       tslib: 2.8.1
@@ -5310,7 +5761,27 @@ snapshots:
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
+  '@aws-sdk/util-user-agent-node@3.972.1':
+    dependencies:
+      '@aws-sdk/middleware-user-agent': 3.972.1
+      '@aws-sdk/types': 3.973.0
+      '@smithy/node-config-provider': 4.3.8
+      '@smithy/types': 4.12.0
+      tslib: 2.8.1
+
   '@aws-sdk/xml-builder@3.969.0':
+    dependencies:
+      '@smithy/types': 4.12.0
+      fast-xml-parser: 5.2.5
+      tslib: 2.8.1
+
+  '@aws-sdk/xml-builder@3.972.0':
+    dependencies:
+      '@smithy/types': 4.12.0
+      fast-xml-parser: 5.2.5
+      tslib: 2.8.1
+
+  '@aws-sdk/xml-builder@3.972.1':
     dependencies:
       '@smithy/types': 4.12.0
       fast-xml-parser: 5.2.5
@@ -5326,7 +5797,7 @@ snapshots:
 
   '@babel/helper-validator-identifier@7.28.5': {}
 
-  '@babel/runtime@7.28.4': {}
+  '@babel/runtime@7.28.6': {}
 
   '@bcoe/v8-coverage@1.0.2': {}
 
@@ -5801,91 +6272,91 @@ snapshots:
       '@tybys/wasm-util': 0.10.1
     optional: true
 
-  '@nivo/annotations@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/annotations@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      lodash: 4.17.21
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      lodash: 4.17.23
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/arcs@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/arcs@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/core': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@types/d3-shape': 3.1.7
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/core': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@types/d3-shape': 3.1.8
       d3-shape: 3.2.0
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/axes@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/axes@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       '@nivo/scales': 0.99.0
-      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       '@types/d3-format': 1.4.5
       '@types/d3-time-format': 2.3.4
       d3-format: 1.4.5
       d3-time-format: 3.0.0
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/bar@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/bar@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/annotations': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/axes': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/annotations': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/axes': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       '@nivo/canvas': 0.99.0
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/legends': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/legends': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       '@nivo/scales': 0.99.0
-      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       '@types/d3-scale': 4.0.9
-      '@types/d3-shape': 3.1.7
+      '@types/d3-shape': 3.1.8
       d3-scale: 4.0.2
       d3-shape: 3.2.0
-      lodash: 4.17.21
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      lodash: 4.17.23
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
   '@nivo/canvas@0.99.0': {}
 
-  '@nivo/colors@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/colors@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
       '@types/d3-color': 3.1.3
       '@types/d3-scale': 4.0.9
       '@types/d3-scale-chromatic': 3.1.0
       d3-color: 3.1.0
       d3-scale: 4.0.2
       d3-scale-chromatic: 3.1.0
-      lodash: 4.17.21
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      lodash: 4.17.23
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/core@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/core@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@types/d3-shape': 3.1.7
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@types/d3-shape': 3.1.8
       d3-color: 3.1.0
       d3-format: 1.4.5
       d3-interpolate: 3.0.1
@@ -5893,90 +6364,90 @@ snapshots:
       d3-scale-chromatic: 3.1.0
       d3-shape: 3.2.0
       d3-time-format: 3.0.0
-      lodash: 4.17.21
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
-      react-virtualized-auto-sizer: 1.0.26(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      use-debounce: 10.0.6(@preact/compat@18.3.1(preact@10.28.1))
+      lodash: 4.17.23
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
+      react-virtualized-auto-sizer: 1.0.26(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      use-debounce: 10.1.0(@preact/compat@18.3.1(preact@10.28.2))
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/funnel@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/funnel@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/annotations': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/annotations': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       '@types/d3-scale': 4.0.9
-      '@types/d3-shape': 3.1.7
+      '@types/d3-shape': 3.1.8
       d3-scale: 4.0.2
       d3-shape: 3.2.0
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/heatmap@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/heatmap@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/annotations': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/axes': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/legends': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/annotations': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/axes': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/legends': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       '@nivo/scales': 0.99.0
-      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/core': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/core': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       '@types/d3-scale': 4.0.9
       d3-scale: 4.0.2
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/legends@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/legends@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
       '@types/d3-scale': 4.0.9
       d3-scale: 4.0.2
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/line@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/line@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/annotations': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/axes': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/legends': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/annotations': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/axes': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/legends': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       '@nivo/scales': 0.99.0
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/voronoi': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@types/d3-shape': 3.1.7
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/voronoi': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@types/d3-shape': 3.1.8
       d3-shape: 3.2.0
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/pie@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/pie@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/arcs': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/legends': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@types/d3-shape': 3.1.7
+      '@nivo/arcs': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/legends': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@types/d3-shape': 3.1.8
       d3-shape: 3.2.0
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
@@ -5990,57 +6461,57 @@ snapshots:
       d3-scale: 4.0.2
       d3-time: 1.1.0
       d3-time-format: 3.0.0
-      lodash: 4.17.21
+      lodash: 4.17.23
 
-  '@nivo/text@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/text@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/theming@0.99.0(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/theming@0.99.0(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      lodash: 4.17.21
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      lodash: 4.17.23
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
 
-  '@nivo/tooltip@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/tooltip@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/treemap@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/treemap@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/core': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/core': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/web': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       '@types/d3-hierarchy': 3.1.7
       d3-hierarchy: 3.1.2
-      lodash: 4.17.21
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      lodash: 4.17.23
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/voronoi@0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@nivo/voronoi@0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))
       '@types/d3-delaunay': 6.0.4
       '@types/d3-scale': 4.0.9
       d3-delaunay: 6.0.4
       d3-scale: 4.0.2
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
     transitivePeerDependencies:
       - react-dom
 
@@ -6275,48 +6746,53 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@preact/compat@18.3.1(preact@10.28.1)':
+  '@preact/compat@18.3.1(preact@10.28.2)':
     dependencies:
-      preact: 10.28.1
+      preact: 10.28.2
 
-  '@preact/signals-core@1.12.1': {}
+  '@preact/signals-core@1.12.2': {}
 
-  '@preact/signals@1.3.2(preact@10.28.1)':
+  '@preact/signals@1.3.2(preact@10.28.2)':
     dependencies:
-      '@preact/signals-core': 1.12.1
-      preact: 10.28.1
+      '@preact/signals-core': 1.12.2
+      preact: 10.28.2
 
-  '@react-spring/animated@10.0.3(@preact/compat@18.3.1(preact@10.28.1))':
+  '@preact/signals@2.6.1(preact@10.28.2)':
     dependencies:
-      '@react-spring/shared': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))
+      '@preact/signals-core': 1.12.2
+      preact: 10.28.2
+
+  '@react-spring/animated@10.0.3(@preact/compat@18.3.1(preact@10.28.2))':
+    dependencies:
+      '@react-spring/shared': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))
       '@react-spring/types': 10.0.3
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
 
-  '@react-spring/core@10.0.3(@preact/compat@18.3.1(preact@10.28.1))':
+  '@react-spring/core@10.0.3(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@react-spring/animated': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/shared': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))
+      '@react-spring/animated': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/shared': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))
       '@react-spring/types': 10.0.3
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
 
   '@react-spring/rafz@10.0.3': {}
 
-  '@react-spring/shared@10.0.3(@preact/compat@18.3.1(preact@10.28.1))':
+  '@react-spring/shared@10.0.3(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
       '@react-spring/rafz': 10.0.3
       '@react-spring/types': 10.0.3
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
 
   '@react-spring/types@10.0.3': {}
 
-  '@react-spring/web@10.0.3(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1))':
+  '@react-spring/web@10.0.3(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2))':
     dependencies:
-      '@react-spring/animated': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/core': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))
-      '@react-spring/shared': 10.0.3(@preact/compat@18.3.1(preact@10.28.1))
+      '@react-spring/animated': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/core': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))
+      '@react-spring/shared': 10.0.3(@preact/compat@18.3.1(preact@10.28.2))
       '@react-spring/types': 10.0.3
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
-      react-dom: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
+      react-dom: '@preact/compat@18.3.1(preact@10.28.2)'
 
   '@rtsao/scc@1.1.0': {}
 
@@ -6358,7 +6834,7 @@ snapshots:
       '@smithy/util-middleware': 4.2.8
       tslib: 2.8.1
 
-  '@smithy/core@3.20.6':
+  '@smithy/core@3.21.1':
     dependencies:
       '@smithy/middleware-serde': 4.2.9
       '@smithy/protocol-http': 5.3.8
@@ -6462,9 +6938,9 @@ snapshots:
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
-  '@smithy/middleware-endpoint@4.4.7':
+  '@smithy/middleware-endpoint@4.4.11':
     dependencies:
-      '@smithy/core': 3.20.6
+      '@smithy/core': 3.21.1
       '@smithy/middleware-serde': 4.2.9
       '@smithy/node-config-provider': 4.3.8
       '@smithy/shared-ini-file-loader': 4.4.3
@@ -6473,12 +6949,12 @@ snapshots:
       '@smithy/util-middleware': 4.2.8
       tslib: 2.8.1
 
-  '@smithy/middleware-retry@4.4.23':
+  '@smithy/middleware-retry@4.4.27':
     dependencies:
       '@smithy/node-config-provider': 4.3.8
       '@smithy/protocol-http': 5.3.8
       '@smithy/service-error-classification': 4.2.8
-      '@smithy/smithy-client': 4.10.8
+      '@smithy/smithy-client': 4.10.12
       '@smithy/types': 4.12.0
       '@smithy/util-middleware': 4.2.8
       '@smithy/util-retry': 4.2.8
@@ -6552,10 +7028,10 @@ snapshots:
       '@smithy/util-utf8': 4.2.0
       tslib: 2.8.1
 
-  '@smithy/smithy-client@4.10.8':
+  '@smithy/smithy-client@4.10.12':
     dependencies:
-      '@smithy/core': 3.20.6
-      '@smithy/middleware-endpoint': 4.4.7
+      '@smithy/core': 3.21.1
+      '@smithy/middleware-endpoint': 4.4.11
       '@smithy/middleware-stack': 4.2.8
       '@smithy/protocol-http': 5.3.8
       '@smithy/types': 4.12.0
@@ -6600,20 +7076,20 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@smithy/util-defaults-mode-browser@4.3.22':
+  '@smithy/util-defaults-mode-browser@4.3.26':
     dependencies:
       '@smithy/property-provider': 4.2.8
-      '@smithy/smithy-client': 4.10.8
+      '@smithy/smithy-client': 4.10.12
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
-  '@smithy/util-defaults-mode-node@4.2.25':
+  '@smithy/util-defaults-mode-node@4.2.29':
     dependencies:
       '@smithy/config-resolver': 4.4.6
       '@smithy/credential-provider-imds': 4.2.8
       '@smithy/node-config-provider': 4.3.8
       '@smithy/property-provider': 4.2.8
-      '@smithy/smithy-client': 4.10.8
+      '@smithy/smithy-client': 4.10.12
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
@@ -6739,7 +7215,7 @@ snapshots:
     dependencies:
       '@types/d3-time': 3.0.4
 
-  '@types/d3-shape@3.1.7':
+  '@types/d3-shape@3.1.8':
     dependencies:
       '@types/d3-path': 3.1.1
 
@@ -6982,6 +7458,10 @@ snapshots:
     dependencies:
       md5: 2.3.0
 
+  allure-js-commons@3.4.5:
+    dependencies:
+      md5: 2.3.0
+
   allure-mocha@3.4.4(mocha@11.7.5):
     dependencies:
       allure-js-commons: 3.4.4
@@ -6989,27 +7469,27 @@ snapshots:
     transitivePeerDependencies:
       - allure-playwright
 
-  allure@3.0.0(typescript@5.9.3):
+  allure@3.0.1(typescript@5.9.3):
     dependencies:
-      '@allurereport/charts-api': 3.0.0
-      '@allurereport/ci': 3.0.0
-      '@allurereport/core': 3.0.0(typescript@5.9.3)
-      '@allurereport/core-api': 3.0.0
-      '@allurereport/directory-watcher': 3.0.0
-      '@allurereport/plugin-allure2': 3.0.0
-      '@allurereport/plugin-api': 3.0.0
-      '@allurereport/plugin-awesome': 3.0.0(typescript@5.9.3)
-      '@allurereport/plugin-classic': 3.0.0(typescript@5.9.3)
-      '@allurereport/plugin-csv': 3.0.0
-      '@allurereport/plugin-dashboard': 3.0.0(typescript@5.9.3)
-      '@allurereport/plugin-jira': 3.0.0
-      '@allurereport/plugin-log': 3.0.0
-      '@allurereport/plugin-progress': 3.0.0
-      '@allurereport/plugin-server-reload': 3.0.0
-      '@allurereport/plugin-slack': 3.0.0
-      '@allurereport/reader-api': 3.0.0
-      '@allurereport/service': 3.0.0
-      '@allurereport/static-server': 3.0.0
+      '@allurereport/charts-api': 3.0.1
+      '@allurereport/ci': 3.0.1
+      '@allurereport/core': 3.0.1(typescript@5.9.3)
+      '@allurereport/core-api': 3.0.1
+      '@allurereport/directory-watcher': 3.0.1
+      '@allurereport/plugin-allure2': 3.0.1
+      '@allurereport/plugin-api': 3.0.1
+      '@allurereport/plugin-awesome': 3.0.1(typescript@5.9.3)
+      '@allurereport/plugin-classic': 3.0.1(typescript@5.9.3)
+      '@allurereport/plugin-csv': 3.0.1
+      '@allurereport/plugin-dashboard': 3.0.1(typescript@5.9.3)
+      '@allurereport/plugin-jira': 3.0.1
+      '@allurereport/plugin-log': 3.0.1
+      '@allurereport/plugin-progress': 3.0.1
+      '@allurereport/plugin-server-reload': 3.0.1
+      '@allurereport/plugin-slack': 3.0.1
+      '@allurereport/reader-api': 3.0.1
+      '@allurereport/service': 3.0.1
+      '@allurereport/static-server': 3.0.1
       adm-zip: 0.5.16
       clipanion: 4.0.0-rc.4(typanion@3.14.0)
       glob: 11.1.0
@@ -7457,7 +7937,7 @@ snapshots:
 
   d3-format@1.4.5: {}
 
-  d3-format@3.1.0: {}
+  d3-format@3.1.2: {}
 
   d3-hierarchy@3.1.2: {}
 
@@ -7477,7 +7957,7 @@ snapshots:
   d3-scale@4.0.2:
     dependencies:
       d3-array: 3.2.4
-      d3-format: 3.1.0
+      d3-format: 3.1.2
       d3-interpolate: 3.0.1
       d3-time: 3.1.0
       d3-time-format: 4.1.0
@@ -8514,7 +8994,7 @@ snapshots:
 
   i18next@24.2.3(typescript@5.9.3):
     dependencies:
-      '@babel/runtime': 7.28.4
+      '@babel/runtime': 7.28.6
     optionalDependencies:
       typescript: 5.9.3
 
@@ -8828,6 +9308,8 @@ snapshots:
 
   lodash@4.17.21: {}
 
+  lodash@4.17.23: {}
+
   log-symbols@4.1.0:
     dependencies:
       chalk: 4.1.2
@@ -9033,7 +9515,7 @@ snapshots:
   oclif@4.22.63(@types/node@25.0.3)(supports-color@10.2.2):
     dependencies:
       '@aws-sdk/client-cloudfront': 3.970.0
-      '@aws-sdk/client-s3': 3.970.0
+      '@aws-sdk/client-s3': 3.974.0
       '@inquirer/confirm': 3.2.0
       '@inquirer/input': 2.3.0
       '@inquirer/select': 2.5.0
@@ -9208,7 +9690,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  preact@10.28.1: {}
+  preact@10.28.2: {}
 
   prelude-ls@1.2.1: {}
 
@@ -9242,6 +9724,10 @@ snapshots:
     dependencies:
       side-channel: 1.1.0
 
+  qs@6.14.1:
+    dependencies:
+      side-channel: 1.1.0
+
   queue-microtask@1.2.3: {}
 
   quick-lru@5.1.1: {}
@@ -9254,10 +9740,10 @@ snapshots:
 
   rate-limiter-flexible@8.3.0: {}
 
-  react-virtualized-auto-sizer@1.0.26(@preact/compat@18.3.1(preact@10.28.1))(@preact/compat@18.3.1(preact@10.28.1)):
+  react-virtualized-auto-sizer@1.0.26(@preact/compat@18.3.1(preact@10.28.2))(@preact/compat@18.3.1(preact@10.28.2)):
     dependencies:
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
-      react-dom: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
+      react-dom: '@preact/compat@18.3.1(preact@10.28.2)'
 
   read-pkg-up@7.0.1:
     dependencies:
@@ -9850,11 +10336,11 @@ snapshots:
   url@0.11.4:
     dependencies:
       punycode: 1.4.1
-      qs: 6.14.0
+      qs: 6.14.1
 
-  use-debounce@10.0.6(@preact/compat@18.3.1(preact@10.28.1)):
+  use-debounce@10.1.0(@preact/compat@18.3.1(preact@10.28.2)):
     dependencies:
-      react: '@preact/compat@18.3.1(preact@10.28.1)'
+      react: '@preact/compat@18.3.1(preact@10.28.2)'
 
   util-deprecate@1.0.2: {}
 
