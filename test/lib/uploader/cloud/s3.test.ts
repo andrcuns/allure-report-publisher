@@ -58,6 +58,7 @@ describe('S3Uploader', () => {
     })
 
     describe('reportUrlBase()', () => {
+
         it('constructs URL from bucket and prefix', () => {
             uploader = new Uploader({
                 bucket: 'test-bucket',
@@ -68,7 +69,7 @@ describe('S3Uploader', () => {
                 plugins: ['awesome'],
                 prefix: 'reports',
             })
-            const urlBase = uploader['reportUrlBase']()
+            const urlBase = uploader.reportUrlBase()
             expect(urlBase).to.equal('https://test-bucket.s3.us-east-1.amazonaws.com/reports')
         })
 
@@ -83,7 +84,7 @@ describe('S3Uploader', () => {
                 baseUrl: 'https://custom.domain.com',
                 prefix: 'reports',
             })
-            const urlBase = uploader['reportUrlBase']()
+            const urlBase = uploader.reportUrlBase()
             expect(urlBase).to.equal('https://custom.domain.com/reports')
         })
 
@@ -96,7 +97,7 @@ describe('S3Uploader', () => {
                 parallel: 1,
                 plugins: ['awesome'],
             })
-            const urlBase = uploader['reportUrlBase']()
+            const urlBase = uploader.reportUrlBase()
             expect(urlBase).to.equal('https://test-bucket.s3.us-east-1.amazonaws.com')
         })
     })
