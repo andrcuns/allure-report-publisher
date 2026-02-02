@@ -37,9 +37,13 @@ export class S3Uploader extends BaseCloudUploader {
   protected reportUrlBase() {
     if (this._reportUrlBase) return this._reportUrlBase
 
-    let base = `https://${this.bucketName}.s3.${this.region}.amazonaws.com`
-    if (this.awsEndpoint) {
+    let base: string
+    if (this.baseUrl) {
+      base = this.baseUrl
+    } else if (this.awsEndpoint) {
       base = this.forcePathStyle ? `${this.awsEndpoint}/${this.bucketName}` : this.awsEndpoint
+    } else {
+      base = `https://${this.bucketName}.s3.${this.region}.amazonaws.com`
     }
 
     this._reportUrlBase = this.prefix ? `${base}/${this.prefix}` : base
