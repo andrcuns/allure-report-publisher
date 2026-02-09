@@ -124,7 +124,7 @@ export abstract class BaseUploadCommand extends Command {
   protected async createExecutorJson(reportUrl: string) {
     for (const resultPath of this._resultPaths || []) {
       const executorJson = path.join(resultPath, 'executor.json')
-      if (!existsSync(executorJson)) continue
+      if (existsSync(executorJson)) continue
 
       logger.debug(`Creating executor.json at path: ${executorJson}`)
       writeFileSync(executorJson, JSON.stringify(ciInfo?.executorJson(reportUrl), null, 2))
