@@ -91,7 +91,7 @@ jobs:
             type=raw,value=latest,enable=${{ needs.metadata.outputs.is_tag == 'true' && needs.metadata.outputs.is_prerelease == 'false' }}
             type=semver,pattern={{version}},enable=${{ needs.metadata.outputs.is_tag == 'true' }}
       - name: Build and push
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           context: .
           push: true
