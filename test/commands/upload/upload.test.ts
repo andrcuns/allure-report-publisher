@@ -82,7 +82,7 @@ describe('upload', () => {
       rmSync(executorJsonPath, { force: true })
     })
 
-    it('creates executor.json in allure-results directory', async function () {
+    it('creates executor.json in allure-results directory', async () => {
       const { AWS_ENDPOINT } = process.env
       const prefix = `allure-report-publisher/${process.env.GITHUB_REF ?? 'local'}/executor-json-test`
 
