@@ -51,15 +51,17 @@ export class GitlabArtifactsUploader {
       throw new Error('Missing required CI_PROJECT_PATH for generating GitLab Pages URL')
     }
 
-    const topLevelGroup = projectPath.split('/')[0]
+    const pathComponents = projectPath.split('/')
+    const namespace = pathComponents[0]
+    const project = pathComponents.slice(1).join('/')
 
     try {
       const url = new URL(serverUrl!)
       const scheme = url.protocol.replace(':', '') || 'https'
-      return `${scheme}://${topLevelGroup}.${pagesDomain}`
+      return `${scheme}://${namespace}.${pagesDomain}`
     } catch {
       logger.debug(`Failed to construct pages domain based on server url, using default https scheme`)
-      return `https://${topLevelGroup}.${pagesDomain || GitlabCiInfo.DEFAULT_PAGES_DOMAIN}`
+      return `https://${namespace}.${pagesDomain || GitlabCiInfo.DEFAULT_PAGES_DOMAIN}/-/${project}`
     }
   }
 
@@ -68,12 +70,12 @@ export class GitlabArtifactsUploader {
 
     const base = this.reportUrlBase()
     const relativePath = path.relative(this.ciInfo.buildDir || '', this.reportPath)
-    const {projectName, jobId} = this.ciInfo
-    const urls = [`${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${relativePath}/index.html`]
+    const {jobId} = this.ciInfo
+    const urls = [`${base}/-/jobs/${jobId}/artifacts/${relativePath}/index.html`]
     if (this.plugins.length > 1) {
       urls.push(
         ...this.plugins.map(
-          (plugin) => `${base}/-/${projectName}/-/jobs/${jobId}/artifacts/${relativePath}/${plugin}/index.html`,
+          (plugin) => `${base}/-/jobs/${jobId}/artifacts/${relativePath}/${plugin}/index.html`,
         ),
       )
     }
