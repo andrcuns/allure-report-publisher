@@ -105,7 +105,7 @@ jobs:
           AWS_ACCESS_KEY_ID: minioadmin
           AWS_SECRET_ACCESS_KEY: minioadmin
           GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm run test --grep 'runs s3 upload command'
+        run: pnpm run test test/e2e/upload.test.ts
       - name: Save coverage
         uses: actions/upload-artifact@v6
         if: always()

@@ -17,9 +17,6 @@
     "import=tsx",
     "experimental-specifier-resolution=node"
   ],
-  "spec": [
-    "test/**/*.test.ts"
-  ],
   "extension": [
     "ts"
   ]
