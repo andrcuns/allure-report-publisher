@@ -6,6 +6,10 @@ import {expect} from '../support/setup'
 describe('e2e', () => {
   let commandError: Error | undefined
 
+  beforeEach(function () {
+    if (process.env.E2E_TEST !== 'true') return this.skip()
+  })
+
   afterEach(function () {
     globalConfig.reset()
 
@@ -15,9 +19,7 @@ describe('e2e', () => {
   })
 
   describe('s3', () => {
-    it('runs s3 upload command', async function () {
-      if (process.env.E2E_TEST !== 'true') return this.skip()
-
+    it('runs s3 upload command', async () => {
       const {AWS_ENDPOINT, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY} = process.env
       if (!AWS_ENDPOINT || !AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY) throw new Error('Missing aws env variables')
 
