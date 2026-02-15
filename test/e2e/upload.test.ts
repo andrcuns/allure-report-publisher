@@ -39,6 +39,7 @@ describe('e2e', () => {
     process.env.AWS_FORCE_PATH_STYLE = 'true'
     process.env.AWS_ACCESS_KEY_ID = 'minioadmin'
     process.env.AWS_SECRET_ACCESS_KEY = 'minioadmin'
+    process.env.NODE_ENV = 'test' // Set node environment for global config reinitialization to work
   })
 
   after(async () => {
