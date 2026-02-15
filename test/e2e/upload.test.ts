@@ -3,6 +3,7 @@ import {mkdirSync} from 'node:fs'
 import path from 'node:path'
 import {GenericContainer, StartedTestContainer} from 'testcontainers'
 
+import {globPaths} from '../../src/utils/glob.js'
 import {expect} from '../support/setup'
 
 describe('e2e', () => {
@@ -87,6 +88,7 @@ describe('e2e', () => {
       commandError = error
 
       expect(error?.message).to.be.undefined
+      expect(await globPaths(`${resultsGlob}/executor.json`, {nodir: true})).to.not.be.empty
     })
   })
 })

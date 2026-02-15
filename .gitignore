@@ -12,3 +12,5 @@
 
 oclif.manifest.json
 *.tsbuildinfo
+
+test/fixtures/allure-results/executor.json
