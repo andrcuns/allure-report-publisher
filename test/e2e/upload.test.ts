@@ -73,8 +73,7 @@ describe('e2e', () => {
       expect(stdout).to.match(new RegExp(`${process.env.AWS_ENDPOINT}/allure-reports/${prefix}/[\\w/]+/index.html`))
     })
 
-    // eslint-disable-next-line mocha/no-skipped-tests
-    it.skip('creates executor.json file', async () => {
+    it('creates executor.json file', async () => {
       const {error} = await runCommand([
         'upload',
         's3',
