@@ -63,11 +63,6 @@ describe('e2e', () => {
         '--config=allurerc.mjs',
         '--bucket=allure-reports',
         `--prefix=${prefix}`,
-        '--update-pr=comment',
-        '--ci-report-title=unit-test-report',
-        '--report-name=unit-test-report',
-        '--add-summary',
-        '--collapse-summary',
         '--copy-latest',
         '--debug',
       ])

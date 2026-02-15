@@ -86,12 +86,7 @@ jobs:
         with:
           pattern: allure-reports-*
           path: tmp/allure-results
-      - name: Run e2e upload test
-        env:
-          NODE_ENV: test
-          ALLURE_JOB_NAME: e2e-npm
-          ALLURE_RESULTS_GLOB: 'tmp/allure-results/*'
-          GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run e2e tests
         run: pnpm run test test/e2e/upload.test.ts
       - name: Save coverage
         uses: actions/upload-artifact@v6
