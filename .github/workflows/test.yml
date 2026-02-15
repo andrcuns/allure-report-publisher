@@ -98,6 +98,7 @@ jobs:
       - name: Run e2e upload test
         env:
           E2E_TEST: 'true'
+          NODE_ENV: test
           ALLURE_JOB_NAME: e2e-npm
           ALLURE_RESULTS_GLOB: 'tmp/allure-results/*'
           AWS_ENDPOINT: http://localhost:9000

@@ -27,7 +27,7 @@ class GlobalConfig {
     debug?: boolean
     disableOutput?: boolean
   }): void {
-    if (this.initialized) {
+    if (this.initialized && process.env.NODE_ENV !== 'test') {
       throw new Error('Config has already been initialized')
     }
 

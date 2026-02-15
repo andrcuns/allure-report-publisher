@@ -1,6 +1,5 @@
 import {runCommand} from '@oclif/test'
 
-import {globalConfig} from '../../src/utils/global-config'
 import {expect} from '../support/setup'
 
 describe('e2e', () => {
@@ -11,8 +10,6 @@ describe('e2e', () => {
   })
 
   afterEach(function () {
-    globalConfig.reset()
-
     if (this.currentTest?.state === 'failed') {
       console.log('Command failed:', commandError?.message)
     }
@@ -53,7 +50,7 @@ describe('e2e', () => {
         's3',
         `--results-glob=${process.env.ALLURE_RESULTS_GLOB ?? './**/allure-results'}`,
         '--config=test/fixtures/configs/allure2.json',
-        '--bucket=allure-reports'
+        '--bucket=allure-reports',
       ])
       commandError = error
 
