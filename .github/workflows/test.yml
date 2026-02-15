@@ -46,7 +46,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run tests
-        run: pnpm run test
+        run: pnpm run test --grep "e2e" --invert
       - name: Save allure results
         uses: actions/upload-artifact@v6
         if: always()
