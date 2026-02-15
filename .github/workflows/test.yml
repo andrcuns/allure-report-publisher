@@ -86,25 +86,11 @@ jobs:
         with:
           pattern: allure-reports-*
           path: tmp/allure-results
-      - name: Set up Minio
-        run: |
-          mkdir -p minio/allure-reports
-          docker run -d \
-            --name minio \
-            --volume "$(pwd)/minio":/data \
-            --publish 9000:9000 \
-            quay.io/minio/minio:latest \
-            server /data
       - name: Run e2e upload test
         env:
-          E2E_TEST: 'true'
           NODE_ENV: test
           ALLURE_JOB_NAME: e2e-npm
           ALLURE_RESULTS_GLOB: 'tmp/allure-results/*'
-          AWS_ENDPOINT: http://localhost:9000
-          AWS_FORCE_PATH_STYLE: 'true'
-          AWS_ACCESS_KEY_ID: minioadmin
-          AWS_SECRET_ACCESS_KEY: minioadmin
           GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm run test test/e2e/upload.test.ts
       - name: Save coverage

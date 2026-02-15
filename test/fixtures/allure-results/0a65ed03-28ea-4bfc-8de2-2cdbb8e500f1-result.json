@@ -1,0 +1,59 @@
+{
+  "uuid": "0a65ed03-28ea-4bfc-8de2-2cdbb8e500f1",
+  "name": "returns undefined when no MR IID is set",
+  "historyId": "e6d7337430d56389e986ecd54f012842:d41d8cd98f00b204e9800998ecf8427e",
+  "status": "passed",
+  "statusDetails": {},
+  "stage": "finished",
+  "steps": [],
+  "attachments": [],
+  "parameters": [],
+  "labels": [
+    {
+      "name": "language",
+      "value": "javascript"
+    },
+    {
+      "name": "framework",
+      "value": "mocha"
+    },
+    {
+      "name": "host",
+      "value": "omarchy"
+    },
+    {
+      "name": "thread",
+      "value": "pid-367248-worker-main"
+    },
+    {
+      "name": "package",
+      "value": "test.lib.ci.info.gitlab.test.ts"
+    },
+    {
+      "name": "parentSuite",
+      "value": "GitlabCiInfo"
+    },
+    {
+      "name": "suite",
+      "value": "mrIid"
+    },
+    {
+      "name": "nodeVersion",
+      "value": "v25.2.1"
+    }
+  ],
+  "links": [],
+  "start": 1768078125466,
+  "fullName": "test/lib/ci/info/gitlab.test.ts: GitlabCiInfo > mrIid > returns undefined when no MR IID is set",
+  "testCaseId": "e6d7337430d56389e986ecd54f012842",
+  "titlePath": [
+    "test",
+    "lib",
+    "ci",
+    "info",
+    "gitlab.test.ts",
+    "GitlabCiInfo",
+    "mrIid"
+  ],
+  "stop": 1768078125467
+}
