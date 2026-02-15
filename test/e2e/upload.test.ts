@@ -19,10 +19,12 @@ describe('e2e', () => {
   })
 
   describe('s3', () => {
-    it('runs s3 upload command', async () => {
+    beforeEach(() => {
       const {AWS_ENDPOINT, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY} = process.env
       if (!AWS_ENDPOINT || !AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY) throw new Error('Missing aws env variables')
+    })
 
+    it('runs s3 upload command', async () => {
       const prefix = `allure-report-publisher/${process.env.GITHUB_REF ?? 'local'}`
       const {stdout, error} = await runCommand([
         'upload',
@@ -42,7 +44,20 @@ describe('e2e', () => {
       commandError = error
 
       expect(error?.message).to.be.undefined
-      expect(stdout).to.match(new RegExp(`${AWS_ENDPOINT}/allure-reports/${prefix}/[\\w/]+/index.html`))
+      expect(stdout).to.match(new RegExp(`${process.env.AWS_ENDPOINT}/allure-reports/${prefix}/[\\w/]+/index.html`))
+    })
+
+    it('creates executor.json file', async () => {
+      const {error} = await runCommand([
+        'upload',
+        's3',
+        `--results-glob=${process.env.ALLURE_RESULTS_GLOB ?? './**/allure-results'}`,
+        '--config=test/fixtures/configs/allure2.json',
+        '--bucket=allure-reports'
+      ])
+      commandError = error
+
+      expect(error?.message).to.be.undefined
     })
   })
 })

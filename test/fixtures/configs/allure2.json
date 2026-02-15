@@ -1,0 +1,9 @@
+{
+  "output": "tmp/allure-report",
+  "plugins": {
+    "allure2": {
+      "enabled": true,
+      "singleFile": true
+    }
+  }
+}
