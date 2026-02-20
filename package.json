@@ -42,7 +42,7 @@
     "allure-mocha": "^3.4.3",
     "c8": "^10.1.3",
     "chai": "^6.2.2",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.0",
     "eslint-config-oclif": "^6.0.128",
     "eslint-config-prettier": "^10.1.8",
     "esmock": "^2.7.3",
