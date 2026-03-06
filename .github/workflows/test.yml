@@ -48,14 +48,14 @@ jobs:
       - name: Run tests
         run: pnpm run test --grep "e2e" --invert
       - name: Save allure results
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: allure-reports-${{ matrix.node }}
           path: tmp/allure-results/
           retention-days: 1
       - name: Save coverage
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always() && matrix.node == '25.6'
         with:
           name: coverage-unit
@@ -89,7 +89,7 @@ jobs:
       - name: Run e2e tests
         run: pnpm run test test/e2e/upload.test.ts
       - name: Save coverage
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: coverage-e2e
