@@ -82,7 +82,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Download allure reports
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           pattern: allure-reports-*
           path: tmp/allure-results
@@ -116,7 +116,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Download allure reports
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           pattern: allure-reports-*
           path: tmp/allure-results
@@ -180,7 +180,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Download coverage report
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           pattern: coverage-*
           path: coverage/
