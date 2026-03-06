@@ -23,5 +23,7 @@ updates:
         dependency-type: production
       dev-dependencies:
         dependency-type: development
+        exclude-patterns:
+          - eslint
     cooldown:
       semver-patch-days: 7
