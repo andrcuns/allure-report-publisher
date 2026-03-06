@@ -8,6 +8,9 @@
   "enabledManagers": [
     "mise"
   ],
+  "ignoreDeps": [
+    "node"
+  ],
   "labels": [
     "dependencies"
   ]
