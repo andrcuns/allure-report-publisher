@@ -31,7 +31,7 @@ importers:
         version: 3.3.1(preact@10.28.4)(typescript@5.9.3)
       allure-js-commons:
         specifier: ^3.4.3
-        version: 3.5.0
+        version: 3.6.0
       chai-as-promised:
         specifier: ^8.0.2
         version: 8.0.2(chai@6.2.2)
@@ -1823,10 +1823,10 @@ packages:
       allure-playwright:
         optional: true
 
-  allure-js-commons@3.5.0:
-    resolution: {integrity: sha512-iBVFNQkX5i48QGlb5U3iWm+NiNOl/ucxv6dvEJBNeJTPMI8t0Dn0CuXMQEiv4forSSAppD7FB9uGal2JwunH/A==}
+  allure-js-commons@3.6.0:
+    resolution: {integrity: sha512-RquIzMlh2l+ZLtq+Uxt+ZpOptxLzyPvLfPGbwU7dtgXo0QfUvhLFFkCljIR7Gjxo7jZ+WVqoto1yOPpXqU/i4g==}
     peerDependencies:
-      allure-playwright: 3.5.0
+      allure-playwright: 3.6.0
     peerDependenciesMeta:
       allure-playwright:
         optional: true
@@ -7388,7 +7388,7 @@ snapshots:
     dependencies:
       md5: 2.3.0
 
-  allure-js-commons@3.5.0:
+  allure-js-commons@3.6.0:
     dependencies:
       md5: 2.3.0
 
