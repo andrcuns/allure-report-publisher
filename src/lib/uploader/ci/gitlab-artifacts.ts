@@ -58,7 +58,7 @@ export class GitlabArtifactsUploader {
     try {
       const url = new URL(serverUrl!)
       const scheme = url.protocol.replace(':', '') || 'https'
-      return `${scheme}://${namespace}.${pagesDomain}`
+      return `${scheme}://${namespace}.${pagesDomain}/-/${project}`
     } catch {
       logger.debug(`Failed to construct pages domain based on server url, using default https scheme`)
       return `https://${namespace}.${pagesDomain || GitlabCiInfo.DEFAULT_PAGES_DOMAIN}/-/${project}`

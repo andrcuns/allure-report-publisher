@@ -86,7 +86,7 @@ describe('GitlabArtifactsUploader', () => {
 
       const url = uploader.reportUrl()
 
-      expect(url).to.equal('https://group.pages.example.com/-/jobs/101/artifacts/reports/allure/index.html')
+      expect(url).to.equal('https://group.pages.example.com/-/subgroup/project/-/jobs/101/artifacts/reports/allure/index.html')
     })
 
     it('uses fallback URL format when server URL is invalid', () => {
@@ -118,13 +118,13 @@ describe('GitlabArtifactsUploader', () => {
 
       expect(loggerInfoStub.callCount).to.equal(3)
       expect(loggerInfoStub.getCall(0).args[0]).to.equal(
-        '- https://group.pages.example.com/-/jobs/101/artifacts/reports/allure/index.html',
+        '- https://group.pages.example.com/-/subgroup/project/-/jobs/101/artifacts/reports/allure/index.html',
       )
       expect(loggerInfoStub.getCall(1).args[0]).to.equal(
-        '- https://group.pages.example.com/-/jobs/101/artifacts/reports/allure/plugin-a/index.html',
+        '- https://group.pages.example.com/-/subgroup/project/-/jobs/101/artifacts/reports/allure/plugin-a/index.html',
       )
       expect(loggerInfoStub.getCall(2).args[0]).to.equal(
-        '- https://group.pages.example.com/-/jobs/101/artifacts/reports/allure/plugin-b/index.html',
+        '- https://group.pages.example.com/-/subgroup/project/-/jobs/101/artifacts/reports/allure/plugin-b/index.html',
       )
     })
   })
