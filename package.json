@@ -51,7 +51,7 @@
     "shx": "^0.4.0",
     "testcontainers": "^11.11.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   },
   "engines": {
     "node": ">=22.0.0"
