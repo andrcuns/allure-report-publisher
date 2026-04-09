@@ -1,26 +1,24 @@
 version: 2
 updates:
   - package-ecosystem: docker
-    directory: /
+    directory: /  
     schedule:
       interval: weekly
     labels:
       - dependencies
   - package-ecosystem: github-actions
-    directory: /
+    directory: /  
     schedule:
       interval: weekly
     labels:
       - ci
   - package-ecosystem: npm
-    directory: /
+    directory: /  
     schedule:
       interval: weekly
     labels:
       - dependencies
     groups:
-      prod-dependencies:
-        dependency-type: production
       dev-dependencies:
         dependency-type: development
         exclude-patterns:
