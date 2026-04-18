@@ -1,2 +1,5 @@
+allowBuilds:
+  esbuild: true
+  protobufjs: true
 overrides:
   '@tootallnate/once@<3.0.1': '>=3.0.1'
