@@ -1,5 +1,8 @@
 allowBuilds:
+  cpu-features: true
   esbuild: true
   protobufjs: true
+  ssh2: true
+  unrs-resolver: true
 overrides:
   '@tootallnate/once@<3.0.1': '>=3.0.1'
