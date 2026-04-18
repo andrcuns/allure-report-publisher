@@ -101,7 +101,7 @@ jobs:
             type=raw,value=latest,enable=${{ needs.metadata.outputs.is_tag == 'true' && needs.metadata.outputs.is_prerelease == 'false' }}
             type=semver,pattern={{version}},enable=${{ needs.metadata.outputs.is_tag == 'true' }}
       - name: Build and push
-        uses: docker/build-push-action@v7.0.0
+        uses: docker/build-push-action@v7.1.0
         with:
           context: .
           push: true
@@ -120,7 +120,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
