@@ -1,10 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "platform": "github",
-  "onboarding": false,
-  "repositories": [
-    "andrcuns/allure-report-publisher"
-  ],
   "enabledManagers": [
     "mise"
   ],
