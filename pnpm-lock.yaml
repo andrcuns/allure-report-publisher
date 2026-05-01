@@ -22,7 +22,7 @@ importers:
         version: 7.19.0(supports-color@10.2.2)
       '@oclif/core':
         specifier: ^4.10.5
-        version: 4.10.5
+        version: 4.11.0
       allure:
         specifier: ^3.6.0
         version: 3.6.0(preact@10.29.1)(typescript@6.0.3)
@@ -68,7 +68,7 @@ importers:
         version: 0.2.1
       '@oclif/test':
         specifier: ^4.1.18
-        version: 4.1.18(@oclif/core@4.10.5)(supports-color@10.2.2)
+        version: 4.1.18(@oclif/core@4.11.0)(supports-color@10.2.2)
       '@types/chai':
         specifier: ^5.2.3
         version: 5.2.3
@@ -1042,8 +1042,8 @@ packages:
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
 
-  '@oclif/core@4.10.5':
-    resolution: {integrity: sha512-qcdCF7NrdWPfme6Kr34wwljRCXbCVpL1WVxiNy0Ep6vbWKjxAjFQwuhqkoyL0yjI+KdwtLcOCGn5z2yzdijc8w==}
+  '@oclif/core@4.11.0':
+    resolution: {integrity: sha512-nTkRMgxFlIKQIIYGvhO2JMsLSQ1aHPHblHfFgxgoBrGK8Ao/8wxc4eNOIv/+t8dMXliZd7mREVr6la4aXXXg5A==}
     engines: {node: '>=18.0.0'}
 
   '@oclif/core@4.9.0':
@@ -4607,14 +4607,17 @@ packages:
 
   uuid@10.0.0:
     resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   v8-to-istanbul@9.3.0:
@@ -6399,7 +6402,7 @@ snapshots:
 
   '@nolyfill/is-core-module@1.0.39': {}
 
-  '@oclif/core@4.10.5':
+  '@oclif/core@4.11.0':
     dependencies:
       ansi-escapes: 4.3.2
       ansis: 3.17.0
@@ -6443,12 +6446,12 @@ snapshots:
 
   '@oclif/plugin-help@6.2.44':
     dependencies:
-      '@oclif/core': 4.10.5
+      '@oclif/core': 4.11.0
 
   '@oclif/plugin-not-found@3.2.80(@types/node@25.6.0)':
     dependencies:
       '@inquirer/prompts': 7.10.1(@types/node@25.6.0)
-      '@oclif/core': 4.10.5
+      '@oclif/core': 4.11.0
       ansis: 3.17.0
       fast-levenshtein: 3.0.0
     transitivePeerDependencies:
@@ -6456,7 +6459,7 @@ snapshots:
 
   '@oclif/plugin-warn-if-update-available@3.1.60(supports-color@10.2.2)':
     dependencies:
-      '@oclif/core': 4.10.5
+      '@oclif/core': 4.11.0
       ansis: 3.17.0
       debug: 4.4.3(supports-color@10.2.2)
       http-call: 5.3.0(supports-color@10.2.2)
@@ -6467,9 +6470,9 @@ snapshots:
 
   '@oclif/prettier-config@0.2.1': {}
 
-  '@oclif/test@4.1.18(@oclif/core@4.10.5)(supports-color@10.2.2)':
+  '@oclif/test@4.1.18(@oclif/core@4.11.0)(supports-color@10.2.2)':
     dependencies:
-      '@oclif/core': 4.10.5
+      '@oclif/core': 4.11.0
       ansis: 3.17.0
       debug: 4.4.3(supports-color@10.2.2)
     transitivePeerDependencies:
