@@ -25,7 +25,7 @@ importers:
         version: 4.11.0
       allure:
         specifier: ^3.6.0
-        version: 3.6.2(preact@10.29.1)(typescript@6.0.3)
+        version: 3.7.0(preact@10.29.1)(typescript@6.0.3)
       chalk:
         specifier: ^5.6.2
         version: 5.6.2
@@ -141,98 +141,98 @@ importers:
 
 packages:
 
-  '@allurereport/aql@3.6.2':
-    resolution: {integrity: sha512-uG8uNuq0xRe4yGhfuSgtjq2SW8YFtiQWNiwjrHoqC1+Z0Pub+QBDZrFcRsrl9YJvbUoLI2cXe6WXjNPfe8lp3Q==}
+  '@allurereport/aql@3.7.0':
+    resolution: {integrity: sha512-XEqfvig9S+y/GeB4iepoZWEXk3xl3wd+xRvpqGisDzZIx7ulOgqFaoOaXkziPOwoLu5xCPTNLLUWPIaHQCF9gQ==}
 
-  '@allurereport/charts-api@3.6.2':
-    resolution: {integrity: sha512-4D+XdGjuj678yuUmgYD7hz9ku8HxMrlE5u/1mMOGCZgEKbjoZ4vuxwyPQj1V6UNXIh0QsFpLBz0v/EZ7eRtVtg==}
+  '@allurereport/charts-api@3.7.0':
+    resolution: {integrity: sha512-7EfY7USGCjUpqFMlDODOq5Zf5MaBwdnd3APiDRKnM4dQXc8XaSHsIV/kaPbU1Uw+v2P+0y1DliPkBJ9CkbUaTQ==}
 
-  '@allurereport/ci@3.6.2':
-    resolution: {integrity: sha512-iOMD3/Db0Hz9XY0OC42tfBecj9mNzvJokw6gMDYEOVVDTaLK7pMDWBdLImWFGTPfCyWXS+BKiGrnLWonxkQMFg==}
+  '@allurereport/ci@3.7.0':
+    resolution: {integrity: sha512-fX+Jl+YzAyqwQvrv+uPMHuBY0kEw/sIQ24Die3Fap/EpdL7vX1XFEja0H34mAazjXPsFl6WlOD3qFS4llHsnsw==}
 
-  '@allurereport/core-api@3.6.2':
-    resolution: {integrity: sha512-sM4k9q+l7iz/5+cE9MCIML72EYNbk2QqSXzkSL6THatDhk/akRBHGLBTlNLfKGYzp+G9fQX5VAsrDaOphwHhRg==}
+  '@allurereport/core-api@3.7.0':
+    resolution: {integrity: sha512-qduv+3S/+RDHzkeLMDPTi7w6Bd50SExTffx/S2gXVooZgb0lqibuEJQ36afR/A0PnaN+I7QasnGCm+buh5+MKg==}
 
-  '@allurereport/core@3.6.2':
-    resolution: {integrity: sha512-Q1Q55OJf8JkIsCBZJ41fhJd2iBWJe0IrCR2OV8f8TA7u1L08XeXWM3SVK2npVFc3AJ2Tkdb7g1HNh+QStIOaVw==}
+  '@allurereport/core@3.7.0':
+    resolution: {integrity: sha512-X/3r3cHXrYwIsSmL+T/t2eATp2VWL+RDDoFkEgCfPUhLnXONo9TPBgr65vXjob3XfdMwaaXdlJ9wIBLcpoxw8A==}
 
-  '@allurereport/directory-watcher@3.6.2':
-    resolution: {integrity: sha512-qNrREoLt1VvW+blvMNxt3a75z2Tf3a791r8vXMKpoUk7oxpOoEotZYA9ULk+bqCEujhGG8nnckj1697i0Sy7xQ==}
+  '@allurereport/directory-watcher@3.7.0':
+    resolution: {integrity: sha512-w4ZNKORVVFIJYh5Xo0aeZ71aWAxepVZ8Q9ffReCsVovlkFJ3uOmAOH6IoPKXseoSkj3Mi6yJgDYEriG17ifqkA==}
 
-  '@allurereport/plugin-agent@3.6.2':
-    resolution: {integrity: sha512-r6jIN7yNXgwEumTyL5EQOrCU7KzPTTcPWLLJl8/Sn+CSFe2QRjgRn3gSgdRbxRo7Ii0LowJbo+cfjv9HNJ0clw==}
+  '@allurereport/plugin-agent@3.7.0':
+    resolution: {integrity: sha512-uMdQOYSFYuOOLD/W8WsjPf3WI+tMwP776HoejWuquWc0gI0WyYonzvFdlNQkvwH0ygyEibVqiH33s1pZX1Ec4g==}
 
-  '@allurereport/plugin-allure2@3.6.2':
-    resolution: {integrity: sha512-oyQFuHKV8Pdr/XMNLPFXQ2FwYHkWxc/iBIN9iIuPv/1CR2xnEtp2iFwMBWOIRG9xLDnhArqdgJbJyXhdHEqMSg==}
+  '@allurereport/plugin-allure2@3.7.0':
+    resolution: {integrity: sha512-AB3MP/+ayv8XjqTdv8r8RMgnP3/H5JyRkkWLQC8tsb7Q+3RWVSrdY8+CnUFqYTTj39Nv0xaDjzv1dIuVBqb2lA==}
 
-  '@allurereport/plugin-api@3.6.2':
-    resolution: {integrity: sha512-aefO7WE5Ri8AnEvEj+8BYZNt/e3S4z1NbHbKMFoiF9ndhusmKL1IB5aW5VIht/+m+a/lp6NNYoeiXgcmhYorVQ==}
+  '@allurereport/plugin-api@3.7.0':
+    resolution: {integrity: sha512-0p78LFt1DprHFg9x/6G7yUHpG3H/kgqzb3vX6u3Psf8CuEDTMUeSdOPn/l+40cleSKM0OErobC0zLbWNLeXTkg==}
 
-  '@allurereport/plugin-awesome@3.6.2':
-    resolution: {integrity: sha512-g1OQoXjpvKE924a2NSt0M6YODGhiecvXM9aaPJ0qYVWP1BserQuN83yqLX6WzV/fQY4qjaAir/paJU7BSMIEAg==}
+  '@allurereport/plugin-awesome@3.7.0':
+    resolution: {integrity: sha512-LMVSTVqjFymzi1dfpWmgL+y2ZBUcKqkaGgOzfgGLoaHPylg+SMNa26zuGX4g2lTJoLLml+a68zq3uFyWwAABWQ==}
 
-  '@allurereport/plugin-classic@3.6.2':
-    resolution: {integrity: sha512-6nU5FfqG+xAuVZ8gPaz1rqA+4G3tsxrv9KYcrcKFYH50+Sc4nfLxs4+6j6zo2FPnpXWxngEQOYLf9mWr66L2Pw==}
+  '@allurereport/plugin-classic@3.7.0':
+    resolution: {integrity: sha512-WcTsk4P8ZzGZGOgTNv5zMGYV0UVkYMpZRvASiPUElTd46WS+yzkQx2KC4zB1ZXwhLd4JqWXCMVMY+MwUHrpkEQ==}
 
-  '@allurereport/plugin-csv@3.6.2':
-    resolution: {integrity: sha512-aPZC1LjHM6L0scXgBbXUPSnRdjZmDBeWn4UMzKFcDFx80TC68ZQBC+ph52hNZcd48pZzveN14dhj3ps6nIvvOA==}
+  '@allurereport/plugin-csv@3.7.0':
+    resolution: {integrity: sha512-l4RUEjT19NxMwIWvDCWEc25Hf0Zv3xq5zzIWYQL9WYSPvpPmNfZxNXHZr0Fe1po0eOG6uak/HGhYRFDhUbu5FA==}
 
-  '@allurereport/plugin-dashboard@3.6.2':
-    resolution: {integrity: sha512-XphLSN5saZc9+dy26npymecSQaD2EFAsHsShb5UWibbMv1rjTGt2ZeSKXOuHuD3DUBWDGLgeR1YrULVLj9WRyA==}
+  '@allurereport/plugin-dashboard@3.7.0':
+    resolution: {integrity: sha512-MQw2IPQLBHR66ZbUMZAfSfFa3ebPrzSCXgrKeK2DbyMg+MLKrFjRoZxFSENkDry2LurucJdwjfRwH2TnAaIAKQ==}
 
-  '@allurereport/plugin-jira@3.6.2':
-    resolution: {integrity: sha512-H0qmLynkef+7eE9MdS5wjPeaM5ITQaw4kA3xsIEc60jVjFHIlXrxtldxS3xPyKtALhIhezYKds6nS+ILikSJgg==}
+  '@allurereport/plugin-jira@3.7.0':
+    resolution: {integrity: sha512-02tQKYshSXnJS8hWMmCos6HikCSB7W1ZAJNKOHD8yISqQ3LjtX1wvl7toktH38hMkrZgqFL2qCCeiaHtiYUs5Q==}
 
-  '@allurereport/plugin-log@3.6.2':
-    resolution: {integrity: sha512-QG9+uYfPm7qkWOSkSN9Q8qPtmam9SObB57ACHrZ3hwUG8bnEsVhBNj/j27+HzzQpqA9dJwZTHLTabl3hhI++tg==}
+  '@allurereport/plugin-log@3.7.0':
+    resolution: {integrity: sha512-NotFG5YQTnORjWg01SXOYQGQCVidNlfhVQ38dnkk+JMFX6i6qehHeevZj4a9H3I2zIWn8pmuDbsFj2M6A7uIog==}
 
-  '@allurereport/plugin-progress@3.6.2':
-    resolution: {integrity: sha512-+06jFbOW7yNIad7Pa6vMt8fTprKtqDV8ybqHJx2xnTChgJI9cEdWfvQqEykawVZLnzc18vMUF3kWZjMj+ryTrg==}
+  '@allurereport/plugin-progress@3.7.0':
+    resolution: {integrity: sha512-IlM5iVDYHiPtXlvTG9UMIlYu9QVsdIDwt9xU7f20+we3pbfwbE5R1O+sgBORgSWFTPW6PPmNfpcoV38Fgd22dA==}
 
-  '@allurereport/plugin-server-reload@3.6.2':
-    resolution: {integrity: sha512-85gW/FYJgOZPmxQQfSXwhdc4ha0G8gmldPC52G9oVsmPl77sKxGm/lZJSZtc4ALpUJULjy5EKlYH5sVXl8ZKEg==}
+  '@allurereport/plugin-server-reload@3.7.0':
+    resolution: {integrity: sha512-Uh33sNbdrkRtLR4z0k55rTbgssT3w0yQV2P3kFms9XlFDIU2AD8xrO8eoZP7nSy+62aoWuppG6Z8baA+c84GYw==}
 
-  '@allurereport/plugin-slack@3.6.2':
-    resolution: {integrity: sha512-14KrzlYXz0ko43zuLjTNtUSvf0NQrDDFmD9MARbzprtWCSE8pSlg5OOmFE3u6Y81oJNhh14piA/MJ2vwTU0Bog==}
+  '@allurereport/plugin-slack@3.7.0':
+    resolution: {integrity: sha512-+6HdJ9X0NabALo6MOx36dWoY/2IT0vgQwUFK3Gs114HN3ZK1nZqnBGRO8QRh5ysab6EyDw0/x4jXjTLqXsrj2g==}
 
-  '@allurereport/plugin-testops@3.6.2':
-    resolution: {integrity: sha512-+dsRvMEuZd1qB2psdR4fJ/G+INrSrM593Ah7kPmCR+zLx/XFDzExQSGXK3+42TZ//+78zToaORmD6qJArCadnQ==}
+  '@allurereport/plugin-testops@3.7.0':
+    resolution: {integrity: sha512-sSrTkJtWz/B1Km2Ua7cyYbmxkZS7kslIgBOTBZwmiDt1YDsCyrulxAMDv1Htgaz/FXv4LRFTxdvmOMDK210E/Q==}
 
-  '@allurereport/plugin-testplan@3.6.2':
-    resolution: {integrity: sha512-d7a2tsUJsa7dLTJMaJkX/MSGkmXUxK00hJreuS3mgfI2i7lSm7UvHni2zgRu37oqlhIbVomnkSLnoqlWECUeWw==}
+  '@allurereport/plugin-testplan@3.7.0':
+    resolution: {integrity: sha512-0AVVanNjurx/yXS+ML5AEiOzF6w6IofrHqC2uug1Yn8uQS0Ri6+CJy5YT4s0OX0KJCC73jWv+3RQFAsPNjt47Q==}
 
-  '@allurereport/reader-api@3.6.2':
-    resolution: {integrity: sha512-oD9jzDVB8o9XzjK25VdSHeUSAffxd8EbTSKxhnp7xS900se5Ll7mlOJOxYKWUu7N9kMN6CgWgJS8UV7HAaLIbQ==}
+  '@allurereport/reader-api@3.7.0':
+    resolution: {integrity: sha512-pM70vXNnxFvtGZT+E9xRLXervIcochnEh397mgMu8eLqYO3enZYFuCDILoPWUB7sT0SUiKYQ+Lbp9cvHKingfg==}
 
-  '@allurereport/reader@3.6.2':
-    resolution: {integrity: sha512-O/C9GQvPlQf1qI5UjAckPbx7CS4i26fE8poFYol7oDWUbXgrkxuCC8naiG9bG8A2M161Yhqr3K5LoGNYhEaHLA==}
+  '@allurereport/reader@3.7.0':
+    resolution: {integrity: sha512-in3AGzaVLrXBTae+TJ86IEz7+/Irfiol1WXMptXjDMiL5GoKctSnBQo11SlAa4t7ZDf1NUZMTKXRXMk2Wlb+mg==}
 
-  '@allurereport/service@3.6.2':
-    resolution: {integrity: sha512-0ZH51eSFyC0sOfPavmAL5YBupBnekErLifymFBV8biDZVNVOZWSzNhX/p7ncLVZ+2wnoNdYPutaGATo+PUynmA==}
+  '@allurereport/service@3.7.0':
+    resolution: {integrity: sha512-fI0JREuboCKXHOEzWFYLHn87WzAO0MTMVNM0HlM22AHIG6d6LkkwKfcshve+SjThKL3Bmde1+dD92A6iGLirWQ==}
 
-  '@allurereport/static-server@3.6.2':
-    resolution: {integrity: sha512-q0AYVLjKpd/qSlh8I7ghxTV+HRcMzFMsU83gM+G7JjIcy8ECWNwUhH/9hjRWf2RDFH/CtOGSsnBHrpLZeSy7ug==}
+  '@allurereport/static-server@3.7.0':
+    resolution: {integrity: sha512-IMSHQSUDrQmqf8ZFq9Vh2VrfmiUGkpCAT6JzJ1Wd3ALVzF6EUsvhwdvsSxj0YaMR20Y4qnmRv8qVjgCkyzpntg==}
 
-  '@allurereport/summary@3.6.2':
-    resolution: {integrity: sha512-umr6GBSU0ngYRtOtXIf+QcYq7uK2vYEsSKN2cf3EBrOSjf/TCW2mUYF5rI2kr3SzJob5isn6cYbkqPo1PWF1Gw==}
+  '@allurereport/summary@3.7.0':
+    resolution: {integrity: sha512-fXBDzQBskpbDVVXYJIa8RWjY6Ss1cSgysJdBBTGiDNovHaLxxn1MHPI1nrIW/hFm1VORCgo3629VakfNmfUnRw==}
 
-  '@allurereport/web-awesome@3.6.2':
-    resolution: {integrity: sha512-zPUrkTVzKmIBPQd7dqrb+xeCF/Um2YTBB/RSa/eOsw2KZzdQzUx1k0uV8heqLw56rxXbj4RBvCtUaigKxAAsCg==}
+  '@allurereport/web-awesome@3.7.0':
+    resolution: {integrity: sha512-25/AU7FeMwGim8tOI+87gRix2g0beTXiN5y6J7qw5NMtnMK3FIljYbrd+kVRbUb+/9BniKujFIKJn7QfdBdabg==}
 
-  '@allurereport/web-classic@3.6.2':
-    resolution: {integrity: sha512-NokGjpu7nnzP0RwsbpzwU4RPY9OWw4IBDNWe//A1Aqc/VXs5EmoO3kPZ/nmX3O0HjodpGXdL+NP8i8ObxvMDMA==}
+  '@allurereport/web-classic@3.7.0':
+    resolution: {integrity: sha512-HLn/1kJkBIyNKnsqAkQp3IjL6et2QGLUZBfnO1GXrbdgnxgL1coM31xemg6ogfQKyeYWSE3WgWzUqiZzPtPh4w==}
 
-  '@allurereport/web-commons@3.6.2':
-    resolution: {integrity: sha512-YfhJYoxZEkVV6h3EV+IED0EdLRWvkxdNOnTcHoJoTkMkxIAbVIBnmDUN6vdgYRbUVomf+2MBArmLiMvX56u8XA==}
+  '@allurereport/web-commons@3.7.0':
+    resolution: {integrity: sha512-0nLU9WdBaSgpgD5iQ6jpqnnorLQ0l9m3trkoUGH/IC+Y4pC5MjC5r6NpE/mJeCMDJy/Yy2j30uDQnbx8EGmENw==}
 
-  '@allurereport/web-components@3.6.2':
-    resolution: {integrity: sha512-WMwC1gNUryleI/Lzd7k6uCWjrgRMWQ82/uNoOSQbVArcGuE5ZTy/eHGcFl6YOwWB0NZiIIWqaC77nzOTSRhTVQ==}
+  '@allurereport/web-components@3.7.0':
+    resolution: {integrity: sha512-l7dChyyudNxTZFXwtlNhvHaGEhrJnO2EM30fCVbWhTtWl6n8STM8K8C7tHHIIFd142j800iOLRtwuFZi6pbJHA==}
 
-  '@allurereport/web-dashboard@3.6.2':
-    resolution: {integrity: sha512-2ctRzdNaqQk9DOjlHXxEDo6cav/Muo7Vm0v5EYZFQ43MOVdg1x47OFLvI57Az/bCKaXEpgCubz/SJ2Wt+iFygg==}
+  '@allurereport/web-dashboard@3.7.0':
+    resolution: {integrity: sha512-/gdMRFuwqGZArCLplwg6TpmLkCOcpO5IpOWlfj7oS4Kv6cXZslj+wZpuQVtUZwfKxxYBz1OMc2oi7opUc+c3qg==}
 
-  '@allurereport/web-summary@3.6.2':
-    resolution: {integrity: sha512-mfaOJpggKQWBTc0BTLjQw3UDQY7bslth0mIME0F1brtFKuWOl2XTiYir0QZMaMjN9gT1DhfdFNsYmeSWmKwiAg==}
+  '@allurereport/web-summary@3.7.0':
+    resolution: {integrity: sha512-KNk0Xbdb8nd7gzf7U/zJtsbpcYl9eixEgC2JnG1rfrFu5rlFPRmjCtqikUiRUfRddN3vrPFzHMxzzmVDvyTCDg==}
 
   '@aws-crypto/crc32@5.2.0':
     resolution: {integrity: sha512-nLbCWqQNgUiwwtFsen1AdzAtvuLRsQS8rYgMuxCrdKf9kOssamGLuPwyTY9wyYblNr9+1XM8v6zoDTPPSIeANg==}
@@ -1841,8 +1841,8 @@ packages:
     peerDependencies:
       mocha: '>=6.2.0'
 
-  allure@3.6.2:
-    resolution: {integrity: sha512-UVbdAw1ljdcvvp8zI41bM6Ujcho9yCaC8NkG7v6LBDiRD6Q6mtl076KIr+DOeVGQidRHzQTZxIVrFCG8qpogEA==}
+  allure@3.7.0:
+    resolution: {integrity: sha512-S2msBDLv85+ElXbPb94VwF/QL54OWa+zVAfkIi8xstXrv9asR0+3q0vglPENL3QqNR/ZWKY92ttSAlgcdzafCQ==}
     hasBin: true
 
   ansi-escapes@4.3.2:
@@ -1944,8 +1944,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.15.2:
-    resolution: {integrity: sha512-wLrXxPtcrPTsNlJmKjkPnNPK2Ihe0hn0wGSaTEiHRPxwjvJwT3hKmXF4dpqxmPO9SoNb2FsYXj/xEo0gHN+D5A==}
+  axios@1.16.0:
+    resolution: {integrity: sha512-6hp5CwvTPlN2A31g5dxnwAX0orzM7pmCRDLnZSX772mv8WDqICwFjowHuPs04Mc8deIld1+ejhtaMn5vp6b+1w==}
 
   b4a@1.8.0:
     resolution: {integrity: sha512-qRuSmNSkGQaHwNbM7J78Wwy+ghLEYF1zNrSeMxj4Kgw6y33O3mXcQ6Ie9fRvfU/YnxWkOchPXbaLb73TkIsfdg==}
@@ -2237,8 +2237,8 @@ packages:
     resolution: {integrity: sha512-6FqVXeETqWPoGcfzrXb37E50NP0LXT8kAMu5ooZayhWWdgEY4lBEEcbQNXtkuKQsGduxiIcI4gOTsxTmuq/bSg==}
     engines: {node: '>= 14'}
 
-  compress-commons@7.0.0:
-    resolution: {integrity: sha512-8WWFRMWaa37dwjWCxDcmdx6sxfjQTAEQ6s96BWqX9WYC6Mgg95EvwPYS/7QGX3txkst7TD1jIL2HCY9AixLGfA==}
+  compress-commons@7.0.1:
+    resolution: {integrity: sha512-g0S8KAD8qf4+V//pr3BfB1aBnARLXNz2Gx+jmHU0LEriUuoQUOPOulVquHKTJ8+EAIIO7fhseNDr9wK5Q9FKBQ==}
     engines: {node: '>=18'}
 
   concat-map@0.0.1:
@@ -2889,6 +2889,10 @@ packages:
 
   fast-xml-parser@5.7.2:
     resolution: {integrity: sha512-P7oW7tLbYnhOLQk/Gv7cZgzgMPP/XN03K02/Jy6Y/NHzyIAIpxuZIM/YqAkfiXFPxA2CTm7NtCijK9EDu09u2w==}
+    hasBin: true
+
+  fast-xml-parser@5.7.3:
+    resolution: {integrity: sha512-C0AaNuC+mscy6vrAQKAc/rMq+zAPHodfHGZu4sGVehvAQt/JLG1O5zEcYcXSY5zSqr4YVgxsB+pHXTq0i7eDlg==}
     hasBin: true
 
   fastest-levenshtein@1.0.16:
@@ -4777,49 +4781,49 @@ packages:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
 
-  zip-stream@7.0.2:
-    resolution: {integrity: sha512-g1TjcvzTXLWwDDyZSdC+w7tNdeNCq/qA8Amm8kxGBldyW2yxtSHHlYinxTRvlcaE4Tt3l1ZPsWSA+P9sn20MRw==}
+  zip-stream@7.0.5:
+    resolution: {integrity: sha512-dSvYKdvLsAHCDqPOhIwk/q5CvuWtTB3Dgpoe0uVEFjTzIOAmsQpprX25InCvrvJsirEbu1OHyy67n/kAj1Sw/w==}
     engines: {node: '>=18'}
 
 snapshots:
 
-  '@allurereport/aql@3.6.2': {}
+  '@allurereport/aql@3.7.0': {}
 
-  '@allurereport/charts-api@3.6.2':
+  '@allurereport/charts-api@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
       d3-shape: 3.2.0
 
-  '@allurereport/ci@3.6.2':
+  '@allurereport/ci@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
+      '@allurereport/core-api': 3.7.0
 
-  '@allurereport/core-api@3.6.2':
+  '@allurereport/core-api@3.7.0':
     dependencies:
       d3-shape: 3.2.0
 
-  '@allurereport/core@3.6.2(preact@10.29.1)(typescript@6.0.3)':
+  '@allurereport/core@3.7.0(preact@10.29.1)(typescript@6.0.3)':
     dependencies:
-      '@allurereport/ci': 3.6.2
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-agent': 3.6.2
-      '@allurereport/plugin-allure2': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
-      '@allurereport/plugin-awesome': 3.6.2(preact@10.29.1)(typescript@6.0.3)
-      '@allurereport/plugin-classic': 3.6.2(preact@10.29.1)(typescript@6.0.3)
-      '@allurereport/plugin-csv': 3.6.2
-      '@allurereport/plugin-dashboard': 3.6.2(preact@10.29.1)(typescript@6.0.3)
-      '@allurereport/plugin-jira': 3.6.2
-      '@allurereport/plugin-log': 3.6.2
-      '@allurereport/plugin-progress': 3.6.2
-      '@allurereport/plugin-slack': 3.6.2
-      '@allurereport/plugin-testops': 3.6.2
-      '@allurereport/plugin-testplan': 3.6.2
-      '@allurereport/reader': 3.6.2
-      '@allurereport/reader-api': 3.6.2
-      '@allurereport/service': 3.6.2
-      '@allurereport/summary': 3.6.2(typescript@6.0.3)
+      '@allurereport/ci': 3.7.0
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-agent': 3.7.0
+      '@allurereport/plugin-allure2': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
+      '@allurereport/plugin-awesome': 3.7.0(preact@10.29.1)(typescript@6.0.3)
+      '@allurereport/plugin-classic': 3.7.0(preact@10.29.1)(typescript@6.0.3)
+      '@allurereport/plugin-csv': 3.7.0
+      '@allurereport/plugin-dashboard': 3.7.0(preact@10.29.1)(typescript@6.0.3)
+      '@allurereport/plugin-jira': 3.7.0
+      '@allurereport/plugin-log': 3.7.0
+      '@allurereport/plugin-progress': 3.7.0
+      '@allurereport/plugin-slack': 3.7.0
+      '@allurereport/plugin-testops': 3.7.0
+      '@allurereport/plugin-testplan': 3.7.0
+      '@allurereport/reader': 3.7.0
+      '@allurereport/reader-api': 3.7.0
+      '@allurereport/service': 3.7.0
+      '@allurereport/summary': 3.7.0(typescript@6.0.3)
       glob: 13.0.6
       handlebars: 4.7.9
       node-stream-zip: 1.15.0
@@ -4827,40 +4831,40 @@ snapshots:
       progress: 2.0.3
       yaml: 2.8.3
       yoctocolors: 2.1.2
-      zip-stream: 7.0.2
+      zip-stream: 7.0.5
     transitivePeerDependencies:
       - debug
       - preact
       - typescript
 
-  '@allurereport/directory-watcher@3.6.2':
+  '@allurereport/directory-watcher@3.7.0':
     dependencies:
       chokidar: 4.0.3
 
-  '@allurereport/plugin-agent@3.6.2':
+  '@allurereport/plugin-agent@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
       yaml: 2.8.3
 
-  '@allurereport/plugin-allure2@3.6.2':
+  '@allurereport/plugin-allure2@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
       find-up: 8.0.0
       handlebars: 4.7.9
 
-  '@allurereport/plugin-api@3.6.2':
+  '@allurereport/plugin-api@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
+      '@allurereport/core-api': 3.7.0
 
-  '@allurereport/plugin-awesome@3.6.2(preact@10.29.1)(typescript@6.0.3)':
+  '@allurereport/plugin-awesome@3.7.0(preact@10.29.1)(typescript@6.0.3)':
     dependencies:
-      '@allurereport/charts-api': 3.6.2
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
-      '@allurereport/web-awesome': 3.6.2(typescript@6.0.3)
-      '@allurereport/web-commons': 3.6.2(preact@10.29.1)
+      '@allurereport/charts-api': 3.7.0
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
+      '@allurereport/web-awesome': 3.7.0(typescript@6.0.3)
+      '@allurereport/web-commons': 3.7.0(preact@10.29.1)
       d3-shape: 3.2.0
       handlebars: 4.7.9
       markdown-it: 14.1.1
@@ -4868,13 +4872,13 @@ snapshots:
       - preact
       - typescript
 
-  '@allurereport/plugin-classic@3.6.2(preact@10.29.1)(typescript@6.0.3)':
+  '@allurereport/plugin-classic@3.7.0(preact@10.29.1)(typescript@6.0.3)':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
-      '@allurereport/web-awesome': 3.6.2(typescript@6.0.3)
-      '@allurereport/web-classic': 3.6.2(typescript@6.0.3)
-      '@allurereport/web-commons': 3.6.2(preact@10.29.1)
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
+      '@allurereport/web-awesome': 3.7.0(typescript@6.0.3)
+      '@allurereport/web-classic': 3.7.0(typescript@6.0.3)
+      '@allurereport/web-commons': 3.7.0(preact@10.29.1)
       d3-shape: 3.2.0
       handlebars: 4.7.9
       markdown-it: 14.1.1
@@ -4882,61 +4886,61 @@ snapshots:
       - preact
       - typescript
 
-  '@allurereport/plugin-csv@3.6.2':
+  '@allurereport/plugin-csv@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
 
-  '@allurereport/plugin-dashboard@3.6.2(preact@10.29.1)(typescript@6.0.3)':
+  '@allurereport/plugin-dashboard@3.7.0(preact@10.29.1)(typescript@6.0.3)':
     dependencies:
-      '@allurereport/charts-api': 3.6.2
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
-      '@allurereport/web-commons': 3.6.2(preact@10.29.1)
-      '@allurereport/web-dashboard': 3.6.2(typescript@6.0.3)
+      '@allurereport/charts-api': 3.7.0
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
+      '@allurereport/web-commons': 3.7.0(preact@10.29.1)
+      '@allurereport/web-dashboard': 3.7.0(typescript@6.0.3)
       d3-shape: 3.2.0
       handlebars: 4.7.9
     transitivePeerDependencies:
       - preact
       - typescript
 
-  '@allurereport/plugin-jira@3.6.2':
+  '@allurereport/plugin-jira@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
-      axios: 1.15.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
+      axios: 1.16.0
     transitivePeerDependencies:
       - debug
 
-  '@allurereport/plugin-log@3.6.2':
+  '@allurereport/plugin-log@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
       yoctocolors: 2.1.2
 
-  '@allurereport/plugin-progress@3.6.2':
+  '@allurereport/plugin-progress@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
       yoctocolors: 2.1.2
 
-  '@allurereport/plugin-server-reload@3.6.2':
+  '@allurereport/plugin-server-reload@3.7.0':
     dependencies:
-      '@allurereport/plugin-api': 3.6.2
-      '@allurereport/static-server': 3.6.2
+      '@allurereport/plugin-api': 3.7.0
+      '@allurereport/static-server': 3.7.0
 
-  '@allurereport/plugin-slack@3.6.2':
+  '@allurereport/plugin-slack@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
 
-  '@allurereport/plugin-testops@3.6.2':
+  '@allurereport/plugin-testops@3.7.0':
     dependencies:
-      '@allurereport/ci': 3.6.2
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
-      '@allurereport/reader-api': 3.6.2
-      axios: 1.15.2
+      '@allurereport/ci': 3.7.0
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
+      '@allurereport/reader-api': 3.7.0
+      axios: 1.16.0
       form-data: 4.0.5
       lodash-es: 4.18.1
       p-limit: 7.3.0
@@ -4945,54 +4949,54 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@allurereport/plugin-testplan@3.6.2':
+  '@allurereport/plugin-testplan@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
 
-  '@allurereport/reader-api@3.6.2':
+  '@allurereport/reader-api@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
       mime-types: 2.1.35
 
-  '@allurereport/reader@3.6.2':
+  '@allurereport/reader@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
-      '@allurereport/reader-api': 3.6.2
-      fast-xml-parser: 5.7.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
+      '@allurereport/reader-api': 3.7.0
+      fast-xml-parser: 5.7.3
 
-  '@allurereport/service@3.6.2':
+  '@allurereport/service@3.7.0':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
-      axios: 1.15.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
+      axios: 1.16.0
       open: 10.2.0
     transitivePeerDependencies:
       - debug
 
-  '@allurereport/static-server@3.6.2':
+  '@allurereport/static-server@3.7.0':
     dependencies:
-      '@allurereport/directory-watcher': 3.6.2
+      '@allurereport/directory-watcher': 3.7.0
       open: 10.2.0
 
-  '@allurereport/summary@3.6.2(typescript@6.0.3)':
+  '@allurereport/summary@3.7.0(typescript@6.0.3)':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
-      '@allurereport/web-summary': 3.6.2(typescript@6.0.3)
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
+      '@allurereport/web-summary': 3.7.0(typescript@6.0.3)
       handlebars: 4.7.9
     transitivePeerDependencies:
       - typescript
 
-  '@allurereport/web-awesome@3.6.2(typescript@6.0.3)':
+  '@allurereport/web-awesome@3.7.0(typescript@6.0.3)':
     dependencies:
-      '@allurereport/charts-api': 3.6.2
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
-      '@allurereport/web-commons': 3.6.2(preact@10.29.1)
-      '@allurereport/web-components': 3.6.2
+      '@allurereport/charts-api': 3.7.0
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
+      '@allurereport/web-commons': 3.7.0(preact@10.29.1)
+      '@allurereport/web-components': 3.7.0
       '@preact/signals': 2.9.0(preact@10.29.1)
       clsx: 2.1.1
       d3-shape: 3.2.0
@@ -5003,12 +5007,12 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@allurereport/web-classic@3.6.2(typescript@6.0.3)':
+  '@allurereport/web-classic@3.7.0(typescript@6.0.3)':
     dependencies:
-      '@allurereport/charts-api': 3.6.2
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/web-commons': 3.6.2(preact@10.29.1)
-      '@allurereport/web-components': 3.6.2
+      '@allurereport/charts-api': 3.7.0
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/web-commons': 3.7.0(preact@10.29.1)
+      '@allurereport/web-components': 3.7.0
       '@preact/signals': 2.9.0(preact@10.29.1)
       clsx: 2.1.1
       d3-shape: 3.2.0
@@ -5020,12 +5024,12 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@allurereport/web-commons@3.6.2(preact@10.29.1)':
+  '@allurereport/web-commons@3.7.0(preact@10.29.1)':
     dependencies:
-      '@allurereport/aql': 3.6.2
-      '@allurereport/charts-api': 3.6.2
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
+      '@allurereport/aql': 3.7.0
+      '@allurereport/charts-api': 3.7.0
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
       '@preact/signals': 2.9.0(preact@10.29.1)
       '@preact/signals-core': 1.14.1
       ansi-to-html: 0.7.2
@@ -5037,10 +5041,10 @@ snapshots:
     transitivePeerDependencies:
       - preact
 
-  '@allurereport/web-components@3.6.2':
+  '@allurereport/web-components@3.7.0':
     dependencies:
-      '@allurereport/charts-api': 3.6.2
-      '@allurereport/web-commons': 3.6.2(preact@10.29.1)
+      '@allurereport/charts-api': 3.7.0
+      '@allurereport/web-commons': 3.7.0(preact@10.29.1)
       '@floating-ui/dom': 1.7.6
       '@nivo/bar': 0.99.0(@preact/compat@18.3.2(preact@10.29.1))(@preact/compat@18.3.2(preact@10.29.1))
       '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.1))(@preact/compat@18.3.2(preact@10.29.1))
@@ -5075,12 +5079,12 @@ snapshots:
       sortablejs: 1.15.7
       use-debounce: 10.1.1(@preact/compat@18.3.2(preact@10.29.1))
 
-  '@allurereport/web-dashboard@3.6.2(typescript@6.0.3)':
+  '@allurereport/web-dashboard@3.7.0(typescript@6.0.3)':
     dependencies:
-      '@allurereport/charts-api': 3.6.2
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/web-commons': 3.6.2(preact@10.29.1)
-      '@allurereport/web-components': 3.6.2
+      '@allurereport/charts-api': 3.7.0
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/web-commons': 3.7.0(preact@10.29.1)
+      '@allurereport/web-components': 3.7.0
       '@preact/signals': 2.9.0(preact@10.29.1)
       clsx: 2.1.1
       i18next: 24.2.3(typescript@6.0.3)
@@ -5088,11 +5092,11 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@allurereport/web-summary@3.6.2(typescript@6.0.3)':
+  '@allurereport/web-summary@3.7.0(typescript@6.0.3)':
     dependencies:
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/web-commons': 3.6.2(preact@10.29.1)
-      '@allurereport/web-components': 3.6.2
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/web-commons': 3.7.0(preact@10.29.1)
+      '@allurereport/web-components': 3.7.0
       '@preact/signals': 2.9.0(preact@10.29.1)
       clsx: 2.1.1
       i18next: 24.2.3(typescript@6.0.3)
@@ -7428,28 +7432,28 @@ snapshots:
     transitivePeerDependencies:
       - allure-playwright
 
-  allure@3.6.2(preact@10.29.1)(typescript@6.0.3):
+  allure@3.7.0(preact@10.29.1)(typescript@6.0.3):
     dependencies:
-      '@allurereport/charts-api': 3.6.2
-      '@allurereport/ci': 3.6.2
-      '@allurereport/core': 3.6.2(preact@10.29.1)(typescript@6.0.3)
-      '@allurereport/core-api': 3.6.2
-      '@allurereport/directory-watcher': 3.6.2
-      '@allurereport/plugin-agent': 3.6.2
-      '@allurereport/plugin-allure2': 3.6.2
-      '@allurereport/plugin-api': 3.6.2
-      '@allurereport/plugin-awesome': 3.6.2(preact@10.29.1)(typescript@6.0.3)
-      '@allurereport/plugin-classic': 3.6.2(preact@10.29.1)(typescript@6.0.3)
-      '@allurereport/plugin-csv': 3.6.2
-      '@allurereport/plugin-dashboard': 3.6.2(preact@10.29.1)(typescript@6.0.3)
-      '@allurereport/plugin-jira': 3.6.2
-      '@allurereport/plugin-log': 3.6.2
-      '@allurereport/plugin-progress': 3.6.2
-      '@allurereport/plugin-server-reload': 3.6.2
-      '@allurereport/plugin-slack': 3.6.2
-      '@allurereport/reader-api': 3.6.2
-      '@allurereport/service': 3.6.2
-      '@allurereport/static-server': 3.6.2
+      '@allurereport/charts-api': 3.7.0
+      '@allurereport/ci': 3.7.0
+      '@allurereport/core': 3.7.0(preact@10.29.1)(typescript@6.0.3)
+      '@allurereport/core-api': 3.7.0
+      '@allurereport/directory-watcher': 3.7.0
+      '@allurereport/plugin-agent': 3.7.0
+      '@allurereport/plugin-allure2': 3.7.0
+      '@allurereport/plugin-api': 3.7.0
+      '@allurereport/plugin-awesome': 3.7.0(preact@10.29.1)(typescript@6.0.3)
+      '@allurereport/plugin-classic': 3.7.0(preact@10.29.1)(typescript@6.0.3)
+      '@allurereport/plugin-csv': 3.7.0
+      '@allurereport/plugin-dashboard': 3.7.0(preact@10.29.1)(typescript@6.0.3)
+      '@allurereport/plugin-jira': 3.7.0
+      '@allurereport/plugin-log': 3.7.0
+      '@allurereport/plugin-progress': 3.7.0
+      '@allurereport/plugin-server-reload': 3.7.0
+      '@allurereport/plugin-slack': 3.7.0
+      '@allurereport/reader-api': 3.7.0
+      '@allurereport/service': 3.7.0
+      '@allurereport/static-server': 3.7.0
       adm-zip: 0.5.17
       clipanion: 4.0.0-rc.4(typanion@3.14.0)
       glob: 11.1.0
@@ -7584,7 +7588,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  axios@1.15.2:
+  axios@1.16.0:
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.5
@@ -7871,7 +7875,7 @@ snapshots:
       normalize-path: 3.0.0
       readable-stream: 4.7.0
 
-  compress-commons@7.0.0:
+  compress-commons@7.0.1:
     dependencies:
       crc-32: 1.2.2
       crc32-stream: 7.0.1
@@ -8726,6 +8730,13 @@ snapshots:
       strnum: 2.2.3
 
   fast-xml-parser@5.7.2:
+    dependencies:
+      '@nodable/entities': 2.1.0
+      fast-xml-builder: 1.1.9
+      path-expression-matcher: 1.5.0
+      strnum: 2.3.0
+
+  fast-xml-parser@5.7.3:
     dependencies:
       '@nodable/entities': 2.1.0
       fast-xml-builder: 1.1.9
@@ -10799,8 +10810,8 @@ snapshots:
       compress-commons: 6.0.2
       readable-stream: 4.7.0
 
-  zip-stream@7.0.2:
+  zip-stream@7.0.5:
     dependencies:
-      compress-commons: 7.0.0
+      compress-commons: 7.0.1
       normalize-path: 3.0.0
       readable-stream: 4.7.0
