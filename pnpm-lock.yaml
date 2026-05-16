@@ -55,7 +55,7 @@ importers:
         version: 5.0.0
       yaml:
         specifier: ^2.8.3
-        version: 2.8.3
+        version: 2.9.0
       yocto-spinner:
         specifier: ^1.1.0
         version: 1.2.0
@@ -4732,8 +4732,8 @@ packages:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
     engines: {node: '>=10'}
 
-  yaml@2.8.3:
-    resolution: {integrity: sha512-AvbaCLOO2Otw/lW5bmh9d/WEdcDFdQp2Z2ZUH3pX9U2ihyUY0nvLv7J6TrWowklRGPYbB/IuIMfYgxaCPg5Bpg==}
+  yaml@2.9.0:
+    resolution: {integrity: sha512-2AvhNX3mb8zd6Zy7INTtSpl1F15HW6Wnqj0srWlkKLcpYl/gMIMJiyuGq2KeI2YFxUPjdlB+3Lc10seMLtL4cA==}
     engines: {node: '>= 14.6'}
     hasBin: true
 
@@ -4829,7 +4829,7 @@ snapshots:
       node-stream-zip: 1.15.0
       p-limit: 7.3.0
       progress: 2.0.3
-      yaml: 2.8.3
+      yaml: 2.9.0
       yoctocolors: 2.1.2
       zip-stream: 7.0.5
     transitivePeerDependencies:
@@ -4845,7 +4845,7 @@ snapshots:
     dependencies:
       '@allurereport/core-api': 3.7.0
       '@allurereport/plugin-api': 3.7.0
-      yaml: 2.8.3
+      yaml: 2.9.0
 
   '@allurereport/plugin-allure2@3.7.0':
     dependencies:
@@ -8150,7 +8150,7 @@ snapshots:
 
   docker-compose@1.4.2:
     dependencies:
-      yaml: 2.8.3
+      yaml: 2.9.0
 
   docker-modem@5.0.7(supports-color@10.2.2):
     dependencies:
@@ -10752,7 +10752,7 @@ snapshots:
 
   y18n@5.0.8: {}
 
-  yaml@2.8.3: {}
+  yaml@2.9.0: {}
 
   yargs-parser@18.1.3:
     dependencies:
