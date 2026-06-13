@@ -35,7 +35,6 @@
     "@types/mocha": "^10.0.10",
     "@types/node": "^25.6.0",
     "@types/sinon": "^21.0.1",
-    "allure-js-commons": "^3.7.1",
     "allure-mocha": "^3.7.1",
     "c8": "^11.0.0",
     "chai": "^6.2.2",
