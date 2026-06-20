@@ -12,7 +12,7 @@ jobs:
   lint:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
         with:
           version: 10
@@ -35,7 +35,7 @@ jobs:
       matrix:
         node: ["22.x", "24.x", "25.6"]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
         with:
           version: 10
@@ -69,7 +69,7 @@ jobs:
     name: e2e (npm)
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Set up PNPM
         uses: pnpm/action-setup@v6
         with:
@@ -103,7 +103,7 @@ jobs:
     name: e2e (docker)
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4.1.0
       - name: Build
@@ -178,7 +178,7 @@ jobs:
     name: publish coverage report
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Download coverage report
         uses: actions/download-artifact@v8
         with:
