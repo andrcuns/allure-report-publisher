@@ -34,7 +34,7 @@
     "@types/mime-types": "^3.0.1",
     "@types/mocha": "^10.0.10",
     "@types/node": "^26.0.0",
-    "@types/sinon": "^21.0.1",
+    "@types/sinon": "^22.0.0",
     "allure-mocha": "^3.7.1",
     "c8": "^11.0.0",
     "chai": "^6.2.2",
@@ -50,7 +50,7 @@
     "sinon": "^22.0.0",
     "testcontainers": "^12.0.0",
     "tsx": "^4.21.0",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "engines": {
     "node": ">=22.0.0"
