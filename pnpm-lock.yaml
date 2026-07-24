@@ -26,7 +26,7 @@ importers:
         version: 7.21.0(supports-color@10.2.2)
       '@oclif/core':
         specifier: ^4.10.5
-        version: 4.11.14
+        version: 4.13.0
       allure:
         specifier: ^3.6.0
         version: 3.14.0(preact@10.29.3)(supports-color@10.2.2)(typescript@6.0.3)
@@ -72,7 +72,7 @@ importers:
         version: 0.2.1
       '@oclif/test':
         specifier: ^4.1.18
-        version: 4.1.18(@oclif/core@4.11.14)(supports-color@10.2.2)
+        version: 4.1.18(@oclif/core@4.13.0)(supports-color@10.2.2)
       '@types/chai':
         specifier: ^5.2.3
         version: 5.2.3
@@ -971,8 +971,8 @@ packages:
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
 
-  '@oclif/core@4.11.14':
-    resolution: {integrity: sha512-cZ5Ktd+rT0PO+o7KBH4vRFTgg+xMLf8F41WK39p8MkXEViZA/Qqe+4lzZT6102zgUxMORET1HtF9t5w8CB3tnQ==}
+  '@oclif/core@4.13.0':
+    resolution: {integrity: sha512-j3NKgXE3qd0gvSYsCqDLb3VhW5KEg030VQhMnv5c0qNzPp6jBmF7cCDIQG4ROZIOqEfGbUoDDMAAzaC30vV99g==}
     engines: {node: '>=18.0.0'}
 
   '@oclif/plugin-help@6.2.50':
@@ -1798,9 +1798,9 @@ packages:
   brace-expansion@2.1.2:
     resolution: {integrity: sha512-w5JZcKgdhDOgOwm8H+KgbosopHMuGcl6qbulwjtz3SM7I7P3yW1eAjzMPLrIE+NQ9vjgANKHWeMHnrT0OXW1oA==}
 
-  brace-expansion@5.0.7:
-    resolution: {integrity: sha512-7oFy703dxfY3/NLxC1fh2SUCQ0H9rmAY+5EpDVfXjUTTs+HEwR2nYaqLv+GWcTsumwxPfiz6CzCNkwXwBUwqCA==}
-    engines: {node: 18 || 20 || >=22}
+  brace-expansion@5.0.8:
+    resolution: {integrity: sha512-JZyDyq3D4AUifKTPOB7DELf6XsB3WdPuNxCtob1vFXPsSXhdAiHBWJ/tJ8HAc9aH84BK+5JFZLNkJKx3G9kzQg==}
+    engines: {node: 20 || >=22}
 
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
@@ -5807,7 +5807,7 @@ snapshots:
 
   '@nolyfill/is-core-module@1.0.39': {}
 
-  '@oclif/core@4.11.14':
+  '@oclif/core@4.13.0':
     dependencies:
       ansi-escapes: 4.3.2
       ansis: 3.17.0
@@ -5830,12 +5830,12 @@ snapshots:
 
   '@oclif/plugin-help@6.2.50':
     dependencies:
-      '@oclif/core': 4.11.14
+      '@oclif/core': 4.13.0
 
   '@oclif/plugin-not-found@3.2.87(@types/node@26.0.0)':
     dependencies:
       '@inquirer/prompts': 7.10.1(@types/node@26.0.0)
-      '@oclif/core': 4.11.14
+      '@oclif/core': 4.13.0
       ansis: 3.17.0
       fast-levenshtein: 3.0.0
     transitivePeerDependencies:
@@ -5843,7 +5843,7 @@ snapshots:
 
   '@oclif/plugin-warn-if-update-available@3.1.65(supports-color@10.2.2)':
     dependencies:
-      '@oclif/core': 4.11.14
+      '@oclif/core': 4.13.0
       ansis: 3.17.0
       debug: 4.4.3(supports-color@10.2.2)
       http-call: 5.3.0(supports-color@10.2.2)
@@ -5854,9 +5854,9 @@ snapshots:
 
   '@oclif/prettier-config@0.2.1': {}
 
-  '@oclif/test@4.1.18(@oclif/core@4.11.14)(supports-color@10.2.2)':
+  '@oclif/test@4.1.18(@oclif/core@4.13.0)(supports-color@10.2.2)':
     dependencies:
-      '@oclif/core': 4.11.14
+      '@oclif/core': 4.13.0
       ansis: 3.17.0
       debug: 4.4.3(supports-color@10.2.2)
     transitivePeerDependencies:
@@ -6753,7 +6753,7 @@ snapshots:
     dependencies:
       balanced-match: 1.0.2
 
-  brace-expansion@5.0.7:
+  brace-expansion@5.0.8:
     dependencies:
       balanced-match: 4.0.4
 
@@ -8511,7 +8511,7 @@ snapshots:
 
   minimatch@10.2.5:
     dependencies:
-      brace-expansion: 5.0.7
+      brace-expansion: 5.0.8
 
   minimatch@3.1.5:
     dependencies:
@@ -8672,7 +8672,7 @@ snapshots:
       '@inquirer/confirm': 3.2.0
       '@inquirer/input': 2.3.0
       '@inquirer/select': 2.5.0
-      '@oclif/core': 4.11.14
+      '@oclif/core': 4.13.0
       '@oclif/plugin-help': 6.2.50
       '@oclif/plugin-not-found': 3.2.87(@types/node@26.0.0)
       '@oclif/plugin-warn-if-update-available': 3.1.65(supports-color@10.2.2)
