@@ -13,7 +13,7 @@
     "@google-cloud/storage": "^7.19.0",
     "@oclif/core": "^4.10.5",
     "allure": "^3.6.0",
-    "chalk": "^5.6.2",
+    "chalk": "^6.0.0",
     "ci-info": "^4.4.0",
     "glob": "^13.0.6",
     "mime-types": "^3.0.2",
