@@ -29,7 +29,7 @@ importers:
         version: 4.13.2
       allure:
         specifier: ^3.6.0
-        version: 3.14.3(preact@10.29.7)(supports-color@11.0.0)(typescript@6.0.3)
+        version: 3.15.0(preact@10.29.8)(supports-color@11.0.0)(typescript@6.0.3)
       chalk:
         specifier: ^6.0.0
         version: 6.0.0
@@ -66,7 +66,7 @@ importers:
     devDependencies:
       '@eslint/compat':
         specifier: ^2.0.5
-        version: 2.1.0(eslint@9.39.4(supports-color@11.0.0))
+        version: 2.1.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       '@oclif/prettier-config':
         specifier: ^0.2.1
         version: 0.2.1
@@ -108,13 +108,13 @@ importers:
         version: 1.7.2
       eslint:
         specifier: ^9.39.4
-        version: 9.39.4(supports-color@11.0.0)
+        version: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       eslint-config-oclif:
         specifier: ^6.0.157
-        version: 6.0.169(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+        version: 6.0.169(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
       eslint-config-prettier:
         specifier: ^10.1.8
-        version: 10.1.8(eslint@9.39.4(supports-color@11.0.0))
+        version: 10.1.8(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       esmock:
         specifier: ^2.7.3
         version: 2.7.6
@@ -142,101 +142,104 @@ importers:
 
 packages:
 
-  '@allurereport/aql@3.14.3':
-    resolution: {integrity: sha512-6GqgV3wKQmhc9bxIn6oNvZwyA5iqTKP9G+bs2iToMKPC2Subecj21cvVznXMiUK9T8k7fBhoPZDnwAjJhFH/ug==}
+  '@allurereport/aql@3.15.0':
+    resolution: {integrity: sha512-gUK+sMpUuJsQXe1Mq8Y2oe+y9PnCe9KSwUuzeinuttfleHO4JdMA9+HdgQu7TXL/9MkE6kR21ANDMvXltCcq1g==}
 
-  '@allurereport/charts-api@3.14.3':
-    resolution: {integrity: sha512-Y9t/tPRk9QQi6CVCWlF4KU5cUsmscXTVB8VuoiuIGZHRwJ0iXrbVmjL6oECWXdFDLkZ6Ifo7qoeU83XmnMxdwg==}
+  '@allurereport/charts-api@3.15.0':
+    resolution: {integrity: sha512-1cE3uK/W0ZQBROQHInPfzvYHx/Tt7xRfclkDQc1tKuG/wNoaaPckh17RAte9/137AsJ44xPahf7hj87kUUwXCQ==}
 
-  '@allurereport/ci@3.14.3':
-    resolution: {integrity: sha512-qHLB9wU1bR88u/zxDRTGnICgTGwHkF8eMfVgIbWJ68kpl24g5RTErQD/k2oqln141+wealR0eWDhy+c2lOYC6w==}
+  '@allurereport/ci@3.15.0':
+    resolution: {integrity: sha512-2U16jt7zvD5H3ACjMCvX3wkG2PmmyZndjtPpkcTTcUrzoNlkDB7zsanG/J5g1XfuJlma5FAp+ANaobTMylWe9Q==}
 
-  '@allurereport/core-api@3.14.3':
-    resolution: {integrity: sha512-vg2GaRGkTDDoc2j/xCsKB/JWpWAFG7+V+wdoZs/jDnMBq1D8aVPQJkjvgUajdJndc2WaOumOXBAQC+HiD9rksA==}
+  '@allurereport/cli-commons@3.15.0':
+    resolution: {integrity: sha512-e3K4CzrhqFXRBc+amSjWO8iMsqjaKrd1sM3rjZ8/tz5ifD6j40JZYgVXwTfYvi0luixTAd1FJTvAX3RJX30INw==}
 
-  '@allurereport/core@3.14.3':
-    resolution: {integrity: sha512-BSqp2eIEIQJd61XTcfDekzHKy3eBG5q2CZ5vOEHP0Iudmkmog5l1ZOJZZS2oTlNOc9wzQ9HuwofDv7L63ht1gg==}
+  '@allurereport/core-api@3.15.0':
+    resolution: {integrity: sha512-H2Vhw+y4bpJbHAzAGA/CpVetft+YNE1HGInekQ/jA6W26nZGcWcj/NOQk695oyLPJ5xvFDsSEKJz2AvXC2FKCA==}
 
-  '@allurereport/directory-watcher@3.14.3':
-    resolution: {integrity: sha512-c8t2/iHT53jugrqeOYELN1NX4F2eJyTj8V7T74oFcyK/rD2ekWiV5baIveUr5iN9Lg0xX2e6lpoYHsPfoaRLvw==}
+  '@allurereport/core@3.15.0':
+    resolution: {integrity: sha512-n/U6egNC7LQMqZm8AI4PaER2m4+kPxG7d0kpPqzHi6WvJyU+exSRE/zoGBWK86qm2RuCn4wJ99HQsapJiJ2cQA==}
 
-  '@allurereport/git@3.14.3':
-    resolution: {integrity: sha512-o8P7pnkSEVoqQxXM0nW7qZYextP2tAOdwCNomz//fhCzqIN1tAJoUr4SiIt+PxWkOZoFm5Sg7xvGAFgjGRJxRA==}
+  '@allurereport/directory-watcher@3.15.0':
+    resolution: {integrity: sha512-YQv8KUxVqq4qRJXBv6dUpYHQab7zCJU59/gzIgQnTAcY7+AoL2mrWKNLOz/7qkF14oKEqIXYZQPfAiGJz9YbGw==}
 
-  '@allurereport/plugin-agent@3.14.3':
-    resolution: {integrity: sha512-0qi4Vji8L5C8qfElSl5EM7Hark/PuKPrtq+Xf5NGSc7fwyh2JM9MzbLt+fsrjxITK2UBj9F6C4Zd59TDStpdRw==}
+  '@allurereport/git@3.15.0':
+    resolution: {integrity: sha512-m1cPw0jYLljtMYY361fHYxuQICRbmB10yTVIheXKPxKg2pdOuAEMC1ZcnKs/81zH9AgmXfqiZYGC4QSDKqn1kA==}
 
-  '@allurereport/plugin-allure2@3.14.3':
-    resolution: {integrity: sha512-4yoP1PXDhTqXzkqmdnPQhIQKWfBSL6jE8wK0ARpEIBXIG3LVwDvUOJ644jESawQW7yR5qSL118q4fjprBfbFpA==}
+  '@allurereport/plugin-agent@3.15.0':
+    resolution: {integrity: sha512-5WhH/90oFIkWa6Pjh/Poy6ceipIRPWNc8HTdlUo6x2QzLJ3FBRz/TeFhK1VUeX4JTxuqtaWmYao3RbrOKe2XDA==}
 
-  '@allurereport/plugin-api@3.14.3':
-    resolution: {integrity: sha512-KIGIBwGCUe+Zas0KZlfW3Dp+qemcVKShB1WwrnkKx7NSsQ+isYuqb0oAgY3hD2fDtafOaKHedTUi7AXUAG683g==}
+  '@allurereport/plugin-allure2@3.15.0':
+    resolution: {integrity: sha512-QJiwDoGOSDAZHO+To1WHlfr9pxu0HYzncYOTBXbU98KKu8LV7WBg0o0KassVHlFYClh07CIZl1os4c6bEqfg/A==}
 
-  '@allurereport/plugin-awesome@3.14.3':
-    resolution: {integrity: sha512-lqCC2O3At2x29Z9AbLNvAnkbKPw0tdYHeV/oSvc3wJ6J4LvToNqv5YzAhPu94DFG0LPsLvzpizekXg5wHiA4YQ==}
+  '@allurereport/plugin-api@3.15.0':
+    resolution: {integrity: sha512-oVOaX/HAgJ9qOIuraXkdgMuOpG/nMB0fd/S1vMyAnr677r92l5GEpeXbHVOKSQF3Ahr0cgR1nOVbqQkjzebG6w==}
 
-  '@allurereport/plugin-classic@3.14.3':
-    resolution: {integrity: sha512-Y/d7Dbw5KjnddnVNIym+HF0Af9K7TRrRwRmeaDcOOct51jDGmKu1pfrro368CfxaRW00SaDVyxysVEAMtEQb5g==}
+  '@allurereport/plugin-awesome@3.15.0':
+    resolution: {integrity: sha512-vrVKvfv4AVrLYk55dl8hGSDob86fq04Ok2Owyp8PF7qCpAVp1uzFsBBwNTjAzgqGcoiJV6xV/VRmYx2CBW2WrA==}
 
-  '@allurereport/plugin-csv@3.14.3':
-    resolution: {integrity: sha512-RoVvGV+Dujh37mlcWyjzS6BLKt8EdIMEZedfVwt2hxgPShac5hub+PRWsbvfG6R+ZY4qDSMXJ8NtBpvBFG0fNg==}
+  '@allurereport/plugin-classic@3.15.0':
+    resolution: {integrity: sha512-h9LVmk+fGVNwz8ePMrs5vOPIbiUlFeSKk85h+qL48NgAcI8pOHsPcPjPGg5P8+g+4sKO4fJEDiQdMy+x657O5A==}
 
-  '@allurereport/plugin-dashboard@3.14.3':
-    resolution: {integrity: sha512-jrYtKavVY0jsZlkv+sBmQH/RYTFPzVy9LWd6+Ixg3/RryQXGZh7Oy1jhp8szWbjiSmtbiS5toC6A6u7+7DbHBg==}
+  '@allurereport/plugin-csv@3.15.0':
+    resolution: {integrity: sha512-RvSXl7ebwUu2bZIdFvZDJszW1bAOo/ze+sNs3ZMwzxmuBWvhjYV0wo6HMJKNaanxunugRvHDgM8xRKN5svNrIg==}
 
-  '@allurereport/plugin-jira@3.14.3':
-    resolution: {integrity: sha512-a1casnI4HuVvfP34bir+Pxizs26IxJCGBAX4rDnUX8JZcWsmxYuRVN9Es3hwY/4Wu1YQnyFAWpjX5m+uo1jBDg==}
+  '@allurereport/plugin-dashboard@3.15.0':
+    resolution: {integrity: sha512-rQB9mVEa0y/vpkcTLrvoZxN0QwYpTnkRr3qhTparFxNCEYUvgGfc/glHocQHF+ThOOQaj0SodVsaHm2/qKWNOg==}
 
-  '@allurereport/plugin-log@3.14.3':
-    resolution: {integrity: sha512-6Mzkb1Xc6EhmWVupiTBfZIqh0tOMh/dHIAcjBF6rmH5fYMcCqZzrLWFFDrM17IurVwMNa2MdedkWfEtxGk+dzg==}
+  '@allurereport/plugin-jira@3.15.0':
+    resolution: {integrity: sha512-zKIsCHgZXvjPprF1NQLGLr/Bz2cCJi0VnB8qlWwzsdTK4JXH1Wu5Vigjy9pT+qIV6j3ZxTAGra5/QoEXrDA/yA==}
 
-  '@allurereport/plugin-progress@3.14.3':
-    resolution: {integrity: sha512-XakOAXzMdxXBkr58ssSrXrjIazhWHlS4c0qIuhQUahicYKkPtBQ1DndvTw5Z/wxMNUQSiFmkvUlfJyhF77jdcA==}
+  '@allurereport/plugin-log@3.15.0':
+    resolution: {integrity: sha512-etqx26I+d7csz5WAlVnW5KHj4cgtXLQVP4CBFRm2bxvDka0+nQtT8sraUPkENU69qGzQEJ/KO1E91nh+kQxHcw==}
 
-  '@allurereport/plugin-server-reload@3.14.3':
-    resolution: {integrity: sha512-p8i58C65lZAkjGX5kQjfwVwpQiBXspXT2U5AwFw7eYlP9iggd5WPq0dj4+zHCmoZypqStssklnmE/0vsq1AnnQ==}
+  '@allurereport/plugin-progress@3.15.0':
+    resolution: {integrity: sha512-+6blx1xE7EpTIwkHSYJ0Ah/RlM07e0V+yJzMKSMJ4Lseqyn33zvPGy/asZXv1hgSxPOn+h3gBnzhdNAc5jBStA==}
 
-  '@allurereport/plugin-slack@3.14.3':
-    resolution: {integrity: sha512-NCfsiacMJgSYF2w4Ck8hSSIpPK/CPN1pN27KqMz5QTb2aFok8IYdqjm8jebHtY9QrO3Um016OWht0/6fdasREg==}
+  '@allurereport/plugin-server-reload@3.15.0':
+    resolution: {integrity: sha512-waqzQaQGVB6X3jDvpO4TuzzbcWmUhu2Q0T5RIky7LZa3MniJFtwcnLc1LDwu+A7SNDxS1CPV4cKVhpOOaHAmfw==}
 
-  '@allurereport/plugin-testops@3.14.3':
-    resolution: {integrity: sha512-+BhKvjc1y7RGO8OTBY3UjtNZxp+a/hBuWFuyvlPjIOXTAZcsTS5SsVyZH6P81dty6/i5AGS6KMhR2u1ImabEeA==}
+  '@allurereport/plugin-slack@3.15.0':
+    resolution: {integrity: sha512-N6KlJaDdrVsLbh3jVyrAeqIuZGzFPtQfDopuE5Gfmd4GS9Z6Ed0BNRvrWuCs5V2tUm3gKESlp1x2iFdmbnhrZw==}
 
-  '@allurereport/plugin-testplan@3.14.3':
-    resolution: {integrity: sha512-gpPTtJDf3cMN2XlraWMRnQPLgiE0NNfGoQP83HF0CYHZaTALGuqLo9M3CQkeMdV1Ni1WBYlb9Wh3JvPzSTf46w==}
+  '@allurereport/plugin-testops@3.15.0':
+    resolution: {integrity: sha512-QQgagLx2eFreBzrxAmi1Tpjo/unmwR3l4sNVpxbUVRA0tR78ZnJ1XcGctDTKMsIinw741vijhIn7/ZHGPzfg7g==}
 
-  '@allurereport/reader-api@3.14.3':
-    resolution: {integrity: sha512-/1kWS28uEGmBZYtJIOw3O6Av0RPDoMGp2exW60HCieZOHNl/otTYYjH3y4xpFansbTgvn07VuT+dSuxnuS1/SA==}
+  '@allurereport/plugin-testplan@3.15.0':
+    resolution: {integrity: sha512-mlyrDOb1LYORpOAT8dW653q/PHbwVnHVdrGHgZc1WBMNmuwWTOx4bbFGFPMKV9efafx51pQW8Ox37vnvn8sGVg==}
 
-  '@allurereport/reader@3.14.3':
-    resolution: {integrity: sha512-dc6xIgs1RDylaeSCdZtrpkGgg1CNeCKixx53uUEjwpqWmVR0OWMpW+cZ61jCUZ8hCHTmLSgLjoG6+frPwSlg7g==}
+  '@allurereport/reader-api@3.15.0':
+    resolution: {integrity: sha512-HZ3mP0Y7ZkHjxgqM3aimFEsxPba7rMP8jo6E8lPve+iHzzooXFKopQleGIScZ7waJp+AACoiR0xVGheLSRpWJQ==}
 
-  '@allurereport/service@3.14.3':
-    resolution: {integrity: sha512-XCPMNSogkdrZxY18sa543JJsdhiiD3t2fJx4m5ou/+93bUIqydYlz7Hm+hwRqV7xoFlHUy7btAtMRWU8MV30Eg==}
+  '@allurereport/reader@3.15.0':
+    resolution: {integrity: sha512-AOqjvSfdI90ou9X4ip+LCOlrcNIP7WL6ieONL8rSSMQft99hK1cKxJ7q1hsmkFWhViPHlqtfwIq4sTlnlW/uDQ==}
 
-  '@allurereport/static-server@3.14.3':
-    resolution: {integrity: sha512-QkgVpqz+E93YrwsPYTRKcQRFseMsF2i2VkmydvHmOCmTIuPrh2IYApvDvBM9homMUDlcJq4mxtYtpveihUVNXA==}
+  '@allurereport/service@3.15.0':
+    resolution: {integrity: sha512-zD4VVdFhmWr8NU1Lah1TlV5S0bIHX64xUmKcgD/Mrzp4xBYtvZYntJgvpnsuroePLSK77FrZfE4VUAURNcj87g==}
 
-  '@allurereport/summary@3.14.3':
-    resolution: {integrity: sha512-Zjrcn/THCAoTYfiHyKogqbk/Lg55PKEk2nIrTfSsNbW95jXVzfCFyBP+0G6t+hNRstF+eAZWX85oT7ilX+EBiw==}
+  '@allurereport/static-server@3.15.0':
+    resolution: {integrity: sha512-ZK7kg2jK8A6RlOFOio94lJgl9WuZOL31FluMFZaujW+9Wn0vSvA3+sVt20WQa8ZW5JZnracCIa1mI4DQaYZ2WA==}
 
-  '@allurereport/web-awesome@3.14.3':
-    resolution: {integrity: sha512-07Zi9PFKPtpa2SwagujTkHfSzrLqdfzHxGp3m+dJhnfqmjAQaFojznGg1lyUdHCDaa4qkYTsm1UKefyjg2Vxbw==}
+  '@allurereport/summary@3.15.0':
+    resolution: {integrity: sha512-WesisywhAVg0iAejphA3eacUiHGGjd3dXCPi8s3eIfU9fIwmrNUn5O0Vtrn+rDlWNWjInJttf+MxHdeOHM00Cg==}
 
-  '@allurereport/web-classic@3.14.3':
-    resolution: {integrity: sha512-k/Udo8PDFKFE3S2v5pyu5qzAY8crrxNOICUMrXkXct1td/K05Whd7N+yKxSmQYtLi2o2v4IpJvD0Ia+B6rtasw==}
+  '@allurereport/web-awesome@3.15.0':
+    resolution: {integrity: sha512-jqxQDYUnZUc0o4q5km3go7u608ZyBn+OH7JEHlUwYDEfbWUZxDIqtin3iSyq+wOqOHXiWUvmqtxXOjIEIyOMqQ==}
 
-  '@allurereport/web-commons@3.14.3':
-    resolution: {integrity: sha512-UkkgSSXcRIhL5Do23jLsQ+ozD/GH6kt31+n/0OEpkDh08IqXRLFhJWkgwYX9iI81/ersO3vTdoJRMljoa/Du/g==}
+  '@allurereport/web-classic@3.15.0':
+    resolution: {integrity: sha512-4b2EKL5zXsWzVU9faFXFRELkXvikMyXO06/4W2ODL0VZq+QkJbVJygPb+jCPE3jlTTZE3jGxVxx7qG2d5g/MRg==}
 
-  '@allurereport/web-components@3.14.3':
-    resolution: {integrity: sha512-wcF07nV9FiUDcic0BxdPjal2pH9/T9nEatfa9ZfBtqNdnq1vhczUY57TOU1pKC3aMnYyw2qk3soofhlk0XgI4g==}
+  '@allurereport/web-commons@3.15.0':
+    resolution: {integrity: sha512-x3qTt8HFgRSCYkgW12CRKurhcgikc87ys5FiOO01P5Pl5HBQN/exUTnzj1pB91sqGzIml5lUch++8S3k/fd7rw==}
 
-  '@allurereport/web-dashboard@3.14.3':
-    resolution: {integrity: sha512-qOy8sPEAMUF05j8512I5tKilEcJjDUDxCCNazFeU07azKHevC6tu7tXn+2bQTzwcxiEWWlNmqSbjbSEyXP6x+g==}
+  '@allurereport/web-components@3.15.0':
+    resolution: {integrity: sha512-Ft0sKpFP1uKBatVw08gHKP/q+LbKSxl33exPheuyBGXcnjPvKNWfUS6lh9AAaA/B+QrUSKF/Swu8YE4HrQA/EA==}
 
-  '@allurereport/web-summary@3.14.3':
-    resolution: {integrity: sha512-eIwTzJ3CGwCVey72zH77i5i51Nr4t56cgco7OcHvBjp9SlVk0k6AH3jKvKbUrE5KmSDN5o/KwOvBknu9oIFagw==}
+  '@allurereport/web-dashboard@3.15.0':
+    resolution: {integrity: sha512-9HTH69+ZDmzBqRJuh++zGpECYTBL9OBPo/UHhznsn8NugMMMEmLms0omvM1/twClrKxgmtX0DlhH41QrBmbT3g==}
+
+  '@allurereport/web-summary@3.15.0':
+    resolution: {integrity: sha512-gsa1txEhWz+ueIy43K5bAha59ANxbw3RCWwEG6HE9Gr5LHt046t19yZ/AAgKg9XS7kFSDDWoszW4ZdX33BH6sQ==}
 
   '@aws-crypto/sha256-browser@5.2.0':
     resolution: {integrity: sha512-AXfN/lGotSQwu6HNcEsIASo7kWXZ5HYWvfOmSNKDsEqC4OashTp8alTmaz+F7TC2L083SFv5RdB+qU3Vs1kZqw==}
@@ -1130,8 +1133,8 @@ packages:
   '@preact/signals-core@1.14.4':
     resolution: {integrity: sha512-HNB6HYeYKhQbJ1aKl+YRjrS4+QWHLKX6qKoUsfS/m0vqzsVaEBiZiaKbG/e+NKk2ch5ALQr/ihWaMHxiCuuWHA==}
 
-  '@preact/signals@2.10.0':
-    resolution: {integrity: sha512-avH1zQLZR6c0DmH3pT/sn4RIzsNDXAue+MEoyS5RIvApKALSU8m05KyBOL8ua21gxeDYp1DclTMcFd+N1zaL1Q==}
+  '@preact/signals@2.11.1':
+    resolution: {integrity: sha512-uYoD+USkacTNU02kfCBkJEV7xabKTmA78W5pnT2GymsuGEC9n/ZO+UT4S96l0dIL6KLDk77VJyUFuOMBvftVHg==}
     peerDependencies:
       preact: '>= 10.25.0 || >=11.0.0-0'
 
@@ -1580,9 +1583,9 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  adm-zip@0.5.18:
-    resolution: {integrity: sha512-ufJnssQGbxzLNS1Ho9bCtX4rQKCCvoVuDLHoJyc3F9dOGDB4BkWs2Ci0kv53lqocAEQ/Cbi+I2XCsNYGqVYqng==}
-    engines: {node: '>=12.0'}
+  adm-zip@0.6.0:
+    resolution: {integrity: sha512-XleryMhbuksdKtofnWZ9Sk+4CUTbms4Mb/EU32SZwToAyZ5RgVos/ki8n+yr0LWHOGKuakbXTuuYNHLQjhddgg==}
+    engines: {node: '>=14.0'}
 
   agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
@@ -1608,8 +1611,8 @@ packages:
     peerDependencies:
       mocha: '>=6.2.0'
 
-  allure@3.14.3:
-    resolution: {integrity: sha512-wHoEDWWDpiqjd6UaNlbCc619pwKkx6J1aJsmB7lCnrrEbaSNyvbw6yd67VI931B0GEkP+dORHRy21Rsuc4l7IQ==}
+  allure@3.15.0:
+    resolution: {integrity: sha512-sCdtC2hUkAQcFfhQAAGqbxVVPXDqJvCYfoUxstAQBYjWMsqSIrU1uOCdqIZt6OvF6GI1NbEi4bfvUntAyPbjzw==}
     hasBin: true
 
   ansi-escapes@4.3.2:
@@ -1717,8 +1720,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.18.1:
-    resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
+  axios@1.19.0:
+    resolution: {integrity: sha512-ht/iuYZXEjFxLH/Hkezgd7m6JKlHHXEUSneaDz8uZe1Gj5QZtCnpyDsckvAiEnT89OEbCLmnte4R4sn7P0EKFw==}
 
   b4a@1.8.1:
     resolution: {integrity: sha512-aiqre1Nr0B/6DgE2N5vwTc+2/oQZ4Wh1t4NznYY4E00y8LCt6NqdRv81so00oo27D8MVKTpUa/MwUUtBLXCoDw==}
@@ -2311,8 +2314,8 @@ packages:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
 
-  dompurify@3.4.12:
-    resolution: {integrity: sha512-zQvGet8Z2sWbQhCmfFz/T5QWH2oBmjnqK3qvOjaqaNLrLEF912WamU+ohnTp0TCep/MFVHpdJuCZEdFOdTnEFg==}
+  dompurify@3.4.13:
+    resolution: {integrity: sha512-2vmYIoqjze2d+kakP8S/nS5shfsl587kzwEjcGlTdiksUVgFHnFCsLYDVj/JNqJVOQZGSYBTmuycv0PodwmnMQ==}
 
   dot-case@3.0.4:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
@@ -2623,8 +2626,8 @@ packages:
   fast-xml-builder@1.2.0:
     resolution: {integrity: sha512-00aAWieqff+ZJhsXA4g1g7M8k+7AYoMUUHF+/zFb5U6Uv/P0Vl4QZo84/IcufzYalLuEj9928bXN9PbbFzMF0Q==}
 
-  fast-xml-builder@1.3.0:
-    resolution: {integrity: sha512-F74cZEdCvuw9P41GAC3rod4X04jjWGM1JPEv/GWSqFTWLsdyMSBMBMlm9Hk3GLBgLBbdBNY8yee0pQh2RBVESQ==}
+  fast-xml-builder@1.3.1:
+    resolution: {integrity: sha512-pIM/1n3ntFXKYrUZwW7QCK0gAW7XY+wzj1YMIV3tLDvPj/V+zTGJK5e3/4WJfwj0qWw2ElNXiTixda/R+3YSug==}
 
   fast-xml-parser@5.10.1:
     resolution: {integrity: sha512-IEMIf7298kXuZSRFoGfMYrl7is8LpavODgbNz1cwIudv7KwVFnuU+UsMporfq6PD6aXSlawZlARiA3UywCTfMw==}
@@ -3196,6 +3199,10 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  jiti@2.7.0:
+    resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
+    hasBin: true
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -3296,6 +3303,9 @@ packages:
 
   lodash.camelcase@4.3.0:
     resolution: {integrity: sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==}
+
+  lodash.debounce@4.0.8:
+    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -3559,8 +3569,8 @@ packages:
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
 
-  open@11.0.0:
-    resolution: {integrity: sha512-smsWv2LzFjP03xmvFoJ331ss6h+jixfA4UUV/Bsiyuu4YJPfN+FIQGOIiv4w9/+MoHkfkJ22UIaQWRVFRfH6Vw==}
+  open@11.0.1:
+    resolution: {integrity: sha512-NzwMUB6C1D0+Kd+9iMS/H4k+Ck3cTX6Ckyfr/gAGlmvSE1LUQZnEZvWBi4PYmMwH/S5SMeTXnE+9uAz8uF+pWw==}
     engines: {node: '>=20'}
 
   optionator@0.9.4:
@@ -3711,8 +3721,12 @@ packages:
     resolution: {integrity: sha512-dM0jVuXJPsDN6DvRpea484tCUaMiXWjuCn++HGTqUWzGDjv5tZkEZldAJ/UMlqRYGFrD/etByo4/xOuC/snX2A==}
     engines: {node: '>=20'}
 
-  preact@10.29.7:
-    resolution: {integrity: sha512-DCHYrK/B10yUD3ZjLfhZ3WIE/9Vf9VFUODcRE2dRomTYDpJk6z6L9wecSfhfE6M9ZTHUdyQkoC46arIDhEV84Q==}
+  powershell-utils@0.2.0:
+    resolution: {integrity: sha512-ZlsFlG7MtSFCoc5xreOvBAozCJ6Pf06opgJjh9ONEv418xpZSAzNjstD36C6+JwOnfSqOW/9uDkqKjezTdxZhw==}
+    engines: {node: '>=20'}
+
+  preact@10.29.8:
+    resolution: {integrity: sha512-ej2aVZ+vZ8WO7tvlQWRM9N63A0KzF9q4mWJfDUHgYaIofWY9hu74QdnQrjoPMmZi2/nZ5gN0bJCQF49xQqx09Q==}
     peerDependencies:
       preact-render-to-string: '>=5'
     peerDependenciesMeta:
@@ -3733,10 +3747,6 @@ packages:
   process@0.11.10:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
     engines: {node: '>= 0.6.0'}
-
-  progress@2.0.3:
-    resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
-    engines: {node: '>=0.4.0'}
 
   prompts@2.4.2:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
@@ -3823,8 +3833,8 @@ packages:
     resolution: {integrity: sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==}
     engines: {node: '>= 14.18.0'}
 
-  readdirp@5.0.0:
-    resolution: {integrity: sha512-9u/XQ1pvrQtYyMpZe7DXKv2p5CNvyVwzUB6uhLAnQwHMSgKMBR62lc7AHljaeteeHXn11XTAaLLUVZYVZyuRBQ==}
+  readdirp@5.1.1:
+    resolution: {integrity: sha512-Kko+Y5XQ6fM+Ce3dq3m9YGxnacYZYl9cA1wZjaF3Vbry2L3i1qVg8+CAgNPsXRArPMUMCaOR7oa9Nqntc43JKA==}
     engines: {node: '>= 20.19.0'}
 
   rechoir@0.6.2:
@@ -4459,8 +4469,8 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  wsl-utils@0.3.1:
-    resolution: {integrity: sha512-g/eziiSUNBSsdDJtCLB8bdYEUMj4jR7AGeUo96p/3dTafgjHhpF4RiCFPiRILwjQoDXx5MqkBr4fwWtR3Ky4Wg==}
+  wsl-utils@1.0.0:
+    resolution: {integrity: sha512-Hl0ZOAs672vg+06kfujwRhoS6/jehvULrlFkuF2dRu6pHgA8U06h3xqNIqNNU1LTXPcedxByAR4GS6pwQK0mgA==}
     engines: {node: '>=20'}
 
   xcase@2.0.1:
@@ -4526,6 +4536,10 @@ packages:
     resolution: {integrity: sha512-CzhO+pFNo8ajLM2d2IW/R93ipy99LWjtwblvC1RsoSUMZgyLbYFr221TnSNT7GjGdYui6P459mw9JH/g/zW2ug==}
     engines: {node: '>=18'}
 
+  yoctocolors@2.2.0:
+    resolution: {integrity: sha512-xYqdZFUK/VYazNl/oCDYN+3WloWQwMfZxBoiNt6qNyk+xfOdi598muWE42rNZFp1kNOiqW936q5RhUdnpqElSg==}
+    engines: {node: '>=18'}
+
   zip-stream@6.0.1:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
@@ -4536,49 +4550,55 @@ packages:
 
 snapshots:
 
-  '@allurereport/aql@3.14.3': {}
+  '@allurereport/aql@3.15.0': {}
 
-  '@allurereport/charts-api@3.14.3':
+  '@allurereport/charts-api@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
       d3-shape: 3.2.0
 
-  '@allurereport/ci@3.14.3':
+  '@allurereport/ci@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
+      '@allurereport/core-api': 3.15.0
 
-  '@allurereport/core-api@3.14.3':
+  '@allurereport/cli-commons@3.15.0':
+    dependencies:
+      lodash.debounce: 4.0.8
+
+  '@allurereport/core-api@3.15.0':
     dependencies:
       d3-shape: 3.2.0
 
-  '@allurereport/core@3.14.3(preact@10.29.7)(supports-color@11.0.0)(typescript@6.0.3)':
+  '@allurereport/core@3.15.0(preact@10.29.8)(supports-color@11.0.0)(typescript@6.0.3)':
     dependencies:
-      '@allurereport/ci': 3.14.3
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-agent': 3.14.3
-      '@allurereport/plugin-allure2': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      '@allurereport/plugin-awesome': 3.14.3(preact@10.29.7)(typescript@6.0.3)
-      '@allurereport/plugin-classic': 3.14.3(preact@10.29.7)(typescript@6.0.3)
-      '@allurereport/plugin-csv': 3.14.3
-      '@allurereport/plugin-dashboard': 3.14.3(preact@10.29.7)(typescript@6.0.3)
-      '@allurereport/plugin-jira': 3.14.3(supports-color@11.0.0)
-      '@allurereport/plugin-log': 3.14.3
-      '@allurereport/plugin-progress': 3.14.3
-      '@allurereport/plugin-slack': 3.14.3
-      '@allurereport/plugin-testops': 3.14.3(supports-color@11.0.0)
-      '@allurereport/plugin-testplan': 3.14.3
-      '@allurereport/reader': 3.14.3
-      '@allurereport/reader-api': 3.14.3
-      '@allurereport/service': 3.14.3(supports-color@11.0.0)
-      '@allurereport/summary': 3.14.3(typescript@6.0.3)
+      '@allurereport/ci': 3.15.0
+      '@allurereport/cli-commons': 3.15.0
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-agent': 3.15.0
+      '@allurereport/plugin-allure2': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      '@allurereport/plugin-awesome': 3.15.0(preact@10.29.8)(typescript@6.0.3)
+      '@allurereport/plugin-classic': 3.15.0(preact@10.29.8)(typescript@6.0.3)
+      '@allurereport/plugin-csv': 3.15.0
+      '@allurereport/plugin-dashboard': 3.15.0(preact@10.29.8)(typescript@6.0.3)
+      '@allurereport/plugin-jira': 3.15.0(supports-color@11.0.0)
+      '@allurereport/plugin-log': 3.15.0
+      '@allurereport/plugin-progress': 3.15.0
+      '@allurereport/plugin-slack': 3.15.0
+      '@allurereport/plugin-testops': 3.15.0(supports-color@11.0.0)
+      '@allurereport/plugin-testplan': 3.15.0
+      '@allurereport/reader': 3.15.0
+      '@allurereport/reader-api': 3.15.0
+      '@allurereport/service': 3.15.0(supports-color@11.0.0)
+      '@allurereport/summary': 3.15.0(typescript@6.0.3)
       glob: 13.0.6
       handlebars: 4.7.9
+      jiti: 2.7.0
       node-stream-zip: 1.16.0
       p-limit: 7.3.1
       yaml: 2.9.0
-      yoctocolors: 2.1.2
+      yoctocolors: 2.2.0
       zip-stream: 7.0.5
     transitivePeerDependencies:
       - debug
@@ -4587,38 +4607,38 @@ snapshots:
       - supports-color
       - typescript
 
-  '@allurereport/directory-watcher@3.14.3':
+  '@allurereport/directory-watcher@3.15.0':
     dependencies:
       chokidar: 5.0.0
 
-  '@allurereport/git@3.14.3':
+  '@allurereport/git@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
+      '@allurereport/core-api': 3.15.0
 
-  '@allurereport/plugin-agent@3.14.3':
+  '@allurereport/plugin-agent@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
       yaml: 2.9.0
 
-  '@allurereport/plugin-allure2@3.14.3':
+  '@allurereport/plugin-allure2@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
       find-up: 8.0.0
       handlebars: 4.7.9
 
-  '@allurereport/plugin-api@3.14.3':
+  '@allurereport/plugin-api@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
+      '@allurereport/core-api': 3.15.0
 
-  '@allurereport/plugin-awesome@3.14.3(preact@10.29.7)(typescript@6.0.3)':
+  '@allurereport/plugin-awesome@3.15.0(preact@10.29.8)(typescript@6.0.3)':
     dependencies:
-      '@allurereport/charts-api': 3.14.3
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      '@allurereport/web-awesome': 3.14.3(typescript@6.0.3)
-      '@allurereport/web-commons': 3.14.3(preact@10.29.7)
+      '@allurereport/charts-api': 3.15.0
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      '@allurereport/web-awesome': 3.15.0(typescript@6.0.3)
+      '@allurereport/web-commons': 3.15.0(preact@10.29.8)
       d3-shape: 3.2.0
       handlebars: 4.7.9
       markdown-it: 14.3.0
@@ -4627,13 +4647,13 @@ snapshots:
       - preact-render-to-string
       - typescript
 
-  '@allurereport/plugin-classic@3.14.3(preact@10.29.7)(typescript@6.0.3)':
+  '@allurereport/plugin-classic@3.15.0(preact@10.29.8)(typescript@6.0.3)':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      '@allurereport/web-awesome': 3.14.3(typescript@6.0.3)
-      '@allurereport/web-classic': 3.14.3(typescript@6.0.3)
-      '@allurereport/web-commons': 3.14.3(preact@10.29.7)
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      '@allurereport/web-awesome': 3.15.0(typescript@6.0.3)
+      '@allurereport/web-classic': 3.15.0(typescript@6.0.3)
+      '@allurereport/web-commons': 3.15.0(preact@10.29.8)
       d3-shape: 3.2.0
       handlebars: 4.7.9
       markdown-it: 14.3.0
@@ -4642,18 +4662,18 @@ snapshots:
       - preact-render-to-string
       - typescript
 
-  '@allurereport/plugin-csv@3.14.3':
+  '@allurereport/plugin-csv@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
 
-  '@allurereport/plugin-dashboard@3.14.3(preact@10.29.7)(typescript@6.0.3)':
+  '@allurereport/plugin-dashboard@3.15.0(preact@10.29.8)(typescript@6.0.3)':
     dependencies:
-      '@allurereport/charts-api': 3.14.3
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      '@allurereport/web-commons': 3.14.3(preact@10.29.7)
-      '@allurereport/web-dashboard': 3.14.3(typescript@6.0.3)
+      '@allurereport/charts-api': 3.15.0
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      '@allurereport/web-commons': 3.15.0(preact@10.29.8)
+      '@allurereport/web-dashboard': 3.15.0(typescript@6.0.3)
       d3-shape: 3.2.0
       handlebars: 4.7.9
     transitivePeerDependencies:
@@ -4661,171 +4681,171 @@ snapshots:
       - preact-render-to-string
       - typescript
 
-  '@allurereport/plugin-jira@3.14.3(supports-color@11.0.0)':
+  '@allurereport/plugin-jira@3.15.0(supports-color@11.0.0)':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      axios: 1.18.1(supports-color@11.0.0)
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      axios: 1.19.0(supports-color@11.0.0)
     transitivePeerDependencies:
       - debug
       - supports-color
 
-  '@allurereport/plugin-log@3.14.3':
+  '@allurereport/plugin-log@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      yoctocolors: 2.1.2
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      yoctocolors: 2.2.0
 
-  '@allurereport/plugin-progress@3.14.3':
+  '@allurereport/plugin-progress@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      yoctocolors: 2.1.2
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      yoctocolors: 2.2.0
 
-  '@allurereport/plugin-server-reload@3.14.3':
+  '@allurereport/plugin-server-reload@3.15.0':
     dependencies:
-      '@allurereport/plugin-api': 3.14.3
-      '@allurereport/static-server': 3.14.3
+      '@allurereport/plugin-api': 3.15.0
+      '@allurereport/static-server': 3.15.0
 
-  '@allurereport/plugin-slack@3.14.3':
+  '@allurereport/plugin-slack@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
 
-  '@allurereport/plugin-testops@3.14.3(supports-color@11.0.0)':
+  '@allurereport/plugin-testops@3.15.0(supports-color@11.0.0)':
     dependencies:
-      '@allurereport/ci': 3.14.3
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/git': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      '@allurereport/reader-api': 3.14.3
-      '@allurereport/service': 3.14.3(supports-color@11.0.0)
-      axios: 1.18.1(supports-color@11.0.0)
+      '@allurereport/ci': 3.15.0
+      '@allurereport/cli-commons': 3.15.0
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/git': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      '@allurereport/reader-api': 3.15.0
+      '@allurereport/service': 3.15.0(supports-color@11.0.0)
+      axios: 1.19.0(supports-color@11.0.0)
       form-data: 4.0.6
       lodash-es: 4.18.1
       p-limit: 7.3.1
-      progress: 2.0.3
-      yoctocolors: 2.1.2
+      yoctocolors: 2.2.0
     transitivePeerDependencies:
       - debug
       - supports-color
 
-  '@allurereport/plugin-testplan@3.14.3':
+  '@allurereport/plugin-testplan@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
 
-  '@allurereport/reader-api@3.14.3':
+  '@allurereport/reader-api@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
       mime-types: 2.1.35
 
-  '@allurereport/reader@3.14.3':
+  '@allurereport/reader@3.15.0':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      '@allurereport/reader-api': 3.14.3
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      '@allurereport/reader-api': 3.15.0
       fast-xml-parser: 5.10.1
 
-  '@allurereport/service@3.14.3(supports-color@11.0.0)':
+  '@allurereport/service@3.15.0(supports-color@11.0.0)':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      axios: 1.18.1(supports-color@11.0.0)
-      open: 11.0.0
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      axios: 1.19.0(supports-color@11.0.0)
+      open: 11.0.1
     transitivePeerDependencies:
       - debug
       - supports-color
 
-  '@allurereport/static-server@3.14.3':
+  '@allurereport/static-server@3.15.0':
     dependencies:
-      '@allurereport/directory-watcher': 3.14.3
-      open: 11.0.0
+      '@allurereport/directory-watcher': 3.15.0
+      open: 11.0.1
 
-  '@allurereport/summary@3.14.3(typescript@6.0.3)':
+  '@allurereport/summary@3.15.0(typescript@6.0.3)':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      '@allurereport/web-summary': 3.14.3(typescript@6.0.3)
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      '@allurereport/web-summary': 3.15.0(typescript@6.0.3)
       handlebars: 4.7.9
     transitivePeerDependencies:
       - preact-render-to-string
       - typescript
 
-  '@allurereport/web-awesome@3.14.3(typescript@6.0.3)':
+  '@allurereport/web-awesome@3.15.0(typescript@6.0.3)':
     dependencies:
-      '@allurereport/charts-api': 3.14.3
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      '@allurereport/web-commons': 3.14.3(preact@10.29.7)
-      '@allurereport/web-components': 3.14.3
-      '@preact/signals': 2.10.0(preact@10.29.7)
+      '@allurereport/charts-api': 3.15.0
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      '@allurereport/web-commons': 3.15.0(preact@10.29.8)
+      '@allurereport/web-components': 3.15.0
+      '@preact/signals': 2.11.1(preact@10.29.8)
       clsx: 2.1.1
       d3-shape: 3.2.0
       i18next: 24.2.3(typescript@6.0.3)
       md5: 2.3.0
       minisearch: 7.2.0
-      preact: 10.29.7
+      preact: 10.29.8
       prismjs: 1.30.0
     transitivePeerDependencies:
       - preact-render-to-string
       - typescript
 
-  '@allurereport/web-classic@3.14.3(typescript@6.0.3)':
+  '@allurereport/web-classic@3.15.0(typescript@6.0.3)':
     dependencies:
-      '@allurereport/charts-api': 3.14.3
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/web-commons': 3.14.3(preact@10.29.7)
-      '@allurereport/web-components': 3.14.3
-      '@preact/signals': 2.10.0(preact@10.29.7)
+      '@allurereport/charts-api': 3.15.0
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/web-commons': 3.15.0(preact@10.29.8)
+      '@allurereport/web-components': 3.15.0
+      '@preact/signals': 2.11.1(preact@10.29.8)
       clsx: 2.1.1
       d3-shape: 3.2.0
       i18next: 24.2.3(typescript@6.0.3)
       md5: 2.3.0
-      preact: 10.29.7
+      preact: 10.29.8
       prismjs: 1.30.0
       split.js: 1.6.5
     transitivePeerDependencies:
       - preact-render-to-string
       - typescript
 
-  '@allurereport/web-commons@3.14.3(preact@10.29.7)':
+  '@allurereport/web-commons@3.15.0(preact@10.29.8)':
     dependencies:
-      '@allurereport/aql': 3.14.3
-      '@allurereport/charts-api': 3.14.3
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      '@preact/signals': 2.10.0(preact@10.29.7)
+      '@allurereport/aql': 3.15.0
+      '@allurereport/charts-api': 3.15.0
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      '@preact/signals': 2.11.1(preact@10.29.8)
       '@preact/signals-core': 1.14.4
       ansi-to-html: 0.7.2
       d3-interpolate: 3.0.1
       d3-scale: 4.0.2
       d3-shape: 3.2.0
-      dompurify: 3.4.12
+      dompurify: 3.4.13
       nanoid: 5.1.16
     transitivePeerDependencies:
       - preact
 
-  '@allurereport/web-components@3.14.3':
+  '@allurereport/web-components@3.15.0':
     dependencies:
-      '@allurereport/charts-api': 3.14.3
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/web-commons': 3.14.3(preact@10.29.7)
+      '@allurereport/charts-api': 3.15.0
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/web-commons': 3.15.0(preact@10.29.8)
       '@floating-ui/dom': 1.8.0
-      '@nivo/bar': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/funnel': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/heatmap': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/line': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/pie': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/treemap': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@preact/compat': 18.3.2(preact@10.29.7)
-      '@preact/signals': 2.10.0(preact@10.29.7)
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/bar': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/funnel': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/heatmap': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/line': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/pie': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/treemap': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@preact/compat': 18.3.2(preact@10.29.8)
+      '@preact/signals': 2.11.1(preact@10.29.8)
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       clsx: 2.1.1
       d3-array: 3.2.4
       d3-axis: 3.0.0
@@ -4840,38 +4860,38 @@ snapshots:
       d3-transition: 3.0.1(d3-selection@3.0.0)
       lodash: 4.18.1
       markdown-it: 14.3.0
-      preact: 10.29.7
+      preact: 10.29.8
       prismjs: 1.30.0
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
-      react-dom: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
+      react-dom: '@preact/compat@18.3.2(preact@10.29.8)'
       sortablejs: 1.15.7
-      use-debounce: 10.1.1(@preact/compat@18.3.2(preact@10.29.7))
+      use-debounce: 10.1.1(@preact/compat@18.3.2(preact@10.29.8))
     transitivePeerDependencies:
       - preact-render-to-string
 
-  '@allurereport/web-dashboard@3.14.3(typescript@6.0.3)':
+  '@allurereport/web-dashboard@3.15.0(typescript@6.0.3)':
     dependencies:
-      '@allurereport/charts-api': 3.14.3
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/web-commons': 3.14.3(preact@10.29.7)
-      '@allurereport/web-components': 3.14.3
-      '@preact/signals': 2.10.0(preact@10.29.7)
+      '@allurereport/charts-api': 3.15.0
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/web-commons': 3.15.0(preact@10.29.8)
+      '@allurereport/web-components': 3.15.0
+      '@preact/signals': 2.11.1(preact@10.29.8)
       clsx: 2.1.1
       i18next: 24.2.3(typescript@6.0.3)
-      preact: 10.29.7
+      preact: 10.29.8
     transitivePeerDependencies:
       - preact-render-to-string
       - typescript
 
-  '@allurereport/web-summary@3.14.3(typescript@6.0.3)':
+  '@allurereport/web-summary@3.15.0(typescript@6.0.3)':
     dependencies:
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/web-commons': 3.14.3(preact@10.29.7)
-      '@allurereport/web-components': 3.14.3
-      '@preact/signals': 2.10.0(preact@10.29.7)
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/web-commons': 3.15.0(preact@10.29.8)
+      '@allurereport/web-components': 3.15.0
+      '@preact/signals': 2.11.1(preact@10.29.8)
       clsx: 2.1.1
       i18next: 24.2.3(typescript@6.0.3)
-      preact: 10.29.7
+      preact: 10.29.8
     transitivePeerDependencies:
       - preact-render-to-string
       - typescript
@@ -5200,24 +5220,24 @@ snapshots:
   '@esbuild/win32-x64@0.28.1':
     optional: true
 
-  '@eslint-community/eslint-utils@4.9.1(eslint@9.39.4(supports-color@11.0.0))':
+  '@eslint-community/eslint-utils@4.9.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))':
     dependencies:
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       eslint-visitor-keys: 3.4.3
 
   '@eslint-community/regexpp@4.12.2': {}
 
-  '@eslint/compat@1.4.1(eslint@9.39.4(supports-color@11.0.0))':
+  '@eslint/compat@1.4.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))':
     dependencies:
       '@eslint/core': 0.17.0
     optionalDependencies:
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
 
-  '@eslint/compat@2.1.0(eslint@9.39.4(supports-color@11.0.0))':
+  '@eslint/compat@2.1.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))':
     dependencies:
       '@eslint/core': 1.2.1
     optionalDependencies:
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
 
   '@eslint/config-array@0.21.2(supports-color@11.0.0)':
     dependencies:
@@ -5589,74 +5609,74 @@ snapshots:
       '@tybys/wasm-util': 0.10.2
     optional: true
 
-  '@nivo/annotations@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/annotations@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       lodash: 4.18.1
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/arcs@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/arcs@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/core': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/core': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-shape': 3.1.8
       d3-shape: 3.2.0
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/axes@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/axes@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@nivo/scales': 0.99.0
-      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-format': 1.4.5
       '@types/d3-time-format': 2.3.4
       d3-format: 1.4.5
       d3-time-format: 3.0.0
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/bar@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/bar@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/annotations': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/axes': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/annotations': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/axes': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@nivo/canvas': 0.99.0
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/legends': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/legends': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@nivo/scales': 0.99.0
-      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-scale': 4.0.9
       '@types/d3-shape': 3.1.8
       d3-scale: 4.0.2
       d3-shape: 3.2.0
       lodash: 4.18.1
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
   '@nivo/canvas@0.99.0': {}
 
-  '@nivo/colors@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/colors@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-color': 3.1.3
       '@types/d3-scale': 4.0.9
       '@types/d3-scale-chromatic': 3.1.0
@@ -5664,15 +5684,15 @@ snapshots:
       d3-scale: 4.0.2
       d3-scale-chromatic: 3.1.0
       lodash: 4.18.1
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/core@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/core@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-shape': 3.1.8
       d3-color: 3.1.0
       d3-format: 1.4.5
@@ -5682,89 +5702,89 @@ snapshots:
       d3-shape: 3.2.0
       d3-time-format: 3.0.0
       lodash: 4.18.1
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
-      react-virtualized-auto-sizer: 1.0.26(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      use-debounce: 10.1.1(@preact/compat@18.3.2(preact@10.29.7))
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
+      react-virtualized-auto-sizer: 1.0.26(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      use-debounce: 10.1.1(@preact/compat@18.3.2(preact@10.29.8))
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/funnel@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/funnel@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/annotations': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/annotations': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-scale': 4.0.9
       '@types/d3-shape': 3.1.8
       d3-scale: 4.0.2
       d3-shape: 3.2.0
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/heatmap@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/heatmap@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/annotations': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/axes': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/legends': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/annotations': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/axes': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/legends': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@nivo/scales': 0.99.0
-      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/core': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/core': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-scale': 4.0.9
       d3-scale: 4.0.2
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/legends@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/legends@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-scale': 4.0.9
       d3-scale: 4.0.2
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/line@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/line@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/annotations': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/axes': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/legends': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/annotations': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/axes': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/legends': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@nivo/scales': 0.99.0
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/voronoi': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/voronoi': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-shape': 3.1.8
       d3-shape: 3.2.0
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/pie@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/pie@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/arcs': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/legends': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/arcs': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/legends': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-shape': 3.1.8
       d3-shape: 3.2.0
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
@@ -5780,55 +5800,55 @@ snapshots:
       d3-time-format: 3.0.0
       lodash: 4.18.1
 
-  '@nivo/text@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/text@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/theming@0.99.0(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/theming@0.99.0(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
       lodash: 4.18.1
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
 
-  '@nivo/tooltip@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/tooltip@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/treemap@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/treemap@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/core': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/colors': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/text': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/core': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/web': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-hierarchy': 3.1.7
       d3-hierarchy: 3.1.2
       lodash: 4.18.1
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
-  '@nivo/voronoi@0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@nivo/voronoi@0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))
-      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))
+      '@nivo/core': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/theming': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))
+      '@nivo/tooltip': 0.99.0(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))
       '@types/d3-delaunay': 6.0.4
       '@types/d3-scale': 4.0.9
       d3-delaunay: 6.0.4
       d3-scale: 4.0.2
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
     transitivePeerDependencies:
       - react-dom
 
@@ -6068,16 +6088,16 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@preact/compat@18.3.2(preact@10.29.7)':
+  '@preact/compat@18.3.2(preact@10.29.8)':
     dependencies:
-      preact: 10.29.7
+      preact: 10.29.8
 
   '@preact/signals-core@1.14.4': {}
 
-  '@preact/signals@2.10.0(preact@10.29.7)':
+  '@preact/signals@2.11.1(preact@10.29.8)':
     dependencies:
       '@preact/signals-core': 1.14.4
-      preact: 10.29.7
+      preact: 10.29.8
 
   '@protobufjs/aspromise@1.1.2': {}
 
@@ -6099,38 +6119,38 @@ snapshots:
 
   '@protobufjs/utf8@1.1.1': {}
 
-  '@react-spring/animated@10.1.2(@preact/compat@18.3.2(preact@10.29.7))':
+  '@react-spring/animated@10.1.2(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@react-spring/shared': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))
+      '@react-spring/shared': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))
       '@react-spring/types': 10.1.2
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
 
-  '@react-spring/core@10.1.2(@preact/compat@18.3.2(preact@10.29.7))':
+  '@react-spring/core@10.1.2(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@react-spring/animated': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/shared': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))
+      '@react-spring/animated': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/shared': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))
       '@react-spring/types': 10.1.2
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
 
   '@react-spring/rafz@10.1.2': {}
 
-  '@react-spring/shared@10.1.2(@preact/compat@18.3.2(preact@10.29.7))':
+  '@react-spring/shared@10.1.2(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
       '@react-spring/rafz': 10.1.2
       '@react-spring/types': 10.1.2
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
 
   '@react-spring/types@10.1.2': {}
 
-  '@react-spring/web@10.1.2(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7))':
+  '@react-spring/web@10.1.2(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8))':
     dependencies:
-      '@react-spring/animated': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/core': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))
-      '@react-spring/shared': 10.1.2(@preact/compat@18.3.2(preact@10.29.7))
+      '@react-spring/animated': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/core': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))
+      '@react-spring/shared': 10.1.2(@preact/compat@18.3.2(preact@10.29.8))
       '@react-spring/types': 10.1.2
       csstype: 3.2.3
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
-      react-dom: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
+      react-dom: '@preact/compat@18.3.2(preact@10.29.8)'
 
   '@rtsao/scc@1.1.0': {}
 
@@ -6196,10 +6216,10 @@ snapshots:
       '@smithy/util-buffer-from': 2.2.0
       tslib: 2.8.1
 
-  '@stylistic/eslint-plugin@3.1.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)':
+  '@stylistic/eslint-plugin@3.1.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)':
     dependencies:
-      '@typescript-eslint/utils': 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
-      eslint: 9.39.4(supports-color@11.0.0)
+      '@typescript-eslint/utils': 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
       estraverse: 5.3.0
@@ -6208,11 +6228,11 @@ snapshots:
       - supports-color
       - typescript
 
-  '@stylistic/eslint-plugin@5.10.0(eslint@9.39.4(supports-color@11.0.0))':
+  '@stylistic/eslint-plugin@5.10.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))':
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(supports-color@11.0.0))
+      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       '@typescript-eslint/types': 8.61.0
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
       estraverse: 5.3.0
@@ -6352,15 +6372,15 @@ snapshots:
 
   '@types/wrap-ansi@3.0.0': {}
 
-  '@typescript-eslint/eslint-plugin@8.61.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)':
+  '@typescript-eslint/eslint-plugin@8.61.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)':
     dependencies:
       '@eslint-community/regexpp': 4.12.2
-      '@typescript-eslint/parser': 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      '@typescript-eslint/parser': 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
       '@typescript-eslint/scope-manager': 8.61.0
-      '@typescript-eslint/type-utils': 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
-      '@typescript-eslint/utils': 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      '@typescript-eslint/type-utils': 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      '@typescript-eslint/utils': 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
       '@typescript-eslint/visitor-keys': 8.61.0
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       ignore: 7.0.5
       natural-compare: 1.4.0
       ts-api-utils: 2.5.0(typescript@6.0.3)
@@ -6368,14 +6388,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)':
+  '@typescript-eslint/parser@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)':
     dependencies:
       '@typescript-eslint/scope-manager': 8.61.0
       '@typescript-eslint/types': 8.61.0
       '@typescript-eslint/typescript-estree': 8.61.0(supports-color@11.0.0)(typescript@6.0.3)
       '@typescript-eslint/visitor-keys': 8.61.0
       debug: 4.4.3(supports-color@11.0.0)
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       typescript: 6.0.3
     transitivePeerDependencies:
       - supports-color
@@ -6398,13 +6418,13 @@ snapshots:
     dependencies:
       typescript: 6.0.3
 
-  '@typescript-eslint/type-utils@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)':
+  '@typescript-eslint/type-utils@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)':
     dependencies:
       '@typescript-eslint/types': 8.61.0
       '@typescript-eslint/typescript-estree': 8.61.0(supports-color@11.0.0)(typescript@6.0.3)
-      '@typescript-eslint/utils': 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      '@typescript-eslint/utils': 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
       debug: 4.4.3(supports-color@11.0.0)
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       ts-api-utils: 2.5.0(typescript@6.0.3)
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -6427,13 +6447,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)':
+  '@typescript-eslint/utils@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)':
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(supports-color@11.0.0))
+      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       '@typescript-eslint/scope-manager': 8.61.0
       '@typescript-eslint/types': 8.61.0
       '@typescript-eslint/typescript-estree': 8.61.0(supports-color@11.0.0)(typescript@6.0.3)
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       typescript: 6.0.3
     transitivePeerDependencies:
       - supports-color
@@ -6523,7 +6543,7 @@ snapshots:
 
   acorn@8.17.0: {}
 
-  adm-zip@0.5.18: {}
+  adm-zip@0.6.0: {}
 
   agent-base@6.0.2(supports-color@11.0.0):
     dependencies:
@@ -6551,35 +6571,35 @@ snapshots:
     transitivePeerDependencies:
       - allure-playwright
 
-  allure@3.14.3(preact@10.29.7)(supports-color@11.0.0)(typescript@6.0.3):
+  allure@3.15.0(preact@10.29.8)(supports-color@11.0.0)(typescript@6.0.3):
     dependencies:
-      '@allurereport/charts-api': 3.14.3
-      '@allurereport/ci': 3.14.3
-      '@allurereport/core': 3.14.3(preact@10.29.7)(supports-color@11.0.0)(typescript@6.0.3)
-      '@allurereport/core-api': 3.14.3
-      '@allurereport/directory-watcher': 3.14.3
-      '@allurereport/plugin-agent': 3.14.3
-      '@allurereport/plugin-allure2': 3.14.3
-      '@allurereport/plugin-api': 3.14.3
-      '@allurereport/plugin-awesome': 3.14.3(preact@10.29.7)(typescript@6.0.3)
-      '@allurereport/plugin-classic': 3.14.3(preact@10.29.7)(typescript@6.0.3)
-      '@allurereport/plugin-csv': 3.14.3
-      '@allurereport/plugin-dashboard': 3.14.3(preact@10.29.7)(typescript@6.0.3)
-      '@allurereport/plugin-jira': 3.14.3(supports-color@11.0.0)
-      '@allurereport/plugin-log': 3.14.3
-      '@allurereport/plugin-progress': 3.14.3
-      '@allurereport/plugin-server-reload': 3.14.3
-      '@allurereport/plugin-slack': 3.14.3
-      '@allurereport/reader-api': 3.14.3
-      '@allurereport/service': 3.14.3(supports-color@11.0.0)
-      '@allurereport/static-server': 3.14.3
-      adm-zip: 0.5.18
+      '@allurereport/charts-api': 3.15.0
+      '@allurereport/ci': 3.15.0
+      '@allurereport/core': 3.15.0(preact@10.29.8)(supports-color@11.0.0)(typescript@6.0.3)
+      '@allurereport/core-api': 3.15.0
+      '@allurereport/directory-watcher': 3.15.0
+      '@allurereport/plugin-agent': 3.15.0
+      '@allurereport/plugin-allure2': 3.15.0
+      '@allurereport/plugin-api': 3.15.0
+      '@allurereport/plugin-awesome': 3.15.0(preact@10.29.8)(typescript@6.0.3)
+      '@allurereport/plugin-classic': 3.15.0(preact@10.29.8)(typescript@6.0.3)
+      '@allurereport/plugin-csv': 3.15.0
+      '@allurereport/plugin-dashboard': 3.15.0(preact@10.29.8)(typescript@6.0.3)
+      '@allurereport/plugin-jira': 3.15.0(supports-color@11.0.0)
+      '@allurereport/plugin-log': 3.15.0
+      '@allurereport/plugin-progress': 3.15.0
+      '@allurereport/plugin-server-reload': 3.15.0
+      '@allurereport/plugin-slack': 3.15.0
+      '@allurereport/reader-api': 3.15.0
+      '@allurereport/service': 3.15.0(supports-color@11.0.0)
+      '@allurereport/static-server': 3.15.0
+      adm-zip: 0.6.0
       clipanion: 4.0.0-rc.4(typanion@3.14.0)
       glob: 13.0.6
       lodash.omit: 4.18.0
       prompts: 2.4.2
       typanion: 3.14.0
-      yoctocolors: 2.1.2
+      yoctocolors: 2.2.0
     transitivePeerDependencies:
       - debug
       - preact
@@ -6713,7 +6733,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  axios@1.18.1(supports-color@11.0.0):
+  axios@1.19.0(supports-color@11.0.0):
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.6
@@ -6951,7 +6971,7 @@ snapshots:
 
   chokidar@5.0.0:
     dependencies:
-      readdirp: 5.0.0
+      readdirp: 5.1.1
 
   chownr@1.1.4: {}
 
@@ -7310,7 +7330,7 @@ snapshots:
     dependencies:
       esutils: 2.0.3
 
-  dompurify@3.4.12:
+  dompurify@3.4.13:
     optionalDependencies:
       '@types/trusted-types': 2.0.7
 
@@ -7482,29 +7502,29 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-compat-utils@0.5.1(eslint@9.39.4(supports-color@11.0.0)):
+  eslint-compat-utils@0.5.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0)):
     dependencies:
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       semver: 7.8.5
 
-  eslint-config-oclif@6.0.169(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3):
+  eslint-config-oclif@6.0.169(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3):
     dependencies:
-      '@eslint/compat': 1.4.1(eslint@9.39.4(supports-color@11.0.0))
+      '@eslint/compat': 1.4.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       '@eslint/eslintrc': 3.3.5(supports-color@11.0.0)
       '@eslint/js': 9.39.4
-      '@stylistic/eslint-plugin': 3.1.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
-      '@typescript-eslint/eslint-plugin': 8.61.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
-      '@typescript-eslint/parser': 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
-      eslint-config-xo: 0.49.0(eslint@9.39.4(supports-color@11.0.0))
-      eslint-config-xo-space: 0.35.0(eslint@9.39.4(supports-color@11.0.0))
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)
-      eslint-plugin-jsdoc: 50.8.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)
-      eslint-plugin-mocha: 10.5.0(eslint@9.39.4(supports-color@11.0.0))
-      eslint-plugin-n: 17.24.0(eslint@9.39.4(supports-color@11.0.0))(typescript@6.0.3)
-      eslint-plugin-perfectionist: 4.15.1(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
-      eslint-plugin-unicorn: 56.0.1(eslint@9.39.4(supports-color@11.0.0))
-      typescript-eslint: 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      '@stylistic/eslint-plugin': 3.1.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      '@typescript-eslint/eslint-plugin': 8.61.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      '@typescript-eslint/parser': 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      eslint-config-xo: 0.49.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
+      eslint-config-xo-space: 0.35.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)
+      eslint-plugin-jsdoc: 50.8.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)
+      eslint-plugin-mocha: 10.5.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
+      eslint-plugin-n: 17.24.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(typescript@6.0.3)
+      eslint-plugin-perfectionist: 4.15.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      eslint-plugin-unicorn: 56.0.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
+      typescript-eslint: 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
     transitivePeerDependencies:
       - eslint
       - eslint-import-resolver-webpack
@@ -7512,27 +7532,27 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-config-prettier@10.1.8(eslint@9.39.4(supports-color@11.0.0)):
+  eslint-config-prettier@10.1.8(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0)):
     dependencies:
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
 
-  eslint-config-xo-space@0.35.0(eslint@9.39.4(supports-color@11.0.0)):
+  eslint-config-xo-space@0.35.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0)):
     dependencies:
-      eslint: 9.39.4(supports-color@11.0.0)
-      eslint-config-xo: 0.44.0(eslint@9.39.4(supports-color@11.0.0))
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
+      eslint-config-xo: 0.44.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
 
-  eslint-config-xo@0.44.0(eslint@9.39.4(supports-color@11.0.0)):
+  eslint-config-xo@0.44.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0)):
     dependencies:
       confusing-browser-globals: 1.0.11
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
 
-  eslint-config-xo@0.49.0(eslint@9.39.4(supports-color@11.0.0)):
+  eslint-config-xo@0.49.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0)):
     dependencies:
       '@eslint/css': 0.10.0
       '@eslint/json': 0.13.2
-      '@stylistic/eslint-plugin': 5.10.0(eslint@9.39.4(supports-color@11.0.0))
+      '@stylistic/eslint-plugin': 5.10.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       confusing-browser-globals: 1.0.11
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       globals: 16.5.0
 
   eslint-import-resolver-node@0.3.10(supports-color@11.0.0):
@@ -7543,40 +7563,40 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0):
+  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.3(supports-color@11.0.0)
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       get-tsconfig: 4.14.0
       is-bun-module: 2.0.0
       stable-hash: 0.0.5
       tinyglobby: 0.2.17
       unrs-resolver: 1.12.2
     optionalDependencies:
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.13.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint-import-resolver-node@0.3.10(supports-color@11.0.0))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0):
+  eslint-module-utils@2.13.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint-import-resolver-node@0.3.10(supports-color@11.0.0))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0):
     dependencies:
       debug: 3.2.7(supports-color@11.0.0)
     optionalDependencies:
-      '@typescript-eslint/parser': 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
-      eslint: 9.39.4(supports-color@11.0.0)
+      '@typescript-eslint/parser': 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       eslint-import-resolver-node: 0.3.10(supports-color@11.0.0)
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-es-x@7.8.0(eslint@9.39.4(supports-color@11.0.0)):
+  eslint-plugin-es-x@7.8.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0)):
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(supports-color@11.0.0))
+      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       '@eslint-community/regexpp': 4.12.2
-      eslint: 9.39.4(supports-color@11.0.0)
-      eslint-compat-utils: 0.5.1(eslint@9.39.4(supports-color@11.0.0))
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
+      eslint-compat-utils: 0.5.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0):
+  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
@@ -7585,9 +7605,9 @@ snapshots:
       array.prototype.flatmap: 1.3.3
       debug: 3.2.7(supports-color@11.0.0)
       doctrine: 2.1.0
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       eslint-import-resolver-node: 0.3.10(supports-color@11.0.0)
-      eslint-module-utils: 2.13.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint-import-resolver-node@0.3.10(supports-color@11.0.0))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)
+      eslint-module-utils: 2.13.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint-import-resolver-node@0.3.10(supports-color@11.0.0))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)
       hasown: 2.0.4
       is-core-module: 2.16.2
       is-glob: 4.0.3
@@ -7599,20 +7619,20 @@ snapshots:
       string.prototype.trimend: 1.0.10
       tsconfig-paths: 3.15.0
     optionalDependencies:
-      '@typescript-eslint/parser': 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      '@typescript-eslint/parser': 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-jsdoc@50.8.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0):
+  eslint-plugin-jsdoc@50.8.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0):
     dependencies:
       '@es-joy/jsdoccomment': 0.50.2
       are-docs-informative: 0.0.2
       comment-parser: 1.4.1
       debug: 4.4.3(supports-color@11.0.0)
       escape-string-regexp: 4.0.0
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       espree: 10.4.0
       esquery: 1.7.0
       parse-imports-exports: 0.2.4
@@ -7621,19 +7641,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-mocha@10.5.0(eslint@9.39.4(supports-color@11.0.0)):
+  eslint-plugin-mocha@10.5.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0)):
     dependencies:
-      eslint: 9.39.4(supports-color@11.0.0)
-      eslint-utils: 3.0.0(eslint@9.39.4(supports-color@11.0.0))
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
+      eslint-utils: 3.0.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       globals: 13.24.0
       rambda: 7.5.0
 
-  eslint-plugin-n@17.24.0(eslint@9.39.4(supports-color@11.0.0))(typescript@6.0.3):
+  eslint-plugin-n@17.24.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(typescript@6.0.3):
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(supports-color@11.0.0))
+      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       enhanced-resolve: 5.24.0
-      eslint: 9.39.4(supports-color@11.0.0)
-      eslint-plugin-es-x: 7.8.0(eslint@9.39.4(supports-color@11.0.0))
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
+      eslint-plugin-es-x: 7.8.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       get-tsconfig: 4.14.0
       globals: 15.15.0
       globrex: 0.1.2
@@ -7643,24 +7663,24 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  eslint-plugin-perfectionist@4.15.1(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3):
+  eslint-plugin-perfectionist@4.15.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3):
     dependencies:
       '@typescript-eslint/types': 8.61.0
-      '@typescript-eslint/utils': 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
-      eslint: 9.39.4(supports-color@11.0.0)
+      '@typescript-eslint/utils': 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       natural-orderby: 5.0.0
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  eslint-plugin-unicorn@56.0.1(eslint@9.39.4(supports-color@11.0.0)):
+  eslint-plugin-unicorn@56.0.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0)):
     dependencies:
       '@babel/helper-validator-identifier': 7.29.7
-      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(supports-color@11.0.0))
+      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       ci-info: 4.4.0
       clean-regexp: 1.0.0
       core-js-compat: 3.49.0
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       esquery: 1.7.0
       globals: 15.15.0
       indent-string: 4.0.0
@@ -7678,9 +7698,9 @@ snapshots:
       esrecurse: 4.3.0
       estraverse: 5.3.0
 
-  eslint-utils@3.0.0(eslint@9.39.4(supports-color@11.0.0)):
+  eslint-utils@3.0.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0)):
     dependencies:
-      eslint: 9.39.4(supports-color@11.0.0)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       eslint-visitor-keys: 2.1.0
 
   eslint-visitor-keys@2.1.0: {}
@@ -7691,9 +7711,9 @@ snapshots:
 
   eslint-visitor-keys@5.0.1: {}
 
-  eslint@9.39.4(supports-color@11.0.0):
+  eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0):
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(supports-color@11.0.0))
+      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))
       '@eslint-community/regexpp': 4.12.2
       '@eslint/config-array': 0.21.2(supports-color@11.0.0)
       '@eslint/config-helpers': 0.4.2
@@ -7727,6 +7747,8 @@ snapshots:
       minimatch: 3.1.5
       natural-compare: 1.4.0
       optionator: 0.9.4
+    optionalDependencies:
+      jiti: 2.7.0
     transitivePeerDependencies:
       - supports-color
 
@@ -7797,7 +7819,7 @@ snapshots:
       path-expression-matcher: 1.5.0
       xml-naming: 0.1.0
 
-  fast-xml-builder@1.3.0:
+  fast-xml-builder@1.3.1:
     dependencies:
       path-expression-matcher: 1.6.2
       xml-naming: 0.3.0
@@ -7805,7 +7827,7 @@ snapshots:
   fast-xml-parser@5.10.1:
     dependencies:
       '@nodable/entities': 3.0.0
-      fast-xml-builder: 1.3.0
+      fast-xml-builder: 1.3.1
       is-unsafe: 2.0.0
       path-expression-matcher: 1.6.2
       strnum: 2.4.1
@@ -8394,6 +8416,8 @@ snapshots:
       filelist: 1.0.6
       picocolors: 1.1.1
 
+  jiti@2.7.0: {}
+
   js-tokens@4.0.0: {}
 
   js-yaml@4.2.0:
@@ -8481,6 +8505,8 @@ snapshots:
   lodash-es@4.18.1: {}
 
   lodash.camelcase@4.3.0: {}
+
+  lodash.debounce@4.0.8: {}
 
   lodash.merge@4.6.2: {}
 
@@ -8763,14 +8789,14 @@ snapshots:
     dependencies:
       wrappy: 1.0.2
 
-  open@11.0.0:
+  open@11.0.1:
     dependencies:
       default-browser: 5.5.0
       define-lazy-prop: 3.0.0
       is-in-ssh: 1.0.0
       is-inside-container: 1.0.0
-      powershell-utils: 0.1.0
-      wsl-utils: 0.3.1
+      powershell-utils: 0.2.0
+      wsl-utils: 1.0.0
 
   optionator@0.9.4:
     dependencies:
@@ -8904,7 +8930,9 @@ snapshots:
 
   powershell-utils@0.1.0: {}
 
-  preact@10.29.7: {}
+  powershell-utils@0.2.0: {}
+
+  preact@10.29.8: {}
 
   prelude-ls@1.2.1: {}
 
@@ -8913,8 +8941,6 @@ snapshots:
   process-nextick-args@2.0.1: {}
 
   process@0.11.10: {}
-
-  progress@2.0.3: {}
 
   prompts@2.4.2:
     dependencies:
@@ -8977,10 +9003,10 @@ snapshots:
 
   rate-limiter-flexible@8.3.0: {}
 
-  react-virtualized-auto-sizer@1.0.26(@preact/compat@18.3.2(preact@10.29.7))(@preact/compat@18.3.2(preact@10.29.7)):
+  react-virtualized-auto-sizer@1.0.26(@preact/compat@18.3.2(preact@10.29.8))(@preact/compat@18.3.2(preact@10.29.8)):
     dependencies:
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
-      react-dom: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
+      react-dom: '@preact/compat@18.3.2(preact@10.29.8)'
 
   read-pkg-up@7.0.1:
     dependencies:
@@ -9025,7 +9051,7 @@ snapshots:
 
   readdirp@4.1.2: {}
 
-  readdirp@5.0.0: {}
+  readdirp@5.1.1: {}
 
   rechoir@0.6.2:
     dependencies:
@@ -9613,13 +9639,13 @@ snapshots:
       possible-typed-array-names: 1.1.0
       reflect.getprototypeof: 1.0.10
 
-  typescript-eslint@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3):
+  typescript-eslint@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 8.61.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
-      '@typescript-eslint/parser': 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      '@typescript-eslint/eslint-plugin': 8.61.0(@typescript-eslint/parser@8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3))(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      '@typescript-eslint/parser': 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
       '@typescript-eslint/typescript-estree': 8.61.0(supports-color@11.0.0)(typescript@6.0.3)
-      '@typescript-eslint/utils': 8.61.0(eslint@9.39.4(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
-      eslint: 9.39.4(supports-color@11.0.0)
+      '@typescript-eslint/utils': 8.61.0(eslint@9.39.4(jiti@2.7.0)(supports-color@11.0.0))(supports-color@11.0.0)(typescript@6.0.3)
+      eslint: 9.39.4(jiti@2.7.0)(supports-color@11.0.0)
       typescript: 6.0.3
     transitivePeerDependencies:
       - supports-color
@@ -9699,9 +9725,9 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  use-debounce@10.1.1(@preact/compat@18.3.2(preact@10.29.7)):
+  use-debounce@10.1.1(@preact/compat@18.3.2(preact@10.29.8)):
     dependencies:
-      react: '@preact/compat@18.3.2(preact@10.29.7)'
+      react: '@preact/compat@18.3.2(preact@10.29.8)'
 
   util-deprecate@1.0.2: {}
 
@@ -9812,7 +9838,7 @@ snapshots:
 
   wrappy@1.0.2: {}
 
-  wsl-utils@0.3.1:
+  wsl-utils@1.0.0:
     dependencies:
       is-wsl: 3.1.1
       powershell-utils: 0.1.0
@@ -9878,6 +9904,8 @@ snapshots:
   yoctocolors-cjs@2.1.3: {}
 
   yoctocolors@2.1.2: {}
+
+  yoctocolors@2.2.0: {}
 
   zip-stream@6.0.1:
     dependencies:
