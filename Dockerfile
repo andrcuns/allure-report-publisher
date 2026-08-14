@@ -1,4 +1,4 @@
-FROM node:26.5.1-alpine3.23 AS node
+FROM node:26.7.0-alpine3.23 AS node
 
 # Build stage
 #
