@@ -10,7 +10,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1032.0",
     "@gitbeaker/rest": "^43.8.0",
-    "@google-cloud/storage": "^7.19.0",
+    "@google-cloud/storage": "^8.0.1",
     "@oclif/core": "^4.10.5",
     "allure": "^3.6.0",
     "chalk": "^6.0.0",
