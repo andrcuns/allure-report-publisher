@@ -14,6 +14,10 @@ updates:
       interval: weekly
     cooldown:
       semver-patch-days: 7
+    groups:
+        action-deps:
+          patterns:
+            - "*"
   - package-ecosystem: npm
     directory: /
     schedule:
