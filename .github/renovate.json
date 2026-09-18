@@ -1,12 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "enabledManagers": [
-    "mise"
-  ],
-  "ignoreDeps": [
-    "node"
-  ],
-  "labels": [
-    "dependencies"
-  ]
+  "enabledManagers": ["mise"],
+  "labels": ["dependencies"],
+  "automerge": true
 }
