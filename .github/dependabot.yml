@@ -1,19 +1,21 @@
 version: 2
 updates:
   - package-ecosystem: docker
-    directory: /  
+    directory: /
     schedule:
       interval: weekly
     labels:
       - dependencies
+    cooldown:
+      semver-patch-days: 7
   - package-ecosystem: github-actions
-    directory: /  
+    directory: /
     schedule:
       interval: weekly
-    labels:
-      - ci
+    cooldown:
+      semver-patch-days: 7
   - package-ecosystem: npm
-    directory: /  
+    directory: /
     schedule:
       interval: weekly
     labels:
@@ -21,7 +23,5 @@ updates:
     groups:
       dev-dependencies:
         dependency-type: development
-        exclude-patterns:
-          - eslint
     cooldown:
       semver-patch-days: 7

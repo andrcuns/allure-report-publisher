@@ -7,20 +7,17 @@ changelog:
       labels:
         - 'feature'
     - title: '🔬 Improvements'
-      labels: 
+      labels:
         - 'enhancement'
     - title: '🐞 Bug Fixes'
-      labels: 
+      labels:
         - 'bug'
     - title: '📦 Dependency updates'
-      labels: 
+      labels:
         - 'dependencies'
     - title: '📄 Documentation updates'
-      labels: 
+      labels:
         - 'documentation'
     - title: '🧰 Maintenance'
-      labels: 
+      labels:
         - 'maintenance'
-    - title: '👷 CI'
-      labels: 
-        - 'ci'
