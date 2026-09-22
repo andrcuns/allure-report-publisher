@@ -256,7 +256,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
       }
 
       const reportGenerator = new ReportGenerator(allureConfig, flags['global-allure-exec'])
-      await reportGenerator.execute()
+      await reportGenerator.execute(uploader.reportUrlBase())
 
       logger.section(`Uploading report to ${this.storageType}`)
       await uploader.upload()

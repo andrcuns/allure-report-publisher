@@ -11,6 +11,7 @@ import {AllureConfig} from '../../../src/lib/allure/config.js'
 import {expect} from '../../support/setup.js'
 
 describe('ReportGenerator', () => {
+  const historyBaseUrl = 'https://reports.example.com/project'
   let tempDir: string
   let allureConfig: AllureConfig
   let spawnStub: sinon.SinonStub
@@ -44,7 +45,7 @@ describe('ReportGenerator', () => {
   })
 
   describe('execute()', () => {
-    it('calls spawn with correct allure command arguments', async () => {
+    it('calls spawn with correct allure command arguments including the history base URL', async () => {
       const summaryFile = join(tempDir, 'summary.json')
       writeFileSync(summaryFile, JSON.stringify({stats: {}, status: 'passed'}))
 
@@ -54,7 +55,7 @@ describe('ReportGenerator', () => {
       })
 
       const generator = new Generator(allureConfig)
-      await generator.execute()
+      await generator.execute(historyBaseUrl)
 
       expect(spawnStub.calledOnce).to.be.true
       expect(spawnStub.firstCall.args[0]).to.equal('allure')
@@ -65,6 +66,8 @@ describe('ReportGenerator', () => {
         join(tempDir, 'config.js'),
         '-o',
         tempDir,
+        '--history-base-url',
+        historyBaseUrl,
       ])
     })
 
@@ -77,7 +80,7 @@ describe('ReportGenerator', () => {
       })
 
       const generator = new Generator(allureConfig, false)
-      await generator.execute()
+      await generator.execute(historyBaseUrl)
 
       expect(spawnStub.firstCall.args[2]).to.deep.equal({preferLocal: true})
     })
@@ -91,7 +94,7 @@ describe('ReportGenerator', () => {
       })
 
       const generator = new Generator(allureConfig, true)
-      await generator.execute()
+      await generator.execute(historyBaseUrl)
 
       expect(spawnStub.firstCall.args[2]).to.deep.equal({preferLocal: false})
     })
@@ -108,7 +111,7 @@ describe('ReportGenerator', () => {
       const generator = new Generator(allureConfig)
       const errorMessage = `Allure report generation failed.\nMessage: ${error.message}\nOutput: ${error.output}`
 
-      expect(generator.execute()).to.be.rejectedWith(Error, errorMessage)
+      await expect(generator.execute(historyBaseUrl)).to.be.rejectedWith(Error, errorMessage)
     })
   })
 
@@ -138,7 +141,7 @@ describe('ReportGenerator', () => {
       })
 
       const generator = new Generator(allureConfig)
-      await generator.execute()
+      await generator.execute(historyBaseUrl)
 
       const summary = generator.summary()
 
@@ -154,7 +157,7 @@ describe('ReportGenerator', () => {
       })
 
       const generator = new Generator(allureConfig)
-      await generator.execute()
+      await generator.execute(historyBaseUrl)
 
       expect(() => generator.summary()).to.throw(Error, 'summary.json file not found in generated report files')
     })

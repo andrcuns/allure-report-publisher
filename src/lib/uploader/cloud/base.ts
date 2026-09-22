@@ -44,8 +44,9 @@ export abstract class BaseCloudUploader {
 
   protected abstract uploadHistory(): Promise<void>
   protected abstract uploadReport(): Promise<void>
-  protected abstract reportUrlBase(): string
   protected abstract createLatestCopy(): Promise<void>
+
+  public abstract reportUrlBase(): string
 
   protected get ciInfo(): GithubCiInfo | GitlabCiInfo | undefined {
     return ciInfo

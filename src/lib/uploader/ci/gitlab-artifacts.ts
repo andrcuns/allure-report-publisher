@@ -44,7 +44,7 @@ export class GitlabArtifactsUploader {
   }
 
   // Built in variables of gitlab CI return incorrect pages hostname so it needs to be built manually
-  protected reportUrlBase() {
+  public reportUrlBase() {
     const {projectPath, serverUrl, pagesDomain} = this.ciInfo
 
     if (!projectPath) {

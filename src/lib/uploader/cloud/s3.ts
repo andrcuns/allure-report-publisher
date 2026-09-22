@@ -34,7 +34,7 @@ export class S3Uploader extends BaseCloudUploader {
     return process.env.AWS_REGION || 'us-east-1'
   }
 
-  protected reportUrlBase() {
+  public reportUrlBase() {
     if (this._reportUrlBase) return this._reportUrlBase
 
     let base: string

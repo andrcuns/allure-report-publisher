@@ -18,8 +18,8 @@ export class ReportGenerator {
     this.globalExec = globalExec ?? false
   }
 
-  public async execute() {
-    await spin(this.generateReport(), 'generating report')
+  public async execute(historyBaseUrl: string) {
+    await spin(this.generateReport(historyBaseUrl), 'generating report')
   }
 
   public summary() {
@@ -45,8 +45,8 @@ export class ReportGenerator {
     return this._outputPath
   }
 
-  private async generateReport() {
-    const args = ['generate', this.resultsGlob, '-c', this.allureConfig.configPath(), '-o', await this.outputPath()]
+  private async generateReport(historyBaseUrl: string) {
+    const args = ['generate', this.resultsGlob, '-c', this.allureConfig.configPath(), '-o', await this.outputPath(), '--history-base-url', historyBaseUrl]
     try {
       logger.debug(`Running allure with args: ${args.join(' ')}`)
       const result = await spawn('allure', args, {preferLocal: !this.globalExec})
