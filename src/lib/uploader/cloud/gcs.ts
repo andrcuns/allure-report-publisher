@@ -9,7 +9,7 @@ export class GcsUploader extends BaseCloudUploader {
   private _reportUrlBase: string | undefined
   private readonly storageClient: Storage = new Storage()
 
-  protected reportUrlBase() {
+  public reportUrlBase() {
     if (this._reportUrlBase) return this._reportUrlBase
 
     this._reportUrlBase = [this.baseUrl || 'https://storage.googleapis.com', this.bucketName, this.prefix]

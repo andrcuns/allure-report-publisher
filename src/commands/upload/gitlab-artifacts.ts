@@ -41,7 +41,7 @@ export default class GitlabArtifacts extends BaseUploadCommand {
       }
 
       const reportGenerator = new ReportGenerator(allureConfig, flags['global-allure-exec'])
-      await reportGenerator.execute()
+      await reportGenerator.execute(uploader.reportUrlBase())
 
       if (ciInfo && isPR && updateMode) {
         await createReportSection({

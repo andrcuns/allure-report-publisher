@@ -120,6 +120,7 @@ class CustomConfig implements AllureConfig {
     }
   }
 }
+
 class DefaultConfig implements AllureConfig {
   private _configPath: string
   private _configCreated: boolean
