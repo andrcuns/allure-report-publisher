@@ -40,7 +40,6 @@ export class GithubCiProvider extends BaseCiProvider {
     await this.client.rest.pulls.update({
       owner: this.owner,
       repo: this.repo,
-      // eslint-disable-next-line camelcase
       pull_number: this.ciInfo.prId!,
       body: updatedDescription,
     })
@@ -55,14 +54,12 @@ export class GithubCiProvider extends BaseCiProvider {
           owner: this.owner,
           repo: this.repo,
           body: updatedComment,
-          // eslint-disable-next-line camelcase
           comment_id: comment.id,
         })
       : await this.client.rest.issues.createComment({
           owner: this.owner,
           repo: this.repo,
           body: updatedComment,
-          // eslint-disable-next-line camelcase
           issue_number: this.ciInfo.prId!,
         })
     logger.debug(`PR comment with id '${response.data.id}' ${comment ? 'updated' : 'created'} successfully`)
@@ -73,7 +70,6 @@ export class GithubCiProvider extends BaseCiProvider {
     const pr = await this.client.rest.pulls.get({
       owner: this.owner,
       repo: this.repo,
-      // eslint-disable-next-line camelcase
       pull_number: this.ciInfo.prId!,
     })
     logger.debug('Fetched PR description')
@@ -85,10 +81,9 @@ export class GithubCiProvider extends BaseCiProvider {
     const comments = await this.client.rest.issues.listComments({
       owner: this.owner,
       repo: this.repo,
-      // eslint-disable-next-line camelcase
       issue_number: this.ciInfo.prId!,
     })
-    const comment = (comments.data.find((comment) => UrlSectionBuilder.match(comment.body)) as Comment)
+    const comment = comments.data.find((comment) => UrlSectionBuilder.match(comment.body)) as Comment
     if (comment) {
       logger.debug('Found existing comment with report section')
     } else {

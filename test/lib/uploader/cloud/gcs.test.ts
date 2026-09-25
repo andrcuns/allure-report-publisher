@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import esmock from 'esmock'
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
 import * as sinon from 'sinon'
 
-import {GcsUploader} from '../../../../src/lib/uploader/cloud/gcs.js'
+import type {GcsUploader} from '../../../../src/lib/uploader/cloud/gcs.js'
 import {expect} from '../../../support/setup.js'
 
 describe('GcsUploader', () => {
@@ -126,7 +125,7 @@ describe('GcsUploader', () => {
     it('constructs history file key with prefix', async () => {
       await uploader.downloadHistory()
 
-      const fileKey = bucketStub.file.firstCall.args[0]
+      const [fileKey] = bucketStub.file.firstCall.args
       expect(fileKey).to.equal('reports/history.jsonl')
     })
   })
@@ -142,7 +141,7 @@ describe('GcsUploader', () => {
     })
 
     it('uses correct destination key for history file', async () => {
-      const uploadOptions = bucketStub.upload.firstCall.args[1]
+      const [, uploadOptions] = bucketStub.upload.firstCall.args
       expect(uploadOptions.destination).to.equal('reports/history.jsonl')
     })
 

@@ -1,4 +1,4 @@
-import {ReportSummary} from './report-summary.js'
+import type {ReportSummary} from './report-summary.js'
 
 type UrlSectionBuilderArgs = {
   buildName: string

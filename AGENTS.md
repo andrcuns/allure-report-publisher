@@ -15,10 +15,13 @@ pnpm run build              # Incremental TypeScript build
 pnpm run cleanBuild         # Clean and rebuild from scratch
 ```
 
-### Linting
+### Linting and Formatting
 
 ```bash
-pnpm run lint               # Run ESLint on all files
+pnpm run lint               # Run oxlint on all files
+pnpm run lint:agent         # Run oxlint with agent-friendly output
+pnpm run format             # Format JavaScript and TypeScript with oxfmt
+pnpm run fmt:check          # Check formatting without modifying files
 ```
 
 ### Testing
@@ -89,7 +92,8 @@ pnpm run readme             # Update README with command docs
 - **No semicolons** at end of statements
 - **Single quotes** for strings (except when avoiding escapes)
 - **Trailing commas** in multiline objects/arrays
-- Prettier config: `@oclif/prettier-config`
+- Formatter config: `.oxfmtrc.json`
+- Linter config: `.oxlintrc.json` (Mocha/Chai overrides for tests)
 
 ### TypeScript Conventions
 

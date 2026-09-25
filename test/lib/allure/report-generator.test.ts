@@ -1,5 +1,5 @@
 import esmock from 'esmock'
-import {SubprocessError} from 'nano-spawn'
+import type {SubprocessError} from 'nano-spawn'
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
@@ -7,7 +7,7 @@ import * as sinon from 'sinon'
 
 import type {ReportGenerator} from '../../../src/lib/allure/report-generator.js'
 
-import {AllureConfig} from '../../../src/lib/allure/config.js'
+import type {AllureConfig} from '../../../src/lib/allure/config.js'
 import {expect} from '../../support/setup.js'
 
 describe('ReportGenerator', () => {

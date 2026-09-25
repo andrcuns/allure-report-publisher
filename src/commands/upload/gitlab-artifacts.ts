@@ -4,7 +4,7 @@ import {createReportSection} from '../../lib/ci/update-workflow.js'
 import {ciInfo, isCI, isPR} from '../../lib/ci/utils.js'
 import {BaseUploadCommand} from '../../lib/commands/upload.js'
 import {GitlabArtifactsUploader} from '../../lib/uploader/ci/gitlab-artifacts.js'
-import {UpdatePRMode} from '../../types/index.js'
+import type {UpdatePRMode} from '../../types/index.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 

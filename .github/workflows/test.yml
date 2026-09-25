@@ -24,7 +24,9 @@ jobs:
         run: pnpm install
       - name: Build package
         run: pnpm run build
-      - name: Run ESlint
+      - name: Check formatting with oxfmt
+        run: pnpm run fmt:check
+      - name: Run oxlint
         run: pnpm run lint
 
   test:
