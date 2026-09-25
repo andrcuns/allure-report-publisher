@@ -1,7 +1,8 @@
 import {runCommand} from '@oclif/test'
 import {mkdirSync} from 'node:fs'
 import path from 'node:path'
-import {GenericContainer, StartedTestContainer} from 'testcontainers'
+import type {StartedTestContainer} from 'testcontainers'
+import {GenericContainer} from 'testcontainers'
 
 import {globPaths} from '../../src/utils/glob.js'
 import {expect} from '../support/setup'

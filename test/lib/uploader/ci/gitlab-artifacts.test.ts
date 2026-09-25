@@ -2,7 +2,7 @@ import esmock from 'esmock'
 import {dirname} from 'node:path'
 import * as sinon from 'sinon'
 
-import {GitlabArtifactsUploader} from '../../../../src/lib/uploader/ci/gitlab-artifacts.js'
+import type {GitlabArtifactsUploader} from '../../../../src/lib/uploader/ci/gitlab-artifacts.js'
 import {expect} from '../../../support/setup.js'
 
 describe('GitlabArtifactsUploader', () => {
@@ -86,7 +86,9 @@ describe('GitlabArtifactsUploader', () => {
 
       const url = uploader.reportUrl()
 
-      expect(url).to.equal('https://group.pages.example.com/-/subgroup/project/-/jobs/101/artifacts/reports/allure/index.html')
+      expect(url).to.equal(
+        'https://group.pages.example.com/-/subgroup/project/-/jobs/101/artifacts/reports/allure/index.html',
+      )
     })
 
     it('uses fallback URL format when server URL is invalid', () => {

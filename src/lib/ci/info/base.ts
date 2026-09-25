@@ -1,4 +1,4 @@
-import { BaseCiProvider } from "../providers/base.js"
+import type {BaseCiProvider} from '../providers/base.js'
 
 export abstract class BaseCiInfo {
   public static ALLURE_JOB_NAME = 'ALLURE_JOB_NAME'

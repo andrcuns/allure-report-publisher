@@ -1,5 +1,5 @@
-// eslint-disable-next-line unicorn/import-style
-import {Chalk, ChalkInstance} from 'chalk'
+import type {ChalkInstance} from 'chalk'
+import {Chalk} from 'chalk'
 
 import {globalConfig} from './global-config.js'
 

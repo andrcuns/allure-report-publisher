@@ -1,6 +1,7 @@
-import table, {Header} from 'tty-table'
+import type {Header} from 'tty-table'
+import table from 'tty-table'
 
-import {SummaryJson} from '../../../types/index.js'
+import type {SummaryJson} from '../../../types/index.js'
 
 type SummaryStats = {
   passed: number

@@ -4,7 +4,7 @@ import path from 'node:path'
 import {pathToFileURL} from 'node:url'
 import yaml from 'yaml'
 
-import {PluginName} from '../../types/index.js'
+import type {PluginName} from '../../types/index.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 
@@ -64,7 +64,7 @@ class CustomConfig implements AllureConfig {
 
   public async plugins() {
     const config = await this.customConfig()
-    const plugins: Set<PluginName> = new Set(['allure2', 'awesome', 'classic', 'csv', 'dashboard'])
+    const plugins = new Set<PluginName>(['allure2', 'awesome', 'classic', 'csv', 'dashboard'])
     const configPlugins = config.plugins || this._defaultConfig.plugins!
 
     return Object.entries(configPlugins)

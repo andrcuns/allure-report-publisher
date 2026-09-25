@@ -1,12 +1,11 @@
-/* eslint-disable unicorn/no-array-for-each */
 import {mkdirSync, readFileSync} from 'node:fs'
 import path from 'node:path'
 
 import {globPaths} from '../../../utils/glob.js'
 import {chalk, logger} from '../../../utils/logger.js'
 import {spin} from '../../../utils/spinner.js'
-import {GithubCiInfo} from '../../ci/info/github.js'
-import {GitlabCiInfo} from '../../ci/info/gitlab.js'
+import type {GithubCiInfo} from '../../ci/info/github.js'
+import type {GitlabCiInfo} from '../../ci/info/gitlab.js'
 import {ciInfo} from '../../ci/utils.js'
 
 export abstract class BaseCloudUploader {
@@ -114,7 +113,7 @@ export abstract class BaseCloudUploader {
   protected key(...components: (null | string | undefined)[]): string {
     return [this.prefix, ...components]
       .filter(Boolean)
-      .map((c) => c?.replace(/\/$/, ''))
+      .map((component) => component?.replace(/\/$/, ''))
       .join('/')
   }
 

@@ -1,4 +1,5 @@
-import supportsColor, {ColorSupport, ColorSupportLevel} from 'supports-color'
+import type {ColorSupport, ColorSupportLevel} from 'supports-color'
+import supportsColor from 'supports-color'
 
 class GlobalConfig {
   private _colorLevel: ColorSupportLevel
@@ -22,11 +23,7 @@ class GlobalConfig {
     return this._colorLevel
   }
 
-  public initialize(options: {
-    colorLevel?: ColorSupportLevel
-    debug?: boolean
-    disableOutput?: boolean
-  }): void {
+  public initialize(options: {colorLevel?: ColorSupportLevel; debug?: boolean; disableOutput?: boolean}): void {
     if (this.initialized && process.env.NODE_ENV !== 'test') {
       throw new Error('Config has already been initialized')
     }

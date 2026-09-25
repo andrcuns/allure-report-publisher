@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import dedent from 'dedent'
 import esmock from 'esmock'
 import * as sinon from 'sinon'
 
 import {ReportSummary} from '../../../../src/lib/ci/pr/report-summary.js'
 import {UrlSectionBuilder} from '../../../../src/lib/ci/pr/url-section-builder.js'
-import {GitlabCiProvider} from '../../../../src/lib/ci/providers/gitlab.js'
+import type {GitlabCiProvider} from '../../../../src/lib/ci/providers/gitlab.js'
 import {expect} from '../../../support/setup.js'
 
 describe('GitlabCiProvider', () => {
