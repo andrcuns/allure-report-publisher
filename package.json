@@ -41,7 +41,7 @@
     "chai-as-promised": "^8.0.2",
     "dedent": "^1.7.2",
     "eslint": "^9.39.4",
-    "eslint-config-oclif": "^6.0.157",
+    "eslint-config-oclif": "^7.1.7",
     "eslint-config-prettier": "^10.1.8",
     "esmock": "^2.7.3",
     "mocha": "^11.7.5",
