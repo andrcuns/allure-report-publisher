@@ -21,7 +21,7 @@
     "octokit": "^5.0.5",
     "p-all": "^5.0.1",
     "supports-color": "^11.0.0",
-    "tty-table": "^5.0.0",
+    "tty-table": "^7.0.1",
     "yaml": "^2.8.3",
     "yocto-spinner": "^1.1.0"
   },
