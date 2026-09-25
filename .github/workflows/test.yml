@@ -122,16 +122,25 @@ jobs:
         with:
           pattern: allure-reports-*
           path: tmp/allure-results
-      - name: Set up Minio
+      - name: Set up SeaweedFS
         run: |
-          mkdir -p minio/allure-reports
           docker network create allure
           docker run -d \
-            --name minio \
+            --name seaweedfs \
             --network allure \
-            --volume "$(pwd)/minio":/data \
-            quay.io/minio/minio:latest \
-            server /data
+            -e AWS_ACCESS_KEY_ID="seaweedfs" \
+            -e AWS_SECRET_ACCESS_KEY="seaweedfs" \
+            -e S3_BUCKET="allure-reports" \
+            chrislusf/seaweedfs:4.47
+          for attempt in $(seq 1 60); do
+            if docker logs seaweedfs 2>&1 | grep -F 'created bucket allure-reports' > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          docker logs seaweedfs
+          echo "SeaweedFS did not create allure-reports within 60 seconds" >&2
+          exit 1
       - name: Publish allure report
         env:
           GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -150,10 +159,10 @@ jobs:
             -e GITHUB_SHA="$GITHUB_SHA" \
             -e GITHUB_AUTH_TOKEN="$GITHUB_AUTH_TOKEN" \
             -e GITHUB_STEP_SUMMARY="$GITHUB_STEP_SUMMARY" \
-            -e AWS_ENDPOINT="http://minio:9000" \
+            -e AWS_ENDPOINT="http://seaweedfs:8333" \
             -e AWS_FORCE_PATH_STYLE="true" \
-            -e AWS_ACCESS_KEY_ID="minioadmin" \
-            -e AWS_SECRET_ACCESS_KEY="minioadmin" \
+            -e AWS_ACCESS_KEY_ID="seaweedfs" \
+            -e AWS_SECRET_ACCESS_KEY="seaweedfs" \
             -e ALLURE_JOB_NAME="e2e-docker" \
             --network allure \
             publisher:latest \
