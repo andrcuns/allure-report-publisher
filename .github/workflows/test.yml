@@ -152,7 +152,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - test
-      - npm
     if: always()
     name: publish coverage report
     steps:
