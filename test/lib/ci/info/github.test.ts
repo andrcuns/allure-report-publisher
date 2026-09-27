@@ -1,10 +1,13 @@
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 
 import {GithubCiInfo} from '../../../../src/lib/ci/info/github.js'
 import {GithubCiProvider} from '../../../../src/lib/ci/providers/github.js'
-import {expect} from '../../../support/setup.js'
+
+// Metadata tests need the provider class, not client initialization or eager CI discovery.
+vi.mock('../../../../src/lib/ci/utils.js', () => ({githubClient: undefined}))
 
 describe('GithubCiInfo', () => {
   let tempDir: string

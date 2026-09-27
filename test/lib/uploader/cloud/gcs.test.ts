@@ -1,27 +1,39 @@
-import esmock from 'esmock'
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
-import * as sinon from 'sinon'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 
-import type {GcsUploader} from '../../../../src/lib/uploader/cloud/gcs.js'
-import {expect} from '../../../support/setup.js'
+import {GcsUploader} from '../../../../src/lib/uploader/cloud/gcs.js'
+
+const mocks = vi.hoisted(() => ({
+  download: vi.fn<(...args: unknown[]) => Promise<void>>(),
+  copy: vi.fn<(...args: unknown[]) => Promise<void>>(),
+  file: vi.fn<(...args: unknown[]) => unknown>(),
+  upload: vi.fn<(...args: unknown[]) => Promise<void>>(),
+  bucket: vi.fn<(...args: unknown[]) => unknown>(),
+}))
+
+vi.mock('@google-cloud/storage', () => ({
+  Storage: class {
+    bucket = mocks.bucket
+  },
+}))
 
 describe('GcsUploader', () => {
   let tempDir: string
   let reportDir: string
   let historyFile: string
 
-  let fileStub: any
-  let bucketStub: any
-  let storageStub: any
-
-  let Uploader: typeof GcsUploader
   let uploader: GcsUploader
-
   let originalEnv: NodeJS.ProcessEnv
 
-  beforeEach(async () => {
+  beforeEach(() => {
+    vi.resetAllMocks()
+    mocks.download.mockResolvedValue(undefined)
+    mocks.copy.mockResolvedValue(undefined)
+    mocks.upload.mockResolvedValue(undefined)
+    mocks.file.mockReturnValue({download: mocks.download, copy: mocks.copy})
+    mocks.bucket.mockReturnValue({file: mocks.file, upload: mocks.upload})
     originalEnv = {...process.env}
     delete process.env.GITHUB_RUN_ID
 
@@ -34,27 +46,7 @@ describe('GcsUploader', () => {
     writeFileSync(join(reportDir, 'index.html'), '<html></html>')
     writeFileSync(join(reportDir, 'data.json'), '{}')
 
-    fileStub = {
-      download: sinon.stub().resolves(),
-      copy: sinon.stub().resolves(),
-    }
-    bucketStub = {
-      file: sinon.stub().returns(fileStub),
-      upload: sinon.stub().resolves(),
-    }
-    storageStub = {
-      bucket: sinon.stub().returns(bucketStub),
-    }
-
-    const module = await esmock('../../../../src/lib/uploader/cloud/gcs.js', {
-      '@google-cloud/storage': {
-        Storage: sinon.stub().returns(storageStub),
-      },
-    })
-
-    Uploader = module.GcsUploader
-
-    uploader = new Uploader({
+    uploader = new GcsUploader({
       bucket: 'test-bucket',
       copyLatest: true,
       historyPath: historyFile,
@@ -78,7 +70,7 @@ describe('GcsUploader', () => {
     })
 
     it('uses custom base URL when provided', () => {
-      const customUploader = new Uploader({
+      const customUploader = new GcsUploader({
         bucket: 'test-bucket',
         copyLatest: false,
         historyPath: historyFile,
@@ -95,7 +87,7 @@ describe('GcsUploader', () => {
     })
 
     it('constructs URL without prefix when not provided', () => {
-      const noPrefixUploader = new Uploader({
+      const noPrefixUploader = new GcsUploader({
         bucket: 'test-bucket',
         copyLatest: false,
         historyPath: historyFile,
@@ -114,10 +106,10 @@ describe('GcsUploader', () => {
     it('calls storage bucket file download with correct parameters', async () => {
       await uploader.downloadHistory()
 
-      expect(storageStub.bucket.calledWith('test-bucket')).to.be.true
-      expect(bucketStub.file.calledOnce).to.be.true
-      expect(fileStub.download.calledOnce).to.be.true
-      expect(fileStub.download.firstCall.args[0]).to.deep.include({
+      expect(mocks.bucket).toHaveBeenCalledWith('test-bucket')
+      expect(mocks.file).toHaveBeenCalledTimes(1)
+      expect(mocks.download).toHaveBeenCalledTimes(1)
+      expect(mocks.download.mock.calls[0][0]).toMatchObject({
         destination: historyFile,
       })
     })
@@ -125,7 +117,7 @@ describe('GcsUploader', () => {
     it('constructs history file key with prefix', async () => {
       await uploader.downloadHistory()
 
-      const [fileKey] = bucketStub.file.firstCall.args
+      const [[fileKey]] = mocks.file.mock.calls
       expect(fileKey).to.equal('reports/history.jsonl')
     })
   })
@@ -136,23 +128,23 @@ describe('GcsUploader', () => {
     })
 
     it('calls bucket upload with history file', async () => {
-      expect(storageStub.bucket.calledWith('test-bucket')).to.be.true
-      expect(bucketStub.upload.firstCall.args[0]).to.equal(historyFile)
+      expect(mocks.bucket).toHaveBeenCalledWith('test-bucket')
+      expect(mocks.upload.mock.calls[0][0]).to.equal(historyFile)
     })
 
     it('uses correct destination key for history file', async () => {
-      const [, uploadOptions] = bucketStub.upload.firstCall.args
-      expect(uploadOptions.destination).to.equal('reports/history.jsonl')
+      const [[, uploadOptions]] = mocks.upload.mock.calls
+      expect(uploadOptions).toHaveProperty('destination', 'reports/history.jsonl')
     })
 
     it('uploads all report files to bucket', async () => {
-      expect(bucketStub.upload.called).to.be.true
-      expect(bucketStub.upload.callCount).to.equal(3) // report files + history file
+      expect(mocks.upload).toHaveBeenCalled()
+      expect(mocks.upload).toHaveBeenCalledTimes(3) // report files + history file
     })
 
     it('copies all report files to latest directory', async () => {
-      expect(fileStub.copy.called).to.be.true
-      expect(fileStub.copy.callCount).to.equal(2) // only report files
+      expect(mocks.copy).toHaveBeenCalled()
+      expect(mocks.copy).toHaveBeenCalledTimes(2) // only report files
     })
   })
 })
