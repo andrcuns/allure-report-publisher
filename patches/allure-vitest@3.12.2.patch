@@ -1,0 +1,13 @@
+diff --git a/dist/reporter.d.ts b/dist/reporter.d.ts
+index 366613afc47cf985ba692ce7ad9d718cb6a1ad7a..085df96267c18f2d26765d98774b078ecd12b830 100644
+--- a/dist/reporter.d.ts
++++ b/dist/reporter.d.ts
+@@ -1,7 +1,7 @@
+ import type { ReporterConfig } from "allure-js-commons/sdk/reporter";
+ import type { RunnerTask as Task } from "vitest";
+ import type { TestModule, Vitest } from "vitest/node";
+-import type { Reporter } from "vitest/reporters";
++import type { Reporter } from "vitest/node";
+ export type AllureVitestReporterConfig = ReporterConfig & {
+     reportMatchers?: boolean;
+ };

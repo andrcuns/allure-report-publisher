@@ -1,9 +1,9 @@
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
+import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 
 import {getAllureResultsPaths, globPaths} from '../../src/utils/glob.js'
-import {expect} from '../support/setup.js'
 
 describe('glob utilities', () => {
   let tempDir: string
@@ -96,10 +96,15 @@ describe('glob utilities', () => {
     })
 
     it('throws error when pattern matches no paths', async () => {
-      expect(getAllureResultsPaths(join(tempDir, 'nonexistent'))).to.be.rejectedWith(
-        Error,
-        /did not match any paths.*Use --ignore-missing-results/,
-      )
+      const results = getAllureResultsPaths(join(tempDir, 'nonexistent'))
+      await expect(results).rejects.toBeInstanceOf(Error)
+      await expect(results).rejects.toMatchObject({
+        message: [
+          `Pattern '${join(tempDir, 'nonexistent')}' did not match any paths`,
+          'Make sure the pattern is correct and points to directories containing allure results',
+          'Use --ignore-missing-results to exit without error when valid results are not found',
+        ].join('\n'),
+      })
     })
 
     it('throws error when pattern matches non-directory', async () => {

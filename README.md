@@ -17,7 +17,7 @@ $ npm install -g allure-report-publisher
 $ allure-report-publisher COMMAND
 running command...
 $ allure-report-publisher (--version)
-allure-report-publisher/5.7.0 linux-x64 node-v25.9.0
+allure-report-publisher/5.7.0 linux-x64 node-v26.10.0
 $ allure-report-publisher --help [COMMAND]
 USAGE
   $ allure-report-publisher COMMAND
@@ -295,7 +295,19 @@ In case merge request triggers a downstream pipeline yet you want to update orig
 
 # Development
 
-Local development tool are handled by [mise](https://mise.jdx.dev/). After checking out the repo, run `mise install` to install necessary dev tools. Run `pnpm install` to install all node dependencies. To run tests, use `pnpm run test`. `bin/dev.js` allows to execute the cli directly from the source code without building it first.
+Local development tools are handled by [mise](https://mise.jdx.dev/), using Node 26 and pnpm 12.6.0. After checking out the repo, run `mise install` to install necessary dev tools, then `pnpm install` to install dependencies. Test tooling requires Node 22.12.0+ on the Node 22 line; the published CLI engine remains `>=22.0.0`.
+
+```sh
+pnpm run test            # All tests with coverage; requires Docker
+pnpm run test:unit       # Unit/command tests without Docker
+pnpm run test:e2e        # Real Docker E2E tests with coverage
+pnpm run test:typecheck  # Check test and configuration types
+pnpm run test:watch      # Watch all tests; requires Docker
+```
+
+The test scripts build oclif metadata first. Run `pnpm run build` before invoking `pnpm exec vitest` directly on a fresh checkout. Watch mode does not rebuild command metadata: after changing command flags/help, rebuild and restart it. Use `pnpm run test:watch --project unit` to watch without Docker.
+
+`bin/dev.js` allows executing the CLI directly from source without building it first.
 
 # Contributing
 
