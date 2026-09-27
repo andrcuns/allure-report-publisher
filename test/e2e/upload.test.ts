@@ -20,7 +20,7 @@ describe('e2e', () => {
 
   beforeAll(async () => {
     originalEnv = {...process.env}
-    delete process.env.GITLAB_CI
+
     process.env.GITHUB_WORKFLOW ??= 'vitest-e2e'
     process.env.GITHUB_JOB ??= 'e2e'
     process.env.GITHUB_RUN_ID ??= '1'
