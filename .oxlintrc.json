@@ -59,7 +59,7 @@
       }
     },
     {
-      "files": ["src/commands/**/*.ts", "allurerc.mjs"],
+      "files": ["src/commands/**/*.ts", "allurerc.mjs", "vitest.config.ts"],
       "rules": {
         "import/no-default-export": "off",
         "import/no-anonymous-default-export": "off"
@@ -73,14 +73,10 @@
     },
     {
       "files": ["test/**/*.ts"],
-      "env": {
-        "mocha": true
-      },
       "rules": {
         "func-names": "off",
         "no-unused-expressions": "off",
-        "import/no-namespace": "off",
-        "typescript/no-explicit-any": "off"
+        "import/no-namespace": "off"
       }
     }
   ]

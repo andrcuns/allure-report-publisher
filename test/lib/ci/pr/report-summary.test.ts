@@ -2,10 +2,10 @@ import dedent from 'dedent'
 import {readFileSync} from 'node:fs'
 import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
+import {describe, expect, it} from 'vitest'
 
 import {ReportSummary} from '../../../../src/lib/ci/pr/report-summary.js'
 import type {SummaryJson} from '../../../../src/types/index.js'
-import {expect} from '../../../support/setup.js'
 
 const summaryData = (file: string) => {
   const fixturesPath = resolve(dirname(fileURLToPath(import.meta.url)), '../../../fixtures')

@@ -1,23 +1,25 @@
-import esmock from 'esmock'
 import type {SubprocessError} from 'nano-spawn'
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
-import * as sinon from 'sinon'
-
-import type {ReportGenerator} from '../../../src/lib/allure/report-generator.js'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 
 import type {AllureConfig} from '../../../src/lib/allure/config.js'
-import {expect} from '../../support/setup.js'
+import {ReportGenerator} from '../../../src/lib/allure/report-generator.js'
+
+const {spawnStub} = vi.hoisted(() => ({
+  spawnStub: vi.fn<(command: string, args: string[], options: {preferLocal: boolean}) => Promise<unknown>>(),
+}))
+
+vi.mock('nano-spawn', () => ({default: spawnStub}))
 
 describe('ReportGenerator', () => {
   const historyBaseUrl = 'https://reports.example.com/project'
   let tempDir: string
   let allureConfig: AllureConfig
-  let spawnStub: sinon.SinonStub
-  let Generator: typeof ReportGenerator
 
-  beforeEach(async () => {
+  beforeEach(() => {
+    spawnStub.mockReset()
     tempDir = join(tmpdir(), `report-gen-test-${Date.now()}`)
     mkdirSync(tempDir, {recursive: true})
 
@@ -28,16 +30,6 @@ describe('ReportGenerator', () => {
       historyPath: async () => join(tempDir, 'history'),
       plugins: async () => ['awesome'],
     }
-
-    spawnStub = sinon.stub()
-
-    const module = await esmock('../../../src/lib/allure/report-generator.js', {
-      'nano-spawn': {
-        default: spawnStub,
-      },
-    })
-
-    Generator = module.ReportGenerator
   })
 
   afterEach(() => {
@@ -49,17 +41,17 @@ describe('ReportGenerator', () => {
       const summaryFile = join(tempDir, 'summary.json')
       writeFileSync(summaryFile, JSON.stringify({stats: {}, status: 'passed'}))
 
-      spawnStub.resolves({
+      spawnStub.mockResolvedValue({
         exitCode: 0,
         output: 'Report successfully generated',
       })
 
-      const generator = new Generator(allureConfig)
+      const generator = new ReportGenerator(allureConfig)
       await generator.execute(historyBaseUrl)
 
-      expect(spawnStub.calledOnce).to.be.true
-      expect(spawnStub.firstCall.args[0]).to.equal('allure')
-      expect(spawnStub.firstCall.args[1]).to.deep.equal([
+      expect(spawnStub).toHaveBeenCalledTimes(1)
+      expect(spawnStub.mock.calls[0][0]).to.equal('allure')
+      expect(spawnStub.mock.calls[0][1]).to.deep.equal([
         'generate',
         'allure-results',
         '-c',
@@ -74,29 +66,29 @@ describe('ReportGenerator', () => {
     it('uses preferLocal true when globalExec is false', async () => {
       writeFileSync(join(tempDir, 'summary.json'), '{}')
 
-      spawnStub.resolves({
+      spawnStub.mockResolvedValue({
         exitCode: 0,
         output: '',
       })
 
-      const generator = new Generator(allureConfig, false)
+      const generator = new ReportGenerator(allureConfig, false)
       await generator.execute(historyBaseUrl)
 
-      expect(spawnStub.firstCall.args[2]).to.deep.equal({preferLocal: true})
+      expect(spawnStub.mock.calls[0][2]).to.deep.equal({preferLocal: true})
     })
 
     it('uses preferLocal false when globalExec is true', async () => {
       writeFileSync(join(tempDir, 'summary.json'), '{}')
 
-      spawnStub.resolves({
+      spawnStub.mockResolvedValue({
         exitCode: 0,
         output: '',
       })
 
-      const generator = new Generator(allureConfig, true)
+      const generator = new ReportGenerator(allureConfig, true)
       await generator.execute(historyBaseUrl)
 
-      expect(spawnStub.firstCall.args[2]).to.deep.equal({preferLocal: false})
+      expect(spawnStub.mock.calls[0][2]).to.deep.equal({preferLocal: false})
     })
 
     it('throws error when allure command fails', async () => {
@@ -106,18 +98,20 @@ describe('ReportGenerator', () => {
       error.durationMs = 1000
       error.output = 'Error: Could not generate report'
 
-      spawnStub.rejects(error)
+      spawnStub.mockRejectedValue(error)
 
-      const generator = new Generator(allureConfig)
+      const generator = new ReportGenerator(allureConfig)
       const errorMessage = `Allure report generation failed.\nMessage: ${error.message}\nOutput: ${error.output}`
 
-      await expect(generator.execute(historyBaseUrl)).to.be.rejectedWith(Error, errorMessage)
+      const result = generator.execute(historyBaseUrl)
+      await expect(result).rejects.toBeInstanceOf(Error)
+      await expect(result).rejects.toThrow(errorMessage)
     })
   })
 
   describe('summary()', () => {
     it('throws error when called before execute', () => {
-      const generator = new Generator(allureConfig)
+      const generator = new ReportGenerator(allureConfig)
 
       expect(() => generator.summary()).to.throw(Error, 'Report has not been generated yet')
     })
@@ -135,12 +129,12 @@ describe('ReportGenerator', () => {
       const summaryFile = join(tempDir, 'summary.json')
       writeFileSync(summaryFile, JSON.stringify(summaryData))
 
-      spawnStub.resolves({
+      spawnStub.mockResolvedValue({
         exitCode: 0,
         output: '',
       })
 
-      const generator = new Generator(allureConfig)
+      const generator = new ReportGenerator(allureConfig)
       await generator.execute(historyBaseUrl)
 
       const summary = generator.summary()
@@ -151,12 +145,12 @@ describe('ReportGenerator', () => {
     it('throws error when summary.json not found in generated report', async () => {
       writeFileSync(join(tempDir, 'index.html'), '<html></html>')
 
-      spawnStub.resolves({
+      spawnStub.mockResolvedValue({
         exitCode: 0,
         output: '',
       })
 
-      const generator = new Generator(allureConfig)
+      const generator = new ReportGenerator(allureConfig)
       await generator.execute(historyBaseUrl)
 
       expect(() => generator.summary()).to.throw(Error, 'summary.json file not found in generated report files')

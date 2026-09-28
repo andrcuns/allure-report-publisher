@@ -1,24 +1,42 @@
-import esmock from 'esmock'
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
-import * as sinon from 'sinon'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 
-import type {S3Uploader} from '../../../../src/lib/uploader/cloud/s3.js'
-import {expect} from '../../../support/setup.js'
+import {S3Uploader} from '../../../../src/lib/uploader/cloud/s3.js'
+
+const mocks = vi.hoisted(() => ({
+  send: vi.fn<(...args: unknown[]) => Promise<unknown>>(),
+  waitUntilObjectExists: vi.fn<(...args: unknown[]) => Promise<void>>(),
+  lookup: vi.fn<(file: string) => string | false>(),
+}))
+
+vi.mock('@aws-sdk/client-s3', () => ({
+  S3Client: class {
+    send = mocks.send
+  },
+  GetObjectCommand: class {},
+  PutObjectCommand: class {},
+  CopyObjectCommand: class {},
+  NoSuchKey: class {},
+  waitUntilObjectExists: mocks.waitUntilObjectExists,
+}))
+
+vi.mock('mime-types', () => ({lookup: mocks.lookup}))
 
 describe('S3Uploader', () => {
   let tempDir: string
   let reportDir: string
   let historyFile: string
 
-  let s3ClientStub: any
-  let sendStub: any
-  let Uploader: typeof S3Uploader
   let uploader: S3Uploader
   let originalEnv: NodeJS.ProcessEnv
 
-  beforeEach(async () => {
+  beforeEach(() => {
+    vi.resetAllMocks()
+    mocks.send.mockResolvedValue({Body: {transformToString: async () => '{"uuid":"test-uuid-123"}'}})
+    mocks.waitUntilObjectExists.mockResolvedValue(undefined)
+    mocks.lookup.mockReturnValue('text/html')
     originalEnv = {...process.env}
     delete process.env.GITHUB_RUN_ID
 
@@ -30,25 +48,6 @@ describe('S3Uploader', () => {
     writeFileSync(historyFile, JSON.stringify({uuid: 'test-uuid-123'}))
     writeFileSync(join(reportDir, 'index.html'), '<html></html>')
     writeFileSync(join(reportDir, 'data.json'), '{}')
-
-    sendStub = sinon.stub().resolves({Body: {transformToString: async () => '{"uuid":"test-uuid-123"}'}})
-    s3ClientStub = sinon.stub().returns({send: sendStub})
-
-    const module = await esmock('../../../../src/lib/uploader/cloud/s3.js', {
-      '@aws-sdk/client-s3': {
-        S3Client: s3ClientStub,
-        GetObjectCommand: sinon.stub(),
-        PutObjectCommand: sinon.stub(),
-        CopyObjectCommand: sinon.stub(),
-        waitUntilObjectExists: sinon.stub().resolves(),
-        NoSuchKey: class {},
-      },
-      'mime-types': {
-        lookup: sinon.stub().returns('text/html'),
-      },
-    })
-
-    Uploader = module.S3Uploader
   })
 
   afterEach(() => {
@@ -58,7 +57,7 @@ describe('S3Uploader', () => {
 
   describe('reportUrlBase()', () => {
     it('constructs URL from bucket and prefix', () => {
-      uploader = new Uploader({
+      uploader = new S3Uploader({
         bucket: 'test-bucket',
         copyLatest: true,
         historyPath: historyFile,
@@ -72,7 +71,7 @@ describe('S3Uploader', () => {
     })
 
     it('uses custom base URL when provided', () => {
-      uploader = new Uploader({
+      uploader = new S3Uploader({
         bucket: 'test-bucket',
         copyLatest: false,
         historyPath: historyFile,
@@ -87,7 +86,7 @@ describe('S3Uploader', () => {
     })
 
     it('constructs URL without prefix when not provided', () => {
-      uploader = new Uploader({
+      uploader = new S3Uploader({
         bucket: 'test-bucket',
         copyLatest: false,
         historyPath: historyFile,
