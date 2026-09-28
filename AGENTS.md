@@ -15,19 +15,31 @@ pnpm run build              # Incremental TypeScript build
 pnpm run cleanBuild         # Clean and rebuild from scratch
 ```
 
-### Linting
+### Linting and Formatting
 
 ```bash
-pnpm run lint               # Run ESLint on all files
+pnpm run lint               # Run oxlint on all files
+pnpm run lint:agent         # Run oxlint with agent-friendly output
+pnpm run format             # Format JavaScript and TypeScript with oxfmt
+pnpm run fmt:check          # Check formatting without modifying files
 ```
 
 ### Testing
 
 ```bash
-pnpm run test               # Run all tests with coverage
-pnpm exec mocha test/path/to/file.test.ts  # Run single test file
-pnpm exec mocha --grep "test name pattern" # Run tests matching pattern
+pnpm run test                        # All tests, including Docker E2E, with coverage
+pnpm run test:unit                   # Unit/command tests, no Docker required
+pnpm run test:e2e                    # Real Docker E2E tests with coverage
+pnpm run test:typecheck              # Typecheck tests, support, and Vitest config
+pnpm run test:watch                  # Watch tests (includes Docker E2E by default)
+pnpm run build
+pnpm exec vitest run test/path/to/file.test.ts
+pnpm exec vitest run -t "test name pattern"
 ```
+
+Use Node 26 for development and pnpm 12.6.0, as selected by `mise.toml`. Test tooling requires Node 22.12.0+ on the Node 22 line; the published CLI engine remains `>=22.0.0`.
+
+Test scripts build oclif command metadata before running. Direct `pnpm exec vitest` commands require a prior build on a fresh checkout. Watch mode does not rebuild that metadata: after changing command flags/help, rebuild and restart watch mode. Use `pnpm run test:watch --project unit` to watch without Docker.
 
 ### Development
 
@@ -89,7 +101,8 @@ pnpm run readme             # Update README with command docs
 - **No semicolons** at end of statements
 - **Single quotes** for strings (except when avoiding escapes)
 - **Trailing commas** in multiline objects/arrays
-- Prettier config: `@oclif/prettier-config`
+- Formatter config: `.oxfmtrc.json`
+- Linter config: `.oxlintrc.json` (test overrides allow supported Chai-style assertions)
 
 ### TypeScript Conventions
 
@@ -195,22 +208,23 @@ logger.debug('Debug details')               // Debug info (buffered)
 
 ### Testing Conventions
 
-- Use **Mocha** for test framework
-- Use **Chai** for assertions with `expect` style
-- Use **@oclif/test** for command testing
-- Use **sinon** for mocking
+- Use **Vitest** for the runner, assertions, spies, module mocks, and coverage
+- Import `describe`, `it`, `expect`, lifecycle functions, and `vi` explicitly from `vitest`
+- Use `test/support/command.ts` for in-process oclif command tests, passing an argument array
+- Use **Testcontainers** for real E2E services; Docker must be available for E2E/default runs
+- Keep Allure results in `tmp/allure-results/` and LCOV coverage in `coverage/`
 - Test files mirror source structure: `test/lib/ci/pr/report-summary.test.ts`
 
 ```typescript
-import {runCommand} from '@oclif/test'
-import {expect} from '../../../support/setup.js'
+import {describe, expect, it} from 'vitest'
 
-describe('ComponentName', () => {
-  describe('methodName()', () => {
-    it('describes behavior', () => {
-      const result = method()
-      expect(result).to.equal(expected)
-    })
+import {runCommand} from '../../support/command.js'
+
+describe('upload help', () => {
+  it('prints help', async () => {
+    const {stdout, error} = await runCommand(['upload', 's3', '--help'])
+    expect(error).toBeUndefined()
+    expect(stdout).toContain('Generate and upload allure report to s3 bucket')
   })
 })
 ```

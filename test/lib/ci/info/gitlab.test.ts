@@ -1,6 +1,10 @@
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+
 import {GitlabCiInfo} from '../../../../src/lib/ci/info/gitlab.js'
 import {GitlabCiProvider} from '../../../../src/lib/ci/providers/gitlab.js'
-import {expect} from '../../../support/setup.js'
+
+// Metadata tests need the provider class, not client initialization or eager CI discovery.
+vi.mock('../../../../src/lib/ci/utils.js', () => ({gitlabClient: undefined}))
 
 describe('GitlabCiInfo', () => {
   let originalEnv: NodeJS.ProcessEnv

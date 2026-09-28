@@ -1,11 +1,12 @@
-import spawn, {SubprocessError} from 'nano-spawn'
+import type {SubprocessError} from 'nano-spawn'
+import spawn from 'nano-spawn'
 import {readFileSync} from 'node:fs'
 
-import {SummaryJson} from '../../types/index.js'
+import type {SummaryJson} from '../../types/index.js'
 import {globPaths} from '../../utils/glob.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
-import {AllureConfig} from './config.js'
+import type {AllureConfig} from './config.js'
 
 export class ReportGenerator {
   private readonly allureConfig
@@ -46,7 +47,16 @@ export class ReportGenerator {
   }
 
   private async generateReport(historyBaseUrl: string) {
-    const args = ['generate', this.resultsGlob, '-c', this.allureConfig.configPath(), '-o', await this.outputPath(), '--history-base-url', historyBaseUrl]
+    const args = [
+      'generate',
+      this.resultsGlob,
+      '-c',
+      this.allureConfig.configPath(),
+      '-o',
+      await this.outputPath(),
+      '--history-base-url',
+      historyBaseUrl,
+    ]
     try {
       logger.debug(`Running allure with args: ${args.join(' ')}`)
       const result = await spawn('allure', args, {preferLocal: !this.globalExec})
