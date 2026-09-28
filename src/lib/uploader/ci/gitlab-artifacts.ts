@@ -1,4 +1,4 @@
-import {Gitlab} from '@gitbeaker/rest'
+import type {Gitlab} from '@gitbeaker/rest'
 import {mkdirSync, writeFileSync} from 'node:fs'
 import path from 'node:path'
 
@@ -52,7 +52,7 @@ export class GitlabArtifactsUploader {
     }
 
     const pathComponents = projectPath.split('/')
-    const namespace = pathComponents[0]
+    const [namespace] = pathComponents
     const project = pathComponents.slice(1).join('/')
 
     try {
@@ -74,9 +74,7 @@ export class GitlabArtifactsUploader {
     const urls = [`${base}/-/jobs/${jobId}/artifacts/${relativePath}/index.html`]
     if (this.plugins.length > 1) {
       urls.push(
-        ...this.plugins.map(
-          (plugin) => `${base}/-/jobs/${jobId}/artifacts/${relativePath}/${plugin}/index.html`,
-        ),
+        ...this.plugins.map((plugin) => `${base}/-/jobs/${jobId}/artifacts/${relativePath}/${plugin}/index.html`),
       )
     }
 
@@ -99,7 +97,7 @@ export class GitlabArtifactsUploader {
       maxPages: 1,
     })
 
-    const pipelineIds = pipelines.map((p) => p.id)
+    const pipelineIds = pipelines.map((pipeline) => pipeline.id)
 
     if (pipelineIds.length < 2) {
       throw new Error('Not enough pipelines found')

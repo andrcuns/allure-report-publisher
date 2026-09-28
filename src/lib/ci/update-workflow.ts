@@ -1,4 +1,4 @@
-import {SummaryJson, UpdatePRMode} from '../../types/index.js'
+import type {SummaryJson, UpdatePRMode} from '../../types/index.js'
 import {logger} from '../../utils/logger.js'
 import {spin} from '../../utils/spinner.js'
 import {GitlabCiInfo} from './info/gitlab.js'

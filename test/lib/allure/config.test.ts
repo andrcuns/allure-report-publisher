@@ -2,9 +2,9 @@ import dedent from 'dedent'
 import {mkdirSync, rmSync, writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
+import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 
 import {getAllureConfig} from '../../../src/lib/allure/config.js'
-import {expect} from '../../support/setup.js'
 
 describe('getAllureConfig', () => {
   let tempDir: string
@@ -122,7 +122,9 @@ describe('getAllureConfig', () => {
 
       const config = getAllureConfig({configPath, resultsGlob: 'results'})
 
-      await expect(config.outputPath()).to.be.rejectedWith(Error, 'No default export found')
+      const output = config.outputPath()
+      await expect(output).rejects.toBeInstanceOf(Error)
+      await expect(output).rejects.toThrow('No default export found')
     })
 
     it('throws error when history path is not defined', async () => {
@@ -131,7 +133,9 @@ describe('getAllureConfig', () => {
 
       const config = getAllureConfig({configPath, resultsGlob: 'results'})
 
-      await expect(config.historyPath()).to.be.rejectedWith(Error, 'History path is not defined in the allure config')
+      const history = config.historyPath()
+      await expect(history).rejects.toBeInstanceOf(Error)
+      await expect(history).rejects.toThrow('History path is not defined in the allure config')
     })
 
     it('returns enabled plugins from custom config', async () => {
