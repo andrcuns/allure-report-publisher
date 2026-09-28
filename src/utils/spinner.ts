@@ -1,4 +1,5 @@
-import yoctoSpinner, {Spinner} from 'yocto-spinner'
+import type {Spinner} from 'yocto-spinner'
+import yoctoSpinner from 'yocto-spinner'
 
 import {isCI} from '../lib/ci/utils.js'
 import {globalConfig} from './global-config.js'

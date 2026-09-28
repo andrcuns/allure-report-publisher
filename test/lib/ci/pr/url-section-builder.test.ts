@@ -1,22 +1,24 @@
 import dedent from 'dedent'
-import {createStubInstance} from 'sinon'
+import {beforeEach, describe, expect, it, vi} from 'vitest'
 
 import {ReportSummary} from '../../../../src/lib/ci/pr/report-summary.js'
 import {UrlSectionBuilder} from '../../../../src/lib/ci/pr/url-section-builder.js'
-import {expect} from '../../../support/setup.js'
 
 describe('UrlSectionBuilder', () => {
+  let summary: ReportSummary
   const defaultArgs = {
     buildName: 'Test Build',
     reportUrl: 'https://example.com/report',
     shaUrl: '[abc123](https://github.com/user/repo/commit/abc123)',
     shouldAddSummaryTable: true,
     shouldCollapseSummary: false,
-    summary: createStubInstance(ReportSummary, {
-      table: '[TEST SUMMARY TABLE]',
-      status: '✅',
-    }),
   }
+
+  beforeEach(() => {
+    summary = new ReportSummary({stats: {}, status: 'passed'}, false)
+    vi.spyOn(summary, 'table').mockReturnValue('[TEST SUMMARY TABLE]')
+    vi.spyOn(summary, 'status').mockReturnValue('✅')
+  })
 
   describe('match()', () => {
     it('returns true when URL block contains allure markers', () => {
@@ -34,7 +36,7 @@ describe('UrlSectionBuilder', () => {
 
   describe('updatedDescription()', () => {
     it('creates new section when description is empty', () => {
-      const builder = new UrlSectionBuilder(defaultArgs)
+      const builder = new UrlSectionBuilder({...defaultArgs, summary})
 
       expect(builder.updatedDescription('')).to.equal(dedent`<!-- allure -->
         # 📝 Test Report
@@ -49,7 +51,7 @@ describe('UrlSectionBuilder', () => {
     })
 
     it('appends section to existing description without markers', () => {
-      const builder = new UrlSectionBuilder(defaultArgs)
+      const builder = new UrlSectionBuilder({...defaultArgs, summary})
       const existingDescription = 'This is my PR description'
 
       expect(builder.updatedDescription(existingDescription)).to.equal(dedent`This is my PR description
@@ -68,7 +70,7 @@ describe('UrlSectionBuilder', () => {
     })
 
     it('updates existing section in description', () => {
-      const builder = new UrlSectionBuilder(defaultArgs)
+      const builder = new UrlSectionBuilder({...defaultArgs, summary})
       const existingDescription = dedent`My PR
         ---
         <!-- allure -->
@@ -101,7 +103,7 @@ describe('UrlSectionBuilder', () => {
     })
 
     it('preserves multiple job entries in jobs section', () => {
-      const args = {...defaultArgs, buildName: 'Build 2'}
+      const args = {...defaultArgs, summary, buildName: 'Build 2'}
       const builder = new UrlSectionBuilder(args)
       const existingDescription = dedent`<!-- allure -->
         # 📝 Test Report
@@ -130,7 +132,7 @@ describe('UrlSectionBuilder', () => {
     })
 
     it('updates existing job entry when build name matches', () => {
-      const builder = new UrlSectionBuilder(defaultArgs)
+      const builder = new UrlSectionBuilder({...defaultArgs, summary})
       const existingDescription = dedent`<!-- allure -->
         # 📝 Test Report
         [\`allure-report-publisher\`](https://github.com/andrcuns/allure-report-publisher) generated test report!
@@ -154,7 +156,7 @@ describe('UrlSectionBuilder', () => {
     })
 
     it('uses custom report title when provided', () => {
-      const args = {...defaultArgs, reportTitle: '🧪 My Custom Report'}
+      const args = {...defaultArgs, summary, reportTitle: '🧪 My Custom Report'}
       const builder = new UrlSectionBuilder(args)
 
       expect(builder.updatedDescription('')).to.equal(dedent`<!-- allure -->
@@ -170,7 +172,7 @@ describe('UrlSectionBuilder', () => {
     })
 
     it('includes separator when description has content', () => {
-      const builder = new UrlSectionBuilder(defaultArgs)
+      const builder = new UrlSectionBuilder({...defaultArgs, summary})
       const description = 'Some content'
 
       const result = builder.updatedDescription(description)
@@ -182,7 +184,7 @@ describe('UrlSectionBuilder', () => {
 
   describe('commentBody()', () => {
     it('creates new comment body when comment is undefined', () => {
-      const builder = new UrlSectionBuilder(defaultArgs)
+      const builder = new UrlSectionBuilder({...defaultArgs, summary})
       const result = builder.commentBody()
 
       expect(result).to.equal(dedent`<!-- allure -->
@@ -198,7 +200,7 @@ describe('UrlSectionBuilder', () => {
     })
 
     it('updates existing comment with jobs section', () => {
-      const builder = new UrlSectionBuilder(defaultArgs)
+      const builder = new UrlSectionBuilder({...defaultArgs, summary})
       const existingComment = dedent`<!-- allure -->
         # 📝 Test Report
         [\`allure-report-publisher\`](https://github.com/andrcuns/allure-report-publisher) generated test report!
@@ -226,7 +228,7 @@ describe('UrlSectionBuilder', () => {
     })
 
     it('adds job entry to existing jobs', () => {
-      const args = {...defaultArgs, buildName: 'Build 2'}
+      const args = {...defaultArgs, summary, buildName: 'Build 2'}
       const builder = new UrlSectionBuilder(args)
       const existingComment = dedent`<!-- allure -->
         # 📝 Test Report
@@ -254,7 +256,7 @@ describe('UrlSectionBuilder', () => {
     })
 
     it('collapses summary when collapseSummary is true', () => {
-      const args = {...defaultArgs, shouldCollapseSummary: true}
+      const args = {...defaultArgs, summary, shouldCollapseSummary: true}
       const builder = new UrlSectionBuilder(args)
 
       expect(builder.commentBody()).to.equal(dedent`<!-- allure -->
@@ -274,7 +276,7 @@ describe('UrlSectionBuilder', () => {
     })
 
     it('does not collapse summary by default', () => {
-      const builder = new UrlSectionBuilder(defaultArgs)
+      const builder = new UrlSectionBuilder({...defaultArgs, summary})
 
       const result = builder.commentBody()
 

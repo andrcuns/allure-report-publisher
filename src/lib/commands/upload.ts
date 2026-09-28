@@ -1,10 +1,11 @@
 import {Command, Flags} from '@oclif/core'
-import {InferredFlags} from '@oclif/core/interfaces'
+import type {InferredFlags} from '@oclif/core/interfaces'
 import {existsSync, writeFileSync} from 'node:fs'
 import path from 'node:path'
-import supportsColor, {ColorSupport, ColorSupportLevel} from 'supports-color'
+import type {ColorSupport, ColorSupportLevel} from 'supports-color'
+import supportsColor from 'supports-color'
 
-import {UpdatePRMode} from '../../types/index.js'
+import type {UpdatePRMode} from '../../types/index.js'
 import {getAllureResultsPaths} from '../../utils/glob.js'
 import {globalConfig} from '../../utils/global-config.js'
 import {logger} from '../../utils/logger.js'
@@ -13,7 +14,7 @@ import {getAllureConfig} from '../allure/config.js'
 import {ReportGenerator} from '../allure/report-generator.js'
 import {createReportSection} from '../ci/update-workflow.js'
 import {ciInfo, isCI, isPR} from '../ci/utils.js'
-import {BaseCloudUploader} from '../uploader/cloud/base.js'
+import type {BaseCloudUploader} from '../uploader/cloud/base.js'
 
 export abstract class BaseUploadCommand extends Command {
   private _resultPaths: string[] | undefined
@@ -207,7 +208,7 @@ export abstract class BaseCloudUploadCommand extends BaseUploadCommand {
   protected async validateInputs(flags: InferredFlags<typeof BaseCloudUploadCommand.baseFlags>) {
     if (flags['base-url']) {
       try {
-        // eslint-disable-next-line no-new
+        // oxlint-disable-next-line no-new -- Constructing the URL validates it.
         new URL(flags['base-url'])
       } catch {
         throw new Error(

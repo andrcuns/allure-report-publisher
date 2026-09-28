@@ -1,10 +1,24 @@
-import * as chai from 'chai'
-import chaiAsPromised from 'chai-as-promised'
+import {afterEach, beforeAll, beforeEach} from 'vitest'
 
-import {globalConfig} from '../../src/utils/global-config'
+import {globalConfig} from '../../src/utils/global-config.js'
 
-if (process.env.E2E_TEST !== 'true') globalConfig.initialize({disableOutput: true, debug: true})
+let originalEnv: NodeJS.ProcessEnv
 
-chai.use(chaiAsPromised)
+function configureOutput(): void {
+  globalConfig.reset()
+  globalConfig.initialize({
+    disableOutput: process.env.E2E_TEST !== 'true',
+    debug: true,
+  })
+}
 
-export const {expect} = chai
+beforeAll(configureOutput)
+
+beforeEach(() => {
+  originalEnv = {...process.env}
+  configureOutput()
+})
+
+afterEach(() => {
+  process.env = originalEnv
+})

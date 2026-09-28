@@ -1,5 +1,5 @@
-import {UpdatePRMode} from '../../../types/index.js'
-import {UrlSectionBuilder} from '../pr/url-section-builder.js'
+import type {UpdatePRMode} from '../../../types/index.js'
+import type {UrlSectionBuilder} from '../pr/url-section-builder.js'
 
 export abstract class BaseCiProvider {
   private readonly _urlSectionBuilder
@@ -19,5 +19,4 @@ export abstract class BaseCiProvider {
   protected get updateMode() {
     return this._updateMode
   }
-
 }

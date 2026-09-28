@@ -4,7 +4,7 @@ const nodeMatcher =
     labels.find((label) => label.name === 'nodeVersion' && label.value.startsWith(`v${versionMajor}.`))
 
 const environments = () =>
-  Object.fromEntries([23, 24, 25].map((version) => [`node${version}`, {matcher: nodeMatcher(version)}]))
+  Object.fromEntries([22, 24, 26].map((version) => [`node${version}`, {matcher: nodeMatcher(version)}]))
 
 export default {
   output: 'tmp/allure-report',

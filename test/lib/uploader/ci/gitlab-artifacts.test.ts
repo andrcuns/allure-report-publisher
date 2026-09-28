@@ -1,25 +1,45 @@
-import esmock from 'esmock'
+import type * as nodeFs from 'node:fs'
 import {dirname} from 'node:path'
-import * as sinon from 'sinon'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 
 import {GitlabArtifactsUploader} from '../../../../src/lib/uploader/ci/gitlab-artifacts.js'
-import {expect} from '../../../support/setup.js'
+
+const mocks = vi.hoisted(() => ({
+  info: vi.fn<(message: string) => void>(),
+  debug: vi.fn<(message: string) => void>(),
+  mkdirSync: vi.fn<(...args: unknown[]) => void>(),
+  writeFileSync: vi.fn<(...args: unknown[]) => void>(),
+  pipelines: vi.fn<(...args: unknown[]) => Promise<unknown>>(),
+  jobs: vi.fn<(...args: unknown[]) => Promise<unknown>>(),
+  download: vi.fn<(...args: unknown[]) => Promise<unknown>>(),
+}))
+
+vi.mock('../../../../src/lib/ci/utils.js', () => ({
+  gitlabClient: {
+    Pipelines: {all: mocks.pipelines},
+    Jobs: {all: mocks.jobs},
+    JobArtifacts: {downloadArchive: mocks.download},
+  },
+}))
+
+vi.mock('node:fs', async (importOriginal) => ({
+  ...(await importOriginal<typeof nodeFs>()),
+  mkdirSync: mocks.mkdirSync,
+  writeFileSync: mocks.writeFileSync,
+}))
+
+vi.mock('../../../../src/utils/logger.js', () => ({
+  logger: {info: mocks.info, debug: mocks.debug},
+}))
 
 describe('GitlabArtifactsUploader', () => {
   let originalEnv: NodeJS.ProcessEnv
-  let loggerInfoStub: sinon.SinonStub
-  let loggerDebugStub: sinon.SinonStub
-  let mkdirSyncStub: sinon.SinonStub
-  let writeFileSyncStub: sinon.SinonStub
-  let pipelinesAllStub: sinon.SinonStub
-  let jobsAllStub: sinon.SinonStub
-  let downloadArchiveStub: sinon.SinonStub
-  let Uploader: typeof GitlabArtifactsUploader
 
   const historyPath = '/builds/group/project/reports/history/history.json'
   const reportPath = '/builds/group/project/reports/allure'
 
-  beforeEach(async () => {
+  beforeEach(() => {
+    vi.resetAllMocks()
     originalEnv = {...process.env}
     process.env.CI_COMMIT_REF_NAME = 'main'
     process.env.CI_JOB_NAME = 'test-job'
@@ -31,45 +51,6 @@ describe('GitlabArtifactsUploader', () => {
     process.env.CI_PIPELINE_ID = '200'
     process.env.CI_SERVER_URL = 'https://gitlab.example.com'
     process.env.CI_PROJECT_DIR = '/builds/group/project'
-
-    loggerInfoStub = sinon.stub()
-    loggerDebugStub = sinon.stub()
-    mkdirSyncStub = sinon.stub()
-    writeFileSyncStub = sinon.stub()
-
-    pipelinesAllStub = sinon.stub()
-    jobsAllStub = sinon.stub()
-    downloadArchiveStub = sinon.stub()
-
-    const gitlabClientStub = {
-      JobArtifacts: {
-        downloadArchive: downloadArchiveStub,
-      },
-      Jobs: {
-        all: jobsAllStub,
-      },
-      Pipelines: {
-        all: pipelinesAllStub,
-      },
-    }
-
-    const module = await esmock('../../../../src/lib/uploader/ci/gitlab-artifacts.js', {
-      '../../../../src/lib/ci/utils.js': {
-        gitlabClient: gitlabClientStub,
-      },
-      '../../../../src/utils/logger.js': {
-        logger: {
-          debug: loggerDebugStub,
-          info: loggerInfoStub,
-        },
-      },
-      'node:fs': {
-        mkdirSync: mkdirSyncStub,
-        writeFileSync: writeFileSyncStub,
-      },
-    })
-
-    Uploader = module.GitlabArtifactsUploader
   })
 
   afterEach(() => {
@@ -78,7 +59,7 @@ describe('GitlabArtifactsUploader', () => {
 
   describe('reportUrl()', () => {
     it('returns the main artifacts report URL', () => {
-      const uploader = new Uploader({
+      const uploader = new GitlabArtifactsUploader({
         historyPath,
         reportPath,
         plugins: ['plugin-a', 'plugin-b'],
@@ -86,7 +67,9 @@ describe('GitlabArtifactsUploader', () => {
 
       const url = uploader.reportUrl()
 
-      expect(url).to.equal('https://group.pages.example.com/-/subgroup/project/-/jobs/101/artifacts/reports/allure/index.html')
+      expect(url).to.equal(
+        'https://group.pages.example.com/-/subgroup/project/-/jobs/101/artifacts/reports/allure/index.html',
+      )
     })
 
     it('uses fallback URL format when server URL is invalid', () => {
@@ -94,7 +77,7 @@ describe('GitlabArtifactsUploader', () => {
       process.env.CI_SERVER_URL = '::invalid::'
       delete process.env.CI_PAGES_DOMAIN
 
-      const uploader = new Uploader({
+      const uploader = new GitlabArtifactsUploader({
         historyPath,
         reportPath,
         plugins: ['plugin-a'],
@@ -108,7 +91,7 @@ describe('GitlabArtifactsUploader', () => {
 
   describe('outputReportUrls()', () => {
     it('logs all report URLs when plugins list has more than one entry', () => {
-      const uploader = new Uploader({
+      const uploader = new GitlabArtifactsUploader({
         historyPath,
         reportPath,
         plugins: ['plugin-a', 'plugin-b'],
@@ -116,14 +99,14 @@ describe('GitlabArtifactsUploader', () => {
 
       uploader.outputReportUrls()
 
-      expect(loggerInfoStub.callCount).to.equal(3)
-      expect(loggerInfoStub.getCall(0).args[0]).to.equal(
+      expect(mocks.info).toHaveBeenCalledTimes(3)
+      expect(mocks.info.mock.calls[0][0]).to.equal(
         '- https://group.pages.example.com/-/subgroup/project/-/jobs/101/artifacts/reports/allure/index.html',
       )
-      expect(loggerInfoStub.getCall(1).args[0]).to.equal(
+      expect(mocks.info.mock.calls[1][0]).to.equal(
         '- https://group.pages.example.com/-/subgroup/project/-/jobs/101/artifacts/reports/allure/plugin-a/index.html',
       )
-      expect(loggerInfoStub.getCall(2).args[0]).to.equal(
+      expect(mocks.info.mock.calls[2][0]).to.equal(
         '- https://group.pages.example.com/-/subgroup/project/-/jobs/101/artifacts/reports/allure/plugin-b/index.html',
       )
     })
@@ -131,14 +114,13 @@ describe('GitlabArtifactsUploader', () => {
 
   describe('downloadHistory()', () => {
     it('downloads history artifact from a previous pipeline job', async () => {
-      pipelinesAllStub.resolves([{id: 200}, {id: 199}])
-      jobsAllStub.onCall(0).resolves([{id: 555, name: 'test-job'}])
-      jobsAllStub.onCall(1).resolves([])
-      downloadArchiveStub.resolves({
+      mocks.pipelines.mockResolvedValue([{id: 200}, {id: 199}])
+      mocks.jobs.mockResolvedValueOnce([{id: 555, name: 'test-job'}]).mockResolvedValueOnce([])
+      mocks.download.mockResolvedValue({
         text: async () => '{"uuid":"test-uuid"}',
       })
 
-      const uploader = new Uploader({
+      const uploader = new GitlabArtifactsUploader({
         historyPath,
         reportPath,
         plugins: ['plugin-a'],
@@ -146,16 +128,19 @@ describe('GitlabArtifactsUploader', () => {
 
       await uploader.downloadHistory()
 
-      expect(mkdirSyncStub.calledOnceWithExactly(dirname(historyPath), {recursive: true})).to.be.true
-      expect(
-        pipelinesAllStub.calledOnceWithExactly('123', {
+      expect(mocks.mkdirSync).toHaveBeenCalledTimes(1)
+      expect(mocks.mkdirSync.mock.calls[0]).toEqual([dirname(historyPath), {recursive: true}])
+      expect(mocks.pipelines).toHaveBeenCalledTimes(1)
+      expect(mocks.pipelines.mock.calls[0]).toEqual([
+        '123',
+        {
           ref: 'main',
           source: 'push',
           perPage: 100,
           maxPages: 1,
-        }),
-      ).to.be.true
-      expect(jobsAllStub.getCall(0).args).to.deep.equal([
+        },
+      ])
+      expect(mocks.jobs.mock.calls[0]).to.deep.equal([
         '123',
         {
           pipelineId: 199,
@@ -164,7 +149,7 @@ describe('GitlabArtifactsUploader', () => {
           perPage: 100,
         },
       ])
-      expect(jobsAllStub.getCall(1).args).to.deep.equal([
+      expect(mocks.jobs.mock.calls[1]).to.deep.equal([
         '123',
         {
           pipelineId: 199,
@@ -173,41 +158,46 @@ describe('GitlabArtifactsUploader', () => {
           perPage: 100,
         },
       ])
-      expect(
-        downloadArchiveStub.calledOnceWithExactly('123', {
+      expect(mocks.download).toHaveBeenCalledTimes(1)
+      expect(mocks.download.mock.calls[0]).toEqual([
+        '123',
+        {
           jobId: 555,
           artifactPath: 'reports/history/history.json',
-        }),
-      ).to.be.true
-      expect(writeFileSyncStub.calledOnceWithExactly(historyPath, '{"uuid":"test-uuid"}')).to.be.true
+        },
+      ])
+      expect(mocks.writeFileSync).toHaveBeenCalledTimes(1)
+      expect(mocks.writeFileSync.mock.calls[0]).toEqual([historyPath, '{"uuid":"test-uuid"}'])
     })
 
     it('throws when there are not enough pipelines to resolve a previous job', async () => {
-      pipelinesAllStub.resolves([{id: 200}])
+      mocks.pipelines.mockResolvedValue([{id: 200}])
 
-      const uploader = new Uploader({
+      const uploader = new GitlabArtifactsUploader({
         historyPath,
         reportPath,
         plugins: ['plugin-a'],
       })
 
-      await expect(uploader.downloadHistory()).to.be.rejectedWith(Error, 'Not enough pipelines found')
+      const result = uploader.downloadHistory()
+      await expect(result).rejects.toBeInstanceOf(Error)
+      await expect(result).rejects.toThrow('Not enough pipelines found')
     })
 
     it('throws a wrapped error when artifacts download fails', async () => {
-      pipelinesAllStub.resolves([{id: 200}, {id: 199}])
-      jobsAllStub.onCall(0).resolves([{id: 555, name: 'test-job'}])
-      jobsAllStub.onCall(1).resolves([])
-      downloadArchiveStub.rejects(new Error('network failure'))
+      mocks.pipelines.mockResolvedValue([{id: 200}, {id: 199}])
+      mocks.jobs.mockResolvedValueOnce([{id: 555, name: 'test-job'}]).mockResolvedValueOnce([])
+      mocks.download.mockRejectedValue(new Error('network failure'))
 
-      const uploader = new Uploader({
+      const uploader = new GitlabArtifactsUploader({
         historyPath,
         reportPath,
         plugins: ['plugin-a'],
       })
 
-      await expect(uploader.downloadHistory()).to.be.rejectedWith(
-        Error,
+      const result = uploader.downloadHistory()
+      await expect(result).rejects.toBeInstanceOf(Error)
+      await expect(result).rejects.toThrow(
         "Failed to download history artifact from job ID: '555'. Err: 'network failure'",
       )
     })

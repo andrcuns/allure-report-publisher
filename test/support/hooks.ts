@@ -1,7 +1,6 @@
-import * as allure from 'allure-js-commons'
+import {label} from 'allure-js-commons'
+import {beforeEach} from 'vitest'
 
-export const mochaHooks = {
-  async beforeEach() {
-    await allure.label('nodeVersion', process.version)
-  },
-}
+beforeEach(async () => {
+  await label('nodeVersion', process.version)
+})
