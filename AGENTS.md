@@ -4,7 +4,7 @@ This document provides coding guidelines and commands for agentic coding assista
 
 ## Project Overview
 
-allure-report-publisher is a CLI tool built with oclif that publishes Allure 3 test reports to cloud storage providers (AWS S3, GCS, GitLab Artifacts). It integrates with GitHub Actions and GitLab CI for automated PR/MR updates.
+allure-report-publisher is a CLI tool built with oclif that publishes Allure 3 test reports to cloud storage providers (AWS S3, GCS). It integrates with GitHub Actions and GitLab CI for automated PR/MR updates.
 
 ## Build, Lint, and Test Commands
 

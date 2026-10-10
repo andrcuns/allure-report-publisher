@@ -26,7 +26,6 @@ USAGE
 <!-- usagestop -->
 <!-- commands -->
 * [`allure-report-publisher upload gcs`](#allure-report-publisher-upload-gcs)
-* [`allure-report-publisher upload gitlab-artifacts`](#allure-report-publisher-upload-gitlab-artifacts)
 * [`allure-report-publisher upload s3`](#allure-report-publisher-upload-s3)
 
 ## `allure-report-publisher upload gcs`
@@ -76,43 +75,6 @@ EXAMPLES
 ```
 
 _See code: [src/commands/upload/gcs.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.7.0/src/commands/upload/gcs.ts)_
-
-## `allure-report-publisher upload gitlab-artifacts`
-
-Generate report and output GitLab CI artifacts links
-
-```
-USAGE
-  $ allure-report-publisher upload gitlab-artifacts [-r <value>] [-c <value>] [--report-name <value>] [-o <value>]
-    [--global-allure-exec] [--ci-report-title <value>] [--update-pr comment|description|actions] [--add-summary]
-    [--collapse-summary] [--flaky-warning-status] [--color] [--debug] [--ignore-missing-results]
-
-FLAGS
-  -c, --config=<value>           [env: ALLURE_CONFIG] The path to allure config file. Options provided here will
-                                 override CLI flags
-  -o, --output=<value>           [env: ALLURE_OUTPUT] Directory to generate the Allure report into
-  -r, --results-glob=<value>     [default: ./**/allure-results, env: ALLURE_RESULTS_GLOB] Glob pattern for allure
-                                 results directories
-      --add-summary              [env: ALLURE_SUMMARY] Add test summary table to section in PR
-      --ci-report-title=<value>  [default: Allure Report, env: ALLURE_CI_REPORT_TITLE] Title for PR comment/description
-                                 section
-      --collapse-summary         [env: ALLURE_COLLAPSE_SUMMARY] Create collapsible summary section in PR
-      --[no-]color               [env: ALLURE_COLOR] Force color output
-      --debug                    [env: ALLURE_DEBUG] Print debug log output
-      --flaky-warning-status     [env: ALLURE_FLAKY_WARNING_STATUS] Mark run with ! status if flaky tests found
-      --global-allure-exec       [env: ALLURE_GLOBAL_ALLURE_EXEC] Use globally installed allure executable instead of
-                                 the packaged one
-      --ignore-missing-results   [env: ALLURE_IGNORE_MISSING_RESULTS] Ignore missing allure results and exit without
-                                 error if no result paths found
-      --report-name=<value>      [env: ALLURE_REPORT_NAME] Custom report name in Allure report
-      --update-pr=<option>       [env: ALLURE_UPDATE_PR] Update PR with a section containing the report URL
-                                 <options: comment|description|actions>
-
-DESCRIPTION
-  Generate report and output GitLab CI artifacts links
-```
-
-_See code: [src/commands/upload/gitlab-artifacts.ts](https://github.com/andrcuns/allure-report-publisher/blob/v5.7.0/src/commands/upload/gitlab-artifacts.ts)_
 
 ## `allure-report-publisher upload s3`
 
@@ -196,23 +158,6 @@ Additional configuration:
 ## Google Cloud Storage
 
 GCS node.js client uses [ADC](https://docs.cloud.google.com/docs/authentication/application-default-credentials) to detect credentials. Easiest way is to set `GOOGLE_APPLICATION_CREDENTIALS` environment variable pointing to service account credentials.json file.
-
-## Gitlab Artifacts
-
-This storage provider is only supported for GitLab CI. Because GitLab does not expose public api for uploading artifacts, a job must be configured to upload the report as an artifact. Example:
-
-```yaml
-# .gitlab-ci.yml
-artifacts:
-  paths:
-    - allure-report
-```
-
-where `allure-report` is the directory containing the generated Allure report and can be overridden via `--output` option.
-
-Requires environment variable `GITLAB_AUTH_TOKEN` where token is a GitLab personal access token with `api` scope capable of downloading artifacts and retrieving job and pipeline information.
-
-This provider is meant to be used with [GitLab CI](#gitlab-ci).
 
 # CI
 
