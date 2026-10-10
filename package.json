@@ -69,7 +69,7 @@
     },
     "topics": {
       "upload": {
-        "description": "Upload reports to cloud storage or CI artifacts"
+        "description": "Upload reports to cloud storage"
       }
     }
   },

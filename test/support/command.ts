@@ -54,15 +54,13 @@ export async function captureCommand(action: () => Promise<unknown>): Promise<Co
 
 export async function runCommand(argv: readonly string[]): Promise<CommandResult> {
   return captureCommand(async () => {
-    const [{default: S3}, {default: Gcs}, {default: GitlabArtifacts}] = await Promise.all([
+    const [{default: S3}, {default: Gcs}] = await Promise.all([
       import('../../src/commands/upload/s3.js'),
       import('../../src/commands/upload/gcs.js'),
-      import('../../src/commands/upload/gitlab-artifacts.js'),
     ])
     const sourceCommands: Record<string, Command.Class> = {
       'upload:s3': S3,
       'upload:gcs': Gcs,
-      'upload:gitlab-artifacts': GitlabArtifacts,
     }
     const root = fileURLToPath(new URL('../../', import.meta.url))
     const autoTranspile = settings.enableAutoTranspile

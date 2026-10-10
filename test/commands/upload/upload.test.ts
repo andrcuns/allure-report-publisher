@@ -16,10 +16,10 @@ describe('upload', () => {
       expect(stdout).to.contain('Generate and upload allure report to gcs bucket')
     })
 
-    it('prints gitlab artifacts upload command help', async () => {
-      const {stdout, error} = await runCommand(['upload', 'gitlab-artifacts', '--help'])
+    it('lists cloud upload commands', async () => {
+      const {stdout, error} = await runCommand(['upload', '--help'])
       expect(error).toBeUndefined()
-      expect(stdout).to.contain('Generate report and output GitLab CI artifacts links')
+      expect(stdout.match(/^ {2}upload \S+/gm)?.map((command) => command.trim())).toEqual(['upload gcs', 'upload s3'])
     })
   })
 })

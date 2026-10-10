@@ -64,16 +64,6 @@ describe('GitlabCiInfo', () => {
     })
   })
 
-  describe('jobId', () => {
-    it('returns CI_JOB_ID from environment', () => {
-      process.env.CI_JOB_ID = '67890'
-
-      const info = new GitlabCiInfo()
-
-      expect(info.jobId).to.equal('67890')
-    })
-  })
-
   describe('projectPath', () => {
     it('returns CI_PROJECT_PATH from environment', () => {
       process.env.CI_PROJECT_PATH = 'group/project'
@@ -101,35 +91,6 @@ describe('GitlabCiInfo', () => {
       const info = new GitlabCiInfo()
 
       expect(info.projectId).to.equal('123')
-    })
-  })
-
-  describe('buildDir', () => {
-    it('returns CI_PROJECT_DIR from environment', () => {
-      process.env.CI_PROJECT_DIR = '/builds/group/project'
-
-      const info = new GitlabCiInfo()
-
-      expect(info.buildDir).to.equal('/builds/group/project')
-    })
-  })
-
-  describe('branch', () => {
-    it('returns CI_COMMIT_REF_NAME from environment', () => {
-      process.env.CI_COMMIT_REF_NAME = 'main'
-
-      const info = new GitlabCiInfo()
-
-      expect(info.branch).to.equal('main')
-    })
-
-    it('prefers CI_MERGE_REQUEST_SOURCE_BRANCH_NAME over CI_COMMIT_REF_NAME', () => {
-      process.env.CI_MERGE_REQUEST_SOURCE_BRANCH_NAME = 'feature-branch'
-      process.env.CI_COMMIT_REF_NAME = 'main'
-
-      const info = new GitlabCiInfo()
-
-      expect(info.branch).to.equal('feature-branch')
     })
   })
 
@@ -188,26 +149,6 @@ describe('GitlabCiInfo', () => {
       const info = new GitlabCiInfo()
 
       expect(() => info.buildName).to.throw(Error, 'Build name not found in environment variables')
-    })
-  })
-
-  describe('pagesDomain', () => {
-    it('returns CI_PAGES_DOMAIN from environment', () => {
-      process.env.CI_PAGES_DOMAIN = 'gitlab.io'
-
-      const info = new GitlabCiInfo()
-
-      expect(info.pagesDomain).to.equal('gitlab.io')
-    })
-  })
-
-  describe('pipelineSource', () => {
-    it('returns CI_PIPELINE_SOURCE from environment', () => {
-      process.env.CI_PIPELINE_SOURCE = 'merge_request_event'
-
-      const info = new GitlabCiInfo()
-
-      expect(info.pipelineSource).to.equal('merge_request_event')
     })
   })
 

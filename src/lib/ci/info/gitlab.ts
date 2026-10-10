@@ -2,8 +2,6 @@ import {GitlabCiProvider} from '../providers/gitlab.js'
 import {BaseCiInfo} from './base.js'
 
 export class GitlabCiInfo extends BaseCiInfo {
-  public static readonly DEFAULT_PAGES_DOMAIN = 'gitlab.io'
-
   public executorJson(reportUrl: string): Record<string, string | undefined> {
     return {
       name: 'GitLab',
@@ -29,10 +27,6 @@ export class GitlabCiInfo extends BaseCiInfo {
     return process.env[BaseCiInfo.ALLURE_RUN_ID] || process.env.CI_PIPELINE_ID
   }
 
-  public get jobId() {
-    return process.env.CI_JOB_ID
-  }
-
   public get projectPath() {
     return process.env.CI_PROJECT_PATH
   }
@@ -43,14 +37,6 @@ export class GitlabCiInfo extends BaseCiInfo {
 
   public get projectId() {
     return process.env.CI_PROJECT_ID
-  }
-
-  public get buildDir() {
-    return process.env.CI_PROJECT_DIR
-  }
-
-  public get branch() {
-    return process.env.CI_MERGE_REQUEST_SOURCE_BRANCH_NAME || process.env.CI_COMMIT_REF_NAME
   }
 
   public get serverUrl() {
@@ -88,14 +74,6 @@ export class GitlabCiInfo extends BaseCiInfo {
 
   public get jobName() {
     return process.env.CI_JOB_NAME
-  }
-
-  public get pagesDomain() {
-    return process.env.CI_PAGES_DOMAIN
-  }
-
-  public get pipelineSource() {
-    return process.env.CI_PIPELINE_SOURCE
   }
 
   public getPrShaUrl() {
