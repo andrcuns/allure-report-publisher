@@ -6,14 +6,10 @@ updates:
       interval: weekly
     labels:
       - dependencies
-    cooldown:
-      semver-patch-days: 7
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
-    cooldown:
-      semver-patch-days: 7
     groups:
         action-deps:
           patterns:
