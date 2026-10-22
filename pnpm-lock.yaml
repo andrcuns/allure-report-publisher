@@ -2763,8 +2763,8 @@ packages:
   magicast@0.5.5:
     resolution: {integrity: sha512-UicdXN8zQ3JHlxVq+28afMXPr1z7WNY6+7EJnzTdQWkTAlMLF5fNCCKxJHBQwGaNGR11581EiQmQzx73+MvszA==}
 
-  markdown-it@14.3.2:
-    resolution: {integrity: sha512-sHHjZ5fJKlgrG4qns2YwVcdNep35h5fERrfkD2YNsb9UFk0UIHarbiTaHKVMlPuWAoiilyK8Fv/jAm11slsY7Q==}
+  markdown-it@14.3.3:
+    resolution: {integrity: sha512-L//tDAkjTjJCU6pBUSBTgs3Kg4InVaZuUZog/b6V12UKhcDQ7S78877ibbCanRExwPuYP1CZD7Gd2dxSy1GXRg==}
     hasBin: true
 
   math-intrinsics@1.1.0:
@@ -3966,7 +3966,7 @@ snapshots:
       '@allurereport/web-commons': 3.20.1(preact@10.29.8)
       d3-shape: 3.2.0
       handlebars: 4.7.10
-      markdown-it: 14.3.2
+      markdown-it: 14.3.3
     transitivePeerDependencies:
       - bare-abort-controller
       - preact
@@ -3980,7 +3980,7 @@ snapshots:
       '@allurereport/web-commons': 3.20.1(preact@10.29.8)
       d3-shape: 3.2.0
       handlebars: 4.7.10
-      markdown-it: 14.3.2
+      markdown-it: 14.3.3
     transitivePeerDependencies:
       - bare-abort-controller
       - preact
@@ -6775,7 +6775,7 @@ snapshots:
       '@babel/types': 7.29.8
       source-map-js: 1.2.1
 
-  markdown-it@14.3.2:
+  markdown-it@14.3.3:
     dependencies:
       argparse: 2.0.1
       entities: 4.5.0
