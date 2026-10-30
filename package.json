@@ -28,18 +28,18 @@
   "devDependencies": {
     "@types/mime-types": "^3.0.1",
     "@types/node": "^26.0.0",
-    "@vitest/coverage-v8": "5.0.4",
+    "@vitest/coverage-v8": "5.0.5",
     "allure-js-commons": "3.14.0",
     "allure-vitest": "3.12.2",
     "dedent": "^1.7.2",
     "oclif": "^6.0.0",
-    "oxfmt": "^0.74.0",
+    "oxfmt": "^0.75.0",
     "oxlint": "^1.71.0",
     "shx": "^0.4.0",
     "testcontainers": "^12.0.0",
     "tsx": "^4.21.0",
     "typescript": "^7.0.2",
-    "vitest": "5.0.4"
+    "vitest": "5.0.5"
   },
   "engines": {
     "node": ">=22.0.0"
